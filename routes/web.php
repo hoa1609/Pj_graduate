@@ -5,6 +5,10 @@ use App\Http\Controllers\Backend\AuthController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\UserController;
 
+
+
+
+
 /*  AMDMIN  */
 Route::get('dashboard/index', [DashboardController::class, 'index'])-> name('dashboard.index')->middleware('admin');
 
