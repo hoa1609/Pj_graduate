@@ -9,4 +9,10 @@
 <script src="backend/assets/libs/jsvectormap/js/jsvectormap.min.js"></script>
 <script src="backend/assets/libs/jsvectormap/maps/world.js"></script>
 <script src="backend/assets/js/pages/index.init.js"></script>
+<script src="backend/assets/js/pages/form-validation.js"></script>
 <script src="backend/assets/js/app.js"></script>
+
+
+<script src="backend/assets/libraly/location.js"></script>
+<script src="backend/assets/libraly/select2.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>

@@ -4,13 +4,13 @@
         
 
         <meta charset="utf-8" />
-                <title>Login - shop</title>
+                <title>Login - 4AM Style</title>
                 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
                 <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
                 <meta content="" name="author" />
                 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-                <link rel="shortcut icon" href="backend/assets/images/favicon.ico">
+                <link rel="shortcut icon" href="backend/assets/images/favicon32.png">
 
        
          <link href="backend/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -32,7 +32,7 @@
                                 <div class="card-body p-0 bg-black auth-header-box rounded-top">
                                     <div class="text-center p-3">
                                         <a href="index.html" class="logo logo-admin">
-                                            <img src="backend/assets/images/logo-sm.png" height="50" alt="logo" class="auth-logo">
+                                            <img src="backend/assets/images/logo-admin.png" height="50" alt="logo" class="auth-logo">
                                         </a>
                                         <h4 class="mt-3 mb-1 fw-semibold text-white fs-18">Bắt đầu quyền ADMIN</h4>   
                                         <p class="text-muted fw-medium mb-0">Đăng nhập để thực hiện quyền.</p>  

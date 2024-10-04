@@ -1,0 +1,162 @@
+<div class="container-xxl">
+    <div class="row justify-content-center">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row align-items-center">
+                        <div class="col">                      
+                            <h4 class="card-title">Thông tin cá nhân</h4>                      
+                        </div>
+                    </div>                                    
+                </div>
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+                @php
+                    $url = ($config['method'] == 'create') ? route('user.store') : route('user.update', $user-> id);
+                @endphp
+                <div class="card-body pt-0">
+                    <form action="{{ $url }}" method="post" >
+                        @csrf
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="mb-3 row">
+                                    <label for="example-text-input" class="col-sm-2 col-form-label text-end">Tên</label>
+                                    <div class="col-sm-10">
+                                        <input class="form-control" 
+                                        name="name" 
+                                        type="text"
+                                         placeholder="nhập tên..."
+                                         value="{{ old('name', ($user-> name) ?? '' ) }}"
+                                         >
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="example-email-input" class="col-sm-2 col-form-label text-end">Email</label>
+                                    <div class="col-sm-10">
+                                        <input class="form-control" 
+                                        name="email"
+                                        type="text" 
+                                        placeholder="nhập email..."
+                                        value="{{ old('email', ($user-> email) ?? '' ) }}"
+                                        >
+                                    </div>
+                                </div> 
+                                <div class="mb-3 row">
+                                    <label for="example-tel-input" class="col-sm-2 col-form-label text-end">Điện thoại</label>
+                                    <div class="col-sm-10">
+                                        <input class="form-control" 
+                                        name="phone"
+                                        type="tel" 
+                                        placeholder="nhập số điện thoại"
+                                        value="{{ old('phone' , ($user-> phone) ?? '' ) }}"
+                                        >
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="example-date-input" class="col-sm-2 col-form-label text-end">Sinh nhật</label>
+                                    <div class="col-sm-10">
+                                        <input class="form-control" 
+                                        name="birthday"
+                                        type="date" 
+                                        value="{{ old('birthday', (isset($user-> birthday)) ? date('Y-m-d', strtotime($user-> birthday)) : '') }}"
+                                        >
+                                    </div>
+                                </div>
+
+                                @if($config['method'] == 'create' )
+                                    <div class="mb-3 row">
+                                        <label for="password" class="col-sm-2 col-form-label text-end">Mật khẩu</label>
+                                        <div class="col-sm-10">
+                                            <input class="form-control" 
+                                            name="password"
+                                            type="password" 
+                                            placeholder="nhập mật khẩu"
+                                            >
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label for="password2" class="col-sm-2 col-form-label text-end">Nhập lại mật khẩu</label>
+                                        <div class="col-sm-10">
+                                            <input class="form-control"  
+                                            name="re_password"
+                                            type="password" 
+                                            placeholder="nhập lại mật khẩu"
+                                            >
+                                        </div>
+                                    </div>
+                                @endif
+                            </div>
+
+                            <div class="col-lg-6">  
+                                <div class="row" style="margin-bottom: 40px">
+                                    <div class="col-md-6">
+                                        <label class="form-label">Thành phố</label>
+                                        <select name="province_id" class="form-select setUpSelect2 province location" data-target="districts">
+                                            <option value="0">[Chọn Thành Phố]</option>
+                                            @if (isset($provinces))
+                                                @foreach ($provinces as $province)
+                                                    <option value="{{ $province-> code }}" {{ old('province_id') == $province->code }}>
+                                                        {{ $province-> name }}
+                                                    </option>
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                    </div>
+        
+                                    <div class="col-md-6">
+                                        <label class="form-label">Quận/Huyện</label>
+                                        <select name="district_id" class="form-select setUpSelect2 districts location" data-target="wards">
+                                            <option value="0">[Chọn Quận/Huyện]</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6" style="margin-top: 30px">
+                                        <label class="form-label">Phường/Xã</label>
+                                        <select name="ward_id" class="form-select setUpSelect2 wards">
+                                            <option value="0">[Chọn Phường/Xã]</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6" style="margin-top: 30px">
+                                        <label class="form-label">Địa chỉ</label>
+                                        <input class="form-control"
+                                            name="address"
+                                            placeholder="nhập rõ địa chỉ..."
+                                            value="{{ old('address', ($user-> address) ?? '' ) }}"
+                                            >
+                                    </div>
+                                </div>  
+
+                                <div class="mb-3 row" >
+                                    <label for="example-password-input" class="col-sm-2 col-form-label text-end">Ghi chú</label>
+                                    <div class="col-sm-10">
+                                        <input class="form-control" 
+                                        name="description"
+                                        type="text" 
+                                        placeholder="nhập ghi chú..."
+                                        value="{{ old('description', ($user-> description) ?? '' ) }}"
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-end"> 
+                                <button type="submit" name="send" class="btn btn-primary">Lưu thông tin</button>
+                            </div>
+                        </div>
+                    </form>               
+                </div>
+            </div>
+        </div>                                                       
+    </div>
+</div>
+
+<script>
+    var province_id = '{{ (isset($user->province_id)) ? $user->province_id : old('province_id') }}'
+    var district_id = '{{ (isset($user->district_id)) ? $user->district_id : old('district_id') }}'
+    var ward_id = '{{ (isset($user->ward_id)) ? $user->ward_id : old('ward_id') }}'
+</script>

@@ -1,13 +1,10 @@
 <div class="startbar d-print-none">
 
     <div class="brand">
-        <a href="index.html" class="logo">
+        <a href="{{ route('dashboard.index') }}" class="logo">
             <span>
-                <img src="backend/assets/images/logo-sm.png" alt="logo-small" class="logo-sm">
-            </span>
-            <span class="">
-                <img src="backend/assets/images/logo-light.png" alt="logo-large" class="logo-lg logo-light">
-                <img src="backend/assets/images/logo-dark.png" alt="logo-large" class="logo-lg logo-dark">
+                <img src="backend/assets/images/logo-main-light.png" alt="logo-large" class="logo-sm logo-light">
+                <img src="backend/assets/images/logo-main-dark.png" alt="logo-main" class="logo-sm logo-dark">
             </span>
         </a>
     </div>
@@ -36,9 +33,6 @@
                             </ul>
                         </div>
                     </li>
-                    
-
-                    
                 </ul>
             </div>
         </div>
