@@ -40,26 +40,27 @@
         })
     }
 
-     HT.changeStatusAll = () => { 
+
+    HT.changeStatusAll = () => { 
         if($('.changeStatusAll').length){
             $(document).on('click', '.changeStatusAll', function(e){
-                let _this = $(this)
-                let id = []
+                let _this = $(this);
+                let ids = [];
+    
                 $('.checkBoxItem').each(function(){
-                    let checkBox = $(this)
-                    if(checkBox.prop('checked')){
-                        id.push(checkBox.val())
+                    if($(this).prop('checked')){
+                        ids.push($(this).val());  
                     }
-                })
-
+                });
+    
                 let option = {
                     'value' : _this.attr('data-value'),
                     'model' : _this.attr('data-model'),
                     'field' : _this.attr('data-field'),
-                    'id' : id,
+                    'id' : ids,
                     '_token' : $('meta[name="csrf-token"]').attr('content')
-                }
-                
+                };
+    
                 $.ajax({
                     url: 'ajax/dashboard/changeStatusAll', 
                     type: 'POST', 
@@ -68,7 +69,15 @@
                     
                     success: function(res){
                         if(res.flag == true){
-
+                            ids.forEach(function(id){
+                                const checkbox = $('.js-switch-' + id);
+    
+                                if(checkbox.length){
+                                    checkbox.prop('checked', option.value == 1);
+                                }
+                            });
+                        } else {
+                            alert('Cập nhật thất bại');
                         }
                     },
     
@@ -77,12 +86,13 @@
                         alert('An error occurred. Please try again.');
                     }
                 });
-                
+    
                 e.preventDefault();
-
-            })
+            });
         }
-    }
+    };
+    
+    
 
 
 

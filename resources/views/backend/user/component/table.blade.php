@@ -30,7 +30,7 @@
                         <td>{{ $user-> address }}</td>
                         <td>
                             <div class="text-center form-switch">
-                                <input class="form-check-input status form-check-input-{{ $user-> id }}" 
+                                <input class="form-check-input status js-switch-{{ $user-> id }}" 
                                     type="checkbox" 
                                     data-field="publish" 
                                     data-model="User" 
