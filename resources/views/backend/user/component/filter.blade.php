@@ -12,8 +12,14 @@
                     <div class="dropdown-menu dropdown-menu-start">
                         <div class="text-dark p-2">
                             <div class="form-check mb-2">
-                                <a href="#" class="changeStatusAll" data-value="1" data-value="1" data-field="publish" data-model="User" >Publish toàn bộ</a>
-                                <a href="#" class="changeStatusAll" data-value="1" data-value="0" data-field="publish" data-model="User" >Publish toàn bộ</a>
+                                <ul class="list-unstyled mb-0">
+                                    <li class>
+                                        <a href="#" class="changeStatusAll" data-value="1" data-field="publish" data-model="User" >Active toàn bộ</a>
+                                    </li>
+                                    <li class="mt-2">
+                                        <a href="#" class="changeStatusAll" data-value="0" data-field="publish" data-model="User" >Unactive toàn bộ</a>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>
@@ -41,18 +47,20 @@
             <div class="action">
                 <div class="uk-flex uk-flex-middle">
                     @php
-                        $publish = request('publish') ?: old('publish');
+                        $publishArry = ['Tình trạng tắt', 'Tình trạng bật'];
+                        $publish = request('publish') ? : old('publish');
                     @endphp
-                    {{-- <select name="publish" class="form-control setupSelect2 ml10">
-                        @foreach(config('apps.general.publish') as $key => $val)
-                        <option {{ ($publish == $key)  ? 'selected' : '' }} value="{{ $key }}">{{ $val }}</option>
-                        @endforeach
-                    </select> --}}
-                    <select name="user_catalogue_id" class="form-control form-select mr10 setupSelect2">
+                    <select name="publish" class="form-control form-select setupSelect2 mr5">
+                        <option value="-1">Chọn tình trạng</option>
+                            @foreach($publishArry as $key => $val)
+                                <option {{ ($publish == $key)  ? 'selected' : '' }} value="{{ $key }}">{{ $val }}</option>
+                            @endforeach
+                    </select>
+                    <select name="user_catalogue_id" class="form-control form-select mr5 setupSelect2">
                         <option value="0" selected="selected">Chọn Nhóm Thành Viên</option>
                         <option value="1">Quản trị viên</option>
                     </select>
-                    <div class="uk-search uk-flex uk-flex-middle mr10">
+                    <div class="uk-search uk-flex uk-flex-middle mr5">
                         <div class="input-group">
                             <input 
                                 type="text" 
