@@ -6,21 +6,25 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    
+    /**
+     * Run the migrations.
+     */
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->tinyInteger('publish')->default(0);
-            
+            $table->unsignedBigInteger('user_catalogue_id')->nullable()->after('publish');
+            $table->foreign('user_catalogue_id')->references('id')->on('user_catalogues')->onDelete('set null');
         });
     }
 
-    
+
+    /**
+     * Reverse the migrations.
+     */
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('publish');
-            
+            $table->dropColumn('user_catalogue_id');
         });
     }
 };

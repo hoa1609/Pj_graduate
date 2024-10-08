@@ -1,9 +1,9 @@
 <div class="card-header">
     <div class="row align-items-center">
-        <div class="col">                      
-            <h4 class="card-title">Quản lý thành viên</h4>                      
+        <div class="col">
+            <h4 class="card-title">Quản lý nhóm thành viên</h4>
         </div>
-        <div class="col-auto"> 
+        <div class="col-auto">
             <form class="row g-2">
                 <div class="col-auto">
                     <a class="btn bg-primary-subtle text-primary dropdown-toggle d-flex align-items-center arrow-none" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false" data-bs-auto-close="outside">
@@ -12,18 +12,19 @@
                     <div class="dropdown-menu dropdown-menu-start">
                         <div class="text-dark p-2">
                             <div class="form-check mb-2">
-                                <a href="#" class="changeStatusAll" data-value="1" data-value="1" data-field="publish" data-model="User" >Publish toàn bộ</a>
-                                <a href="#" class="changeStatusAll" data-value="1" data-value="0" data-field="publish" data-model="User" >Publish toàn bộ</a>
+                                <a href="#" class="changeStatusAll" data-value="1" data-field="publish" data-model="User" >Xuất Bản</a>
+                                <br>
+                                <a href="#" class="changeStatusAll" data-value="0" data-field="publish" data-model="User" >Không Xuất Bản</a>
                             </div>
                         </div>
                     </div>
                 </div>
-            </form>    
+            </form>
         </div>
-    </div>                                     
+    </div>
 </div>
 
-<form action="{{ route('user.index') }}">
+<form action="{{ route('user.catalogue.index') }}">
     <div class="filter-wrapper">
         <div class="uk-flex uk-flex-middle uk-flex-space-between">
             <div class="perpage">
@@ -41,23 +42,32 @@
             <div class="action">
                 <div class="uk-flex uk-flex-middle">
                     @php
-                        $publish = request('publish') ?: old('publish');
+                        $publishArray = ['Không Xuất Bản','Xuất Bản'];
+                        $publish = request('publish') ? : old('publish');
                     @endphp
                     {{-- <select name="publish" class="form-control setupSelect2 ml10">
                         @foreach(config('apps.general.publish') as $key => $val)
                         <option {{ ($publish == $key)  ? 'selected' : '' }} value="{{ $key }}">{{ $val }}</option>
                         @endforeach
                     </select> --}}
+                    <select name="publish" class="form-control form-select mr10 setupSelect2">
+                        <option value="-1" selected="selected">Chọn Tình Trạng</option>
+                        @foreach($publishArray as $key => $val)
+                            <option {{ ($publish == $key)  ? 'selected' : '' }} value="{{ $key }}">{{ $val }}</option>
+                        @endforeach
+
+                    </select>
+
                     <select name="user_catalogue_id" class="form-control form-select mr10 setupSelect2">
                         <option value="0" selected="selected">Chọn Nhóm Thành Viên</option>
                         <option value="1">Quản trị viên</option>
                     </select>
                     <div class="uk-search uk-flex uk-flex-middle mr10">
                         <div class="input-group">
-                            <input 
-                                type="text" 
-                                name="keyword" 
-                                value="{{ request('keyword') ?: old('keyword') }}" 
+                            <input
+                                type="text"
+                                name="keyword"
+                                value="{{ request('keyword') ?: old('keyword') }}"
                                 placeholder="Nhập Từ khóa bạn muốn tìm kiếm..." class="form-control"
                             >
                            <span class="input-group-btn">
@@ -66,7 +76,7 @@
                            </span>
                         </div>
                     </div>
-                    <a href="{{ route('user.create') }}" class="btn btn-danger"><i class="fa fa-plus mr5"></i>Thêm mới thành viên</a>
+                    <a href="{{ route('user.catalogue.create') }}" class="btn btn-danger"><i class="fa fa-plus mr5"></i>Thêm mới nhóm thành viên</a>
                 </div>
             </div>
         </div>

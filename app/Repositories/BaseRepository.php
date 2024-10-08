@@ -21,45 +21,56 @@ class BaseRepository implements BaseRepositoryInterface
         array $condition = [],
         array $join = [],
         array $extend = [],
-              $perPage = '',
-    ){
-        $query = $this->model->select($column)->where(function($query) use ($condition){
-            if(isset($condition['keyword']) && !empty($condition['keyword'])) {
-                $query->where('name', 'LIKE', '%' .$condition['keyword']. '%');
+        $perPage = '',
+    ) {
+        $query = $this->model->select($column)->where(function ($query) use ($condition) {
+            if (isset($condition['keyword']) && !empty($condition['keyword'])) {
+                $query->where('name', 'LIKE', '%' . $condition['keyword'] . '%');
             }
+
+            if (isset($condition['publish']) && $condition['publish'] != -1) {
+                $query->where('publish', '=', $condition['publish']);
+            }
+            return $query;
         });
-        
-        if(!empty($join)){
+
+        if (!empty($join)) {
             $query->join(...$join);
         }
 
         return $query->paginate($perPage)
-        ->withQueryString()->withPath(env('APP_URL').$extend['path']);
+            ->withQueryString()->withPath(env('APP_URL') . $extend['path']);
     }
 
-    public function all(){
+    public function all()
+    {
         return $this->model->all();
     }
 
-    public function create(array $payload =[]){
+    public function create(array $payload = [])
+    {
         $model = $this->model->create($payload);
         return $model->fresh();
     }
 
-    public function delete($id){
+    public function delete($id)
+    {
         return $this->findById($id)->delete();
     }
 
-    public function forceDelete($id){
+    public function forceDelete($id)
+    {
         return $this->findById($id)->forceDelete();
     }
 
-    public function update(int $id = 0, array $payload = []){
+    public function update(int $id = 0, array $payload = [])
+    {
         $model = $this->findById($id);
         return $model->update($payload);
     }
 
-    public function updateByWhereIn(string $whereInField = '', array $whereIn = [], array $payload = [] ){
+    public function updateByWhereIn(string $whereInField = '', array $whereIn = [], array $payload = [])
+    {
         return $this->model->whereIn($whereInField, $whereIn)->update($payload);
     }
 
@@ -71,6 +82,4 @@ class BaseRepository implements BaseRepositoryInterface
     ) {
         return $this->model->select($column)->with($relation)->findOrFail($modelId);
     }
-
-    
 }

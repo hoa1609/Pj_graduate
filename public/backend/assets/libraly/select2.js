@@ -7,7 +7,7 @@
         $('.setUpSelect2').select2();
     }
 
-    HT.changeStatus = () => { 
+    HT.changeStatus = () => {
         $(document).on('change', '.status', function(){
             let _this= $(this)
             let option = {
@@ -19,18 +19,34 @@
             }
 
             $.ajax({
-                url: 'ajax/dashboard/changeStatus', 
-                type: 'POST', 
+                url: 'ajax/dashboard/changeStatus',
+                type: 'POST',
                 data: option,
-                dataType: 'json', 
+                dataType: 'json',
 
-                // success: function(res) {
-                //     if (res.success) {
-                //         alert('Cập nhật thành công'); 
-                //     } else {
-                //         alert('Cập nhật thất bại'); 
-                //     }
-                // },
+                success: function(res) {
+                    if (res.flag == true) {
+                        if (option.value == 1) {
+                            for (let i = 0; i < id.length; i++) {
+                                const switcheryInput = $('.js-switch-' + id[i])[0];
+
+                                if (switcheryInput) {
+                                    switcheryInput.checked = !switcheryInput.checked;
+                                    new Switchery(switcheryInput);
+                                }
+                            }
+                        } else if (option.value == 0){
+                            for (let i = 0; i < id.length; i++) {
+                                const switcheryInput = $('.js-switch-' + id[i])[0];
+
+                                if (switcheryInput) {
+                                    switcheryInput.checked = false;
+                                    new Switchery(switcheryInput);
+                                }
+                            }
+                        }
+                    }
+                },
 
                 error: function(jqXHR, textStatus, errorThrown) {
                     console.log('Lỗi: ' + textStatus + ' ' + errorThrown);
@@ -41,18 +57,18 @@
     }
 
 
-    HT.changeStatusAll = () => { 
+    HT.changeStatusAll = () => {
         if($('.changeStatusAll').length){
             $(document).on('click', '.changeStatusAll', function(e){
                 let _this = $(this);
                 let ids = [];
-    
+
                 $('.checkBoxItem').each(function(){
                     if($(this).prop('checked')){
-                        ids.push($(this).val());  
+                        ids.push($(this).val());
                     }
                 });
-    
+
                 let option = {
                     'value' : _this.attr('data-value'),
                     'model' : _this.attr('data-model'),
@@ -60,18 +76,18 @@
                     'id' : ids,
                     '_token' : $('meta[name="csrf-token"]').attr('content')
                 };
-    
+
                 $.ajax({
-                    url: 'ajax/dashboard/changeStatusAll', 
-                    type: 'POST', 
+                    url: 'ajax/dashboard/changeStatusAll',
+                    type: 'POST',
                     data: option,
                     dataType: 'json',
-                    
+
                     success: function(res){
                         if(res.flag == true){
                             ids.forEach(function(id){
                                 const checkbox = $('.js-switch-' + id);
-    
+
                                 if(checkbox.length){
                                     checkbox.prop('checked', option.value == 1);
                                 }
@@ -80,19 +96,19 @@
                             alert('Cập nhật thất bại');
                         }
                     },
-    
+
                     error: function(jqXHR, textStatus, errorThrown) {
                         console.log('Lỗi: ' + textStatus + ' ' + errorThrown);
-                        alert('An error occurred. Please try again.');
+                        alert('Đã xảy ra lỗi. Vui lòng thử lại');
                     }
                 });
-    
+
                 e.preventDefault();
             });
         }
     };
-    
-    
+
+
 
 
 
@@ -134,7 +150,7 @@
     }
 
 
-   
+
 
     $(document).ready(function(){
         HT.select2() ;
@@ -143,7 +159,7 @@
         HT.checkBoxItem() ;
         HT.allChecked() ;
         HT.changeStatusAll() ;
-        
+
     });
 
 })(jQuery);
