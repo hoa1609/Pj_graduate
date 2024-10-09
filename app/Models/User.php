@@ -12,7 +12,6 @@ use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
-
     
     // protected $fillable = [
     //     'name',
@@ -20,17 +19,23 @@ class User extends Authenticatable
     //     'password',
     // ];
 
-    protected $guarded=[];
+    protected $guarded = [
 
+    ];
     
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function user_roles(){
+        return $this-> belongsTo(UserRole::class, 'user_role_id', 'id');
+    }
+
+
 }

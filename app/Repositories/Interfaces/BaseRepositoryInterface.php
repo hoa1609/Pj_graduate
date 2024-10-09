@@ -2,10 +2,6 @@
 
 namespace App\Repositories\Interfaces;
 
-/**
- * Interface ProvinceServiceInterface
- * @package App\Services\Interfaces
- */
 interface BaseRepositoryInterface
 {
     public function all();
@@ -17,6 +13,8 @@ interface BaseRepositoryInterface
         array $join = [],
         array $extend = [],
               $perPage = '',
+        array $relation = []
     );
+
     public function updateByWhereIn(string $whereInField = '', array $whereIn = [], array $payload = [] );
 }

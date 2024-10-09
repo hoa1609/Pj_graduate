@@ -23,14 +23,12 @@
                 type: 'POST', 
                 data: option,
                 dataType: 'json', 
-
-                // success: function(res) {
-                //     if (res.success) {
-                //         alert('Cập nhật thành công'); 
-                //     } else {
-                //         alert('Cập nhật thất bại'); 
-                //     }
-                // },
+                success: function(res) {
+                    let inputValue = ((option.value == 1) ? 2 : 1)
+                    if (res.flag == true) {
+                        _this.val(inputValue)
+                    } 
+                },
 
                 error: function(jqXHR, textStatus, errorThrown) {
                     console.log('Lỗi: ' + textStatus + ' ' + errorThrown);
@@ -73,7 +71,7 @@
                                 const checkbox = $('.js-switch-' + id);
     
                                 if(checkbox.length){
-                                    checkbox.prop('checked', option.value == 1);
+                                    checkbox.prop('checked', option.value == 2);
                                 }
                             });
                         } else {
@@ -86,7 +84,6 @@
                         alert('An error occurred. Please try again.');
                     }
                 });
-    
                 e.preventDefault();
             });
         }

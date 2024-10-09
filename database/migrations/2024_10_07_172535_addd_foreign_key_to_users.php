@@ -3,24 +3,24 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
+    
     public function up(): void
     {
-        if (!Schema::hasColumn('users', 'publish')) {
-            Schema::table('users', function (Blueprint $table) {
-                $table->tinyInteger('publish')->default(0);
-            });
-        }
+        Schema::table('users', function (Blueprint $table) {
+                $table->foreign('user_role_id')->references('id')->on('user_roles');
+        });
     }
 
+    /**
+     * Reverse the migrations.
+     */
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('publish');
+            $table->dropForeign(['user_role_id']);
         });
     }
 };
-

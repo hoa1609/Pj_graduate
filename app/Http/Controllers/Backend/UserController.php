@@ -29,11 +29,10 @@ class UserController extends Controller{
     }
 
     public function index(Request $request){
-
-        $perPage = $request->integer('perpage', 10);
+        $perPage = $request->integer('perPage', 10);
         $users = $this->userService->paginate($request, $perPage);
 
-        $template = 'backend.user.index';
+        $template = 'backend.user.user.index';
         return view('backend.dashboard.layout', compact(
             'template',
             'users',
@@ -45,7 +44,7 @@ class UserController extends Controller{
         $provinces = $this->provinceRepository->all();
         $config['method'] = 'create';
 
-        $template = 'backend.user.store';
+        $template = 'backend.user.user.store';
         return view('backend.dashboard.layout', compact(
             'config',
             'template',
@@ -67,7 +66,7 @@ class UserController extends Controller{
         $provinces = $this->provinceRepository->all();
 
         $config['method'] = 'edit';
-        $template = 'backend.user.store';
+        $template = 'backend.user.user.store';
         return view('backend.dashboard.layout', compact(
             'config',
             'template',

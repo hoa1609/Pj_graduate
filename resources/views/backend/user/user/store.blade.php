@@ -96,6 +96,25 @@
 
                             <div class="col-lg-6">  
                                 <div class="row" style="margin-bottom: 40px">
+                                    <div class="col-md-12">
+                                        @php
+                                            $userRole = [
+                                                '[Chọn nhóm thành viên]',
+                                                'Quản trị viên',
+                                                'Cộng tác viên'
+                                            ];       
+                                        @endphp
+                                        <label class="form-label">Nhóm thành viên</label>
+                                        <select name="user_role_id" class="form-select" >
+                                            @foreach($userRole as $key => $item)
+                                                <option {{$key == old('user_role_id', (isset($user->user_role_id)) ? $user->user_role_id : '') ? 'selected' : '' 
+                                                    }}  value="{{ $key }}">{{ $item }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-bottom: 40px">
                                     <div class="col-md-6">
                                         <label class="form-label">Thành phố</label>
                                         <select name="province_id" class="form-select setUpSelect2 province location" data-target="districts">
@@ -109,7 +128,6 @@
                                             @endif
                                         </select>
                                     </div>
-        
                                     <div class="col-md-6">
                                         <label class="form-label">Quận/Huyện</label>
                                         <select name="district_id" class="form-select setUpSelect2 districts location" data-target="wards">
@@ -131,7 +149,6 @@
                                             >
                                     </div>
                                 </div>  
-
                                 <div class="mb-3 row" >
                                     <label for="example-password-input" class="col-sm-2 col-form-label text-end">Ghi chú</label>
                                     <div class="col-sm-10">

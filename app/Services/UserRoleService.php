@@ -2,7 +2,8 @@
 
 namespace App\Services;
 
-use App\Services\Interfaces\UserServiceInterface;
+use App\Services\Interfaces\UserRoleServiceInterface;
+use App\Repositories\Interfaces\UserRoleRepositoryInterface as UserRoleRepository;
 use App\Repositories\Interfaces\UserRepositoryInterface as UserRepository;
 
 use Illuminate\Support\Facades\DB;
@@ -10,13 +11,16 @@ use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 
 
-class UserService implements UserServiceInterface
+class UserRoleService implements UserRoleServiceInterface
 {
+    protected $userRoleRepository;
     protected $userRepository;
 
     public function __construct(
+        UserRoleRepository $userRoleRepository,
         UserRepository $userRepository
     ) {
+        $this->userRoleRepository = $userRoleRepository;
         $this->userRepository = $userRepository;
     }
 
@@ -24,23 +28,19 @@ class UserService implements UserServiceInterface
 
         $condition['keyword'] = $request->input('keyword');
         $condition['publish'] = $request->integer('publish');
-        $users = $this->userRepository->pagination(
-            $this->paginateSelect(),
-            $condition, 
-            [] ,
-            ['path' => 'user/index'], 
-            $perPage
+        $userRoles = $this->userRoleRepository->pagination(
+            $this->paginateSelect(), $condition, [] , ['path' => 'user/role/index'], $perPage, ['users']
         );
-        // dd($users);
         
-        return $users;
+        return $userRoles;
     }
 
     public function updateStatus($post = []){
         DB::beginTransaction();
         try {
             $payload = [$post['field'] =>(($post['value'] == 1) ? 2 : 1)]; 
-            $user = $this->userRepository->update($post['modelId'], $payload);
+            $user = $this->userRoleRepository->update($post['modelId'], $payload);
+            $this->changeUserStatus($post, $payload[$post['field']]);
 
             DB::commit();
             return true;
@@ -56,7 +56,32 @@ class UserService implements UserServiceInterface
         DB::beginTransaction();
         try {
             $payload = [$post['field'] => $post['value']]; 
-            $flag = $this->userRepository->updateByWhereIn('id', $post['id'], $payload);
+            $flag = $this->userRoleRepository->updateByWhereIn('id', $post['id'], $payload);
+            $this->changeUserStatus($post, $post['value']);
+
+
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollback();
+            echo $e->getMessage();
+            die();
+            return false;
+        }
+    }
+
+    private function changeUserStatus($post, $value){
+        DB::beginTransaction();
+        try {
+            $array = [];
+            if(isset($post['modelId'])) {
+                $array[] = $post['modelId'];
+            }else{
+                $array = $post['id'];
+            }
+           $payload[$post['field']] = $value;
+           $this->userRepository->updateByWhereIn('user_role_id', $array, $payload);
+           
 
             DB::commit();
             return true;
@@ -71,10 +96,9 @@ class UserService implements UserServiceInterface
     public function create($request){
         DB::beginTransaction();
         try {
-            $payload = $request->except('_token','send','re_password');
-            $payload['password'] = Hash::make($request->input('password'));
+            $payload = $request->except('_token','send');
 
-            $user = $this->userRepository->create($payload);
+            $user = $this->userRoleRepository->create($payload);
             DB::commit();
             return true;
         } catch (\Exception $e) {
@@ -89,9 +113,8 @@ class UserService implements UserServiceInterface
         DB::beginTransaction();
         try {
             $payload = $request->except('_token','send');
-            $payload['birthday'] = $this->convertBirthdayDate($payload['birthday']);
             
-            $user = $this->userRepository->update($id, $payload);
+            $user = $this->userRoleRepository->update($id, $payload);
             DB::commit();
             return true;
         } catch (\Exception $e) {
@@ -106,7 +129,7 @@ class UserService implements UserServiceInterface
         DB::beginTransaction();
         try {
             
-            $user = $this->userRepository->delete($id);
+            $user = $this->userRoleRepository->delete($id);
             DB::commit();
             return true;
         } catch (\Exception $e) {
@@ -117,22 +140,12 @@ class UserService implements UserServiceInterface
         }
     }
 
-
-    private function convertBirthdayDate($birthday = ''){
-        $carbonDate = Carbon::createFromFormat('Y-m-d', $birthday);
-        $birthday = $carbonDate->format('Y-m-d H:i:s');
-        return $birthday;
-    }
-    
     private function paginateSelect(){
        return [
             'id',
             'name',
-            'email',
-            'phone',
-            'address',
+            'description',
             'publish',
-            'user_role_id',
        ];
     }
 }

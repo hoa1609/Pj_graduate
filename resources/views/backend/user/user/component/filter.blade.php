@@ -14,10 +14,10 @@
                             <div class="form-check mb-2">
                                 <ul class="list-unstyled mb-0">
                                     <li class>
-                                        <a href="#" class="changeStatusAll" data-value="1" data-field="publish" data-model="User" >Active toàn bộ</a>
+                                        <a href="#" class="changeStatusAll" data-value="2" data-field="publish" data-model="User" >Active toàn bộ</a>
                                     </li>
                                     <li class="mt-2">
-                                        <a href="#" class="changeStatusAll" data-value="0" data-field="publish" data-model="User" >Unactive toàn bộ</a>
+                                        <a href="#" class="changeStatusAll" data-value="1" data-field="publish" data-model="User" >Unactive toàn bộ</a>
                                     </li>
                                 </ul>
                             </div>
@@ -47,11 +47,14 @@
             <div class="action">
                 <div class="uk-flex uk-flex-middle">
                     @php
-                        $publishArry = ['Tình trạng tắt', 'Tình trạng bật'];
+                        $publishArry = [
+                            0 => 'Chọn tình trạng', 
+                            1 => 'Tình trạng tắt', 
+                            2 => 'Tình trạng bật'
+                        ];
                         $publish = request('publish') ? : old('publish');
                     @endphp
                     <select name="publish" class="form-control form-select setupSelect2 mr5">
-                        <option value="-1">Chọn tình trạng</option>
                             @foreach($publishArry as $key => $val)
                                 <option {{ ($publish == $key)  ? 'selected' : '' }} value="{{ $key }}">{{ $val }}</option>
                             @endforeach
@@ -74,7 +77,7 @@
                            </span>
                         </div>
                     </div>
-                    <a href="{{ route('user.create') }}" class="btn btn-danger"><i class="fa fa-plus mr5"></i>Thêm mới thành viên</a>
+                    <a href="{{ route('user.create') }}" class="btn btn-md btn-danger px-2 d-inline-flex align-items-center"><i class="iconoir-user fs-14 me-1"></i>Thêm mới thành viên</a>
                 </div>
             </div>
         </div>

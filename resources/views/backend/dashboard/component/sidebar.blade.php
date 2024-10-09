@@ -25,10 +25,10 @@
                         <div class="collapse " id="sidebarDashboards">
                             <ul class="nav flex-column">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('user.index') }}">QL nhóm thành viên</a>
+                                    <a class="nav-link" href="{{ route('user.index') }}">QL thành viên</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="ecommerce-index.html">QL thành viên</a>
+                                    <a class="nav-link" href="{{ route('user.role.index') }}">QL nhóm thành viên</a>
                                 </li>
                             </ul>
                         </div>

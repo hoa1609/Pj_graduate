@@ -10,6 +10,7 @@
                 <th>Tên</th>
                 <th>Điện thoại</th>
                 <th>Email</th>
+                <th>Thuộc nhóm thành viên</th>
                 <th>Địa chỉ</th>
                 <th style="min-width: 90px;">Tình trạng</th>
                 <th class="text-end">Thao tác</th>
@@ -27,6 +28,7 @@
 
                         </td>
                         <td>{{ $user-> email }}</td>
+                        <td>{{ $user-> user_roles-> name }}</td>
                         <td>{{ $user-> address }}</td>
                         <td>
                             <div class="text-center form-switch">
@@ -36,7 +38,7 @@
                                     data-model="User" 
                                     value="{{ $user->publish }}"  
                                     data-modeId="{{ $user->id }}"
-                                    {{ $user->publish == 1 ? 'checked' : '' }} 
+                                    {{ $user->publish == 2 ? 'checked' : '' }} 
                                     >
                             </div>
                         </td>
