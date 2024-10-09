@@ -74,7 +74,7 @@
                            </span>
                         </div>
                     </div>
-                    <a href="{{ route('user.role.create') }}" class="btn btn-md btn-danger px-2 d-inline-flex align-items-center"><i class="iconoir-user fs-14 me-1"></i>Thêm mới nhóm thành viên</a>
+                    <a href="{{ route('user.role.create') }}" class="btn btn-lg btn-danger d-inline-flex px-2 align-items-center"><i class="fas fa-user-friends fs-10"></i>Thêm nhóm thành viên</a>
                 </div>
             </div>
         </div>

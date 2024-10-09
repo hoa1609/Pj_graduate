@@ -13,6 +13,9 @@
 <script src="backend/assets/js/app.js"></script>
 
 
-<script src="backend/assets/libraly/location.js"></script>
-<script src="backend/assets/libraly/select2.js"></script>
+<script src="backend/assets/library/location.js"></script>
+<script src="backend/assets/library/select2.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<script src="backend/plugins/ckfinder_2/ckfinder.js"></script>
+<script src="backend/assets/library/finder.js"></script>

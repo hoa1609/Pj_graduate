@@ -5,6 +5,8 @@ use App\Http\Controllers\Backend\AuthController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Backend\UserRoleController;
+use App\Http\Controllers\Backend\LanguageController;
+
 use App\Http\Controllers\Ajax\LocationController;
 use App\Http\Controllers\Ajax\DashboardController as AjaxDashboardController;
 use Illuminate\Routing\RouteGroup;
@@ -27,6 +29,7 @@ Route::group(['prefix' => 'user'], function () {
 
 });
 
+/*  ROLE */
 Route::group(['prefix' => 'user/role'], function () {
     Route::get('index', [UserRoleController::class, 'index'])->name('user.role.index')->middleware('admin');
     Route::get('create', [UserRoleController::class, 'create'])->name('user.role.create')->middleware('admin');
@@ -36,6 +39,18 @@ Route::group(['prefix' => 'user/role'], function () {
     Route::post('update/{id}', [UserRoleController::class, 'update'])->name('user.role.update')->middleware('admin');
     Route::delete('destroy/{id}', [UserRoleController::class, 'destroy'])->name('user.role.destroy')->middleware('admin');
     Route::post('/user/change-status', [UserRoleController::class, 'changeStatus'])->name('user.role.changeStatus');
+});
+
+/*  LANGUAGE */
+Route::group(['prefix' => 'language'], function () {
+    Route::get('index', [LanguageController::class, 'index'])->name('language.index')->middleware('admin');
+    Route::get('create', [LanguageController::class, 'create'])->name('language.create')->middleware('admin');
+
+    Route::post('store', [LanguageController::class, 'store'])->name('language.store')->middleware('admin');
+    Route::get('edit/{id}', [LanguageController::class, 'edit'])->name('language.edit')->middleware('admin');
+    Route::post('update/{id}', [LanguageController::class, 'update'])->name('language.update')->middleware('admin');
+    Route::delete('destroy/{id}', [LanguageController::class, 'destroy'])->name('language.destroy')->middleware('admin');
+    Route::post('/user/change-status', [LanguageController::class, 'changeStatus'])->name('language.changeStatus');
 
 });
 

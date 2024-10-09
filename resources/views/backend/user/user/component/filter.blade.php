@@ -77,7 +77,7 @@
                            </span>
                         </div>
                     </div>
-                    <a href="{{ route('user.create') }}" class="btn btn-md btn-danger px-2 d-inline-flex align-items-center"><i class="iconoir-user fs-14 me-1"></i>Thêm mới thành viên</a>
+                    <a href="{{ route('user.create') }}" class="btn btn-md btn-danger px-2 d-inline-flex align-items-center"><i class="fas fa-user-alt fs-10"></i>Thêm mới thành viên</a>
                 </div>
             </div>
         </div>

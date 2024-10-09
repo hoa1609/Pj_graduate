@@ -25,7 +25,7 @@ class UserRoleService implements UserRoleServiceInterface
     }
 
     public function paginate ($request, $perPage = [] ){
-
+        
         $condition['keyword'] = $request->input('keyword');
         $condition['publish'] = $request->integer('publish');
         $userRoles = $this->userRoleRepository->pagination(
@@ -45,7 +45,7 @@ class UserRoleService implements UserRoleServiceInterface
             DB::commit();
             return true;
         } catch (\Exception $e) {
-            DB::rollback();
+            DB::rollback(); 
             echo $e->getMessage();
             die();
             return false;
