@@ -87,9 +87,10 @@
                                 <label class="form-label">Chọn danh mục cha <span class="text-danger fs-10">(*)</span></label>
                                 <div class="fs-10 mb-2"><span class="text-danger">*</span> Chọn root để tạo danh mục cha mới</div>
                                 <select name="parent_id" class="form-select form-select-important">
-                                    <option value="0">--Chọn danh mục--</option>
-                                    <option value="1">Root</option>
-                                    <option>...</option>
+                                    @foreach ($dropdown as $key => $val)
+                                        <option value="{{ $key }}">{{ $val }}</option>
+                                    @endforeach
+
                                 </select>
                             </div>
                         </div>
