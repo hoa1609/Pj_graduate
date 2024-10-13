@@ -10,32 +10,32 @@ class AppServiceProvider extends ServiceProvider
 
     public $bindings = [
         'App\Services\Interfaces\UserServiceInterface' => 'App\Services\UserService',
-        'App\Repositories\Interfaces\UserRepositoryInterface' => 'App\Repositories\UserRepository',
-
-        'App\Services\Interfaces\UserRoleServiceInterface' => 'App\Services\UserRoleService',
-        'App\Repositories\Interfaces\UserRoleRepositoryInterface' => 'App\Repositories\UserRoleRepository',
-
-        /* Language */
+        'App\Services\Interfaces\UserCatalogueServiceInterface' => 'App\Services\UserCatalogueService',
         'App\Services\Interfaces\LanguageServiceInterface' => 'App\Services\LanguageService',
-        'App\Repositories\Interfaces\LanguageRepositoryInterface' => 'App\Repositories\LanguageRepository',
-
-        /* post category */
         'App\Services\Interfaces\PostCatalogueServiceInterface' => 'App\Services\PostCatalogueService',
-        'App\Repositories\Interfaces\PostCatalogueRepositoryInterface' => 'App\Repositories\PostCatalogueRepository',
-
-        /* provine & ditrict*/
-        'App\Repositories\Interfaces\ProvinceRepositoryInterface' => 'App\Repositories\ProvinceRepository',
-        'App\Repositories\Interfaces\DistrictRepositoryInterface' => 'App\Repositories\DistrictRepository',
-
-        
-        
+        'App\Services\Interfaces\GenerateServiceInterface' => 'App\Services\GenerateService',
+        'App\Services\Interfaces\PermissionServiceInterface' => 'App\Services\PermissionService',
+        'App\Services\Interfaces\PostServiceInterface' => 'App\Services\PostService',
+        'App\Services\Interfaces\ProductCatalogueServiceInterface' => 'App\Services\ProductCatalogueService',
+        'App\Services\Interfaces\ProductServiceInterface' => 'App\Services\ProductService',
+        'App\Services\Interfaces\ProductCatalogueServiceInterface' => 'App\Services\ProductCatalogueService',
+        'App\Services\Interfaces\ProductServiceInterface' => 'App\Services\ProductService',
+        'App\Services\Interfaces\AttributeCatalogueServiceInterface' => 'App\Services\AttributeCatalogueService',
+        'App\Services\Interfaces\AttributeServiceInterface' => 'App\Services\AttributeService',
     ];
 
+    /**
+     * Register any application services.
+     */
     public function register(): void
     {
-       foreach ($this->bindings as $key => $val) {
-        $this-> app ->bind($key, $val);
-       }
+        foreach($this->bindings as $key => $val)
+        {
+            $this->app->bind($key, $val);
+        }
+
+        $this->app->register(RepositoryServiceProvider::class);
+
     }
 
     /**
