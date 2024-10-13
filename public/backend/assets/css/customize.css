@@ -97,10 +97,6 @@ table strong{
     display: block;
 }
 
-.form-control{
-    height:31px;
-}
-
 .ml10{
     margin-left:10px;
 }
@@ -131,4 +127,22 @@ table strong{
 .checkBoxItem{
     width: 20px;
     height: 20px;
+}
+.meta-title{
+    color: #1b3fd1;
+}
+.canonical{
+    color: #2f9119;
+}
+.meta-description{
+    font-size: 15px;
+}
+.form-select-important{
+    line-height: 1 !important;
+}
+.textarea-10{
+    min-height: 100px !important;
+}
+.image-target{
+    cursor: pointer;
 }

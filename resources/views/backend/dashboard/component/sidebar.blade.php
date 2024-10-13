@@ -14,13 +14,30 @@
                     <li class="menu-label pt-0 mt-0">
                         <span>Main Menu</span>
                     </li>
+
                     <li class="nav-item">
-                        <a class="nav-link" href="#sidebarDashboards" data-bs-toggle="collapse" role="button"
-                            aria-expanded="false" aria-controls="sidebarDashboards">
+                        <a class="nav-link" href="#sidebarPost" data-bs-toggle="collapse" role="button"
+                            aria-expanded="false" aria-controls="sidebarPost">
+                            <i class="iconoir-view-grid menu-icon"></i>
+                            <span>QL bài viết</span>
+                        </a>
+                        <div class="collapse " id="sidebarPost">
+                            <ul class="nav flex-column">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('post.catalogue.index') }}">QL nhóm bài viết</a>
+                                </li>
+                                
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#sidebarUser" data-bs-toggle="collapse" role="button"
+                            aria-expanded="false" aria-controls="sidebarUser">
                             <i class="fas fa-user menu-icon"></i>
                             <span>QL Thành Viên</span>
                         </a>
-                        <div class="collapse" id="sidebarDashboards">
+                        <div class="collapse" id="sidebarUser">
                             <ul class="nav flex-column">
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('user.index') }}">QL thành viên</a>
@@ -33,12 +50,12 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="#sidebarApplications" data-bs-toggle="collapse" role="button"
-                            aria-expanded="false" aria-controls="sidebarApplications">
+                        <a class="nav-link" href="#sidebarLanguage" data-bs-toggle="collapse" role="button"
+                            aria-expanded="false" aria-controls="sidebarLanguage">
                             <i class="iconoir-view-grid menu-icon"></i>
                             <span>Ngôn ngữ</span>
                         </a>
-                        <div class="collapse " id="sidebarApplications">
+                        <div class="collapse " id="sidebarLanguage">
                             <ul class="nav flex-column">
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('language.index') }}">QL ngôn ngữ</a>

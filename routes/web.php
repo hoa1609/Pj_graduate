@@ -5,6 +5,7 @@ use App\Http\Controllers\Backend\AuthController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Backend\UserRoleController;
+use App\Http\Controllers\Backend\PostCatalogueController;
 use App\Http\Controllers\Backend\LanguageController;
 
 use App\Http\Controllers\Ajax\LocationController;
@@ -39,6 +40,18 @@ Route::group(['prefix' => 'user/role'], function () {
     Route::post('update/{id}', [UserRoleController::class, 'update'])->name('user.role.update')->middleware('admin');
     Route::delete('destroy/{id}', [UserRoleController::class, 'destroy'])->name('user.role.destroy')->middleware('admin');
     Route::post('/user/change-status', [UserRoleController::class, 'changeStatus'])->name('user.role.changeStatus');
+});
+
+/*  POST */
+Route::group(['prefix' => 'post/catalogue'], function () {
+    Route::get('index', [PostCatalogueController::class, 'index'])->name('post.catalogue.index')->middleware('admin');
+    Route::get('create', [PostcatalogueController::class, 'create'])->name('post.catalogue.create')->middleware('admin');
+
+    Route::post('store', [PostcatalogueController::class, 'store'])->name('post.catalogue.store')->middleware('admin');
+    Route::get('edit/{id}', [PostcatalogueController::class, 'edit'])->name('post.catalogue.edit')->middleware('admin');
+    Route::post('update/{id}', [PostcatalogueController::class, 'update'])->name('post.catalogue.update')->middleware('admin');
+    Route::delete('destroy/{id}', [PostcatalogueController::class, 'destroy'])->name('post.catalogue.destroy')->middleware('admin');
+    Route::post('/user/change-status', [PostcatalogueController::class, 'changeStatus'])->name('post.catalogue.changeStatus');
 });
 
 /*  LANGUAGE */

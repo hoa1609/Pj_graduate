@@ -47,15 +47,15 @@
             <div class="action">
                 <div class="uk-flex uk-flex-middle">
                     @php
-                        $publishArry = [
-                            0 => 'Chọn tình trạng', 
-                            1 => 'Tình trạng tắt', 
-                            2 => 'Tình trạng bật'
-                        ];
+                        // $publishArry = [
+                        //     0 => 'Chọn tình trạng', 
+                        //     1 => 'Tình trạng tắt', 
+                        //     2 => 'Tình trạng bật'
+                        // ];
                         $publish = request('publish') ? : old('publish');
                     @endphp
                     <select name="publish" class="form-control form-select setupSelect2 mr5">
-                            @foreach($publishArry as $key => $val)
+                            @foreach (config('apps.general.publish') as $key => $val)
                                 <option {{ ($publish == $key)  ? 'selected' : '' }} value="{{ $key }}">{{ $val }}</option>
                             @endforeach
                     </select>
