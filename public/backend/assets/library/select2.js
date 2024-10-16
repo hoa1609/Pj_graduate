@@ -6,6 +6,11 @@
     HT.select2 = ()=>{
         $('.setUpSelect2').select2();
     }
+    
+    HT.sortui = () => {
+        $( "#sortable" ).sortable();
+		$( "#sortable" ).disableSelection();
+    }
 
     HT.changeStatus = () => { 
         $(document).on('change', '.status', function(){
@@ -140,6 +145,7 @@
         HT.checkBoxItem() ;
         HT.allChecked() ;
         HT.changeStatusAll() ;
+        HT.sortui() ;
         
     });
 

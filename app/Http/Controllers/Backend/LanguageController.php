@@ -25,9 +25,7 @@ class LanguageController extends Controller{
     }
 
     public function index(Request $request){
-
-        $perPage = $request->integer('perpage', 10);
-        $languages = $this->languageService->paginate($request, $perPage);
+        $languages = $this->languageService->paginate($request);
 
         $template = 'backend.language.index';
         return view('backend.dashboard.layout', compact(

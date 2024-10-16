@@ -42,9 +42,10 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
             }
             return $query;
         })->with('user_catalogues');
-        if(!empty($join)){
-            $query->join(...$join);
-        }
+        
+            if(!empty($join)){
+                $query->join(...$join);
+            }
 
         return $query->paginate($perPage)
                     ->withQueryString()->withPath(env('APP_URL').$extend['path']);

@@ -27,9 +27,8 @@ class UserService implements UserServiceInterface
         $users = $this->userRepository->pagination(
             $this->paginateSelect(),
             $condition, 
-            [] ,
+            $perPage,
             ['path' => 'user/index'], 
-            $perPage
         );
         // dd($users);
         

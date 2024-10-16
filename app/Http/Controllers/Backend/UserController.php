@@ -31,7 +31,7 @@ class UserController extends Controller{
     public function index(Request $request){
         $perPage = $request->integer('perPage', 10);
         $users = $this->userService->paginate($request, $perPage);
-
+        
         $template = 'backend.user.user.index';
         return view('backend.dashboard.layout', compact(
             'template',

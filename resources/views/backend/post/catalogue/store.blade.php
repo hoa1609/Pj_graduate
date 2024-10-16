@@ -7,6 +7,7 @@
         </ul>
     </div>
 @endif
+
 @php
     $url = ($config['method'] == 'create') ? route('post.catalogue.store') : route('post.catalogue.update',$postCatalogue-> id);
 @endphp
@@ -19,62 +20,59 @@
                     <div class="card-header">
                         <div class="row align-items-center">
                             <div class="col">
-                                <h4 class="card-title">Thêm nhóm bài viết</h4>
+                                <h4 class="card-title">{{ $config['seo']['title'] }}</h4>
                             </div>
                         </div>
                     </div>
-                    
                     <div class="card-body pt-0">
-                            <div class="row mb-2">
-                                <div class="col-md-12 position-relative">
-                                    <label class="form-label">Tiêu đề nhóm bài viết 
-                                        <span class="text-danger fs-10"> (*)</span>
-                                    </label>
-                                    <input 
-                                        type="text" 
-                                        name="name" 
-                                        class="form-control" 
-                                        placeholder="nhập tên bài viết..."
-                                        value="{{ old('name', ($postCatalogue-> name) ?? '' ) }}"
-                                        >
-                                </div>
+                        <div class="row mb-2">
+                            <div class="col-md-12 position-relative">
+                                <label class="form-label">Tiêu đề nhóm bài viết 
+                                    <span class="text-danger fs-10"> (*)</span>
+                                </label>
+                                <input 
+                                    type="text" 
+                                    name="name" 
+                                    class="form-control" 
+                                    placeholder="nhập tên bài viết..."
+                                    value="{{ old('name', ($postCatalogue-> name) ?? '' ) }}"
+                                    >
                             </div>
-                            <div class="row mb-2">
-                                <div class="col-md-12 position-relative">
-                                    <label class="form-label">Mô tả ngắn 
-                                        <span class="text-danger fs-10"> (*)</span>
-                                    </label>
-                                    <textarea 
-                                        name="description" 
-                                        class="form-control textarea-10 ck-editor" 
-                                        placeholder="nhập mô tả"
-                                        id="ckDescription"
-                                        data-height="150"
-                                        {{ (isset($disabled)) ? 'disabled' : '' }} 
-                                        data-height="100"
-                                        >
-                                        {{ old('description', ($postCatalogue-> description) ?? '') }}
-                                    </textarea>
-                                </div>
+                        </div>
+                        <div class="row mb-4">
+                            <div class="col-md-12 position-relative">
+                                <label class="form-label">Mô tả ngắn</label>
+                                <textarea 
+                                    name="description" 
+                                    class="form-control textarea-10 ck-editor" 
+                                    placeholder="nhập mô tả"
+                                    id="ckDescription"
+                                    data-height="150"
+                                    {{ (isset($disabled)) ? 'disabled' : '' }} 
+                                    data-height="100"
+                                    >
+                                    {{ old('description', ($postCatalogue-> description) ?? '') }}
+                                </textarea>
                             </div>
-                            <div class=" mb-2">
-                                <div class="col-md-12 position-relative">
-                                    <label class="form-label">Nội dung
-                                        <span class="text-danger fs-10"> (*)</span>
-                                    </label>
-                                    <textarea 
-                                        name="content" 
-                                        class="form-control textarea-10 ck-editor" 
-                                        rows="5" 
-                                        placeholder="nhập mô tả"
-                                        id="ckContent"
-                                        data-height="300"
-                                        >
-                                        {{ old('content', ($postCatalogue-> content) ?? '') }}
-                                    </textarea>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-12 position-relative">
+                                <div class="uk-flex uk-flex-space-between">
+                                    <label class="form-label">Nội dung</label>
+                                    <a href="" class="multipleUploadImageCkeditor" data-target="ckContent">Upload nhiều hình ảnh</a>
                                 </div>
+                                <textarea 
+                                    name="content" 
+                                    class="form-control textarea-10 ck-editor" 
+                                    rows="5" 
+                                    placeholder="nhập mô tả"
+                                    id="ckContent"
+                                    data-height="300"
+                                    >
+                                    {{ old('content', ($postCatalogue-> content) ?? '') }}
+                                </textarea>
                             </div>
-                            
+                        </div>
                     </div>
                 </div>
             </div>
@@ -88,9 +86,8 @@
                                 <div class="fs-10 mb-2"><span class="text-danger">*</span> Chọn root để tạo danh mục cha mới</div>
                                 <select name="parent_id" class="form-select form-select-important">
                                     @foreach ($dropdown as $key => $val)
-                                        <option value="{{ $key }}">{{ $val }}</option>
+                                        <option {{ ($key == old('parent_id', $postCatalogue->parent_id ?? '')) ? 'selected' : '' }} value="{{ $key }}">{{ $val }}</option>
                                     @endforeach
-
                                 </select>
                             </div>
                         </div>
@@ -103,7 +100,11 @@
                                 <label class="form-label">Chọn ảnh đại diện <span class="text-danger fs-10">(*)</span></label>
                             </div>
                             <span class="image img-cover image-target">
-                                <img src="{{ (old('image')) ?? 'backend/assets/images/no-img.jpg' }}" alt="img" width="200px">
+                                @php
+                                    $image = old('image', $postCatalogue->image ?? ''); 
+                                    $image = $image ?: 'backend/assets/images/no-img.jpg'; 
+                                @endphp
+                                <img src="{{ $image }}" alt="img" width="200px">
                             </span>
                             <input type="hidden" name="image" value="{{ old('image', ($postCatalogue-> image) ?? '') }}">
                         </div>
@@ -119,14 +120,14 @@
                                 <div class="mb-2">
                                     <select name="publish" class="form-select form-select-important">
                                         @foreach (config('apps.general.publish') as $key => $val)
-                                            <option {{ ($key == old('publish'))  ? 'selected' : '' }}  value="{{ $key }}">{{ $val }}</option>
+                                            <option {{ ($key == old('publish', $postCatalogue->publish ?? '')) ? 'selected' : '' }} value="{{ $key }}">{{ $val }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                                 <div class="">
                                     <select name="follow" class="form-select form-select-important">
                                         @foreach (config('apps.general.follow') as $key => $val)
-                                            <option {{ ($key == old('publish'))  ? 'selected' : '' }}  value="{{ $key }}">{{ $val }}</option>
+                                            <option {{ ($key == old('follow', $postCatalogue-> follow ?? ''))  ? 'selected' : '' }}  value="{{ $key }}">{{ $val }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -139,6 +140,8 @@
                 </div>
             </div>
         </div>
+        @include('backend.dashboard.component.album')
+        
         <div class="row justify-content-star">
             <div class="col-md-9 col-lg-9">
                 <div class="card">
@@ -152,11 +155,15 @@
                     <div class="card-body pt-0">
                         <div class="ibox-content mb-3">
                             <div class="seo-container">
-                                <div class="meta-title fs-5">{{ old('meta_title') ?? 'Đây là tiêu đề cho bài viết' }}</div>
+                                <div class="meta-title fs-5">
+                                    {{ (old('meta_title', ($postCatalogue-> meta_title) ?? '' )) ?? 'Đây là tiêu đề cho bài viết' }}
+                                </div>
                             </div>
-                            <div class="canonical mb-2">{{ old('canonical') ? config('app.url').old('canonical').config('apps.general.suffix') : 'http://duong-dan-cua-ban.html' }}</div>
+                            <div class="canonical mb-2">
+                                {{ ( ($postCatalogue-> canonical) ?? '') ? config('app.url').old('canonical', ($postCatalogue-> canonical) ?? '').config('apps.general.suffix') : 'http://duong-dan-cua-ban.html' }}
+                            </div>
                             <div class="meta-description">
-                                {{ old('meta_description') ?? 'Đây là mô tả bài viết.......' }}
+                                {{ (old('meta_description', ($postCatalogue-> meta_description) ?? '')) ?? 'Đây là mô tả bài viết.......' }}
                             </div>
                         </div>
                         <div class="row mb-2">
@@ -219,11 +226,8 @@
                             </div>
                         </div>
                     </div>
-                    
-                    </form>
                 </div>
             </div>
-            
         </div>
     </div>
 </form>

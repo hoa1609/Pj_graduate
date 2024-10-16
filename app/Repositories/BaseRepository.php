@@ -19,10 +19,11 @@ class BaseRepository implements BaseRepositoryInterface
     public function pagination(
         array $column = ['*'],
         array $condition = [],
-        array $join = [],
+        int $perPage = 1,
         array $extend = [],
-              $perPage = '',
-        array $relation = []
+        array $orderBy = ['id', 'DESC'],
+        array $join = [],
+        array $relations = [], 
     ){
         $query = $this->model->select($column)->where(function($query) use ($condition){
             if(isset($condition['keyword']) && !empty($condition['keyword'])) {
@@ -31,16 +32,27 @@ class BaseRepository implements BaseRepositoryInterface
             if(isset($condition['publish']) && $condition['publish'] != 0){
                 $query->where('publish', '=', $condition['publish']);
               }
+            if(isset($condition['where']) && count($condition['where'])){
+                foreach($condition['where'] as $key =>$val){
+                    $query->where($val[0], $val[1], $val[2]);
+                }
+            }
         });
 
-        if(isset($relation) && !empty($relation)){
-            foreach($relation as $relation){
+        if(isset($relations) && !empty($relations)){
+            foreach($relations as $relation){
                 $query->withCount($relation);
             }
         }
         
-        if(!empty($join)){
-            $query->join(...$join);
+        if(isset($join) && is_array($join) && count($join)){
+            foreach($join as $key => $val){
+                $query->join($val[0], $val[1], $val[2], $val[3]);
+            }
+        }
+
+        if(isset($orderBy) && !empty($orderBy)){
+            $query->orderBy($orderBy[0], $orderBy[1]);
         }
 
         return $query->paginate($perPage)

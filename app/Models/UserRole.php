@@ -20,8 +20,7 @@ class UserRole extends Model
 
     protected $table = 'user_roles';
 
-    public function users()
-    {
+    public function users(){
         return $this-> hasMany(User::class, 'user_role_id', 'id');
     }
 

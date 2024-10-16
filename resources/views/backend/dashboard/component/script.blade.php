@@ -21,18 +21,4 @@
 <script src="backend/plugins/ckeditor/ckeditor.js"></script> {{-- ck editor4 --}}
 <script src="backend/assets/library/finder.js"></script>
 <script src="backend/assets/library/seo.js"></script>
-
-
-
-{{-- <script>
-    function initializeEditor() {
-            if (CKEDITOR.instances['ckDescription']) {
-                CKEDITOR.instances['ckDescription'].destroy(true);
-            }
-            CKEDITOR.replace('ckDescription', {
-                height: '200px'
-            });
-        }
-
-        initializeEditor();
-</script> --}}
+<script src="backend/plugins/jquery-ui.js"></script>

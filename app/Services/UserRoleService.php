@@ -29,7 +29,14 @@ class UserRoleService implements UserRoleServiceInterface
         $condition['keyword'] = $request->input('keyword');
         $condition['publish'] = $request->integer('publish');
         $userRoles = $this->userRoleRepository->pagination(
-            $this->paginateSelect(), $condition, [] , ['path' => 'user/role/index'], $perPage, ['users']
+            $this->paginateSelect(),
+            $condition, 
+            $perPage, 
+            ['path' => 'user/role/index'], 
+            ['id', 'DESC'],
+            [] , 
+            ['users'],
+            
         );
         
         return $userRoles;

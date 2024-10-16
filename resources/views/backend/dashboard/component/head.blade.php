@@ -20,10 +20,10 @@
     <link href="backend/assets/libs/simple-datatables/style.css" rel="stylesheet" type="text/css" />
     <link href="backend/assets/css/select2.min.css" rel="stylesheet" type="text/css" />
 
+    <link href="backend/plugins/jquery-ui.js" rel="stylesheet" type="text/css" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     
     <script>
-    var BASE_URL = '{{ config('app.url')  }}'
-    var SUFFIX = '{{ config('apps.general.suffix')  }}'
-
-</script>
+        var BASE_URL = '{{ config('app.url')  }}'
+        var SUFFIX = '{{ config('apps.general.suffix')  }}'
+    </script>

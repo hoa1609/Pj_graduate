@@ -1,7 +1,7 @@
 <div class="card-header">
     <div class="row align-items-center">
         <div class="col">                      
-            <h4 class="card-title">Quản lý ngôn ngữ</h4>                      
+            <h4 class="card-title">Quản lý bài viết</h4>                      
         </div>
         <div class="col-auto"> 
             <form class="row g-2">
@@ -14,10 +14,10 @@
                             <div class="form-check mb-2">
                                 <ul class="list-unstyled mb-0">
                                     <li class>
-                                        <a href="#" class="changeStatusAll" data-value="2" data-field="publish" data-model="Language" >Active toàn bộ</a>
+                                        <a href="#" class="changeStatusAll" data-value="2" data-field="publish" data-model="PostCatalogue" >Active toàn bộ</a>
                                     </li>
                                     <li class="mt-2">
-                                        <a href="#" class="changeStatusAll" data-value="1" data-field="publish" data-model="Language" >Unactive toàn bộ</a>
+                                        <a href="#" class="changeStatusAll" data-value="1" data-field="publish" data-model="PostCatalogue" >Unactive toàn bộ</a>
                                     </li>
                                 </ul>
                             </div>

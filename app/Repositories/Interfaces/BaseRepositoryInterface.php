@@ -7,13 +7,15 @@ interface BaseRepositoryInterface
     public function all();
     public function findById(int $id);
     public function update(int $id = 0 , array $payload = []);
+
     public function pagination(
         array $column = ['*'],
         array $condition = [],
-        array $join = [],
+        int $perPage = 1,
         array $extend = [],
-              $perPage = '',
-        array $relation = []
+        array $orderBy = [],
+        array $join = [],
+        array $relations = [], 
     );
 
     public function updateByWhereIn(

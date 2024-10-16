@@ -41,4 +41,21 @@ class PostCatalogue extends Model
         )->withTimestamps();
     }
 
+    public function post_catalogue_language(){
+        return $this->hasMany(PostCatalogueLanguage::class, 'post_catalogue_id', 'id')->where('language_id','=',1);
+    }
+
+    public static function isNodeCheck($id = 0){
+        $postCatalogue = PostCatalogue::find($id);
+
+        if($postCatalogue->rgt - $postCatalogue->lft !== 1){
+            return false;
+        } 
+        return true;
+        
+    }
+    
+
+
+
 }
