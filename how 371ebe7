@@ -1,0 +1,34 @@
+[33me29d608[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32msyupload[m[33m, [m[1;31morigin/syupload[m[33m)[m HEAD@{0}: checkout: moving from master to syupload
+[33m34ca9f0[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{1}: checkout: moving from syupload to master
+[33me29d608[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32msyupload[m[33m, [m[1;31morigin/syupload[m[33m)[m HEAD@{2}: reset: moving to HEAD
+[33me29d608[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32msyupload[m[33m, [m[1;31morigin/syupload[m[33m)[m HEAD@{3}: checkout: moving from master to syupload
+[33m34ca9f0[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{4}: checkout: moving from syupload to master
+[33me29d608[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32msyupload[m[33m, [m[1;31morigin/syupload[m[33m)[m HEAD@{5}: checkout: moving from master to syupload
+[33m34ca9f0[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{6}: checkout: moving from testpostcategory to master
+[33m371ebe7[m[33m ([m[1;32mtestpostcategory[m[33m)[m HEAD@{7}: commit: Save current changes
+[33m8597082[m[33m ([m[1;31morigin/testpostcategory[m[33m)[m HEAD@{8}: reset: moving to HEAD
+[33m8597082[m[33m ([m[1;31morigin/testpostcategory[m[33m)[m HEAD@{9}: commit: postcatagory
+[33m34ca9f0[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{10}: checkout: moving from master to testpostcategory
+[33m34ca9f0[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{11}: commit: đưa lên trước truy vấn
+[33mdeb530d[m HEAD@{12}: commit: đưa lên trước truy vấn
+[33m9a59799[m HEAD@{13}: commit: post
+[33m7120664[m HEAD@{14}: commit: upload image & language
+[33mbf3dced[m HEAD@{15}: commit: done user
+[33m234edb0[m HEAD@{16}: commit: update status
+[33mc4ade12[m HEAD@{17}: commit: update status
+[33mb1c4293[m HEAD@{18}: commit: update user
+[33m5f1ce0d[m HEAD@{19}: commit: test login
+[33m21d6e19[m HEAD@{20}: commit: basic - hòa
+[33mc00d22f[m HEAD@{21}: checkout: moving from master to master
+[33mc00d22f[m HEAD@{22}: commit: login
+[33mcfaebc2[m[33m ([m[1;31morigin/new-branch-name[m[33m, [m[1;31morigin/new-bran[m[33m)[m HEAD@{23}: checkout: moving from test001 to master
+[33mf4e2797[m[33m ([m[1;31morigin/test001[m[33m)[m HEAD@{24}: checkout: moving from test001 to test001
+[33mf4e2797[m[33m ([m[1;31morigin/test001[m[33m)[m HEAD@{25}: checkout: moving from test001 to test001
+[33mf4e2797[m[33m ([m[1;31morigin/test001[m[33m)[m HEAD@{26}: commit: login
+[33mcfaebc2[m[33m ([m[1;31morigin/new-branch-name[m[33m, [m[1;31morigin/new-bran[m[33m)[m HEAD@{27}: checkout: moving from new-bran to test001
+[33mcfaebc2[m[33m ([m[1;31morigin/new-branch-name[m[33m, [m[1;31morigin/new-bran[m[33m)[m HEAD@{28}: checkout: moving from test01 to new-bran
+[33mcfaebc2[m[33m ([m[1;31morigin/new-branch-name[m[33m, [m[1;31morigin/new-bran[m[33m)[m HEAD@{29}: checkout: moving from new-branch-name to test01
+[33mcfaebc2[m[33m ([m[1;31morigin/new-branch-name[m[33m, [m[1;31morigin/new-bran[m[33m)[m HEAD@{30}: checkout: moving from master to new-branch-name
+[33mcfaebc2[m[33m ([m[1;31morigin/new-branch-name[m[33m, [m[1;31morigin/new-bran[m[33m)[m HEAD@{31}: commit: oke ko nè
+[33m2a58a45[m HEAD@{32}: commit: first commit
+[33m7da8925[m HEAD@{33}: commit (initial): tes
