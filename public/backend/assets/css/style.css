@@ -1,0 +1,154 @@
+.custom-breadcrumb {
+   margin-top: 5px;
+   margin-left: 3px;
+}
+
+.custom-breadcrumb .breadcrumb-item {
+    font-weight: 500;
+    color: #007bff;
+    position: relative;
+}
+
+.custom-breadcrumb .breadcrumb-item a {
+    text-decoration: none;
+    color: #007bff;
+}
+
+.custom-breadcrumb .breadcrumb-item a:hover {
+    text-decoration: underline;
+}
+
+.custom-breadcrumb .breadcrumb-item.active {
+    color: #6c757d;
+}
+
+.custom-breadcrumb .breadcrumb-item strong {
+    font-weight: 700;
+}
+
+.custom-breadcrumb .breadcrumb-item + .breadcrumb-item::before {
+    content: "/";
+    color: #6c757d;
+    font-weight: normal;
+}
+
+
+.custom-breadcrumb .breadcrumb-item:first-child::before {
+    content: "";
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    --bs-form-select-bg-img: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23555b7e' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+    display: block;
+    width: 100%;
+    padding: .190rem 2.85rem .100rem .95rem;
+    font-size: .812rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--bs-body-color);
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: var(--bs-card-bg);
+    background-image: var(--bs-form-select-bg-img),var(--bs-form-select-bg-icon,none);
+    background-repeat: no-repeat;
+    background-position: right .95rem center;
+    background-size: 16px 12px;
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    border-radius: var(--bs-border-radius);
+    -webkit-transition: border-color .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;
+    transition: border-color .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out,-webkit-box-shadow .15s ease-in-out
+}
+
+.select2-container--default .select2-selection--single {
+    border: 0px solid #ffff !important
+}
+.select2-selection__arrow {
+    display: none;
+}
+
+.select2-container--default .select2-results__option--highlighted.select2-results__option--selectable {
+    background-color: #22C55E !important;
+}
+
+.active_bg {
+    background: #ffc !important;
+}
+
+
+.ibox-tools a {
+    color: #333;
+    transition: color 0.3s;
+}
+
+.ibox-tools a:hover {
+    color: #22C55E;
+}
+
+.ibox-tools .dropdown-user li a:hover {
+    background-color: #f8f9fa;
+    color: #007bff;
+}
+
+.ibox-tools .close-link {
+    color: #333;
+}
+
+.ibox-tools .close-link:hover {
+    color: #f90019;
+}
+
+.custom-img {
+    width: 60px;
+    height: auto;
+}
+
+.thumb-lg {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.dashed-line {
+    border: none;
+    border-top: 1px dashed #000;
+
+}
+.form-select {
+   cursor: pointer;
+}
+
+.unit-text {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.9em;
+    color: #22C55E;
+    pointer-events: none; /* Để người dùng không thể tương tác với chữ "ms" */
+}
+
+.slide-item {
+    width: 100%;
+}
+
+.ui-state-default {
+    border: none !important;
+    background-color: #fff !important;
+}
+
+.deleteSlide {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    border-radius: 10px;
+}
+
+.img-slide {
+    width: 270px;
+    height: 200px;
+    object-fit: contain;
+}
