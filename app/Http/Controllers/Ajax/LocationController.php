@@ -44,6 +44,5 @@ class LocationController extends Controller {
         }
         return $html;
     }
-    echo 123;die();
 
 }
