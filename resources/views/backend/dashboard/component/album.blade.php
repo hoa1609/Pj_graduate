@@ -18,7 +18,7 @@
                             </a>
                         </div>
                         <div class="text-note">
-                            Chọn hình để thêm hình ảnh <br>
+                            Chọn hình để thêm hình ảnh 
                         </div>
                     </div>
                 </div>
