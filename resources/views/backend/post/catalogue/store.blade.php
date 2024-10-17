@@ -82,7 +82,7 @@
                     <div class="card-body pt-10">
                         <div class="row">
                             <div class="col-md-12 position-relative">
-                                <label class="form-label">Chọn danh mục cha <span class="text-danger fs-10">(*)</span></label>
+                                <label class="card-title fs-16">Chọn danh mục cha </label>
                                 <div class="fs-10 mb-2"><span class="text-danger">*</span> Chọn root để tạo danh mục cha mới</div>
                                 <select name="parent_id" class="form-select form-select-important">
                                     @foreach ($dropdown as $key => $val)

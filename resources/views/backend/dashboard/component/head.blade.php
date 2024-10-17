@@ -10,8 +10,7 @@
         <link rel="shortcut icon" href="backend/assets/images/favicon32.png">
     
 
-    <link rel="stylesheet" href="backend/assets/libs/jsvectormap/css/jsvectormap.min.css">
-
+    <link href="backend/assets/libs/jsvectormap/css/jsvectormap.min.css" rel="stylesheet" >
     <link href="backend/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="backend/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
     <link href="backend/assets/css/app.min.css" rel="stylesheet" type="text/css" />
@@ -21,6 +20,7 @@
     <link href="backend/assets/css/select2.min.css" rel="stylesheet" type="text/css" />
 
     <link href="backend/plugins/jquery-ui.js" rel="stylesheet" type="text/css" />
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     
     <script>
