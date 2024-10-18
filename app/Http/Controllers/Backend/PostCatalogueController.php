@@ -33,12 +33,14 @@ class PostCatalogueController extends Controller{
     }
 
     public function index(Request $request){
+        $config['seo'] = config('apps.postcatalogue.index');
 
         $perPage = $request->integer('perpage');
         $postCatalogues = $this->postCatalogueService->paginate($request);
         $template = 'backend.post.catalogue.index';
         
         return view('backend.dashboard.layout', compact(
+            'config',
             'template',
             'postCatalogues',
         ));
@@ -47,9 +49,8 @@ class PostCatalogueController extends Controller{
 
     public function create(){
         $config['method'] = 'create';
+        $config['seo'] = config('apps.postcatalogue.create');
         $dropdown = $this->nestedset->Dropdown();
-        $config['seo'] = config('apps.post.create');
-
 
         $template = 'backend.post.catalogue.store';
         return view('backend.dashboard.layout', compact(
@@ -72,7 +73,7 @@ class PostCatalogueController extends Controller{
         $postCatalogue = $this->postCatalogueRepository->getPostCatalogueById($id, $this->language);
        
         $config['method'] = 'edit';
-        $config['seo'] = config('apps.post.edit');
+        $config['seo'] = config('apps.postcatalogue.edit');
         $album = json_decode($postCatalogue->album);
         $dropdown = $this->nestedset->Dropdown();
 
@@ -94,15 +95,6 @@ class PostCatalogueController extends Controller{
         }
         return redirect()->route('post.catalogue.index')->with('error', 'Cập nhập nhóm thành viên thất bại !');
     }
-
-
-
-
-
-
-
-
-
 
     
     public function destroy(DeletePostCatalogueRequest $request, $id){

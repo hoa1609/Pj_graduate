@@ -26,7 +26,9 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('post.catalogue.index') }}">QL nhóm bài viết</a>
                                 </li>
-                                
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('post.index') }}">QL bài viết</a>
+                                </li>
                             </ul>
                         </div>
                     </li>

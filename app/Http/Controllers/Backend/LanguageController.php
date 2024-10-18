@@ -27,8 +27,10 @@ class LanguageController extends Controller{
     public function index(Request $request){
         $languages = $this->languageService->paginate($request);
 
+        $config['seo'] = config('apps.language.index');
         $template = 'backend.language.index';
         return view('backend.dashboard.layout', compact(
+            'config',
             'template',
             'languages',
         ));
@@ -37,7 +39,7 @@ class LanguageController extends Controller{
 
     public function create(){
         $config['method'] = 'create';
-
+        $config['seo'] = config('apps.language.create');
         $template = 'backend.language.store';
         return view('backend.dashboard.layout', compact(
             'config',
@@ -57,6 +59,7 @@ class LanguageController extends Controller{
     public function edit($id){
         $language = $this->languageRepository->findById($id);
 
+        $config['seo'] = config('apps.language.edit');
         $config['method'] = 'edit';
         $template = 'backend.language.store';
         return view('backend.dashboard.layout', compact(

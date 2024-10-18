@@ -22,7 +22,7 @@
                         <th style="width: 16px;">
                             <input type="checkbox" class="form-check-input checkBoxItem" value="{{ $user-> id }}">                                                    
                         </th>
-                        <td><img src="backend/assets/images/logos/lang-logo/chatgpt.png" alt="" class="rounded-circle thumb-md me-1 d-inline">
+                        <td><img src="{{ ($user-> image) ?? '/userfiles/image/user/user-hiden.png' }}" alt="" class="rounded-circle thumb-md me-1 d-inline">
                         <td> {{ $user-> name }}</td>
                         <td> {{ $user-> phone }}</td>
 

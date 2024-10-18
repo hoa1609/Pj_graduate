@@ -32,8 +32,10 @@ class UserController extends Controller{
         $perPage = $request->integer('perPage', 10);
         $users = $this->userService->paginate($request, $perPage);
         
+        $config['seo'] = config('apps.user.index');
         $template = 'backend.user.user.index';
         return view('backend.dashboard.layout', compact(
+            'config',
             'template',
             'users',
         ));
@@ -43,6 +45,7 @@ class UserController extends Controller{
     public function create(){
         $provinces = $this->provinceRepository->all();
         $config['method'] = 'create';
+        $config['seo'] = config('apps.user.create');
 
         $template = 'backend.user.user.store';
         return view('backend.dashboard.layout', compact(
@@ -64,8 +67,9 @@ class UserController extends Controller{
     public function edit($id){
         $user = $this->userRepository->findById($id);
         $provinces = $this->provinceRepository->all();
-
         $config['method'] = 'edit';
+        $config['seo'] = config('apps.user.edit');
+
         $template = 'backend.user.user.store';
         return view('backend.dashboard.layout', compact(
             'config',

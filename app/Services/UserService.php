@@ -30,8 +30,6 @@ class UserService implements UserServiceInterface
             $perPage,
             ['path' => 'user/index'], 
         );
-        // dd($users);
-        
         return $users;
     }
 
@@ -128,6 +126,7 @@ class UserService implements UserServiceInterface
             'id',
             'name',
             'email',
+            'image',
             'phone',
             'address',
             'publish',

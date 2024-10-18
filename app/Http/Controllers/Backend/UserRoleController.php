@@ -29,8 +29,10 @@ class UserRoleController extends Controller{
         $perPage = $request->integer('perpage', 10);
         $userRoles = $this->userRoleService->paginate($request, $perPage);
 
+        $config['seo'] = config('apps.userRole.index');
         $template = 'backend.user.role_user.index';
         return view('backend.dashboard.layout', compact(
+            'config',
             'template',
             'userRoles',
         ));
@@ -39,6 +41,7 @@ class UserRoleController extends Controller{
 
     public function create(){
         $config['method'] = 'create';
+        $config['seo'] = config('apps.userRole.create');
 
         $template = 'backend.user.role_user.store';
         return view('backend.dashboard.layout', compact(
@@ -60,6 +63,7 @@ class UserRoleController extends Controller{
         $userRoles = $this->userRoleRepository->findById($id);
 
         $config['method'] = 'edit';
+        $config['seo'] = config('apps.userRole.edit');
         $template = 'backend.user.role_user.store';
         return view('backend.dashboard.layout', compact(
             'config',

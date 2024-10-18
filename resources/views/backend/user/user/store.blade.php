@@ -5,7 +5,7 @@
                 <div class="card-header">
                     <div class="row align-items-center">
                         <div class="col">                      
-                            <h4 class="card-title">Thông tin cá nhân</h4>                      
+                            <h4 class="card-title">{{ $config['seo']['title'] }}</h4>                      
                         </div>
                     </div>                                    
                 </div>
@@ -67,6 +67,18 @@
                                         type="date" 
                                         value="{{ old('birthday', (isset($user-> birthday)) ? date('Y-m-d', strtotime($user-> birthday)) : '') }}"
                                         >
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="example-text-input" class="col-sm-2 col-form-label text-end">Ảnh</label>
+                                    <div class="col-sm-10">
+                                        <input class="form-control upload-image" 
+                                        name="image" 
+                                        type="text"
+                                         placeholder="nhập ..."
+                                         value="{{ old('image', ($user-> image) ?? '' ) }}"
+                                         data-type="Images"
+                                         >
                                     </div>
                                 </div>
 

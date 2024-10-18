@@ -14,10 +14,10 @@
                             <div class="form-check mb-2">
                                 <ul class="list-unstyled mb-0">
                                     <li class>
-                                        <a href="#" class="changeStatusAll" data-value="2" data-field="publish" data-model="PostCatalogue" >Active toàn bộ</a>
+                                        <a href="#" class="changeStatusAll" data-value="2" data-field="publish" data-model="{{ $config['model'] }}" >Active toàn bộ</a>
                                     </li>
                                     <li class="mt-2">
-                                        <a href="#" class="changeStatusAll" data-value="1" data-field="publish" data-model="PostCatalogue" >Unactive toàn bộ</a>
+                                        <a href="#" class="changeStatusAll" data-value="1" data-field="publish" data-model="{{ $config['model'] }}" >Unactive toàn bộ</a>
                                     </li>
                                 </ul>
                             </div>
@@ -29,7 +29,7 @@
     </div>                                     
 </div>
 
-<form action="{{ route('post.catalogue.index') }}">
+<form action="{{ route('post.index') }}">
     <div class="filter-wrapper">
         <div class="uk-flex uk-flex-middle uk-flex-space-between">
             <div class="perpage">
@@ -49,12 +49,12 @@
                     @php
                         $publish = request('publish') ? : old('publish');
                     @endphp
-
                     <select name="publish" class="form-control form-select setupSelect2 mr5">
                         @foreach (config('apps.general.publish') as $key => $val)
-                            <option {{ ($publish == $key)  ? 'selected' : '' }} value="{{ $key }}">{{ $val }}</option>
-                        @endforeach
+                                <option {{ ($publish == $key)  ? 'selected' : '' }} value="{{ $key }}">{{ $val }}</option>
+                            @endforeach
                     </select>
+                   
                     <div class="uk-search uk-flex uk-flex-middle mr5">
                         <div class="input-group">
                             <input 
@@ -69,7 +69,7 @@
                            </span>
                         </div>
                     </div>
-                    <a href="{{ route('post.catalogue.create') }}" class="btn btn-lg btn-danger d-inline-flex px-2 align-items-center"><i class="fas fa-user-friends fs-10"></i>Thêm bài viết</a>
+                    <a href="{{ route('post.create') }}" class="btn btn-lg btn-danger d-inline-flex px-2 align-items-center"><i class="fas fa-user-friends fs-10"></i>Thêm bài viết</a>
                 </div>
             </div>
         </div>

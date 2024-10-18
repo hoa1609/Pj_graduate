@@ -1,6 +1,10 @@
 <div class="row justify-content-star">
     <div class="col-md-9 col-lg-9">
         <div class="card">
+            @php
+                // $album = (!empty($model->album)) ? json_decode($model->album) : [];
+                $gallery = (isset($album) && count($album) ) ? $album : old('album');
+            @endphp
             <div class="card-header">
                 <div class="row align-items-center">
                     <div class="col uk-flex uk-flex-space-between">
@@ -28,10 +32,10 @@
                 </div>
             </div>
             
-            @if (isset($album) && count($album))
-                <div class="upload-list">
-                    <ul id="sortable" class="clearfix data-album sortui ui-sortable">
-                        @foreach ($album as $key => $val)
+            <div class="upload-list {{ (isset($gallery) && count($gallery)) ? '' : 'hidden' }}">
+                <ul id="sortable" class="clearfix data-album sortui ui-sortable">
+                    @if(isset($gallery) && count($gallery))
+                        @foreach($gallery as $key => $val)
                             <li class="ui-state-default">
                                 <div class="thumb">
                                     <span class="span image img-scaledown">
@@ -42,9 +46,9 @@
                                 </div>
                             </li>
                         @endforeach
-                    </ul>
-                </div>
-            @endif
+                    @endif
+                </ul>
+            </div>
         </div>
     </div>
 </div>

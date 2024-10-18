@@ -1,7 +1,7 @@
 <div class="card-header">
     <div class="row align-items-center">
         <div class="col">                      
-            <h4 class="card-title">Quản lý thành viên</h4>                      
+            <h4 class="card-title">{{ $config['seo']['title'] }}</h4>                      
         </div>
         <div class="col-auto"> 
             <form class="row g-2">
@@ -47,19 +47,14 @@
             <div class="action">
                 <div class="uk-flex uk-flex-middle">
                     @php
-                         $publishArry = [
-                            0 => 'Chọn tình trạng', 
-                            1 => 'Tình trạng tắt', 
-                            2 => 'Tình trạng bật'
-                        ];
                         $publish = request('publish') ? : old('publish');
                     @endphp
+
                     <select name="publish" class="form-control form-select setupSelect2 mr5">
-                            @foreach($publishArry as $key => $val)
-                                <option {{ ($publish == $key)  ? 'selected' : '' }} value="{{ $key }}">{{ $val }}</option>
-                            @endforeach
+                        @foreach (config('apps.general.publish') as $key => $val)
+                            <option {{ ($publish == $key)  ? 'selected' : '' }} value="{{ $key }}">{{ $val }}</option>
+                        @endforeach
                     </select>
-                   
                     <div class="uk-search uk-flex uk-flex-middle mr5">
                         <div class="input-group">
                             <input 

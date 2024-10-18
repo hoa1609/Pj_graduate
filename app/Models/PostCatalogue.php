@@ -41,10 +41,17 @@ class PostCatalogue extends Model
         )->withTimestamps();
     }
 
+
+    public function posts(){
+        return $this->belongsToMany(Post::class, 'post_language_post', 'post_catalogue_id', 'post_id');
+    }
+
+
     public function post_catalogue_language(){
         return $this->hasMany(PostCatalogueLanguage::class, 'post_catalogue_id', 'id')->where('language_id','=',1);
     }
 
+     
     public static function isNodeCheck($id = 0){
         $postCatalogue = PostCatalogue::find($id);
 
@@ -52,10 +59,5 @@ class PostCatalogue extends Model
             return false;
         } 
         return true;
-        
     }
-    
-
-
-
 }

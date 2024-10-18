@@ -5,7 +5,7 @@
                 <div class="card-header">
                     <div class="row align-items-center">
                         <div class="col">                      
-                            <h4 class="card-title">Thêm nhóm ngôn ngữ</h4>                      
+                            <h4 class="card-title">{{ $config['seo']['title'] }}</h4>                      
                         </div>
                     </div>                                    
                 </div>
