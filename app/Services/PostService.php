@@ -59,26 +59,11 @@ class PostService extends BaseService implements PostServiceInterface
     public function create($request){
         DB::beginTransaction();
         try{
-            $payload = $request->only($this->payload());
-            $payload['user_id'] = Auth::id();
-            
-            if (isset($payload['album']) && is_array($payload['album'])) {
-                $payload['album'] = json_encode($payload['album']);
-            } else {
-                $payload['album'] = json_encode([]);
-            }
-            
-            $post = $this->postRepository->create($payload);
+            $post = $this->createPost($request);
             if($post->id > 0){
-                $payloadLanguage = $request->only($this->payloadLanguage());
-                $payloadLanguage['canonical'] =Str::slug($payloadLanguage['canonical']);
-                $payloadLanguage['language_id'] = $this->language;
-                $payloadLanguage['post_id'] = $post->id;
-                $language = $this->postRepository->createPivot($post, $payloadLanguage, 'languages');
-                $catalogue = $this->catalogue($request);
-                $post->post_catalogues()->sync($catalogue);
+                $this->updateLanguageForPost($post, $request);
+                $this->updateCatalogueForPost($post, $request);
             }
-
             DB::commit();
             return true;
         }catch(\Exception $e ){
@@ -89,6 +74,44 @@ class PostService extends BaseService implements PostServiceInterface
         }
     }
 
+    private function createPost($request){
+        $payload = $request->only($this->payload());
+        $payload['user_id'] = Auth::id();
+        $payload['album'] = $this->formatAlbum($payload['album']);
+        $post = $this->postRepository->create($payload);
+        return $post;
+
+    }
+
+    private function uploadPost($post, $request){
+        $payload = $request->only($this->payload());
+        $payload['album'] = $this->formatAlbum($payload['album']);
+        return $this->postRepository->update($post->id, $payload);
+    }
+
+    private function updateLanguageForPost($post, $request){
+        $payload = $request->only($this->payloadLanguage());
+        $payload = $this->formatLanguagePayload($payload, $post->id);
+        $post->languages()->detach([$this->language, $post->id]);
+        return $this->postRepository->createPivot($post, $payload,'languages');
+    }
+    private function updateCatalogueForPost($post, $request){
+        $post->post_catalogues()->sync($this->catalogue($request));
+    }
+
+    private function formatLanguagePayload($payload, $postId){
+        $payload['canonical'] =Str::slug($payload['canonical']);
+        $payload['language_id'] = $this->language;
+        $payload['post_id'] = $postId;
+        return $payload;
+    }
+
+    private function formatAlbum($payload){
+        return (isset($payload['album']) && !empty($payload['album'])) ? json_encode($payload['album']) : '';
+    }
+
+   
+
     private function catalogue($request){
        return array_unique(array_merge($request->input('catalogue'), [$request->post_catalogue_id]));
     }
@@ -97,25 +120,10 @@ class PostService extends BaseService implements PostServiceInterface
         DB::beginTransaction();
         try{
             $post = $this->postRepository->findById($id);
-            $payload = $request->only($this->payload());
-            if (isset($payload['album']) && is_array($payload['album'])) {
-                $payload['album'] = json_encode($payload['album']);
-            } else {
-                $payload['album'] = json_encode([]);
+            if( $this->uploadPost($post, $request)){
+                $this->updateLanguageForPost($post, $request);
+                $this->updateCatalogueForPost($post, $request);
             }
-            $flag = $this->postRepository->update($id, $payload);
-
-            if($flag == TRUE){
-                $payloadLanguage = $request->only($this->payloadLanguage());
-                $payloadLanguage['canonical'] =Str::slug($payloadLanguage['canonical']);
-                $payloadLanguage['language_id'] = $this->language;
-                $payloadLanguage['post_id'] = $post->id;
-                $post->languages()->detach([$payloadLanguage['language_id'], $id]);
-                $response = $this->postRepository->createPivot($post, $payloadLanguage, 'languages');
-                $catalogue = $this->catalogue($request);
-                $post->post_catalogues()->sync($catalogue);
-            }
-
             DB::commit();
             return true;
         }catch(\Exception $e ){
@@ -174,28 +182,6 @@ class PostService extends BaseService implements PostServiceInterface
         }
     }
 
-    public function switch($id){
-        DB::beginTransaction();
-        try{
-            $postCatalogues = $this->postRepository->update($id, ['current' => 1]);
-            $payload = ['current' => 0];
-            $where = [
-                ['id', '!=', $id],
-            ];
-            $this->postRepository->updateByWhere($where, $payload);
-
-            DB::commit();
-            return true;
-        }catch(\Exception $e ){
-            DB::rollBack();
-            // Log::error($e->getMessage());
-            echo $e->getMessage();die();
-            return false;
-        }
-      
-    }
-
-  
     private function paginateSelect(){
         return [
             'posts.id', 
@@ -216,6 +202,7 @@ class PostService extends BaseService implements PostServiceInterface
             'album',
         ];
     }
+
     private function payloadLanguage(){
         return [
             'name',
@@ -227,7 +214,4 @@ class PostService extends BaseService implements PostServiceInterface
             'canonical'
         ];
     }
-
-
-
 }

@@ -177,28 +177,6 @@ class PostCatalogueService extends BaseService implements PostCatalogueServiceIn
             return false;
         }
     }
-
-    public function switch($id){
-        DB::beginTransaction();
-        try{
-            $postCatalogues = $this->postCatalogueRepository->update($id, ['current' => 1]);
-            $payload = ['current' => 0];
-            $where = [
-                ['id', '!=', $id],
-            ];
-            $this->postCatalogueRepository->updateByWhere($where, $payload);
-
-            DB::commit();
-            return true;
-        }catch(\Exception $e ){
-            DB::rollBack();
-            // Log::error($e->getMessage());
-            echo $e->getMessage();die();
-            return false;
-        }
-      
-    }
-
   
     private function paginateSelect(){
         return [
