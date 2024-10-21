@@ -48,9 +48,15 @@
                 <div class="uk-flex uk-flex-middle">
                     @php
                         $publish = request('publish') ? : old('publish');
+                        $post_catalogueId = request('post_catalogue_id') ? : old('post_catalogue_id');
                     @endphp
                     <select name="publish" class="form-control form-select setupSelect2 mr5">
                         @foreach (config('apps.general.publish') as $key => $val)
+                                <option {{ ($publish == $key)  ? 'selected' : '' }} value="{{ $key }}">{{ $val }}</option>
+                            @endforeach
+                    </select>
+                    <select name="post_catalogue_id" class="form-control form-select setupSelect2 mr5">
+                        @foreach ($dropdown as $key => $val)
                                 <option {{ ($publish == $key)  ? 'selected' : '' }} value="{{ $key }}">{{ $val }}</option>
                             @endforeach
                     </select>

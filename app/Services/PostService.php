@@ -40,19 +40,39 @@ class PostService extends BaseService implements PostServiceInterface
             ]
         ];
         $perPage = $request->integer('perpage', 10);
-
         $posts = $this->postRepository->pagination(
             $this->paginateSelect(), 
             $condition, 
             $perPage,
-            ['path' => 'post/catalogue/index'], 
+            ['path' => 'post.index', 'groupBy' =>$this->paginateSelect()], 
             ['posts.id','DESC'],
             [
-                ['post_language as tb2', 'tb2.post_id', '=', 'posts.id']
+                ['post_language as tb2', 'tb2.post_id', '=', 'posts.id'],
+                ['post_catalogue_post as tb3', 'posts.id', '=', 'tb3.post_id'],
             ] , 
-            ['post_catalogues']
+            ['post_catalogues'],
+            $this->whereRaw($request),
         );
         return $posts;
+    }
+
+    private function whereRaw($request){
+        $rawCondition = [];
+        if($request->integer('post_catalogue_id') > 0){
+            $rawCondition['whereRaw'] =  [
+                [
+                    'tb3.post_catalogue_id IN (
+                        SELECT id
+                        FROM post_catalogues
+                        WHERE lft >= (SELECT lft FROM post_catalogues as pc WHERE pc.id = ?)
+                        AND rgt <= (SELECT rgt FROM post_catalogues as pc WHERE pc.id = ?)
+                    )',
+                    [$request->integer('post_catalogue_id'), $request->integer('post_catalogue_id')]
+                ]
+            ];
+            
+        }
+        return $rawCondition;
     }
 
 
@@ -77,7 +97,7 @@ class PostService extends BaseService implements PostServiceInterface
     private function createPost($request){
         $payload = $request->only($this->payload());
         $payload['user_id'] = Auth::id();
-        $payload['album'] = $this->formatAlbum($payload['album']);
+        $payload['album'] = $this->formatAlbum($request);
         $post = $this->postRepository->create($payload);
         return $post;
 
@@ -85,7 +105,7 @@ class PostService extends BaseService implements PostServiceInterface
 
     private function uploadPost($post, $request){
         $payload = $request->only($this->payload());
-        $payload['album'] = $this->formatAlbum($payload['album']);
+        $payload['album'] = $this->formatAlbum($request);
         return $this->postRepository->update($post->id, $payload);
     }
 
@@ -106,14 +126,17 @@ class PostService extends BaseService implements PostServiceInterface
         return $payload;
     }
 
-    private function formatAlbum($payload){
-        return (isset($payload['album']) && !empty($payload['album'])) ? json_encode($payload['album']) : '';
+    private function formatAlbum($request){
+        return  ($request->input('album') && !empty($request->input('album'))) ? json_encode($request->input('album')) : '';
     }
 
    
 
     private function catalogue($request){
-       return array_unique(array_merge($request->input('catalogue'), [$request->post_catalogue_id]));
+        if($request->input('catalogue') != null){
+            return array_unique(array_merge($request->input('catalogue'), [$request->post_catalogue_id]));
+        }
+        return [$request->post_catalogue_id];
     }
 
     public function update($id, $request){
@@ -137,9 +160,6 @@ class PostService extends BaseService implements PostServiceInterface
         DB::beginTransaction();
         try{
             $postCatalogue = $this->postRepository->delete($id);
-            $this->nestedset->Get('level ASC, order ASC');
-            $this->nestedset->Recursive(0, $this->nestedset->Set());
-            $this->nestedset->Action();
 
             DB::commit();
             return true;

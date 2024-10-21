@@ -8,7 +8,6 @@ use App\Repositories\Interfaces\PostRepositoryInterface as PostRepository;
 
 use App\Http\Requests\PostRequest;
 use App\Http\Requests\UpdatePostRequest;
-use App\Http\Requests\DeletePostRequest;
 use Illuminate\Http\Request;
 use App\Classes\Nestedsetbie;
 
@@ -39,12 +38,14 @@ class PostController extends Controller{
 
         $perPage = $request->integer('perpage');
         $posts = $this->postService->paginate($request);
+        $dropdown = $this->nestedset->Dropdown();
         $template = 'backend.post.post.index';
         $config['seo'] = config('apps.post.index');
         
         return view('backend.dashboard.layout', compact(
             'config',
             'template',
+            'dropdown',
             'posts',
         ));
     }
@@ -99,7 +100,7 @@ class PostController extends Controller{
         return redirect()->route('post.index')->with('error', 'Cập nhập nhóm thành viên thất bại !');
     }
     
-    public function destroy(Request $request, $id){
+    public function destroy($id){
         
         if ($this->postService->destroy($id)) {
             return redirect()->route('post.index')->with('success', 'Xóa nhóm thành viên thành công!');
