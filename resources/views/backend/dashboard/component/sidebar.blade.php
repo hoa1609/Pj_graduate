@@ -15,58 +15,34 @@
                         <span>Main Menu</span>
                     </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="#sidebarPost" data-bs-toggle="collapse" role="button"
-                            aria-expanded="false" aria-controls="sidebarPost">
-                            <i class="iconoir-view-grid menu-icon"></i>
-                            <span>QL bài viết</span>
-                        </a>
-                        <div class="collapse " id="sidebarPost">
-                            <ul class="nav flex-column">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('post.catalogue.index') }}">QL nhóm bài viết</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('post.index') }}">QL bài viết</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
+                    
+                    @php
+                        $segment = request()->segment(1);
+                    @endphp
+                    <ul class="nav flex-column">
+                        @foreach (__('sidebar.module') as $module)
+                            <li class="nav-item">
+                                <a class="nav-link" href="#sidebar{{ $module['dropdown'] }}" data-bs-toggle="collapse" role="button"
+                                    aria-expanded="false" aria-controls="sidebar{{ $module['dropdown'] }}">
+                                    <i class="{{ $module['icon'] }} menu-icon"></i>
+                                    <span>{{ $module['title'] }}</span>
+                                </a>
+                    
+                                <div class="collapse" id="sidebar{{ $module['dropdown'] }}">
+                                    <ul class="nav flex-column">
+                                        @foreach ($module['subModule'] as $sub)
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="{{ url($sub['route']) }}">
+                                                    {{ $sub['title'] }}
+                                                </a>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            </li>
+                        @endforeach
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="#sidebarUser" data-bs-toggle="collapse" role="button"
-                            aria-expanded="false" aria-controls="sidebarUser">
-                            <i class="fas fa-user menu-icon"></i>
-                            <span>QL Thành Viên</span>
-                        </a>
-                        <div class="collapse" id="sidebarUser">
-                            <ul class="nav flex-column">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('user.index') }}">QL thành viên</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('user.role.index') }}">QL nhóm thành viên</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="#sidebarLanguage" data-bs-toggle="collapse" role="button"
-                            aria-expanded="false" aria-controls="sidebarLanguage">
-                            <i class="iconoir-view-grid menu-icon"></i>
-                            <span>Ngôn ngữ</span>
-                        </a>
-                        <div class="collapse " id="sidebarLanguage">
-                            <ul class="nav flex-column">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('language.index') }}">QL ngôn ngữ</a>
-                                </li>
-                                
-                            </ul>
-                        </div>
-                    </li>
-                   
+                    </ul>
                 </ul>
             </div>
         </div>

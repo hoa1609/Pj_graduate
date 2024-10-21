@@ -6,10 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Services\Interfaces\LanguageServiceInterface as LanguageService;
 use App\Repositories\Interfaces\LanguageRepositoryInterface as LanguageRepository;
 
-use App\Http\Requests\UpdateUserRequest;
-use App\Http\Requests\LanguageRequest;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\App;
+use App\Http\Requests\LanguageRequest;
 
 class LanguageController extends Controller{
 
@@ -70,7 +69,7 @@ class LanguageController extends Controller{
     }
 
     public function update($id, LanguageRequest $request){
-        if ($this->languageService->update($id, $request)) {
+        if ($this->languageService->update($this->id, $request)) {
             return redirect()->route('language.index')->with('success', 'Cập nhập ngôn ngữ thành công !');
         }
         return redirect()->route('language.index')->with('error', 'Cập nhập ngôn ngữ thất bại !');
@@ -81,6 +80,15 @@ class LanguageController extends Controller{
             return redirect()->route('language.index')->with('success', 'Xóa ngôn ngữ thành công !');
         }
         return redirect()->route('language.index')->with('error', 'Xóa ngôn ngữ thất bại !');
+    }
+
+    public function swicthBackendLanguage($id){
+        $language = $this->languageRepository->findById($id);
+        if($this->languageService->switch($id)){
+            session(['app_locale' => $language->canonical]);
+            App::setLocale($language->canonical);
+        }
+        return redirect()->back();
     }
 
 }

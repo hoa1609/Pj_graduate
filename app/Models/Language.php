@@ -19,7 +19,8 @@ class Language extends Model
         'user_id',
         'image',
         'publish',
-        'description'
+        'description',
+        'current',
     ];
 
     protected $table = 'languages';

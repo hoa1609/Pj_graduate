@@ -28,7 +28,7 @@
                     </a>
                     <div class="dropdown-menu">
                         @foreach ($languages as $key =>$val)
-                            <a class="dropdown-item {{ ($val-> current == 1) ? 'active' : '' }}" href="#"><img src="{{ $val-> image }}" alt="" width="30px" class="me-2">{{ $val-> name }}</a>
+                            <a class="dropdown-item {{ ($val-> current == 1) ? 'active' : '' }}" href="{{ route('language.switch', $val-> id) }}"><img src="{{ $val-> image }}" alt="" width="30px" class="me-2">{{ $val-> name }}</a>
                         @endforeach
                     </div>
                 </li>

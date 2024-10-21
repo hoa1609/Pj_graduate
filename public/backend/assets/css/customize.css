@@ -155,7 +155,6 @@ table strong{
     height: auto;
     border-radius: 4px;
 }
-/* Positioning the delete button */
 #sortable li .thumb button {
     position: absolute;
     top: 8px; 
@@ -190,4 +189,7 @@ table strong{
 }
 .color-note{
     color: #208a22;
+}
+.dropdown-item.active, .dropdown-item:active {
+    background-color: #e6ffe3 !important;
 }
