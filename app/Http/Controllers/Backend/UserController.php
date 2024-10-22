@@ -31,7 +31,7 @@ class UserController extends Controller
     public function index (Request $request){
 
         $users = $this->userService->paginate($request);
-        $userCatalogues = $this->userService->getMenu();
+        $userCatalogues = $this->userService->getUserCatalogue();
         // $config = $this->config();
         $config['seo'] = config('apps.user');
         $template = 'backend.user.user.index';
@@ -46,7 +46,7 @@ class UserController extends Controller
 
     public function create()
     {
-        $userCatalogues = $this->userService->getMenu();
+        $userCatalogues = $this->userService->getUserCatalogue();
         $provinces = $this->provinceRepository->all();
         $config['seo'] = config('apps.user');
         $config['method'] = 'create';
@@ -69,7 +69,7 @@ class UserController extends Controller
 
     public function edit($id)
     {
-        $userCatalogues = $this->userService->getMenu();
+        $userCatalogues = $this->userService->getUserCatalogue();
         $user = $this->userRepository->findById($id);
         $provinces = $this->provinceRepository->all();
         $config['seo'] = config('apps.user');

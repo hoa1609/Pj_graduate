@@ -126,7 +126,7 @@ class UserService implements UserServiceInterface
         }
     }
 
-    public function getMenu()
+    public function getUserCatalogue()
     {
        return UserCatalogue::where('publish', 2)->get();
     }
