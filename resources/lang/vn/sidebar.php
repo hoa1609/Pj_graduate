@@ -32,6 +32,10 @@ return [
                     'title' => 'QL Thành Viên',
                     'route' => 'user/index'
                 ],
+                [
+                    'title' => 'Phân quyền',
+                    'route' => 'permission/index'
+                ],
                 
             ]
         ],

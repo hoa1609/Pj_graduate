@@ -35,6 +35,7 @@ class PostController extends Controller{
         $config = [
             'model' => 'Post',
         ];
+        $this->authorize('modules', 'post.index');
 
         $perPage = $request->integer('perpage');
         $posts = $this->postService->paginate($request);
@@ -52,6 +53,8 @@ class PostController extends Controller{
 
 
     public function create(){
+        $this->authorize('modules', 'post.create');
+
         $config['method'] = 'create';
         $config['seo'] = config('apps.post.create');
         $dropdown = $this->nestedset->Dropdown();
@@ -74,8 +77,9 @@ class PostController extends Controller{
 
 
     public function edit($id){
+        $this->authorize('modules', 'post.edit');
+
         $post = $this->postRepository->getPostById($id, $this->language);
-       
         $config['method'] = 'edit';
         $config['seo'] = config('apps.post.edit');
         $album = json_decode($post->album);
@@ -93,15 +97,15 @@ class PostController extends Controller{
 
 
     public function update($id, UpdatePostRequest $request){
-
         if ($this->postService->update($id, $request)) {
             return redirect()->route('post.index')->with('success', 'Cập nhập nhóm thành viên thành công !');
         }
         return redirect()->route('post.index')->with('error', 'Cập nhập nhóm thành viên thất bại !');
     }
+
     
     public function destroy($id){
-        
+        $this->authorize('modules', 'post.destroy');
         if ($this->postService->destroy($id)) {
             return redirect()->route('post.index')->with('success', 'Xóa nhóm thành viên thành công!');
         }

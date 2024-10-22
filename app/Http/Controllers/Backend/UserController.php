@@ -29,6 +29,8 @@ class UserController extends Controller{
     }
 
     public function index(Request $request){
+        $this->authorize('modules', 'user.index');
+
         $perPage = $request->integer('perPage', 10);
         $users = $this->userService->paginate($request, $perPage);
         
@@ -43,6 +45,8 @@ class UserController extends Controller{
 
 
     public function create(){
+        $this->authorize('modules', 'user.create');
+
         $provinces = $this->provinceRepository->all();
         $config['method'] = 'create';
         $config['seo'] = config('apps.user.create');
@@ -65,6 +69,8 @@ class UserController extends Controller{
 
 
     public function edit($id){
+        $this->authorize('modules', 'user.edit');
+
         $user = $this->userRepository->findById($id);
         $provinces = $this->provinceRepository->all();
         $config['method'] = 'edit';
@@ -79,6 +85,7 @@ class UserController extends Controller{
         ));
     }
 
+
     public function update($id, UpdateUserRequest $request){
         if ($this->userService->update($id, $request)) {
             return redirect()->route('user.index')->with('success', 'Cập nhập thành viên thành công !');
@@ -86,7 +93,10 @@ class UserController extends Controller{
         return redirect()->route('user.index')->with('error', 'Cập nhập thành viên thất bại !');
     }
 
+
     public function destroy($id){
+        $this->authorize('modules', 'user.destroy');
+
         if ($this->userService->destroy($id)) {
             return redirect()->route('user.index')->with('success', 'Xóa thành viên thành công !');
         }

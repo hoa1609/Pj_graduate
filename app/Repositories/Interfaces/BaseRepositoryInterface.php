@@ -4,7 +4,7 @@ namespace App\Repositories\Interfaces;
 
 interface BaseRepositoryInterface
 {
-    public function all();
+    public function all(array $relation);
     public function findById(int $id);
     public function update(int $id = 0 , array $payload = []);
 

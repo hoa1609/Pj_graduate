@@ -9,6 +9,7 @@ use App\Repositories\Interfaces\LanguageRepositoryInterface as LanguageRepositor
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use App\Http\Requests\LanguageRequest;
+use App\Http\Requests\UpdateLanguageRequest;
 
 class LanguageController extends Controller{
 
@@ -24,8 +25,9 @@ class LanguageController extends Controller{
     }
 
     public function index(Request $request){
-        $languages = $this->languageService->paginate($request);
+        $this->authorize('modules', 'language.index');
 
+        $languages = $this->languageService->paginate($request);
         $config['seo'] = config('apps.language.index');
         $template = 'backend.language.index';
         return view('backend.dashboard.layout', compact(
@@ -37,6 +39,8 @@ class LanguageController extends Controller{
 
 
     public function create(){
+        $this->authorize('modules', 'language.create');
+
         $config['method'] = 'create';
         $config['seo'] = config('apps.language.create');
         $template = 'backend.language.store';
@@ -56,8 +60,9 @@ class LanguageController extends Controller{
 
 
     public function edit($id){
-        $language = $this->languageRepository->findById($id);
+        $this->authorize('modules', 'language.edit');
 
+        $language = $this->languageRepository->findById($id);
         $config['seo'] = config('apps.language.edit');
         $config['method'] = 'edit';
         $template = 'backend.language.store';
@@ -68,15 +73,18 @@ class LanguageController extends Controller{
         ));
     }
 
-    public function update($id, LanguageRequest $request){
-        if ($this->languageService->update($this->id, $request)) {
+    public function update($id, UpdateLanguageRequest $request){
+        $this->authorize('modules', 'language.update');
+        if ($this->languageService->update($id, $request)) {
             return redirect()->route('language.index')->with('success', 'Cập nhập ngôn ngữ thành công !');
         }
         return redirect()->route('language.index')->with('error', 'Cập nhập ngôn ngữ thất bại !');
     }
 
+
     public function destroy($id){
         if ($this->languageService->destroy($id)) {
+        $this->authorize('modules', 'language.destroy');
             return redirect()->route('language.index')->with('success', 'Xóa ngôn ngữ thành công !');
         }
         return redirect()->route('language.index')->with('error', 'Xóa ngôn ngữ thất bại !');

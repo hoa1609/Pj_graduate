@@ -33,8 +33,9 @@ class PostCatalogueController extends Controller{
     }
 
     public function index(Request $request){
-        $config['seo'] = config('apps.postcatalogue.index');
+        $this->authorize('modules', 'post.catalogue.index');
 
+        $config['seo'] = config('apps.postcatalogue.index');
         $perPage = $request->integer('perpage');
         $postCatalogues = $this->postCatalogueService->paginate($request);
         $template = 'backend.post.catalogue.index';
@@ -48,6 +49,8 @@ class PostCatalogueController extends Controller{
 
 
     public function create(){
+        $this->authorize('modules', 'post.catalogue.create');
+
         $config['method'] = 'create';
         $config['seo'] = config('apps.postcatalogue.create');
         $dropdown = $this->nestedset->Dropdown();
@@ -70,8 +73,9 @@ class PostCatalogueController extends Controller{
 
 
     public function edit($id){
+        $this->authorize('modules', 'post.catalogue.edit');
+
         $postCatalogue = $this->postCatalogueRepository->getPostCatalogueById($id, $this->language);
-       
         $config['method'] = 'edit';
         $config['seo'] = config('apps.postcatalogue.edit');
         $album = json_decode($postCatalogue->album);
@@ -89,7 +93,6 @@ class PostCatalogueController extends Controller{
 
 
     public function update($id, UpdatePostCatalogueRequest $request){
-
         if ($this->postCatalogueService->update($id, $request)) {
             return redirect()->route('post.catalogue.index')->with('success', 'Cập nhập nhóm thành viên thành công !');
         }
@@ -98,6 +101,7 @@ class PostCatalogueController extends Controller{
 
     
     public function destroy(DeletePostCatalogueRequest $request, $id){
+        $this->authorize('modules', 'post.catalogue.destroy');
         
         if ($this->postCatalogueService->destroy($id)) {
             return redirect()->route('post.catalogue.index')->with('success', 'Xóa nhóm thành viên thành công!');

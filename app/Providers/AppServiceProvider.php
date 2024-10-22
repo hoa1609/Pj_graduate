@@ -23,9 +23,17 @@ class AppServiceProvider extends ServiceProvider
         'App\Services\Interfaces\PostServiceInterface' => 'App\Services\PostService',
         'App\Repositories\Interfaces\PostRepositoryInterface' => 'App\Repositories\PostRepository',
 
+        /* permission */
+        'App\Services\Interfaces\PermissionServiceInterface' => 'App\Services\PermissionService',
+        'App\Repositories\Interfaces\PermissionRepositoryInterface' => 'App\Repositories\PermissionRepository',
+
         /* post category */
         'App\Services\Interfaces\PostCatalogueServiceInterface' => 'App\Services\PostCatalogueService',
         'App\Repositories\Interfaces\PostCatalogueRepositoryInterface' => 'App\Repositories\PostCatalogueRepository',
+
+        /* router */
+        'App\Services\Interfaces\RouterServiceInterface' => 'App\Services\RouterService',
+        'App\Repositories\Interfaces\RouterRepositoryInterface' => 'App\Repositories\RouterRepository',
 
         /* provine & ditrict*/
         'App\Repositories\Interfaces\ProvinceRepositoryInterface' => 'App\Repositories\ProvinceRepository',

@@ -73,6 +73,9 @@ table strong{
     font-size:13px;
     padding: 5px 15px;
 }
+.mr5{
+    margin-right:5px;
+}
 .mr10{
     margin-right:10px;
 }
@@ -193,3 +196,6 @@ table strong{
 .dropdown-item.active, .dropdown-item:active {
     background-color: #e6ffe3 !important;
 }
+/* .uk-flex .uk-flex-middle a{
+    padding: 5px;
+} */

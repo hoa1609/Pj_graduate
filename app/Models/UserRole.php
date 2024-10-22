@@ -22,8 +22,14 @@ class UserRole extends Model
 
     protected $table = 'user_roles';
 
+
     public function users(){
         return $this-> hasMany(User::class, 'user_role_id', 'id');
+    }
+
+
+    public function permissions(){
+        return  $this->belongsToMany(Permission::class, 'user_role_permission' , 'user_role_id', 'permission_id' );
     }
 
 }

@@ -109,16 +109,10 @@
                             <div class="col-lg-6">  
                                 <div class="row" style="margin-bottom: 40px">
                                     <div class="col-md-12">
-                                        @php
-                                            $userRole = [
-                                                '[Chọn nhóm thành viên]',
-                                                'Quản trị viên',
-                                                'Cộng tác viên'
-                                            ];       
-                                        @endphp
+                                        
                                         <label class="form-label">Nhóm thành viên</label>
                                         <select name="user_role_id" class="form-select" >
-                                            @foreach($userRole as $key => $item)
+                                            @foreach(config('apps.general.roleUser') as $key => $item)
                                                 <option {{$key == old('user_role_id', (isset($user->user_role_id)) ? $user->user_role_id : '') ? 'selected' : '' 
                                                     }}  value="{{ $key }}">{{ $item }}
                                                 </option>

@@ -147,6 +147,29 @@ class UserRoleService implements UserRoleServiceInterface
         }
     }
 
+    public function setPermission($request){
+        DB::beginTransaction();
+        try {
+            $permissions = $request->input('permission');
+            if (is_array($permissions)) {
+                foreach($permissions as $key => $val){
+                    $userCatalogue = $this->userRoleRepository->findById($key);
+                    if ($userCatalogue) {
+                        $userCatalogue->permissions()->sync($val);
+                    }
+                }
+            }
+            DB::commit();
+            return true;
+        } catch(\Exception $e) {
+            DB::rollback();
+            echo $e->getMessage();
+            die();
+            return false;
+        }
+    }
+    
+
     private function paginateSelect(){
        return [
             'id',
@@ -155,5 +178,7 @@ class UserRoleService implements UserRoleServiceInterface
             'publish',
        ];
     }
+
+
 }
  

@@ -69,6 +69,8 @@
                            </span>
                         </div>
                     </div>
+                    <a href="{{ route('user.role.permission') }}" class="mr5 btn btn-lg btn-warning d-inline-flex px-2 align-items-center"><i class="fa fa-user-cog fs-10"></i>Phân quyền</a>
+
                     <a href="{{ route('user.role.create') }}" class="btn btn-lg btn-danger d-inline-flex px-2 align-items-center"><i class="fas fa-user-friends fs-10"></i>Thêm nhóm thành viên</a>
                 </div>
             </div>

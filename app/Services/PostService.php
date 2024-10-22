@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Services\Interfaces\PostServiceInterface;
 use App\Services\Interfaces\BaseServiceInterface;
 use App\Repositories\Interfaces\PostRepositoryInterface as PostRepository;
+use App\Repositories\Interfaces\RouterRepositoryInterface as RouterRepository;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Carbon;
@@ -22,13 +23,16 @@ class PostService extends BaseService implements PostServiceInterface
     protected $postRepository;
     protected $nestedset;
     protected $language;
-    
+    protected $routerRepository;
 
     public function __construct(
         PostRepository $postRepository,
+        RouterRepository $routerRepository,
     ){
         $this->language = $this->currentLanguage();
         $this->postRepository = $postRepository;
+        $this->routerRepository = $routerRepository;
+        $this->controllerName = 'PostController';
     }
 
     public function paginate ($request){
@@ -70,7 +74,6 @@ class PostService extends BaseService implements PostServiceInterface
                     [$request->integer('post_catalogue_id'), $request->integer('post_catalogue_id')]
                 ]
             ];
-            
         }
         return $rawCondition;
     }
@@ -83,6 +86,7 @@ class PostService extends BaseService implements PostServiceInterface
             if($post->id > 0){
                 $this->updateLanguageForPost($post, $request);
                 $this->updateCatalogueForPost($post, $request);
+                $this->createRouter($post, $request, $this->controllerName);
             }
             DB::commit();
             return true;
@@ -126,11 +130,6 @@ class PostService extends BaseService implements PostServiceInterface
         return $payload;
     }
 
-    private function formatAlbum($request){
-        return  ($request->input('album') && !empty($request->input('album'))) ? json_encode($request->input('album')) : '';
-    }
-
-   
 
     private function catalogue($request){
         if($request->input('catalogue') != null){
@@ -146,6 +145,7 @@ class PostService extends BaseService implements PostServiceInterface
             if( $this->uploadPost($post, $request)){
                 $this->updateLanguageForPost($post, $request);
                 $this->updateCatalogueForPost($post, $request);
+                $this->updateRouter($post, $request, $this->controllerName);
             }
             DB::commit();
             return true;

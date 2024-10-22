@@ -40,8 +40,8 @@ class BaseRepository implements BaseRepositoryInterface
                 ->withQueryString()->withPath(env('APP_URL').$extend['path']);
             }
 
-    public function all(){
-        return $this->model->all();
+    public function all(array $relation = []){
+        return $this->model->with($relation)->get();
     }
 
     public function create(array $payload =[]){
@@ -80,6 +80,14 @@ class BaseRepository implements BaseRepositoryInterface
         array $relation = [],
     ) {
         return $this->model->select($column)->with($relation)->findOrFail($modelId);
+    }
+
+    public function findByCondition($condition = []){
+        $query = $this->model->newQuery();
+        foreach($condition as $key => $val){
+            $query->where($val[0], $val[1] , $val[2]);
+        }
+        return $query->first();
     }
 
     public function createPivot($model, array $payload = [], string $relation = ''){
