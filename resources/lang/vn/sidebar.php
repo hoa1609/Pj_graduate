@@ -26,6 +26,7 @@ return [
             'subModule' => [
                 [
                     'title' => 'QL Nhóm',
+
                     'route' => 'user/role/index'
                 ],
                 [
@@ -36,7 +37,7 @@ return [
                     'title' => 'Phân quyền',
                     'route' => 'permission/index'
                 ],
-                
+
             ]
         ],
         [
@@ -49,9 +50,9 @@ return [
                     'title' => 'QL ngôn ngữ',
                     'route' => 'language/index'
                 ],
-                
+
             ]
         ],
-        
+
     ],
 ];
