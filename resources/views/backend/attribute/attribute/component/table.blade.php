@@ -8,7 +8,7 @@
                 </th>
                 <th>Bài viết</th>
                 <th>Hình ảnh</th>
-                {{-- <th>Vị trí</th> --}}
+                <th>Vị trí</th>
                 <th>Tình trạng</th>
                 <th>Thao tác</th>
             </tr>
@@ -37,9 +37,9 @@
                                 </div>
                             </div>
                         </td>
-                        {{-- <td>
+                        <td>
                             <input type="text" name="form-control" data-id="{{ $attribute->id }}" data-model="{{ $config['model'] }}" value="{{ $attribute-> order }}">
-                        </td> --}}
+                        </td>
                         <td>
                             <div class="form-switch">
                                 <input class="form-check-input status js-switch-{{ $attribute-> id }}" 
