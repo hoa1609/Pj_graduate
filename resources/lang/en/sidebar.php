@@ -1,52 +1,88 @@
 <?php
+
 return [
     'module' => [
+
+        [
+            'dropdown' => 'sidebarProduct',
+            'title' => 'Product Management',
+            'icon' => 'fa fa-cube',
+            'subModule' => [
+                [
+                    'dropdown' => 'sidebarProductManagement',
+                    'title' => 'Products',
+                    'subSubModule' => [
+                        [
+                            'title' => 'Product Category',
+                            'route' => 'product.catalogue.index',
+                        ],
+                        [
+                            'title' => 'Product List',
+                            'route' => 'product.index',
+                        ],
+                    ],
+                ],
+                [
+                    'dropdown' => 'sidebarAttributeManagement',
+                    'title' => 'Attributes',
+                    'subSubModule' => [
+                        [
+                            'title' => 'Attribute Types',
+                            'route' => 'attribute.catalogue.index',
+                        ],
+                        [
+                            'title' => 'Attributes List',
+                            'route' => 'attribute.index',
+                        ],
+                    ],
+                ],
+            ],
+        ],
         [
             'dropdown' => 'sidebarPost',
-            'title' => 'Post',
+            'title' => 'Post Management',
             'icon' => 'fa fa-file',
             'subModule' => [
                 [
-                    'title' => 'Post Categories',
-                    'route' => 'post/catalogue/index'
+                    'title' => 'Post Category',
+                    'route' => 'post.catalogue.index'
                 ],
                 [
-                    'title' => 'Post',
-                    'route' => 'post/index'
+                    'title' => 'Posts',
+                    'route' => 'post.index'
                 ]
             ]
         ],
         [
             'dropdown' => 'sidebarUser',
-            'title' => 'User',
+            'title' => 'User Management',
             'icon' => 'fa fa-user',
             'subModule' => [
                 [
-                    'title' => 'Role',
-                    'route' => 'user/role/index'
+                    'title' => 'User Groups',
+                    'route' => 'user.role.index'
                 ],
                 [
-                    'title' => 'User',
-                    'route' => 'user/index'
+                    'title' => 'Users',
+                    'route' => 'user.index'
                 ],
                 [
-                    'title' => 'Permission',
-                    'route' => 'permission/index'
+                    'title' => 'Add Permissions',
+                    'route' => 'permission.index'
                 ],
             ]
         ],
         [
-            'dropdown' => 'sidebarLanguage',
-            'title' => 'Language',
-            'icon' => 'fa fa-globe',
+            'dropdown' => 'sidebarGeneral',
+            'title' => 'General Settings',
+            'icon' => 'fa fa-wrench',
             'subModule' => [
                 [
-                    'title' => 'Language',
-                    'route' => 'language/index'
+                    'title' => 'Languages',
+                    'route' => 'language.index'
                 ],
-                
             ]
         ],
-        
+
     ],
 ];

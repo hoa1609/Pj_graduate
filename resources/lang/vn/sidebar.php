@@ -59,7 +59,7 @@ return [
             'icon' => 'fa fa-user',
             'subModule' => [
                 [
-                    'title' => 'Nhóm thành viên',
+                    'title' => 'QL Nhóm',
                     'route' => 'user.role.index'
                 ],
                 [
@@ -70,7 +70,7 @@ return [
                     'title' => 'Thêm quyền',
                     'route' => 'permission.index'
                 ],
-                
+
             ]
         ],
         [
@@ -82,9 +82,9 @@ return [
                     'title' => 'Ngôn ngữ',
                     'route' => 'language.index'
                 ],
-                
+
             ]
         ],
-        
+
     ],
 ];
