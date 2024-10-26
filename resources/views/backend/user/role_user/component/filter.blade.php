@@ -55,23 +55,18 @@
                             <option {{ ($publish == $key)  ? 'selected' : '' }} value="{{ $key }}">{{ $val }}</option>
                         @endforeach
                     </select>
-                    <div class="uk-search uk-flex uk-flex-middle mr5">
-                        <div class="input-group">
-                            <input 
-                                type="text" 
-                                name="keyword" 
-                                value="{{ request('keyword') ?: old('keyword') }}" 
-                                placeholder="Nhập Từ khóa bạn muốn tìm kiếm..." class="form-control"
-                            >
-                           <span class="input-group-btn">
-                               <button type="submit" name="search" value="search" class="btn btn-primary mb0 btn-sm">Tìm Kiếm
-                                </button>
-                           </span>
-                        </div>
+                    <div class="uk-search uk-flex uk-flex-middle uk-flex-nowrap input-group mr5">
+                        <input 
+                            type="text" 
+                            name="keyword" 
+                            value="{{ request('keyword') ?: old('keyword') }}" 
+                            placeholder="Nhập Từ khóa bạn muốn tìm kiếm..." class="form-control"
+                        >
+                        <button type="submit" name="search" value="search" class="btn btn-primary btn-find">Tìm Kiếm</button>
                     </div>
-                    <a href="{{ route('user.role.permission') }}" class="mr5 btn btn-lg btn-warning d-inline-flex px-2 align-items-center"><i class="fa fa-user-cog fs-10"></i>Phân quyền</a>
+                    <a href="{{ route('user.role.permission') }}" class="btn btn-warning btn-permission mr5"><i class="fa fa-user-cog mr5"></i>Phân quyền </a>
 
-                    <a href="{{ route('user.role.create') }}" class="btn btn-lg btn-danger d-inline-flex px-2 align-items-center"><i class="fas fa-user-friends fs-10"></i>Thêm nhóm thành viên</a>
+                    <a href="{{ route('user.role.create') }}" class="btn btn-danger form-control"><i class="fas fa-user-friends mr5"></i>Thêm nhóm </a>
                 </div>
             </div>
         </div>

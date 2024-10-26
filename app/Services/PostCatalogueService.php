@@ -82,16 +82,6 @@ class PostCatalogueService extends BaseService implements PostCatalogueServiceIn
         }
     }
     
-    // private function updateRouter($model, $request, $controllerName){
-    //     $payload = $this->formatRouterPayload($model, $request, $this->controllerName);
-    //     $condition = [
-    //         ['module_id', '=', $model->id],
-    //         ['controllers', '=', 'App\Http\Controllers\Fontend\\'.$controllerName.''],
-    //     ];
-    //     $router = $this->routerRepository->findByCondition($condition);
-    //     $res = $this->routerRepository->update($router->id, $payload);
-    //     return $res;
-    // }
 
     private function createCatalogue($request){
         $payload = $request->only($this->payload());

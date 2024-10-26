@@ -12,6 +12,10 @@ use App\Http\Controllers\Ajax\LocationController;
 use App\Http\Controllers\Ajax\DashboardController as AjaxDashboardController;
 use App\Http\Controllers\Backend\PostController;
 use App\Http\Controllers\Backend\PermissionController;
+use App\Http\Controllers\Backend\ProductCatalogueController;
+use App\Http\Controllers\Backend\ProductController;
+use App\Http\Controllers\Backend\AttributeController;
+use App\Http\Controllers\Backend\AttributeCatalogueController;
 use Illuminate\Routing\RouteGroup;
 
 
@@ -51,11 +55,11 @@ Route::middleware(['admin', 'locale'])->group(function () {
 
     Route::group(['prefix' => 'post/catalogue'], function () {
         Route::get('index', [PostCatalogueController::class, 'index'])->name('post.catalogue.index');
-        Route::get('create', [PostcatalogueController::class, 'create'])->name('post.catalogue.create');
-        Route::post('store', [PostcatalogueController::class, 'store'])->name('post.catalogue.store');
-        Route::get('edit/{id}', [PostcatalogueController::class, 'edit'])->name('post.catalogue.edit');
-        Route::post('update/{id}', [PostcatalogueController::class, 'update'])->name('post.catalogue.update');
-        Route::delete('destroy/{id}', [PostcatalogueController::class, 'destroy'])->name('post.catalogue.destroy');
+        Route::get('create', [PostCatalogueController::class, 'create'])->name('post.catalogue.create');
+        Route::post('store', [PostCatalogueController::class, 'store'])->name('post.catalogue.store');
+        Route::get('edit/{id}', [PostCatalogueController::class, 'edit'])->name('post.catalogue.edit');
+        Route::post('update/{id}', [PostCatalogueController::class, 'update'])->name('post.catalogue.update');
+        Route::delete('destroy/{id}', [PostCatalogueController::class, 'destroy'])->name('post.catalogue.destroy');
     });
 
     Route::group(['prefix' => 'post'], function () {
@@ -65,6 +69,42 @@ Route::middleware(['admin', 'locale'])->group(function () {
         Route::get('edit/{id}', [PostController::class, 'edit'])->name('post.edit');
         Route::post('update/{id}', [PostController::class, 'update'])->name('post.update');
         Route::delete('destroy/{id}', [PostController::class, 'destroy'])->name('post.destroy');
+    });
+
+    Route::group(['prefix' => 'product/catalogue'], function () {
+        Route::get('index', [ProductCatalogueController::class, 'index'])->name('product.catalogue.index');
+        Route::get('create', [ProductCatalogueController::class, 'create'])->name('product.catalogue.create');
+        Route::post('store', [ProductCatalogueController::class, 'store'])->name('product.catalogue.store');
+        Route::get('edit/{id}', [ProductCatalogueController::class, 'edit'])->name('product.catalogue.edit');
+        Route::post('update/{id}', [ProductCatalogueController::class, 'update'])->name('product.catalogue.update');
+        Route::delete('destroy/{id}', [ProductCatalogueController::class, 'destroy'])->name('product.catalogue.destroy');
+    });
+
+    Route::group(['prefix' => 'product'], function () {
+        Route::get('index', [ProductController::class, 'index'])->name('product.index');
+        Route::get('create', [ProductController::class, 'create'])->name('product.create');
+        Route::post('store', [ProductController::class, 'store'])->name('product.store');
+        Route::get('edit/{id}', [ProductController::class, 'edit'])->name('product.edit');
+        Route::post('update/{id}', [ProductController::class, 'update'])->name('product.update');
+        Route::delete('destroy/{id}', [ProductController::class, 'destroy'])->name('product.destroy');
+    });
+
+    Route::group(['prefix' => 'attribute'], function () {
+        Route::get('index', [AttributeController::class, 'index'])->name('attribute.index');
+        Route::get('create', [AttributeController::class, 'create'])->name('attribute.create');
+        Route::post('store', [AttributeController::class, 'store'])->name('attribute.store');
+        Route::get('edit/{id}', [AttributeController::class, 'edit'])->name('attribute.edit');
+        Route::post('update/{id}', [AttributeController::class, 'update'])->name('attribute.update');
+        Route::delete('destroy/{id}', [AttributeController::class, 'destroy'])->name('attribute.destroy');
+    });
+
+    Route::group(['prefix' => 'attribute/catalogue'], function () {
+        Route::get('index', [AttributeCatalogueController::class, 'index'])->name('attribute.catalogue.index');
+        Route::get('create', [AttributeCatalogueController::class, 'create'])->name('attribute.catalogue.create');
+        Route::post('store', [AttributeCatalogueController::class, 'store'])->name('attribute.catalogue.store');
+        Route::get('edit/{id}', [AttributeCatalogueController::class, 'edit'])->name('attribute.catalogue.edit');
+        Route::post('update/{id}', [AttributeCatalogueController::class, 'update'])->name('attribute.catalogue.update');
+        Route::delete('destroy/{id}', [AttributeCatalogueController::class, 'destroy'])->name('attribute.catalogue.destroy');
     });
 
     Route::group(['prefix' => 'language'], function () {

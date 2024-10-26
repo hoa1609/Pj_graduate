@@ -24,12 +24,13 @@ class BaseRepository implements BaseRepositoryInterface
         array $orderBy = ['id', 'DESC'],
         array $join = [],
         array $relations = [], 
-        array $rawQuery = [], 
+        array $rawQuery = []
     ){
         $query = $this->model->select($column);
-        return $query 
+        return $query
                 ->keyword($condition['keyword'] ?? null)
                 ->publish($condition['publish'] ?? null)
+                ->userCatalogueId($condition['user_role_id'] ?? null) 
                 ->relationCount($relations ?? null)
                 ->CustomWhere($condition['where'] ?? null)
                 ->customWhereRaw($rawQuery['whereRaw'] ?? null)
@@ -37,8 +38,9 @@ class BaseRepository implements BaseRepositoryInterface
                 ->customGroupBy($extend['groupBy'] ?? null)
                 ->customOrderBy($orderBy ?? null)
                 ->paginate($perPage)
-                ->withQueryString()->withPath(env('APP_URL').$extend['path']);
-            }
+                ->withQueryString()->withPath(env('APP_URL') . $extend['path']);
+    }
+    
 
     public function all(array $relation = []){
         return $this->model->with($relation)->get();

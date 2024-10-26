@@ -20,18 +20,21 @@ class UserService implements UserServiceInterface
         $this->userRepository = $userRepository;
     }
 
-    public function paginate ($request, $perPage = [] ){
-
-        $condition['keyword'] = $request->input('keyword');
-        $condition['publish'] = $request->integer('publish');
+    public function paginate($request, $perPage = []){
+        $condition = [
+            'keyword' => $request->input('keyword'),
+            'publish' => $request->integer('publish'),
+            'user_role_id' => $request->integer('user_role_id'),
+        ];
         $users = $this->userRepository->pagination(
             $this->paginateSelect(),
-            $condition, 
+            $condition,
             $perPage,
-            ['path' => 'user/index'], 
+            ['path' => 'user/index']
         );
         return $users;
     }
+    
 
     public function updateStatus($post = []){
         DB::beginTransaction();

@@ -44,32 +44,30 @@
                     </select>
                 </div>
             </div>
-            <div class="action">
-                <div class="uk-flex uk-flex-middle">
-                    @php
-                        $publish = request('publish') ? : old('publish');
-                    @endphp
+            @php
+                $publish = request('publish') ? : old('publish');
+                $keyword =  request('keyword') ?: old('keyword');
+            @endphp
 
-                    <select name="publish" class="form-control form-select setupSelect2 mr5">
-                        @foreach (config('apps.general.publish') as $key => $val)
-                            <option {{ ($publish == $key)  ? 'selected' : '' }} value="{{ $key }}">{{ $val }}</option>
-                        @endforeach
-                    </select>
-                    <div class="uk-search uk-flex uk-flex-middle mr5">
-                        <div class="input-group">
-                            <input 
-                                type="text" 
-                                name="keyword" 
-                                value="{{ request('keyword') ?: old('keyword') }}" 
-                                placeholder="Nhập Từ khóa bạn muốn tìm kiếm..." class="form-control"
+            <div class="action">
+                <div class="action">
+                    <div class="uk-flex uk-flex-middle">
+                        <select name="publish" class="form-control form-select setupSelect2 mr5">
+                            @foreach (config('apps.general.publish') as $key => $val)
+                                <option {{ ($publish == $key)  ? 'selected' : '' }} value="{{ $key }}">{{ $val }}</option>
+                            @endforeach
+                        </select>
+                        <div class="uk-flex uk-flex-middle uk-flex-nowrap input-group mr5">
+                            <input type="text" 
+                            name="keyword" 
+                            value="{{ $keyword }}" 
+                            placeholder="Nhập Từ khóa bạn muốn tìm kiếm..." 
+                            class="form-control"
                             >
-                           <span class="input-group-btn">
-                               <button type="submit" name="search" value="search" class="btn btn-primary mb0 btn-sm">Tìm Kiếm
-                                </button>
-                           </span>
+                            <button type="submit" name="search" value="search" class="btn btn-primary btn-find">Tìm Kiếm</button>
                         </div>
+                        <a href="{{ route('product.catalogue.create') }}" class="btn btn-danger form-control"><i class="fa fa-list-ul mr5"></i>Thêm danh mục</a>
                     </div>
-                    <a href="{{ route('post.catalogue.create') }}" class="btn btn-lg btn-danger d-inline-flex px-2 align-items-center"><i class="fas fa-user-friends fs-10"></i>Thêm bài viết</a>
                 </div>
             </div>
         </div>

@@ -1,0 +1,114 @@
+<?php
+
+namespace App\Http\Controllers\Backend;
+
+use App\Http\Controllers\Controller;
+use App\Services\Interfaces\AttributeCatalogueServiceInterface as AttributeCatalogueService;
+use App\Repositories\Interfaces\AttributeCatalogueRepositoryInterface as AttributeCatalogueRepository;
+
+use App\Http\Requests\AttributeCatalogueRequest;
+use App\Http\Requests\UpdateAttributeCatalogueRequest;
+use App\Http\Requests\DeleteAttributeCatalogueRequest;
+use Illuminate\Http\Request;
+use App\Classes\Nestedsetbie;
+
+class AttributeCatalogueController extends Controller{
+
+    protected $attributeCatalogueService;
+    protected $attributeCatalogueRepository;
+    protected $language;
+
+    public function __construct(
+        AttributeCatalogueService $attributeCatalogueService,
+        AttributeCatalogueRepository $attributeCatalogueRepository,
+    ) {
+        $this->attributeCatalogueService = $attributeCatalogueService;
+        $this->attributeCatalogueRepository = $attributeCatalogueRepository;
+        $this->nestedset = new Nestedsetbie([
+            'table' => 'attribute_catalogues',
+            'foreignkey' => 'attribute_catalogue_id',
+            'language_id' => 1,
+        ]);
+        $this->language = $this->currentLanguage();
+    }
+
+    public function index(Request $request){
+        // $this->authorize('modules', 'attribute.catalogue.index');
+
+        $config['seo'] = config('apps.attributecatalogue.index');
+        $perPage = $request->integer('perpage');
+        $attributeCatalogues = $this->attributeCatalogueService->paginate($request);
+        $template = 'backend.attribute.catalogue.index';
+        
+        return view('backend.dashboard.layout', compact(
+            'config',
+            'template',
+            'attributeCatalogues',
+        ));
+    }
+
+
+    public function create(){
+        // $this->authorize('modules', 'attribute.catalogue.create');
+
+        $config['method'] = 'create';
+        $config['seo'] = config('apps.attributecatalogue.create');
+        $dropdown = $this->nestedset->Dropdown();
+
+        $template = 'backend.attribute.catalogue.store';
+        return view('backend.dashboard.layout', compact(
+            'config',
+            'template',
+            'dropdown',
+        ));
+    }
+
+
+    public function store(AttributeCatalogueRequest $request){
+        if ($this->attributeCatalogueService->create($request)) {
+            return redirect()->route('attribute.catalogue.index')->with('success', 'Thêm nhóm thành viên thành công !');
+        }
+        return redirect()->route('attribute.catalogue.index')->with('error', 'Thêm nhóm thành viên thất bại !');
+    }
+
+
+    public function edit($id){
+        // $this->authorize('modules', 'attribute.catalogue.edit');
+
+        $attributeCatalogue = $this->attributeCatalogueRepository->getAttributeCatalogueById($id, $this->language);
+        $config['method'] = 'edit';
+        $config['seo'] = config('apps.attributecatalogue.edit');
+        $album = json_decode($attributeCatalogue->album);
+        $dropdown = $this->nestedset->Dropdown();
+
+        $template = 'backend.attribute.catalogue.store';
+        return view('backend.dashboard.layout', compact(
+            'config',
+            'template',
+            'dropdown',
+            'attributeCatalogue',
+            'album',
+        ));
+    }
+
+
+    public function update($id, UpdateAttributeCatalogueRequest $request){
+        if ($this->attributeCatalogueService->update($id, $request)) {
+            return redirect()->route('attribute.catalogue.index')->with('success', 'Cập nhập nhóm thành viên thành công !');
+        }
+        return redirect()->route('attribute.catalogue.index')->with('error', 'Cập nhập nhóm thành viên thất bại !');
+    }
+
+    
+    public function destroy(DeleteAttributeCatalogueRequest $request, $id){
+        // $this->authorize('modules', 'attribute.catalogue.destroy');
+        
+        if ($this->attributeCatalogueService->destroy($id)) {
+            return redirect()->route('attribute.catalogue.index')->with('success', 'Xóa nhóm thành viên thành công!');
+        }
+
+        return redirect()->route('attribute.catalogue.index')->with('error', 'Xóa nhóm thành viên thất bại!');
+    }
+
+
+}

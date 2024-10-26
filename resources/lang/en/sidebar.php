@@ -5,7 +5,6 @@ return [
             'dropdown' => 'sidebarPost',
             'title' => 'Post',
             'icon' => 'fa fa-file',
-            'name' => ['post'],
             'subModule' => [
                 [
                     'title' => 'Post Categories',
@@ -21,7 +20,6 @@ return [
             'dropdown' => 'sidebarUser',
             'title' => 'User',
             'icon' => 'fa fa-user',
-            'name' => ['user','permission'],
             'subModule' => [
                 [
                     'title' => 'Role',
@@ -41,7 +39,6 @@ return [
             'dropdown' => 'sidebarLanguage',
             'title' => 'Language',
             'icon' => 'fa fa-globe',
-            'name' => ['user','permission'],
             'subModule' => [
                 [
                     'title' => 'Language',

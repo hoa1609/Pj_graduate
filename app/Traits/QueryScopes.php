@@ -18,6 +18,13 @@ trait QueryScopes
         return $query;
     }
 
+    public function scopeUserCatalogueId($query, $userCatalogueId){
+        if (!empty($userCatalogueId)) {
+            $query->where('user_role_id', '=', $userCatalogueId);
+        }
+        return $query;
+    }
+
     public function scopeCustomWhere($query, $where = []){
         if(!empty($where)){
             foreach($where as $key => $val){
@@ -26,7 +33,6 @@ trait QueryScopes
         }
         return $query;
     }
-
 
     public function scopeCustomWhereRaw($query, $rawQuery){
         if(is_array($rawQuery) && !empty($rawQuery)){

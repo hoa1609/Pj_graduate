@@ -2,19 +2,54 @@
 
 return [
     'module' => [
+
+        [
+            'dropdown' => 'sidebarProduct',
+            'title' => 'QL Mặt hàng',
+            'icon' => 'fa fa-cube',
+            'subModule' => [
+                [
+                    'dropdown' => 'sidebarProductManagement',
+                    'title' => 'Sản phẩm',
+                    'subSubModule' => [
+                        [
+                            'title' => 'Danh mục Sản phẩm',
+                            'route' => 'product.catalogue.index',
+                        ],
+                        [
+                            'title' => 'Sản phẩm',
+                            'route' => 'product.index',
+                        ],
+                    ],
+                ],
+                [
+                    'dropdown' => 'sidebarAttributeManagement',
+                    'title' => 'Thuộc tính',
+                    'subSubModule' => [
+                        [
+                            'title' => 'Loại Thuộc tính',
+                            'route' => 'attribute.catalogue.index',
+                        ],
+                        [
+                            'title' => 'Thuộc tính',
+                            'route' => 'attribute.index',
+                        ],
+                    ],
+                ],
+            ],
+        ],
         [
             'dropdown' => 'sidebarPost',
             'title' => 'QL Bài viết',
             'icon' => 'fa fa-file',
-            'name' => ['post'],
             'subModule' => [
                 [
-                    'title' => 'QL Nhóm Bài Viết',
-                    'route' => 'post/catalogue/index'
+                    'title' => 'Danh mục Bài Viết',
+                    'route' => 'post.catalogue.index'
                 ],
                 [
-                    'title' => 'QL Bài Viết',
-                    'route' => 'post/index'
+                    'title' => 'Bài Viết',
+                    'route' => 'post.index'
                 ]
             ]
         ],
@@ -22,32 +57,30 @@ return [
             'dropdown' => 'sidebarUser',
             'title' => 'QL Thành Viên',
             'icon' => 'fa fa-user',
-            'name' => ['user','permission'],
             'subModule' => [
                 [
-                    'title' => 'QL Nhóm',
-                    'route' => 'user/role/index'
+                    'title' => 'Nhóm thành viên',
+                    'route' => 'user.role.index'
                 ],
                 [
-                    'title' => 'QL Thành Viên',
-                    'route' => 'user/index'
+                    'title' => 'Thành Viên',
+                    'route' => 'user.index'
                 ],
                 [
-                    'title' => 'Phân quyền',
-                    'route' => 'permission/index'
+                    'title' => 'Thêm quyền',
+                    'route' => 'permission.index'
                 ],
                 
             ]
         ],
         [
-            'dropdown' => 'sidebarlanguague',
-            'title' => 'QL ngôn ngữ',
-            'icon' => 'fa fa-globe',
-            'name' => ['user','permission'],
+            'dropdown' => 'sidebarGeneral',
+            'title' => 'Cấu hình chung',
+            'icon' => 'fa fa-wrench',
             'subModule' => [
                 [
-                    'title' => 'QL ngôn ngữ',
-                    'route' => 'language/index'
+                    'title' => 'Ngôn ngữ',
+                    'route' => 'language.index'
                 ],
                 
             ]

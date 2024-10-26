@@ -55,21 +55,17 @@
                             <option {{ ($publish == $key)  ? 'selected' : '' }} value="{{ $key }}">{{ $val }}</option>
                         @endforeach
                     </select>
-                    <div class="uk-search uk-flex uk-flex-middle mr5">
-                        <div class="input-group">
+                    <div class="uk-search uk-flex uk-flex-middle uk-flex-nowrap input-group mr5">
                             <input 
                                 type="text" 
                                 name="keyword" 
                                 value="{{ request('keyword') ?: old('keyword') }}" 
                                 placeholder="Nhập Từ khóa bạn muốn tìm kiếm..." class="form-control"
                             >
-                           <span class="input-group-btn">
-                               <button type="submit" name="search" value="search" class="btn btn-primary mb0 btn-sm">Tìm Kiếm
+                               <button type="submit" name="search" value="search" class="btn btn-primary btn-find">Tìm Kiếm
                                 </button>
-                           </span>
-                        </div>
                     </div>
-                    <a href="{{ route('language.create') }}" class="btn btn-lg btn-danger d-inline-flex px-2 align-items-center"><i class="fas fa-user-friends fs-10"></i>Thêm ngôn ngữ</a>
+                    <a href="{{ route('language.create') }}" class="btn btn-danger form-control"><i class="fa fa-globe mr5"></i>Thêm ngôn ngữ</a>
                 </div>
             </div>
         </div>

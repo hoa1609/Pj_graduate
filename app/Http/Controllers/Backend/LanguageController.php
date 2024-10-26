@@ -74,7 +74,6 @@ class LanguageController extends Controller{
     }
 
     public function update($id, UpdateLanguageRequest $request){
-        $this->authorize('modules', 'language.update');
         if ($this->languageService->update($id, $request)) {
             return redirect()->route('language.index')->with('success', 'Cập nhập ngôn ngữ thành công !');
         }

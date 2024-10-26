@@ -6,7 +6,7 @@
 			'2' => 'Xuất bản',
 		],
 		'roleUser' => [
-			'0' => '--Chọn tình trạng--',
+			'0' => '--Chọn tư cách--',
 			'1' => 'Admin',
 			'2' => 'Quản lý',
 			'3' => 'Testing',

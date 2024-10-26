@@ -48,7 +48,7 @@ class PostService extends BaseService implements PostServiceInterface
             $this->paginateSelect(), 
             $condition, 
             $perPage,
-            ['path' => 'post.index', 'groupBy' =>$this->paginateSelect()], 
+            ['path' => 'post/index', 'groupBy' =>$this->paginateSelect()], 
             ['posts.id','DESC'],
             [
                 ['post_language as tb2', 'tb2.post_id', '=', 'posts.id'],

@@ -14,35 +14,45 @@
                     <li class="menu-label pt-0 mt-0">
                         <span>Main Menu</span>
                     </li>
-
-                    
-                    @php
-                        $segment = request()->segment(1);
-                    @endphp
-                    <ul class="nav flex-column">
-                        @foreach (__('sidebar.module') as $module)
-                            <li class="nav-item">
-                                <a class="nav-link" href="#sidebar{{ $module['dropdown'] }}" data-bs-toggle="collapse" role="button"
-                                    aria-expanded="false" aria-controls="sidebar{{ $module['dropdown'] }}">
-                                    <i class="{{ $module['icon'] }} menu-icon"></i>
-                                    <span>{{ $module['title'] }}</span>
-                                </a>
-                    
-                                <div class="collapse" id="sidebar{{ $module['dropdown'] }}">
-                                    <ul class="nav flex-column">
-                                        @foreach ($module['subModule'] as $sub)
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="{{ url($sub['route']) }}">
+                    @foreach (__('sidebar.module') as $module)
+                        <li class="nav-item">
+                            <a class="nav-link" href="#sidebar{{ $module['dropdown'] }}" data-bs-toggle="collapse" role="button"
+                                aria-expanded="false" aria-controls="sidebar{{ $module['dropdown'] }}">
+                                <i class="{{ $module['icon'] }} menu-icon"></i>
+                                <span>{{ $module['title'] }}</span>
+                            </a>
+                            <div class="collapse" id="sidebar{{ $module['dropdown'] }}">
+                                <ul class="nav flex-column">
+                                    @foreach ($module['subModule'] as $sub)
+                                        <li class="nav-item">
+                                            @if (isset($sub['subSubModule']))
+                                                <a class="nav-link" href="#sidebar{{ $sub['dropdown'] }}" data-bs-toggle="collapse" role="button"
+                                                    aria-expanded="false" aria-controls="sidebar{{ $sub['dropdown'] }}">
+                                                    <span>{{ $sub['title'] }}</span>
+                                                </a>
+                                                <div class="collapse" id="sidebar{{ $sub['dropdown'] }}">
+                                                    <ul class="nav flex-column">
+                                                        @foreach ($sub['subSubModule'] as $subSub)
+                                                            <li class="nav-item">
+                                                                <a href="{{ route($subSub['route']) }}" class="nav-link">
+                                                                    {{ $subSub['title'] }}
+                                                                </a>
+                                                            </li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
+                                            @else
+                                                <a href="{{ route($sub['route']) }}" class="nav-link">
                                                     {{ $sub['title'] }}
                                                 </a>
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            </li>
-                        @endforeach
-
-                    </ul>
+                                            @endif
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </li>
+                    @endforeach
+                    
                 </ul>
             </div>
         </div>

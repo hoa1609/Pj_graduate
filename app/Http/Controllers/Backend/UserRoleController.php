@@ -100,7 +100,7 @@ class UserRoleController extends Controller{
 
 
     public function permission(){
-        // $this->authorize('modules', 'user.role.permission');
+        $this->authorize('modules', 'user.role.permission');
         $template = 'backend.user.role_user.permission';
         $config['seo'] = config('apps.permission.index');
         $config['method'] = 'create';
@@ -116,7 +116,7 @@ class UserRoleController extends Controller{
     }
 
     public function updatePermission(Request $request){
-        // $this->authorize('modules', 'user.role.updatePermission');
+        $this->authorize('modules', 'user.role.updatePermission');
         if($this->userRoleService->setPermission($request)){
             return redirect()->route('user.role.permission')->with('success', 'Cập nhập quyền thành công !');
         }

@@ -44,38 +44,33 @@
                     </select>
                 </div>
             </div>
+            @php
+                $publish = request('publish') ? : old('publish');
+                $post_catalogueId = request('post_catalogue_id') ? : old('post_catalogue_id');
+            @endphp
+
             <div class="action">
                 <div class="uk-flex uk-flex-middle">
-                    @php
-                        $publish = request('publish') ? : old('publish');
-                        $post_catalogueId = request('post_catalogue_id') ? : old('post_catalogue_id');
-                    @endphp
                     <select name="publish" class="form-control form-select setupSelect2 mr5">
                         @foreach (config('apps.general.publish') as $key => $val)
-                                <option {{ ($publish == $key)  ? 'selected' : '' }} value="{{ $key }}">{{ $val }}</option>
-                            @endforeach
+                            <option {{ ($publish == $key)  ? 'selected' : '' }} value="{{ $key }}">{{ $val }}</option>
+                        @endforeach
                     </select>
                     <select name="post_catalogue_id" class="form-control form-select setupSelect2 mr5">
                         @foreach ($dropdown as $key => $val)
-                                <option {{ ($publish == $key)  ? 'selected' : '' }} value="{{ $key }}">{{ $val }}</option>
-                            @endforeach
+                            <option {{ ($post_catalogueId == $key)  ? 'selected' : '' }} value="{{ $key }}">{{ $val }}</option>
+                        @endforeach
                     </select>
-                   
-                    <div class="uk-search uk-flex uk-flex-middle mr5">
-                        <div class="input-group">
-                            <input 
-                                type="text" 
-                                name="keyword" 
-                                value="{{ request('keyword') ?: old('keyword') }}" 
-                                placeholder="Nhập Từ khóa bạn muốn tìm kiếm..." class="form-control"
-                            >
-                           <span class="input-group-btn">
-                               <button type="submit" name="search" value="search" class="btn btn-primary mb0 btn-sm">Tìm Kiếm
-                                </button>
-                           </span>
-                        </div>
+                    <div class="uk-flex uk-flex-middle uk-flex-nowrap input-group mr5">
+                        <input type="text" 
+                        name="keyword" 
+                        value="{{ request('keyword') ?: old('keyword') }}" 
+                        placeholder="Nhập Từ khóa bạn muốn tìm kiếm..." 
+                        class="form-control"
+                        >
+                        <button type="submit" name="search" value="search" class="btn btn-primary btn-find">Tìm Kiếm</button>
                     </div>
-                    <a href="{{ route('post.create') }}" class="btn btn-lg btn-danger d-inline-flex px-2 align-items-center"><i class="fas fa-user-friends fs-10"></i>Thêm bài viết</a>
+                    <a href="{{ route('post.create') }}" class="btn btn-danger form-control"><i class="fa fa-pencil-alt mr5"></i>Thêm bài viết</a>
                 </div>
             </div>
         </div>
