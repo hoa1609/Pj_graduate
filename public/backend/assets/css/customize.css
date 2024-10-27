@@ -6,6 +6,9 @@
 .mb20{
     margin-bottom:20px;
 }
+.mb40{
+    margin-bottom:20px;
+}
 .mt20{
     margin-top:20px;
 }
@@ -206,4 +209,18 @@ table strong{
     max-width: 180px;
     min-width: 130px;
     padding: 5px 15px;
+}
+
+.fixed-find {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1030;
+}
+
+.sticky-find {
+    position: sticky;
+    top: 300px;
+    z-index: 1000;
 }

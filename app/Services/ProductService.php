@@ -100,6 +100,7 @@ class ProductService extends BaseService implements ProductServiceInterface
 
     private function createProduct($request){
         $payload = $request->only($this->payload());
+        // dd($payload);
         $payload['user_id'] = Auth::id();
         $payload['album'] = $this->formatAlbum($request);
         $product = $this->productRepository->create($payload);

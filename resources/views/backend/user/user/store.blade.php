@@ -27,8 +27,8 @@
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="mb-3 row">
-                                    <label for="example-text-input" class="col-sm-2 col-form-label text-end">Tên</label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-2 col-form-label">Tên</label>
+                                    <div class="col-sm-9">
                                         <input class="form-control" 
                                         name="name" 
                                         type="text"
@@ -38,8 +38,8 @@
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
-                                    <label for="example-email-input" class="col-sm-2 col-form-label text-end">Email</label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-2 col-form-label">Email</label>
+                                    <div class="col-sm-9">
                                         <input class="form-control" 
                                         name="email"
                                         type="text" 
@@ -49,8 +49,8 @@
                                     </div>
                                 </div> 
                                 <div class="mb-3 row">
-                                    <label for="example-tel-input" class="col-sm-2 col-form-label text-end">Điện thoại</label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-2 col-form-label">Điện thoại</label>
+                                    <div class="col-sm-9">
                                         <input class="form-control" 
                                         name="phone"
                                         type="tel" 
@@ -60,8 +60,8 @@
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
-                                    <label for="example-date-input" class="col-sm-2 col-form-label text-end">Sinh nhật</label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-2 col-form-label">Sinh nhật</label>
+                                    <div class="col-sm-9">
                                         <input class="form-control" 
                                         name="birthday"
                                         type="date" 
@@ -70,8 +70,8 @@
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
-                                    <label for="example-text-input" class="col-sm-2 col-form-label text-end">Ảnh</label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-2 col-form-label">Ảnh</label>
+                                    <div class="col-sm-9">
                                         <input class="form-control upload-image" 
                                         name="image" 
                                         type="text"
@@ -81,11 +81,11 @@
                                          >
                                     </div>
                                 </div>
-
+                                
                                 @if($config['method'] == 'create' )
                                     <div class="mb-3 row">
-                                        <label for="password" class="col-sm-2 col-form-label text-end">Mật khẩu</label>
-                                        <div class="col-sm-10">
+                                        <label class="col-sm-2 col-form-label">Mật khẩu</label>
+                                        <div class="col-sm-9">
                                             <input class="form-control" 
                                             name="password"
                                             type="password" 
@@ -94,8 +94,8 @@
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
-                                        <label for="password2" class="col-sm-2 col-form-label text-end">Nhập lại mật khẩu</label>
-                                        <div class="col-sm-10">
+                                        <label class="col-sm-2 col-form-label">Nhập lại mật khẩu</label>
+                                        <div class="col-sm-9">
                                             <input class="form-control"  
                                             name="re_password"
                                             type="password" 
@@ -107,9 +107,8 @@
                             </div>
 
                             <div class="col-lg-6">  
-                                <div class="row" style="margin-bottom: 40px">
+                                <div class="row pb-4">
                                     <div class="col-md-12">
-                                        
                                         <label class="form-label">Nhóm thành viên</label>
                                         <select name="user_role_id" class="form-select" >
                                             @foreach(config('apps.general.roleUser') as $key => $item)
@@ -120,10 +119,10 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="row" style="margin-bottom: 40px">
-                                    <div class="col-md-6">
+                                <div class="row pb-4 text-start">
+                                    <div class="col-lg-6 mb40">
                                         <label class="form-label">Thành phố</label>
-                                        <select name="province_id" class="form-select setUpSelect2 province location" data-target="districts">
+                                        <select name="province_id" class="form-select setUpSelect2 location" data-target="districts">
                                             <option value="0">[Chọn Thành Phố]</option>
                                             @if (isset($provinces))
                                                 @foreach ($provinces as $province)
@@ -134,19 +133,19 @@
                                             @endif
                                         </select>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-6 pd-2">
                                         <label class="form-label">Quận/Huyện</label>
                                         <select name="district_id" class="form-select setUpSelect2 districts location" data-target="wards">
                                             <option value="0">[Chọn Quận/Huyện]</option>
                                         </select>
                                     </div>
-                                    <div class="col-md-6" style="margin-top: 30px">
+                                    <div class="col-md-6" style="margin-top: 10px">
                                         <label class="form-label">Phường/Xã</label>
                                         <select name="ward_id" class="form-select setUpSelect2 wards">
                                             <option value="0">[Chọn Phường/Xã]</option>
                                         </select>
                                     </div>
-                                    <div class="col-md-6" style="margin-top: 30px">
+                                    <div class="col-md-6" style="margin-top: 10px">
                                         <label class="form-label">Địa chỉ</label>
                                         <input class="form-control"
                                             name="address"
@@ -155,14 +154,13 @@
                                             >
                                     </div>
                                 </div>  
-                                <div class="mb-3 row" >
-                                    <label for="example-password-input" class="col-sm-2 col-form-label text-end">Ghi chú</label>
-                                    <div class="col-sm-10">
-                                        <input class="form-control" 
-                                        name="description"
-                                        type="text" 
+                                <div class="row pb-4">
+                                    <div class="col-md-12">
+                                        <label class="form-label">Ghi chú</label>
+                                        <input class="form-control"
+                                        name="description "
                                         placeholder="nhập ghi chú..."
-                                        value="{{ old('description', ($user-> description) ?? '' ) }}"
+                                        value="{{ old('description ', ($user-> description ) ?? '' ) }}"
                                         >
                                     </div>
                                 </div>

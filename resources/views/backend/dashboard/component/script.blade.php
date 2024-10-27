@@ -28,3 +28,19 @@
         {!! '<script src="'.$val.'"></script>' !!}
     @endforeach
 @endif
+
+<script>
+    const formatPrice = (value) => {
+        value = value.replace(/\D/g, '');
+        if (!value) return '';
+        return value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    }
+    // document.getElementById('priceInput').addEventListener('input', function() {
+    //     let value = this.value;
+    //     this.value = formatPrice(value);
+    // });
+    document.getElementById('priceInput').addEventListener('blur', function() {
+        let value = this.value;
+        this.value = formatPrice(value);
+    });
+    </script>

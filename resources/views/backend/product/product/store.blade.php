@@ -49,7 +49,7 @@
                                     id="ckDescription"
                                     data-height="150"
                                     {{ (isset($disabled)) ? 'disabled' : '' }} 
-                                    data-height="100"
+                                    data-height="80"
                                     >
                                     {{ old('description', ($product-> description) ?? '') }}
                                 </textarea>
@@ -67,7 +67,7 @@
                                     rows="5" 
                                     placeholder="nhập mô tả"
                                     id="ckContent"
-                                    data-height="300"
+                                    data-height="350"
                                     >
                                     {{ old('content', ($product-> content) ?? '') }}
                                 </textarea>
@@ -82,7 +82,7 @@
                     <div class="card-body pt-10">
                         <div class="row">
                             <div class="col-md-12 position-relative pb-3">
-                                <label class="card-title fs-16">Chọn danh mục sản phẩm </label>
+                                <label class="card-title fs-14">Chọn danh mục sản phẩm </label>
                                 <div class="fs-10 mb-2">
                                     <span class="text-danger">*</span> Chọn root để tạo danh mục cha mới
                                 </div>
@@ -98,9 +98,9 @@
                                 // Mảng lưu các post_catalogues đã được chọn
                                 $catalogue = old('catalogue', isset($post) ? $post->post_catalogues->pluck('id')->toArray() : ['']);
                             @endphp
-                            <div class="col-md-12 position-relative pb-3">
-                                <label class="form-label">Danh mục phụ </label>
-                                <select multiple name="catalogue[]" class="form-select form-select-important setUpSelect2 border-select-2">
+                            <div class="col-md-12 position-relative">
+                                <label class="form-label">Danh mục phụ (nếu có) </label>
+                                <select multiple name="catalogue[]" class="form-select setUpSelect2 border-select-2">
                                     @foreach($dropdown as $key => $val)
                                         <option 
                                             value="{{ $key }}"
@@ -112,6 +112,41 @@
                                         </option>
                                     @endforeach
                                 </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body pt-10">
+                        <div class="row">
+                            <div class="col-md-12 position-relative">
+                                <label class="card-title fs-14">Thông tin sản phẩm </label>
+                            </div>
+                            <div class="col-md-12 position-relative mb-2">
+                                <label class="form-label">Mã sản phẩm</label>
+                                <input type="text" 
+                                    class="form-control" 
+                                    name="code"
+                                    value="{{ old('code', ($product->code) ?? '') }}"
+                                >
+                            </div>
+                            <div class="col-md-12 position-relative mb-2">
+                                <label class="form-label">Xuất xứ</label>
+                                <input type="text" 
+                                    class="form-control" 
+                                    name="made_in"
+                                    value="{{ old('made_in', ($product->made_in) ?? '') }}"
+                                >
+                            </div>
+                            <div class="col-md-12 position-relative">
+                                <label class="form-label">Giá sản phẩm</label>
+                                <input type="text" 
+                                    min="0"
+                                    class="form-control" 
+                                    name="price"
+                                    id="priceInput"
+                                    value="{{ old('price') ?: (isset($product) ? number_format($product->price, 0, ',', '.') : '') }}"
+                                >
                             </div>
                         </div>
                     </div>
@@ -158,7 +193,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="text-end">
+                <div class="text-end sticky-find">
                     <button type="submit" name="send" class="btn btn-primary">Lưu thông tin</button>
                 </div>
             </div>

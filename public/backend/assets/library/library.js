@@ -139,13 +139,13 @@
    
 
     $(document).ready(function(){
-        HT.select2() ;
-        HT.changeStatus() ;
-        HT.checkAll() ;
-        HT.checkBoxItem() ;
-        HT.allChecked() ;
-        HT.changeStatusAll() ;
-        HT.sortui() ;
+        HT.select2();
+        HT.changeStatus();
+        HT.checkAll();
+        HT.checkBoxItem();
+        HT.allChecked();
+        HT.changeStatusAll();
+        HT.sortui();
         
     });
 
