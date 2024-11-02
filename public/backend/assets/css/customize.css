@@ -20,7 +20,6 @@ h5{
     font-weight: normal;
 }
 table .image{
-    height:50px;
     display: block;
 }
 .updateVariant .image{
@@ -79,6 +78,13 @@ table strong{
     min-width: 170px;
     font-size:13px;
     padding: 5px 15px;
+}
+.form-control-hgt-30{
+    height: 30px !important;
+    padding: 0px 15px !important;
+}
+.hight-42{
+    height: 42px !important;
 }
 .mr5{
     margin-right:5px;
@@ -142,14 +148,14 @@ table strong{
 .textarea-10{
     min-height: 100px !important;
 }
-#sortable {
+.ui-sortable {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     grid-gap: 10px;
-    padding: 0;
+    padding: 30px 0;
     list-style-type: none;
 }
-#sortable li {
+.ui-sortable li {
     background-color: #f9f9f9;
     border-radius: 8px;
     padding: 10px;
@@ -157,15 +163,15 @@ table strong{
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     position: relative; 
 }
-#sortable li .thumb {
+.ui-sortable li .thumb {
     position: relative; 
 }
-#sortable li .thumb img {
+.ui-sortable li .thumb img {
     max-width: 100%;
     height: auto;
     border-radius: 4px;
 }
-#sortable li .thumb button {
+.ui-sortable li .thumb button {
     position: absolute;
     top: 8px; 
     right: 8px; 
@@ -173,7 +179,6 @@ table strong{
     border: none;
     color: #e32828;
     padding: 5px;
-    /* border-radius: ; */
     cursor: pointer;
     font-size: 16px;
     display: flex;
@@ -181,7 +186,7 @@ table strong{
     justify-content: center;
     transition: background-color 0.3s;
 }
-#sortable li .thumb button:hover {
+.ui-sortable li .thumb button:hover {
     background-color: rgba(217, 83, 79, 0.8); 
 }
 .hidden{
@@ -211,16 +216,126 @@ table strong{
     padding: 5px 15px;
 }
 
-.fixed-find {
+.fixed-save-product.active {
     position: fixed;
-    right: 0;
-    bottom: 0;
+    right: 20px;
+    bottom: 90px;
     left: 0;
-    z-index: 1030;
+    z-index: 10000;
+    transition: .5s ease;
 }
-
 .sticky-find {
     position: sticky;
     top: 300px;
     z-index: 1000;
+}
+.text-small{
+    font-size: 12px;
+    font-style: italic;
+}
+.remove-attribute {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #eb4757; 
+    color: #fff;
+    border: none;
+    padding: 20px 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+.remove-attribute:hover {
+    background-color: #c82333; 
+    transform: scale(1.05); 
+    color: #fff;
+}
+.remove-attribute i {
+    font-size: 18px;
+    margin-right: 0;
+}
+.add-variant{
+    height: 42px;
+    color: #286cca;
+    border: 1px dashed #3257ec;
+    background: #f3f3f3;
+    text-align: center;
+    border-radius: 5px;
+    transition: all .3s ease-in-out;
+    padding: 0 42px;
+    margin-top: 20px;
+}
+.hiden{
+    display: none;
+}
+.turnOnVariant{
+    cursor: pointer;
+}
+.select-option{
+    width: 100% !important;
+}
+.select2-container--default .select2-selection--multiple {
+    background-color: #f4f4f4;
+    border: 1px solid #afafaf;
+    border-radius: 4px;
+    cursor: text;
+    padding: 5px 3px;
+    position: relative;
+    height: 42px;
+}
+.border-table{
+    border: 1px solid #afafaf !important;
+    border-radius: 20px !important;
+}
+.text-note{
+    color: #515151;
+}
+.text-overflow{
+    width: 500px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    -webkit-line-clamp: 2;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+}
+.click-to-upload{
+    text-align: center;
+    padding: 20px 0;
+    border: 1px dashed #afafaf;
+}
+.hight-85{
+    height: 85px;
+}
+.click-to-upload-variant{
+    text-align: center;
+    padding: 20px 0;
+    border: 1px dashed #afafaf;
+}
+.prc-0{
+    padding-left: 0 !important;
+}
+input:disabled {
+    background-color: #f6f6f6 !important; 
+    cursor: not-allowed; 
+}
+.uk-flex-space-around{
+    justify-content: space-around;
+}
+.variant-row{
+    cursor: pointer;
+}
+.w-70{
+    width: 70px !important;
+}
+.notification {
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 20px;
+    color: #fff;
+    background-color: #eb1d0f; 
+    border-radius: 4px;
+    font-size: 14px;
+    z-index: 100000;
 }

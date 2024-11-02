@@ -103,6 +103,7 @@ class ProductService extends BaseService implements ProductServiceInterface
         // dd($payload);
         $payload['user_id'] = Auth::id();
         $payload['album'] = $this->formatAlbum($request);
+        $payload['price'] = convert_price($payload['price']);
         $product = $this->productRepository->create($payload);
         return $product;
 
@@ -111,6 +112,7 @@ class ProductService extends BaseService implements ProductServiceInterface
     private function uploadProduct($product, $request){
         $payload = $request->only($this->payload());
         $payload['album'] = $this->formatAlbum($request);
+        $payload['price'] = convert_price($payload['price']);
         return $this->productRepository->update($product->id, $payload);
     }
 

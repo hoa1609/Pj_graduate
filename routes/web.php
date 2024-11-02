@@ -7,15 +7,16 @@ use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Backend\UserRoleController;
 use App\Http\Controllers\Backend\PostCatalogueController;
 use App\Http\Controllers\Backend\LanguageController;
-
 use App\Http\Controllers\Ajax\LocationController;
-use App\Http\Controllers\Ajax\DashboardController as AjaxDashboardController;
 use App\Http\Controllers\Backend\PostController;
 use App\Http\Controllers\Backend\PermissionController;
 use App\Http\Controllers\Backend\ProductCatalogueController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\AttributeController;
 use App\Http\Controllers\Backend\AttributeCatalogueController;
+use App\Http\Controllers\Ajax\DashboardController as AjaxDashboardController;
+use App\Http\Controllers\Ajax\AttributeController as AjaxAttributeController;
+
 use Illuminate\Routing\RouteGroup;
 
 
@@ -118,10 +119,12 @@ Route::middleware(['admin', 'locale'])->group(function () {
         Route::get('switch/{id}', [LanguageController::class, 'swicthBackendLanguage'])->name('language.switch');
     });
 
+    /* AJAX */
     Route::get('ajax/location/getLocation', [LocationController::class, 'getLocation'])->name('ajax.location.index');
     Route::post('ajax/dashboard/changeStatus', [AjaxDashboardController::class, 'changeStatus'])->name('ajax.dashboard.changeStatus');
     Route::post('ajax/dashboard/changeStatusAll', [AjaxDashboardController::class, 'changeStatusAll'])->name('ajax.dashboard.changeStatusAll');
-
+   Route::get('ajax/attribute/getAttribute', [AjaxAttributeController::class, 'getAttribute'])->name('ajax.attribute.getAttribute');
+   Route::get('ajax/attribute/loadAttribute', [AjaxAttributeController::class, 'loadAttribute'])->name('ajax.attribute.loadAttribute');
 
 });
 

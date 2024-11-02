@@ -93,10 +93,6 @@
             });
         }
     }; 
-    
-    
-
-
 
     HT.checkAll = () => {
         if($('#checkAll').length){

@@ -1,13 +1,4 @@
-@if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
-
+@include('backend.dashboard.component.errors')
 @php
     $url = ($config['method'] == 'create') ? route('product.store') : route('product.update',$product-> id);
 @endphp
@@ -47,9 +38,8 @@
                                     class="form-control textarea-10 ck-editor" 
                                     placeholder="nhập mô tả"
                                     id="ckDescription"
-                                    data-height="150"
+                                    data-height="200"
                                     {{ (isset($disabled)) ? 'disabled' : '' }} 
-                                    data-height="80"
                                     >
                                     {{ old('description', ($product-> description) ?? '') }}
                                 </textarea>
@@ -76,7 +66,8 @@
                     </div>
                 </div>
             </div>
-            {{-- --}}
+
+
             <div class="col-md-3 col-lg-3">
                 <div class="card">
                     <div class="card-body pt-10">
@@ -145,7 +136,7 @@
                                     class="form-control" 
                                     name="price"
                                     id="priceInput"
-                                    value="{{ old('price') ?: (isset($product) ? number_format($product->price, 0, ',', '.') : '') }}"
+                                    value="{{ old('made_in', ($product->price) ?? '') }}"
                                 >
                             </div>
                         </div>
@@ -193,13 +184,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="text-end sticky-find">
+                <div class="text-end fixed-save-product">
                     <button type="submit" name="send" class="btn btn-primary">Lưu thông tin</button>
                 </div>
             </div>
         </div>
-        @include('backend.dashboard.component.album')
-        
+        @include('backend.product.product.component.variant')
         <div class="row justify-content-star">
             <div class="col-md-9 col-lg-9">
                 <div class="card">

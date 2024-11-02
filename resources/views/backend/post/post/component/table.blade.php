@@ -6,9 +6,9 @@
                 <th style="width: 16px;">
                     <input type="checkbox" class="form-check-input checkBoxItem" id="checkAll">                                                    
                 </th>
-                <th>Bài viết</th>
                 <th>Hình ảnh</th>
-                <th>Vị trí</th>
+                <th>Bài viết</th>
+                {{-- <th>Vị trí</th> --}}
                 <th>Tình trạng</th>
                 <th>Thao tác</th>
             </tr>
@@ -16,13 +16,13 @@
             <tbody>
                 @foreach ($posts as $post)
                     <tr>
-                        <th style="width: 16px;">
+                        <td style="width: 16px;">
                             <input type="checkbox" class="form-check-input checkBoxItem" value="{{ $post-> id }}">                                                    
-                        </th>
-                        <th><img loading="lazy" src="{{ $post-> image}}" alt="image" width="50px"></th>
+                        </td>
+                        <td><img loading="lazy" src="{{ $post-> image}}" alt="image" height="60px"></td>
                         <td>
                             <div class="uk-flex flex-direction-column">
-                                <div class="fsz-5">{{ $post->name }}</div>
+                                <div class="fsz-5 text-overflow">{{ $post->name }}</div>
                                 <div class="uk-flex">
                                     <div class="category">
                                         <span class="color-note">Nhóm hiển thị: </span>
@@ -37,9 +37,9 @@
                                 </div>
                             </div>
                         </td>
-                        <td>
+                        {{-- <td>
                             <input type="text" name="form-control" data-id="{{ $post->id }}" data-model="{{ $config['model'] }}" value="{{ $post-> order }}">
-                        </td>
+                        </td> --}}
                         <td>
                             <div class="form-switch">
                                 <input class="form-check-input status js-switch-{{ $post-> id }}" 
@@ -52,7 +52,7 @@
                                     >
                             </div>
                         </td>
-                        <td class="text-end uk-flex">                                                        
+                        <td class="text-end uk-flex uk-flex-middle hight-85">                                                        
                             <a class="pading-action" href="{{ route('post.edit', $post-> id) }}">
                                 <i class="las la-pen text-secondary fs-18"></i>
                             </a>

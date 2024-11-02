@@ -6,8 +6,8 @@
                 <th style="width: 16px;">
                     <input type="checkbox" class="form-check-input checkBoxItem" id="checkAll">                                                    
                 </th>
-                <th>Bài viết</th>
                 <th>Hình ảnh</th>
+                <th>Loại thuộc tính</th>
                 <th>Vị trí</th>
                 <th>Tình trạng</th>
                 <th>Thao tác</th>

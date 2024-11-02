@@ -138,6 +138,7 @@
             }
            
             $('.click-to-upload').addClass('hidden')
+            $('.box-center').addClass('hidden')
             $('#sortable').append(html)
             $('.upload-list').removeClass('hidden')
         }
@@ -150,6 +151,7 @@
             _this.parents('.ui-state-default').remove()
             if($('.ui-state-default').length == 0){
                 $('.click-to-upload').removeClass('hidden')
+                $('.box-center').removeClass('hidden')
                 $('.upload-list').addClass('hidden')
             }
         })
