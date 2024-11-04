@@ -11,7 +11,7 @@ interface BaseRepositoryInterface
     public function pagination(
         array $column = ['*'],
         array $condition = [],
-        int $perPage = 1,
+        int $perPage = 10,
         array $extend = [],
         array $orderBy = [],
         array $join = [],
@@ -24,4 +24,5 @@ interface BaseRepositoryInterface
         array $payload = [] 
         );
     public function createPivot($model, array $payload = [], string $relation = '');
+    public function createBatch(array $payload = []);
 }

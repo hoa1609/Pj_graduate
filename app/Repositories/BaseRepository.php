@@ -64,6 +64,11 @@ class BaseRepository implements BaseRepositoryInterface
         return $model->update($payload);
     }
 
+    public function createBatch(array $payload = []){
+        return $this->model->insert($payload);
+    }
+
+
     public function updateByWhereIn(string $whereInField = '', array $whereIn = [], array $payload = [] ){
         return $this->model->whereIn($whereInField, $whereIn)->update($payload);
     }
@@ -82,6 +87,14 @@ class BaseRepository implements BaseRepositoryInterface
         array $relation = [],
     ) {
         return $this->model->select($column)->with($relation)->findOrFail($modelId);
+    }
+
+    public function forceDeleteByCondition(array $condition = []){
+        $query = $this->model->newQuery();
+        foreach($condition as $key => $val){
+            $query->where($val[0], $val[1] , $val[2]);
+        }
+        return $query->forceDelete();
     }
 
     public function findByCondition($condition = []){

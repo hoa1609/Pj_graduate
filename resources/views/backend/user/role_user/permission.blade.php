@@ -9,9 +9,8 @@
                         </div>
                     </div>
                 </div>
-
                 <form action="{{ route('user.role.updatePermission') }}" method="post">
-                    @csrf
+                @csrf
                     <div class="card-body pt-0">
                         <div class="table-responsive">
                             <table class="table mb-0 table-centered">
@@ -24,8 +23,6 @@
                                         @endforeach
                                     </tr>
                                 </thead>
-
-                                
                                 <tbody>
                                     @foreach ($permissions as $permission)
                                         <tr>
@@ -34,11 +31,6 @@
 
                                             @foreach ($userCatalogues as $userCatalogue)
                                             <td class="text-center">
-
-                                                {{-- @php
-                                                    dd($userCatalogue-> permissions);
-                                                @endphp --}}
-
                                                 <input {{ (collect($userCatalogue-> permissions)->contains('id', $permission-> id)) ? 'checked' : '' }} type="checkbox" name="permission[{{ $userCatalogue-> id }}][]" class="form-check-input " value="{{ $permission-> id }}">
                                             </td>
                                             @endforeach

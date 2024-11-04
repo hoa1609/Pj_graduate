@@ -66,7 +66,7 @@
                             >
                             <button type="submit" name="search" value="search" class="btn btn-primary btn-find">Tìm Kiếm</button>
                         </div>
-                        <a href="{{ route('product.catalogue.create') }}" class="btn btn-danger form-control"><i class="fa fa-list-ul mr5"></i>Thêm danh mục</a>
+                        <a href="{{ route('post.catalogue.create') }}" class="btn btn-danger form-control"><i class="fa fa-list-ul mr5"></i>Thêm danh mục</a>
                     </div>
                 </div>
             </div>

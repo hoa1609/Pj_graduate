@@ -10,6 +10,7 @@ use App\Http\Requests\PostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use Illuminate\Http\Request;
 use App\Classes\Nestedsetbie;
+use App\Models\Language;
 
 class PostController extends Controller{
 
@@ -20,29 +21,31 @@ class PostController extends Controller{
     public function __construct(
         PostService $postService,
         PostRepository $postRepository,
-    ) {
+    ){
+        $this->middleware(function($request, $next){
+            $locale = app()->getLocale(); 
+            $language = Language::where('canonical', $locale)->first();
+            $this->language = $language ? $language->id : 1;
+            $this->initialize();
+            return $next($request);
+        });
+
         $this->postService = $postService;
-        $this->postRepository = $postRepository;
-        $this->nestedset = new Nestedsetbie([
-            'table' => 'post_catalogues',
-            'foreignkey' => 'post_catalogue_id',
-            'language_id' => 1,
-        ]);
-        $this->language = $this->currentLanguage();
+        $this->postRepository = $postRepository;     
     }
 
+
     public function index(Request $request){
+        $this->authorize('modules', 'post.index');
+
         $config = [
             'model' => 'Post',
         ];
-        $this->authorize('modules', 'post.index');
-
         $perPage = $request->integer('perpage');
-        $posts = $this->postService->paginate($request);
+        $posts = $this->postService->paginate($request, $this->language);
         $dropdown = $this->nestedset->Dropdown();
         $template = 'backend.post.post.index';
         $config['seo'] = config('apps.post.index');
-        
         return view('backend.dashboard.layout', compact(
             'config',
             'template',
@@ -54,11 +57,9 @@ class PostController extends Controller{
 
     public function create(){
         $this->authorize('modules', 'post.create');
-
         $config['method'] = 'create';
         $config['seo'] = config('apps.post.create');
         $dropdown = $this->nestedset->Dropdown();
-
         $template = 'backend.post.post.store';
         return view('backend.dashboard.layout', compact(
             'config',
@@ -69,7 +70,7 @@ class PostController extends Controller{
 
 
     public function store(PostRequest $request){
-        if ($this->postService->create($request)) {
+        if ($this->postService->create($request, $this->language)) {
             return redirect()->route('post.index')->with('success', 'Thêm nhóm thành viên thành công !');
         }
         return redirect()->route('post.index')->with('error', 'Thêm nhóm thành viên thất bại !');
@@ -78,13 +79,11 @@ class PostController extends Controller{
 
     public function edit($id){
         $this->authorize('modules', 'post.edit');
-
         $post = $this->postRepository->getPostById($id, $this->language);
         $config['method'] = 'edit';
         $config['seo'] = config('apps.post.edit');
         $album = json_decode($post->album);
         $dropdown = $this->nestedset->Dropdown();
-
         $template = 'backend.post.post.store';
         return view('backend.dashboard.layout', compact(
             'config',
@@ -97,7 +96,7 @@ class PostController extends Controller{
 
 
     public function update($id, UpdatePostRequest $request){
-        if ($this->postService->update($id, $request)) {
+        if ($this->postService->update($id, $request, $this->language)) {
             return redirect()->route('post.index')->with('success', 'Cập nhập nhóm thành viên thành công !');
         }
         return redirect()->route('post.index')->with('error', 'Cập nhập nhóm thành viên thất bại !');
@@ -106,12 +105,19 @@ class PostController extends Controller{
     
     public function destroy($id){
         $this->authorize('modules', 'post.destroy');
-        if ($this->postService->destroy($id)) {
+        if ($this->postService->destroy($id, $this->language)) {
             return redirect()->route('post.index')->with('success', 'Xóa nhóm thành viên thành công!');
         }
 
         return redirect()->route('post.index')->with('error', 'Xóa nhóm thành viên thất bại!');
     }
 
+    private function initialize(){
+        $this->nestedset = new Nestedsetbie([
+            'table' => 'post_catalogues',
+            'foreignkey' => 'post_catalogue_id',
+            'language_id' =>  $this->language,
+        ]);
+    } 
 
 }

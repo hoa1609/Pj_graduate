@@ -27,7 +27,6 @@
                     </div>
                 </div>
                 <div class="variant-body container">
-                    {{-- nội dung attribute (color & size,...)  --}}
                     @if (old('attributeCatalogue'))
                         @foreach (old('attributeCatalogue') as $keyAttr => $valAttr)
                             <div class="row pb-2 variant-item"> 

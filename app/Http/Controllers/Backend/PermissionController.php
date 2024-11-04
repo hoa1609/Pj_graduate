@@ -9,12 +9,15 @@ use App\Repositories\Interfaces\PermissionRepositoryInterface as PermissionRepos
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use App\Http\Requests\PermissionRequest;
+use App\Http\Requests\UpdatePermissionRequest;
 
 class PermissionController extends Controller{
 
     protected $permissionService;
     protected $permissionRepository;
 
+
+    
     public function __construct(
         PermissionService $permissionService,
         PermissionRepository $permissionRepository,
@@ -23,9 +26,10 @@ class PermissionController extends Controller{
         $this->permissionRepository = $permissionRepository;
     }
 
+
+
     public function index(Request $request){
         $this->authorize('modules', 'permission.index');
-
         $permissions = $this->permissionService->paginate($request);
         $config['seo'] = config('apps.permission.index');
         $template = 'backend.permission.index';
@@ -39,7 +43,6 @@ class PermissionController extends Controller{
 
     public function create(){
         $this->authorize('modules', 'permission.create');
-
         $config['method'] = 'create';
         $config['seo'] = config('apps.permission.create');
         $template = 'backend.permission.store';
@@ -60,7 +63,6 @@ class PermissionController extends Controller{
 
     public function edit($id){
         $this->authorize('modules', 'permission.edit');
-
         $permission = $this->permissionRepository->findById($id);
         $config['seo'] = config('apps.permission.edit');
         $config['method'] = 'edit';
@@ -72,8 +74,7 @@ class PermissionController extends Controller{
         ));
     }
 
-    public function update($id, PermissionRequest $request){
-
+    public function update($id, UpdatePermissionRequest $request){
         if ($this->permissionService->update($id, $request)) {
             return redirect()->route('permission.index')->with('success', 'Cập nhập ngôn ngữ thành công !');
         }
@@ -82,7 +83,6 @@ class PermissionController extends Controller{
 
     public function destroy($id){
         $this->authorize('modules', 'permission.destroy');
-
         if ($this->permissionService->destroy($id)) {
             return redirect()->route('permission.index')->with('success', 'Xóa ngôn ngữ thành công !');
         }

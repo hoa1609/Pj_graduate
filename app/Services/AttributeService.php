@@ -3,21 +3,15 @@
 namespace App\Services;
 
 use App\Services\Interfaces\AttributeServiceInterface;
-use App\Services\Interfaces\BaseServiceInterface;
 use App\Repositories\Interfaces\AttributeRepositoryInterface as AttributeRepository;
 use App\Repositories\Interfaces\RouterRepositoryInterface as RouterRepository;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
-/**
- * Class AttributeService
- * @package App\Services
- */
+
+
 class AttributeService extends BaseService implements AttributeServiceInterface
 {
     protected $attributeRepository;
@@ -29,31 +23,30 @@ class AttributeService extends BaseService implements AttributeServiceInterface
         AttributeRepository $attributeRepository,
         RouterRepository $routerRepository,
     ){
-        $this->language = $this->currentLanguage();
         $this->attributeRepository = $attributeRepository;
         $this->routerRepository = $routerRepository;
         $this->controllerName = 'AttributeController';
     }
 
-    public function paginate ($request){
+    public function paginate ($request, $languageId){
         $condition = [
             'keyword' => addslashes($request->input('keyword')),
             'publish' => $request->integer('publish'),
             'where' => [
-                ['tb2.language_id', '=', $this->language]
+                ['tb2.language_id', '=', $languageId]
             ]
         ];
         $perPage = $request->integer('perpage', 10);
         $attributes = $this->attributeRepository->pagination(
-            $this->paginateSelect(), 
-            $condition, 
+            $this->paginateSelect(),
+            $condition,
             $perPage,
-            ['path' => 'attribute/index', 'groupBy' =>$this->paginateSelect()], 
-            ['attributes.id','DESC'],
+            ['path' => 'attribute/index', 'groupBy' => $this->paginateSelect()],
+            ['attributes.id', 'DESC'],
             [
                 ['attribute_language as tb2', 'tb2.attribute_id', '=', 'attributes.id'],
                 ['attribute_catalogue_attribute as tb3', 'attributes.id', '=', 'tb3.attribute_id'],
-            ] , 
+            ],
             ['attribute_catalogues'],
             $this->whereRaw($request),
         );
@@ -79,12 +72,12 @@ class AttributeService extends BaseService implements AttributeServiceInterface
     }
 
 
-    public function create($request){
+    public function create($request, $languageId){
         DB::beginTransaction();
         try{
             $attribute = $this->createAttribute($request);
             if($attribute->id > 0){
-                $this->updateLanguageForAttribute($attribute, $request);
+                $this->updateLanguageForAttribute($attribute, $request, $languageId);
                 $this->updateCatalogueForAttribute($attribute, $request);
                 $this->createRouter($attribute, $request, $this->controllerName);
             }
@@ -113,19 +106,19 @@ class AttributeService extends BaseService implements AttributeServiceInterface
         return $this->attributeRepository->update($attribute->id, $payload);
     }
 
-    private function updateLanguageForAttribute($attribute, $request){
+    private function updateLanguageForAttribute($attribute, $request, $languageId){
         $payload = $request->only($this->payloadLanguage());
-        $payload = $this->formatLanguagePayload($payload, $attribute->id);
-        $attribute->languages()->detach([$this->language, $attribute->id]);
+        $payload = $this->formatLanguagePayload($payload, $attribute->id, $languageId);
+        $attribute->languages()->detach([$languageId, $attribute->id]);
         return $this->attributeRepository->createPivot($attribute, $payload,'languages');
     }
     private function updateCatalogueForAttribute($attribute, $request){
         $attribute->attribute_catalogues()->sync($this->catalogue($request));
     }
 
-    private function formatLanguagePayload($payload, $attributeId){
+    private function formatLanguagePayload($payload, $attributeId, $languageId){
         $payload['canonical'] =Str::slug($payload['canonical']);
-        $payload['language_id'] = $this->language;
+        $payload['language_id'] = $languageId;
         $payload['attribute_id'] = $attributeId;
         return $payload;
     }
@@ -138,12 +131,12 @@ class AttributeService extends BaseService implements AttributeServiceInterface
         return [$request->attribute_catalogue_id];
     }
 
-    public function update($id, $request){
+    public function update($id, $request, $languageId){
         DB::beginTransaction();
         try{
             $attribute = $this->attributeRepository->findById($id);
             if( $this->uploadAttribute($attribute, $request)){
-                $this->updateLanguageForAttribute($attribute, $request);
+                $this->updateLanguageForAttribute($attribute, $request, $languageId);
                 $this->updateCatalogueForAttribute($attribute, $request);
                 $this->updateRouter($attribute, $request, $this->controllerName);
             }

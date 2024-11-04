@@ -1,15 +1,6 @@
-@if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
-
+@include('backend.dashboard.component.errors')
 @php
-    $url = ($config['method'] == 'create') ? route('attribute.store') : route('attribute.update',$product-> id);
+    $url = ($config['method'] == 'create') ? route('attribute.store') : route('attribute.update',$attribute-> id);
 @endphp
 <form action="{{ $url }}" method="post">
     @csrf
@@ -35,7 +26,7 @@
                                     name="name" 
                                     class="form-control" 
                                     placeholder="nhập tên bài viết..."
-                                    value="{{ old('name', ($product-> name) ?? '' ) }}"
+                                    value="{{ old('name', ($attribute-> name) ?? '' ) }}"
                                     >
                             </div>
                         </div>
@@ -51,7 +42,7 @@
                                     {{ (isset($disabled)) ? 'disabled' : '' }} 
                                     data-height="100"
                                     >
-                                    {{ old('description', ($product-> description) ?? '') }}
+                                    {{ old('description', ($attribute-> description) ?? '') }}
                                 </textarea>
                             </div>
                         </div>
@@ -69,7 +60,7 @@
                                     id="ckContent"
                                     data-height="300"
                                     >
-                                    {{ old('content', ($product-> content) ?? '') }}
+                                    {{ old('content', ($attribute-> content) ?? '') }}
                                 </textarea>
                             </div>
                         </div>
@@ -89,7 +80,7 @@
                                 <select name="attribute_catalogue_id" class="form-control setupSelect2" id="">
                                     @foreach($dropdown as $key => $val)
                                     <option {{ 
-                                        $key == old('attribute_catalogue_id', (isset($product->attribute_catalogue_id)) ? $product->attribute_catalogue_id : '') ? 'selected' : '' 
+                                        $key == old('attribute_catalogue_id', (isset($attribute->attribute_catalogue_id)) ? $attribute->attribute_catalogue_id : '') ? 'selected' : '' 
                                         }} value="{{ $key }}">{{ $val }}</option>
                                     @endforeach
                                 </select>
@@ -124,12 +115,12 @@
                             </div>
                             <span class="image img-cover image-target">
                                 @php
-                                    $image = old('image', $product->image ?? ''); 
+                                    $image = old('image', $attribute->image ?? ''); 
                                     $image = $image ?: 'backend/assets/images/no-img.jpg'; 
                                 @endphp
                                 <img src="{{ $image }}" alt="img" width="200px">
                             </span>
-                            <input type="hidden" name="image" value="{{ old('image', ($product-> image) ?? '') }}">
+                            <input type="hidden" name="image" value="{{ old('image', ($attribute-> image) ?? '') }}">
                         </div>
                     </div>
                 </div>
@@ -143,14 +134,14 @@
                                 <div class="mb-2">
                                     <select name="publish" class="form-select form-select-important">
                                         @foreach (config('apps.general.publish') as $key => $val)
-                                            <option {{ ($key == old('publish', $product->publish ?? '')) ? 'selected' : '' }} value="{{ $key }}">{{ $val }}</option>
+                                            <option {{ ($key == old('publish', $attribute->publish ?? '')) ? 'selected' : '' }} value="{{ $key }}">{{ $val }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                                 <div class="">
                                     <select name="follow" class="form-select form-select-important">
                                         @foreach (config('apps.general.follow') as $key => $val)
-                                            <option {{ ($key == old('follow', $product-> follow ?? ''))  ? 'selected' : '' }}  value="{{ $key }}">{{ $val }}</option>
+                                            <option {{ ($key == old('follow', $attribute-> follow ?? ''))  ? 'selected' : '' }}  value="{{ $key }}">{{ $val }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -179,14 +170,14 @@
                         <div class="ibox-content mb-3">
                             <div class="seo-container">
                                 <div class="meta-title fs-5">
-                                    {{ (old('meta_title', ($product-> meta_title) ?? '' )) ?? 'Đây là tiêu đề cho bài viết' }}
+                                    {{ (old('meta_title', ($attribute-> meta_title) ?? '' )) ?? 'Đây là tiêu đề cho bài viết' }}
                                 </div>
                             </div>
                             <div class="canonical mb-2">
-                                {{ ( ($product-> canonical) ?? '') ? config('app.url').old('canonical', ($product-> canonical) ?? '').config('apps.general.suffix') : 'http://duong-dan-cua-ban.html' }}
+                                {{ ( ($attribute-> canonical) ?? '') ? config('app.url').old('canonical', ($attribute-> canonical) ?? '').config('apps.general.suffix') : 'http://duong-dan-cua-ban.html' }}
                             </div>
                             <div class="meta-description">
-                                {{ (old('meta_description', ($product-> meta_description) ?? '')) ?? 'Đây là mô tả bài viết.......' }}
+                                {{ (old('meta_description', ($attribute-> meta_description) ?? '')) ?? 'Đây là mô tả bài viết.......' }}
                             </div>
                         </div>
                         <div class="row mb-2">
@@ -201,7 +192,7 @@
                                     name="meta_title" 
                                     type="text" 
                                     placeholder="nhập tên bài viết..."
-                                    value="{{ old('meta_title', ($product-> meta_title) ?? '' ) }}"
+                                    value="{{ old('meta_title', ($attribute-> meta_title) ?? '' ) }}"
                                     >
                             </div>
                         </div>
@@ -214,7 +205,7 @@
                                 <input class="form-control mb-2" 
                                 name="meta_keyword"
                                 placeholder="nhập từ khóa"
-                                value="{{ old('meta_keyword', ($product-> meta_keyword) ?? '' ) }}"
+                                value="{{ old('meta_keyword', ($attribute-> meta_keyword) ?? '' ) }}"
                                 >
                             </div>
                         </div>
@@ -229,7 +220,7 @@
                                     rows="3" 
                                     name="meta_description" 
                                     placeholder="nhập mô tả"
-                                >{{ old('meta_description', ($product-> meta_description) ?? '') }}</textarea>
+                                >{{ old('meta_description', ($attribute-> meta_description) ?? '') }}</textarea>
                             </div>
                         </div>
                         <div class="row mb-2">
@@ -243,7 +234,7 @@
                                         type="text"
                                         class="form-control"
                                         name="canonical" 
-                                        value="{{ old('name', ($product-> canonical) ?? '' ) }}"
+                                        value="{{ old('name', ($attribute-> canonical) ?? '' ) }}"
                                         >
                                 </div>
                             </div>

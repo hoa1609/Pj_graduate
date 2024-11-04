@@ -25,9 +25,6 @@ class BaseService  implements BaseServiceInterface
         $this->routerRepository = $routerRepository;
     }
 
-    public function currentLanguage(){
-        return 1;
-    }
 
     public function formatAlbum($request){
         return  ($request->input('album') && !empty($request->input('album'))) ? json_encode($request->input('album')) : '';

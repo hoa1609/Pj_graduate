@@ -31,7 +31,7 @@
                             </div>
                         </td>
                         <td class="text-end uk-flex">                                                        
-                            <a class="pading-action" href="{{ route('post.catalogue.edit', $attributeCatalogue-> id) }}">
+                            <a class="pading-action" href="{{ route('attribute.catalogue.edit', $attributeCatalogue-> id) }}">
                                 <i class="las la-pen text-secondary fs-18"></i>
                             </a>
                             <form action="{{ route('attribute.catalogue.destroy', $attributeCatalogue-> id) }}" method="POST">

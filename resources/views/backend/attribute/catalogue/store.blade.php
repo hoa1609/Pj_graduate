@@ -1,13 +1,4 @@
-@if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
-
+@include('backend.dashboard.component.errors')
 @php
     $url = ($config['method'] == 'create') ? route('attribute.catalogue.store') : route('attribute.catalogue.update',$attributeCatalogue-> id);
 @endphp

@@ -58,9 +58,7 @@ class AttributeCatalogue extends Model
         if($attributeCatalogue->rgt - $attributeCatalogue->lft !== 1){
             return false;
         } 
-
         return true;
-        
     }
 
 

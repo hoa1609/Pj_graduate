@@ -40,7 +40,7 @@
             this.value = formatPrice(value);
         });
 
-        //Scoll
+       
         document.addEventListener('scroll', function() {
             var fixedSaveProduct = document.querySelector('.fixed-save-product');
             if (window.scrollY > 500) {

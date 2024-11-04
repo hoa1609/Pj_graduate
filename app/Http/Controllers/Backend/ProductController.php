@@ -32,7 +32,6 @@ class ProductController extends Controller{
             $this->initialize();
             return $next($request);
         });
-        
 
         $this->productService = $productService;
         $this->productRepository = $productRepository;
@@ -52,12 +51,12 @@ class ProductController extends Controller{
    
 
     public function index(Request $request){
-        // $this->authorize('modules', 'product.index');
+        $this->authorize('modules', 'product.index');
         $config = [
             'model' => 'Product',
         ];
         $perPage = $request->integer('perpage');
-        $products = $this->productService->paginate($request);
+        $products = $this->productService->paginate($request, $this->language);
         $dropdown = $this->nestedset->Dropdown();
         $template = 'backend.product.product.index';
         $config['seo'] = config('apps.product.index');
@@ -71,7 +70,7 @@ class ProductController extends Controller{
 
 
     public function create(){
-        // $this->authorize('modules', 'product.create');
+        $this->authorize('modules', 'product.create');
         $attributeCatalogue = $this->attributeCatalogue->getAll($this->language);
         $config['method'] = 'create';
         $config['seo'] = config('apps.product.create');
@@ -87,15 +86,15 @@ class ProductController extends Controller{
 
 
     public function store(ProductRequest $request){
-        if ($this->productService->create($request)) {
-            return redirect()->route('product.index')->with('success', 'Thêm nhóm thành viên thành công !');
+        if ($this->productService->create($request, $this->language)) {
+            return redirect()->route('product.index')->with('success', 'Thêm sản phẩm thành công !');
         }
-        return redirect()->route('product.index')->with('error', 'Thêm nhóm thành viên thất bại !');
+        return redirect()->route('product.index')->with('error', 'Thêm sản phẩm thất bại !');
     }
 
 
     public function edit($id){
-        // $this->authorize('modules', 'product.edit');
+        $this->authorize('modules', 'product.edit');
         $product = $this->productRepository->getProductById($id, $this->language);
         $config['method'] = 'edit';
         $config['seo'] = config('apps.product.edit');
@@ -116,19 +115,19 @@ class ProductController extends Controller{
 
 
     public function update($id, UpdateProductRequest $request){
-        if ($this->productService->update($id, $request)) {
-            return redirect()->route('product.index')->with('success', 'Cập nhập nhóm thành viên thành công !');
+        if ($this->productService->update($id, $request, $this->language)) {
+            return redirect()->route('product.index')->with('success', 'Cập nhập sản phẩm thành công !');
         }
-        return redirect()->route('product.index')->with('error', 'Cập nhập nhóm thành viên thất bại !');
+        return redirect()->route('product.index')->with('error', 'Cập nhập sản phẩm thất bại !');
     }
 
     
     public function destroy($id){
-        // $this->authorize('modules', 'product.destroy');
+        $this->authorize('modules', 'product.destroy');
         if ($this->productService->destroy($id)) {
-            return redirect()->route('product.index')->with('success', 'Xóa nhóm thành viên thành công!');
+            return redirect()->route('product.index')->with('success', 'Xóa sản phẩm thành công!');
         }
-        return redirect()->route('product.index')->with('error', 'Xóa nhóm thành viên thất bại!');
+        return redirect()->route('product.index')->with('error', 'Xóa sản phẩm thất bại!');
     }
 
 

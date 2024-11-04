@@ -136,7 +136,7 @@
                                     class="form-control" 
                                     name="price"
                                     id="priceInput"
-                                    value="{{ old('made_in', ($product->price) ?? '') }}"
+                                    value="{{ old('price', ($product->price) ?? '') }}"
                                 >
                             </div>
                         </div>

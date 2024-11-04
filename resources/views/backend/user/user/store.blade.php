@@ -9,15 +9,7 @@
                         </div>
                     </div>                                    
                 </div>
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
+                @include('backend.dashboard.component.errors')
                 @php
                     $url = ($config['method'] == 'create') ? route('user.store') : route('user.update', $user-> id);
                 @endphp
@@ -122,7 +114,7 @@
                                 <div class="row pb-4 text-start">
                                     <div class="col-lg-6 mb40">
                                         <label class="form-label">Thành phố</label>
-                                        <select name="province_id" class="form-select setUpSelect2 location" data-target="districts">
+                                        <select name="province_id" class="form-select setUpSelect2 province location" data-target="districts">
                                             <option value="0">[Chọn Thành Phố]</option>
                                             @if (isset($provinces))
                                                 @foreach ($provinces as $province)
@@ -158,9 +150,9 @@
                                     <div class="col-md-12">
                                         <label class="form-label">Ghi chú</label>
                                         <input class="form-control"
-                                        name="description "
+                                        name="description"
                                         placeholder="nhập ghi chú..."
-                                        value="{{ old('description ', ($user-> description ) ?? '' ) }}"
+                                        value="{{ old('description', ($user-> description ) ?? '' ) }}"
                                         >
                                     </div>
                                 </div>

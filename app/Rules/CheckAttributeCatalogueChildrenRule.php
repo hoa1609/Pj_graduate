@@ -15,11 +15,7 @@ class CheckAttributeCatalogueChildrenRule implements ValidationRule
         $this->id = $id;
     }
 
-    /**
-     * Run the validation rule.
-     *
-     * @param  \Closure(string): \Illuminate\Translation\PotentiallyTranslatedString  $fail
-     */
+    
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
         $flag = AttributeCatalogue::isNodeCheck($this->id);

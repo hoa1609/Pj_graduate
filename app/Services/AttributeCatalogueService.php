@@ -7,17 +7,13 @@ use App\Services\Interfaces\BaseServiceInterface;
 use App\Repositories\Interfaces\AttributeCatalogueRepositoryInterface as AttributeCatalogueRepository;
 use App\Repositories\Interfaces\RouterRepositoryInterface as RouterRepository;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\Classes\Nestedsetbie;
 use Illuminate\Support\Str;
 
-/**
- * Class AttributeCatalogueService
- * @package App\Services
- */
+
+
+
 class AttributeCatalogueService extends BaseService implements AttributeCatalogueServiceInterface
 {
     protected $attributeCatalogueRepository;
@@ -31,52 +27,53 @@ class AttributeCatalogueService extends BaseService implements AttributeCatalogu
         AttributeCatalogueRepository $attributeCatalogueRepository,
         RouterRepository $routerRepository,
     ){
-        $this->language = $this->currentLanguage();
         $this->attributeCatalogueRepository = $attributeCatalogueRepository;
         $this->routerRepository = $routerRepository;
-        $this->nestedset = new Nestedsetbie([
-            'table' => 'attribute_catalogues',
-            'foreignkey' => 'attribute_catalogue_id',
-            'language_id' => $this->language,
-        ]);
     }
 
-    public function paginate ($request){
+
+
+    public function paginate ($request, $languageId){
         $condition = [
-            'keyword' => addslashes($request->input('keyword')),
+            'keyword' => $request->input('keyword'),
             'publish' => $request->integer('publish'),
             'where' => [
-                ['tb2.language_id', '=', $this->language]
+                ['tb2.language_id', '=', $languageId]
             ]
         ];
         $perPage = $request->integer('perpage', 10);
         $attributeCatalogues = $this->attributeCatalogueRepository->pagination(
-            $this->paginateSelect(), 
-            $condition, 
+            $this->paginateSelect(),
+            $condition,
             $perPage,
-            ['path' => 'attribute/catalogue/index'], 
-            ['attribute_catalogues.lft','ASC'],
+            ['path' => 'attribute/catalogue/index'],
+            ['attribute_catalogues.lft', 'ASC'],
             [
                 ['attribute_catalogue_language as tb2', 'tb2.attribute_catalogue_id', '=', 'attribute_catalogues.id']
-            ] , 
+            ],
         );
         return $attributeCatalogues;
     }
 
-    public function create($request){
+
+    public function create($request, $languageId){
         DB::beginTransaction();
         try{
             $attributeCatalogue = $this->createCatalogue($request);
             if($attributeCatalogue->id >0){
-                $this->updateLanguageForCatalogue($attributeCatalogue, $request);
+                $this->updateLanguageForCatalogue($attributeCatalogue, $request, $languageId);
                 $this->createRouter($attributeCatalogue, $request, $this->controllerName);
+                $this->nestedset = new Nestedsetbie([
+                    'table' => 'attribute_catalogues',
+                    'foreignkey' => 'attribute_catalogue_id',
+                    'language_id' =>  $languageId ,
+                ]);
                 $this->nestedset();
             }
             DB::commit();
             return true;
         }catch(\Exception $e ){
             DB::rollBack();
-            // Log::error($e->getMessage());
             echo $e->getMessage();die();
             return false;
         }
@@ -90,17 +87,17 @@ class AttributeCatalogueService extends BaseService implements AttributeCatalogu
         return $attributeCatalogue;
     }
 
-    private function updateLanguageForCatalogue($attributeCatalogue, $request){
-        $payload = $this->formatLanguagePayload($attributeCatalogue, $request);
+    private function updateLanguageForCatalogue($attributeCatalogue, $request, $languageId){
+        $payload = $this->formatLanguagePayload($attributeCatalogue, $request, $languageId);
         $attributeCatalogue->languages()->detach($this->language, $attributeCatalogue->id);
         $language = $this->attributeCatalogueRepository->createPivot($attributeCatalogue, $payload, 'languages');
         return $language;
     }
 
-    private function formatLanguagePayload($attributeCatalogue, $request){
+    private function formatLanguagePayload($attributeCatalogue, $request, $languageId){
         $payload = $request->only($this->payloadLanguage());
         $payload['canonical'] =Str::slug($payload['canonical']);
-        $payload['language_id'] = $this->currentLanguage();
+        $payload['language_id'] = $languageId;
         $payload['attribute_catalogue_id'] = $attributeCatalogue->id;
         return $payload;
 
@@ -113,39 +110,44 @@ class AttributeCatalogueService extends BaseService implements AttributeCatalogu
         return $flag;
     }
 
-    public function update($id, $request){
+    public function update($id, $request, $languageId){
         DB::beginTransaction();
         try{
             $attributeCatalogue = $this->attributeCatalogueRepository->findById($id);
             $flag = $this->updateCatalogue($attributeCatalogue, $request);
             if($flag == TRUE){
-                $this->updateLanguageForCatalogue($attributeCatalogue, $request);
+                $this->updateLanguageForCatalogue($attributeCatalogue, $request, $languageId);
                 $this->updateRouter($attributeCatalogue, $request, $this->controllerName);
+                $this->nestedset = new Nestedsetbie([
+                    'table' => 'attribute_catalogues',
+                    'foreignkey' => 'attribute_catalogue_id',
+                    'language_id' =>  $languageId ,
+                ]);
                 $this->nestedset();
             }
             DB::commit();
             return true;
         }catch(\Exception $e ){
             DB::rollBack();
-            // Log::error($e->getMessage());
             echo $e->getMessage();die();
             return false;
         }
     }
 
-    public function destroy($id){
+    public function destroy($id, $languageId){
         DB::beginTransaction();
         try{
             $attributeCatalogue = $this->attributeCatalogueRepository->delete($id);
-            $this->nestedset->Get('level ASC, order ASC');
-            $this->nestedset->Recursive(0, $this->nestedset->Set());
-            $this->nestedset->Action();
-
+            $this->nestedset = new Nestedsetbie([
+                'table' => 'attribute_catalogues',
+                'foreignkey' => 'attribute_catalogue_id',
+                'language_id' =>  $languageId ,
+            ]);
+            $this->nestedset();
             DB::commit();
             return true;
         }catch(\Exception $e ){
             DB::rollBack();
-            // Log::error($e->getMessage());
             echo $e->getMessage();die();
             return false;
         }
@@ -156,13 +158,10 @@ class AttributeCatalogueService extends BaseService implements AttributeCatalogu
         try{
             $payload[$attribute['field']] = (($attribute['value'] == 1)?2:1);
             $attributeCatalogues = $this->attributeCatalogueRepository->update($attribute['modelId'], $payload);
-            // $this->changeUserStatus($attribute, $payload[$attribute['field']]);
-
             DB::commit();
             return true;
         }catch(\Exception $e ){
             DB::rollBack();
-            // Log::error($e->getMessage());
             echo $e->getMessage();die();
             return false;
         }
@@ -173,13 +172,10 @@ class AttributeCatalogueService extends BaseService implements AttributeCatalogu
         try{
             $payload[$attribute['field']] = $attribute['value'];
             $flag = $this->attributeCatalogueRepository->updateByWhereIn('id', $attribute['id'], $payload);
-            // $this->changeUserStatus($attribute, $attribute['value']);
-
             DB::commit();
             return true;
         }catch(\Exception $e ){
             DB::rollBack();
-            // Log::error($e->getMessage());
             echo $e->getMessage();die();
             return false;
         }
@@ -216,7 +212,4 @@ class AttributeCatalogueService extends BaseService implements AttributeCatalogu
             'canonical'
         ];
     }
-
-
-
 }

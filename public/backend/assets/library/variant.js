@@ -291,8 +291,8 @@
             { name: 'variant[file_name][]', class: 'variant_filename' },
             { name: 'variant[file_url][]', class: 'variant_fileurl' },
             { name: 'variant[album][]', class: 'variant_album' },
-            { name: 'attribute[name][]', value: attributeString },
-            { name: 'attribute[id][]', value: attributeId },
+            { name: 'productVariant[name][]', value: attributeString },
+            { name: 'productVariant[id][]', value: attributeId },
         ]
 
         $.each(inputHiddenFields, function (_, field) {
@@ -711,9 +711,5 @@
         HT.cancleVariantUpdate()
         HT.setupSelectMultiple(() => { HT.productVariant() })
     });
-
-    
-    
-
 })(jQuery);
 
