@@ -20,8 +20,8 @@
                         <td> {{ $slide->name }}</td>
                         <td> {{ $slide->keyword }}</td>
                         <td>
-                            @if (isset($slide->items['2']))
-                                @foreach ($slide->items['2'] as $item)
+                            @if (isset($slide->items['1']))
+                                @foreach ($slide->items['1'] as $item)
                                     <img src="{{ asset($item['image']) }}" alt="{{ $item['alt'] }}"
                                         style="max-width: 100px;">
                                 @endforeach
