@@ -42,15 +42,13 @@
                                     >
                             </div>
                         </td>
-                        <td class="text-end uk-flex">                                                        
+                        <td class="text-end">                                                        
                             <a class="pading-action" href="{{ route('user.edit', $user-> id) }}">
                                 <i class="las la-pen text-secondary fs-18"></i>
                             </a>
-                            <form action="{{ route('user.destroy', $user-> id) }}" method="POST">
-                                @method('DELETE')
-                                @csrf
-                                <button class="button_none pading-action" style="submit"><i class="las la-trash-alt text-secondary fs-18"></i></button>
-                            </form>
+                            <a class="pading-action" href="{{ route('user.delete', $user-> id) }}">
+                                <i class="las la-trash-alt text-secondary fs-18"></i>
+                            </a>
                         </td>
                     </tr>
                 @endforeach

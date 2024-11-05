@@ -80,6 +80,16 @@ class LanguageController extends Controller{
         return redirect()->route('language.index')->with('error', 'Cập nhập ngôn ngữ thất bại !');
     }
 
+    public function delete($id){
+        $this->authorize('modules', 'language.delete');
+        $language = $this->languageRepository->findById($id);
+        $template = 'backend.language.delete';
+        return view('backend.dashboard.layout', compact(
+            'template',
+            'language',
+        ));
+    }
+
 
     public function destroy($id){
         if ($this->languageService->destroy($id)) {

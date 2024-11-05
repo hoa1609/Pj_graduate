@@ -8,9 +8,9 @@
                 </th>
                 <th>Hình ảnh</th>
                 <th>Loại thuộc tính</th>
-                <th>Vị trí</th>
+                {{-- <th>Vị trí</th> --}}
                 <th>Tình trạng</th>
-                <th>Thao tác</th>
+                <th class="text-end">Thao tác</th>
             </tr>
             </thead>
             <tbody>
@@ -37,9 +37,9 @@
                                 </div>
                             </div>
                         </td>
-                        <td>
+                        {{-- <td>
                             <input type="text" name="form-control" data-id="{{ $attribute->id }}" data-model="{{ $config['model'] }}" value="{{ $attribute-> order }}">
-                        </td>
+                        </td> --}}
                         <td>
                             <div class="form-switch">
                                 <input class="form-check-input status js-switch-{{ $attribute-> id }}" 
@@ -52,24 +52,13 @@
                                     >
                             </div>
                         </td>
-                        <td class="text-end uk-flex">                                                        
+                        <td class="text-end">                                                        
                             <a class="pading-action" href="{{ route('attribute.edit', $attribute-> id) }}">
                                 <i class="las la-pen text-secondary fs-18"></i>
                             </a>
-                            <form action="{{ route('attribute.destroy', $attribute-> id) }}" method="POST">
-                                @method('DELETE')
-                                @csrf  
-                                <input 
-                                    type="hidden"
-                                    name="name"
-                                    value="{{ old('name', ($attribute->name) ?? '' ) }}"
-                                    class="form-control"
-                                    placeholder=""
-                                    autocomplete="off"
-                                    readonly
-                                >
-                                <button class="button_none pading-action" style="submit"><i class="las la-trash-alt text-secondary fs-18"></i></button>
-                            </form>
+                            <a class="pading-action" href="{{ route('attribute.delete', $attribute-> id) }}">
+                                <i class="las la-trash-alt text-secondary fs-18"></i>
+                            </a>
                         </td>
                     </tr>
                 @endforeach

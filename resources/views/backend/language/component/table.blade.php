@@ -36,20 +36,18 @@
                                     >
                             </div>
                         </td>
-                        <td class="text-end uk-flex">                                                        
+                        <td>                                                        
                             <a class="pading-action" href="{{ route('language.edit', $language-> id) }}">
                                 <i class="las la-pen text-secondary fs-18"></i>
                             </a>
-                            <form action="{{ route('language.destroy', $language-> id) }}" method="POST">
-                                @method('DELETE')
-                                @csrf
-                                <button class="button_none pading-action" style="submit"><i class="las la-trash-alt text-secondary fs-18"></i></button>
-                            </form>
+                            <a class="pading-action" href="{{ route('language.delete', $language-> id) }}">
+                                <i class="las la-trash-alt text-secondary fs-18"></i>
+                            </a>
                         </td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
     </div>            
-    {{-- {{  $language->links('pagination::bootstrap-4') }} --}}
+    {{-- {{  $languages->links('pagination::bootstrap-4') }} --}}
 </div>

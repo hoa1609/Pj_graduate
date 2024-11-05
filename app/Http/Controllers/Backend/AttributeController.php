@@ -41,7 +41,7 @@ class AttributeController extends Controller{
         $config = [
             'model' => 'Attribute',
         ];
-        // $this->authorize('modules', 'attribute.index');
+        $this->authorize('modules', 'attribute.index');
         $perPage = $request->integer('perpage');
         $attributes = $this->attributeService->paginate($request, $this->language);
         $dropdown = $this->nestedset->Dropdown();
@@ -58,7 +58,7 @@ class AttributeController extends Controller{
 
 
     public function create(){
-        // $this->authorize('modules', 'attribute.create');
+        $this->authorize('modules', 'attribute.create');
         $config['method'] = 'create';
         $config['seo'] = config('apps.attribute.create');
         $dropdown = $this->nestedset->Dropdown();
@@ -80,7 +80,7 @@ class AttributeController extends Controller{
 
 
     public function edit($id){
-        // $this->authorize('modules', 'attribute.edit');
+        $this->authorize('modules', 'attribute.edit');
         $attribute = $this->attributeRepository->getAttributeById($id, $this->language);
         $config['method'] = 'edit';
         $config['seo'] = config('apps.attribute.edit');
@@ -96,6 +96,16 @@ class AttributeController extends Controller{
         ));
     }
 
+    public function delete($id){
+        $this->authorize('modules', 'attribute.delete');
+        $attribute = $this->attributeRepository->getAttributeById($id, $this->language);
+        $template = 'backend.attribute.attribute.delete';
+        return view('backend.dashboard.layout', compact(
+            'template',
+            'attribute',
+        ));
+    }
+
     public function update($id, UpdateAttributeRequest $request){
         if ($this->attributeService->update($id, $request, $this->language)) {
             return redirect()->route('attribute.index')->with('success', 'Cập nhập nhóm thành viên thành công !');
@@ -104,7 +114,7 @@ class AttributeController extends Controller{
     }
     
     public function destroy($id){
-        // $this->authorize('modules', 'attribute.destroy');
+        $this->authorize('modules', 'attribute.destroy');
         if ($this->attributeService->destroy($id, $this->language)) {
             return redirect()->route('attribute.index')->with('success', 'Xóa nhóm thành viên thành công!');
         }

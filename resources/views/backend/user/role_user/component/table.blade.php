@@ -34,15 +34,13 @@
                                     >
                             </div>
                         </td>
-                        <td class="text-end uk-flex">                                                        
+                        <td>                                                        
                             <a class="pading-action" href="{{ route('user.role.edit', $userRole-> id) }}">
                                 <i class="las la-pen text-secondary fs-18"></i>
                             </a>
-                            <form action="{{ route('user.role.destroy', $userRole-> id) }}" method="POST">
-                                @method('DELETE')
-                                @csrf
-                                <button class="button_none pading-action" style="submit"><i class="las la-trash-alt text-secondary fs-18"></i></button>
-                            </form>
+                            <a class="pading-action" href="{{ route('user.role.delete', $userRole-> id) }}">
+                                <i class="las la-trash-alt text-secondary fs-18"></i>
+                            </a>
                         </td>
                     </tr>
                 @endforeach

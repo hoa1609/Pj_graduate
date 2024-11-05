@@ -91,6 +91,17 @@ class PostCatalogueController extends Controller{
         ));
     }
 
+    public function delete($id){
+        $this->authorize('modules', 'post.catalogue.delete');
+        $postCatalogue = $this->postCatalogueRepository->getPostCatalogueById($id, $this->language);
+        $template = 'backend.post.catalogue.delete';
+        return view('backend.dashboard.layout', compact(
+            'template',
+            'postCatalogue',
+        ));
+    }
+
+
 
     public function update($id, UpdatePostCatalogueRequest $request){
         if ($this->postCatalogueService->update($id, $request, $this->language)) {

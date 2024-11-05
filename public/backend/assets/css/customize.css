@@ -116,78 +116,108 @@ table strong{
 .input-wrapper{
     position: relative;
 }
+.input-wrapper .baseUrl{
+    position: absolute;
+    height:31px;
+    line-height:31px;
+    display: inline-block;
+    padding:0 10px;
+    left:0;
+    top:0;
+    background: linear-gradient(to bottom,#fff,#f9fafb);
+    border-color: #e5e6e7 !important;
+    border:1px solid;
+    border-right:0;
+}
+
+.seo-canonical{
+    color:navy;
+    font-weight:600;
+}
+
+.button-fix{
+    position: fixed;
+    bottom:30px;
+    right:30px;
+}
+
+.w .select2-container--default{
+    width:100% !important;
+}
+
+.w .ibox-content{
+    padding:10px;
+}
+
 .mb30{
     margin-bottom:30px;
 }
-.button_none{
-    border: none;
-    background: none;
+.clearfix:before {
+    content: "";
+    display: table-cell;
 }
-.pading-action{
-    padding: .75rem .4rem;
+
+.clearfix:after {
+    content: "";
+    display: table;
+    clear: both;
 }
-.active-bg{
-    background-color: #ebffef;
+.sortui{
+    list-style: none;
+    padding-left:0;
 }
-.checkBoxItem{
-    width: 20px;
-    height: 20px;
+.sortui .ui-state-default {
+    /* width: calc(20% - 2px);
+    float: left;
+    padding-left: 10px;
+    margin: 0 0 10px 0;
+    margin-bottom: 10px; */
+    cursor: move;
+    /* background: transparent;
+    box-shadow: none;
+    border:0; */
 }
-.meta-title{
-    color: #1b3fd1;
+/* .sortui .ui-state-default .thumb{
+    border:1px solid #ddd;
+    height:150px;
+    background:#fafbfc;
+} */
+.img-scaledown {
+    display: block;
+    width: 100%;
+    height: 100%;
 }
-.canonical{
-    color: #2f9119;
+.img-scaledown img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: scale-down;
 }
-.meta-description{
-    font-size: 15px;
-}
-.form-select-important{
-    line-height: 1 !important;
-}
-.textarea-10{
-    min-height: 100px !important;
-}
-.ui-sortable {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    grid-gap: 10px;
-    padding: 30px 0;
-    list-style-type: none;
-}
-.ui-sortable li {
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    padding: 10px;
+.click-to-upload {
     text-align: center;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    position: relative; 
+    padding: 20px;
+    border: 1px dashed #b8b2b2;
 }
-.ui-sortable li .thumb {
-    position: relative; 
+.sortui .thumb{
+    position: relative;
 }
-.ui-sortable li .thumb img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 4px;
-}
-.ui-sortable li .thumb button {
+.sortui .variant-delete-image,
+.sortui .delete-image{
     position: absolute;
-    top: 8px; 
-    right: 8px; 
-    background: #ffff; 
-    border: none;
-    color: #e32828;
-    padding: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.3s;
+    background: linear-gradient(to bottom,#fff,#f9fafb);
+    color:red;
+    right:10px;
+    top:10px;
+    border:0;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    display: inline-block;
+    width:25px;
+    height:25px;
 }
-.ui-sortable li .thumb button:hover {
-    background-color: rgba(217, 83, 79, 0.8); 
+.sortui .variant-delete-image:hover,
+.sortui .delete-image:hover{
+    background: red;
+    color:#fff;
 }
 .hidden{
     display: none;

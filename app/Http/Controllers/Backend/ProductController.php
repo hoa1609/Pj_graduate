@@ -113,6 +113,16 @@ class ProductController extends Controller{
         ));
     }
 
+    public function delete($id){
+        $this->authorize('modules', 'product.delete');
+        $product = $this->productRepository->getProductById($id, $this->language);
+        $template = 'backend.product.product.delete';
+        return view('backend.dashboard.layout', compact(
+            'template',
+            'product',
+        ));
+    }
+
 
     public function update($id, UpdateProductRequest $request){
         if ($this->productService->update($id, $request, $this->language)) {

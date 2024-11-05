@@ -51,6 +51,10 @@ class AppServiceProvider extends ServiceProvider
         'App\Services\Interfaces\ProductVariantLanguageServiceInterface' => 'App\Services\ProductVariantLanguageService',
         'App\Repositories\Interfaces\ProductVariantLanguageRepositoryInterface' => 'App\Repositories\ProductVariantLanguageRepository',
 
+        /* slide */
+        'App\Services\Interfaces\SlideServiceInterface' => 'App\Services\SlideService',
+        'App\Repositories\Interfaces\SlideRepositoryInterface' =>'App\Repositories\SlideRepository',
+
         /* router */
         'App\Services\Interfaces\RouterServiceInterface' => 'App\Services\RouterService',
         'App\Repositories\Interfaces\RouterRepositoryInterface' => 'App\Repositories\RouterRepository',
@@ -58,6 +62,7 @@ class AppServiceProvider extends ServiceProvider
         /* provine & ditrict*/
         'App\Repositories\Interfaces\ProvinceRepositoryInterface' => 'App\Repositories\ProvinceRepository',
         'App\Repositories\Interfaces\DistrictRepositoryInterface' => 'App\Repositories\DistrictRepository',
+
 
         
         

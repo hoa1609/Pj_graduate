@@ -102,6 +102,18 @@ class ProductCatalogueController extends Controller {
         ));
     }
 
+    public function delete($id){
+        $this->authorize('modules', 'product.catalogue.delete');
+        $config['method'] = 'delete';
+        $productCatalogue = $this->productCatalogueRepository->getProductCatalogueById($id, $this->language);
+        $template = 'backend.product.catalogue.delete';
+        return view('backend.dashboard.layout', compact(
+            'config',
+            'template',
+            'productCatalogue',
+        ));
+    }
+
 
     public function update($id, UpdateProductCatalogueRequest $request){
         if ($this->productCatalogueService->update($id, $request, $this->language)) {

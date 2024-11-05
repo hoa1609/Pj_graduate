@@ -85,6 +85,16 @@ class UserController extends Controller{
         ));
     }
 
+    public function delete($id){
+        $this->authorize('modules', 'user.delete');
+        $user = $this->userRepository->findById($id);
+        $template = 'backend.user.user.delete';
+        return view('backend.dashboard.layout', compact(
+            'template',
+            'user',
+        ));
+    }
+
 
     public function update($id, UpdateUserRequest $request){
         if ($this->userService->update($id, $request)) {

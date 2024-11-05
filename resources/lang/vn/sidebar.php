@@ -39,6 +39,17 @@ return [
             ],
         ],
         [
+            'dropdown' => 'sidebarslide',
+            'title' => 'QL slide',
+            'icon' => 'lar la-image',
+            'subModule' => [
+                [
+                    'title' => 'Slide & banner',
+                    'route' => 'slide.index'
+                ]
+            ]
+        ],
+        [
             'dropdown' => 'sidebarPost',
             'title' => 'QL Bài viết',
             'icon' => 'fa fa-file',

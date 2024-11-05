@@ -10,7 +10,7 @@
                 <th>Bài viết</th>
                 <th>Vị trí</th>
                 <th>Tình trạng</th>
-                <th>Thao tác</th>
+                <th class="text-end">Thao tác</th>
             </tr>
             </thead>
             <tbody>
@@ -52,24 +52,13 @@
                                     >
                             </div>
                         </td>
-                        <td class="text-end uk-flex">                                                        
+                        <td class="text-end">                                                        
                             <a class="pading-action" href="{{ route('product.edit', $product-> id) }}">
-                                <i class="las la-pen text-secondary fs-18"></i>
+                                <i class="las la-pen text-secondary fs-20"></i>
                             </a>
-                            <form action="{{ route('product.destroy', $product-> id) }}" method="POST">
-                                @method('DELETE')
-                                @csrf  
-                                <input 
-                                    type="hidden"
-                                    name="name"
-                                    value="{{ old('name', ($product->name) ?? '' ) }}"
-                                    class="form-control"
-                                    placeholder=""
-                                    autocomplete="off"
-                                    readonly
-                                >
-                                <button class="button_none pading-action" style="submit"><i class="las la-trash-alt text-secondary fs-18"></i></button>
-                            </form>
+                            <a class="pading-action" href="{{ route('product.delete', $product-> id) }}">
+                                <i class="las la-trash-alt text-secondary fs-20"></i>
+                            </a>
                         </td>
                     </tr>
                 @endforeach

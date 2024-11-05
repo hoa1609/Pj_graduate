@@ -89,6 +89,16 @@ class UserRoleController extends Controller{
         return redirect()->route('user.role.index')->with('error', 'Cập nhập nhóm thành viên thất bại !');
     }
 
+    public function delete($id){
+        $this->authorize('modules', 'user.role.delete');
+        $userRole = $this->userRoleRepository->findById($id);
+        $template = 'backend.user.role_user.delete';
+        return view('backend.dashboard.layout', compact(
+            'template',
+            'userRole',
+        ));
+    }
+
 
     public function destroy($id){
         $this->authorize('modules', 'user.role.destroy');

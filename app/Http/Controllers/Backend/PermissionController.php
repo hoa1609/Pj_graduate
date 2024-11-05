@@ -74,6 +74,17 @@ class PermissionController extends Controller{
         ));
     }
 
+    public function delete($id){
+        $this->authorize('modules', 'permission.delete');
+        $permission = $this->permissionRepository->findById($id);
+        $template = 'backend.permission.delete';
+        return view('backend.dashboard.layout', compact(
+            'template',
+            'permission',
+        ));
+    }
+
+
     public function update($id, UpdatePermissionRequest $request){
         if ($this->permissionService->update($id, $request)) {
             return redirect()->route('permission.index')->with('success', 'Cập nhập ngôn ngữ thành công !');

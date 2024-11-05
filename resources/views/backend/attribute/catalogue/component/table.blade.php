@@ -30,24 +30,13 @@
                                     >
                             </div>
                         </td>
-                        <td class="text-end uk-flex">                                                        
+                        <td>                                                        
                             <a class="pading-action" href="{{ route('attribute.catalogue.edit', $attributeCatalogue-> id) }}">
                                 <i class="las la-pen text-secondary fs-18"></i>
                             </a>
-                            <form action="{{ route('attribute.catalogue.destroy', $attributeCatalogue-> id) }}" method="POST">
-                                @method('DELETE')
-                                @csrf  
-                                <input 
-                                    type="hidden"
-                                    name="name"
-                                    value="{{ old('name', ($attributeCatalogue->name) ?? '' ) }}"
-                                    class="form-control"
-                                    placeholder=""
-                                    autocomplete="off"
-                                    readonly
-                                >
-                                <button class="button_none pading-action" style="submit"><i class="las la-trash-alt text-secondary fs-18"></i></button>
-                            </form>
+                            <a class="pading-action" href="{{ route('attribute.catalogue.delete', $attributeCatalogue-> id) }}">
+                                <i class="las la-trash-alt text-secondary fs-18"></i>
+                            </a>
                         </td>
                     </tr>
                 @endforeach

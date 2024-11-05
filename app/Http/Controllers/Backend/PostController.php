@@ -95,6 +95,17 @@ class PostController extends Controller{
     }
 
 
+    public function delete($id){
+        $this->authorize('modules', 'post.delete');
+        $post = $this->postRepository->getPostById($id, $this->language);
+        $template = 'backend.post.post.delete';
+        return view('backend.dashboard.layout', compact(
+            'template',
+            'post',
+        ));
+    }
+
+
     public function update($id, UpdatePostRequest $request){
         if ($this->postService->update($id, $request, $this->language)) {
             return redirect()->route('post.index')->with('success', 'Cập nhập nhóm thành viên thành công !');

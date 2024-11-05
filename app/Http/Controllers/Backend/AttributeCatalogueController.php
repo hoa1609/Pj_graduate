@@ -91,6 +91,17 @@ class AttributeCatalogueController extends Controller{
         ));
     }
 
+    public function delete($id){
+        $this->authorize('modules', 'attribute.catalogue.destroy');
+        $attributeCatalogue = $this->attributeCatalogueRepository->getAttributeCatalogueById($id, $this->language);
+        $template = 'backend.attribute.catalogue.delete';
+        return view('backend.dashboard.layout', compact(
+            'template',
+            'attributeCatalogue',
+        ));
+    }
+
+
 
     public function update($id, UpdateAttributeCatalogueRequest $request){
         if ($this->attributeCatalogueService->update($id, $request, $this->language)) {
