@@ -36,17 +36,34 @@ class SlideService  extends BaseService implements SlideServiceInterface
         ];
      }
 
-    public function paginate($request, $perPage = [])
-    {
-        $condition['keyword'] = $request->input('keyword');
+    // public function paginate($request, $perPage = [])
+    // {
+    //     $condition['keyword'] = $request->input('keyword');
+    //     $slides = $this->slideRepository->pagination(
+    //         $this->paginateSelect(),
+    //         $condition,
+    //         [] ,
+    //         ['path' => 'slide/index'],
+    //         $perPage
+    //     );
+
+    //     return $slides;
+    // }
+    public function paginate($request){
+        $condition = [
+            'keyword' => addslashes($request->input('keyword')),
+            'publish' => $request->integer('publish')
+        ];
+        $perPage = $request->integer('perpage');
         $slides = $this->slideRepository->pagination(
             $this->paginateSelect(),
             $condition,
-            [] ,
+            $perPage,
             ['path' => 'slide/index'],
-            $perPage
+            ['id', 'DESC'],
+            [],
+            // ['slides']
         );
-
         return $slides;
     }
 

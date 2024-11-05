@@ -7,6 +7,9 @@ return [
     'create' => [
         'title' => 'Thêm Mới Ngôn Ngữ'
     ],
+    'edit' => [
+        'title' => 'Cập Nhật Ngôn Ngữ'
+    ],
     'delete' => [
         'title' => 'Xóa Ngôn Ngữ'
     ]

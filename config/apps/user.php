@@ -7,6 +7,9 @@ return [
     'create' => [
         'title' => 'Thêm Mới Thành Viên'
     ],
+    'edit' => [
+        'title' => 'Cập Nhật Thành Viên'
+    ],
     'delete' => [
         'title' => 'Xóa Thành Viên'
     ]

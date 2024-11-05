@@ -22,6 +22,7 @@ return new class extends Migration
             $table->text('album')->nullable();
             $table->tinyInteger('active')->default(1);
             $table->integer('order')->nullable();
+            $table->tinyInteger('follow')->default(0);
             $table->unsignedbigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamp('deleted_at')->nullable();

@@ -28,5 +28,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.1/js/select2.min.js"></script>
 
 
+    <script>
+        // var BASE_URL = '{{ env('APP_URL') }}'
+        var BASE_URL = '{{ url('/') }}';
+        var SUFFIX = '{{ config('apps.general.suffix') }}'
+
+        console.log("BASE_URL:", BASE_URL);
+    </script>
 
 

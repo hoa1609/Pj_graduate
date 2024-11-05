@@ -186,35 +186,33 @@ input[type=radio].form-control{
 .image-target{
     cursor: pointer;
 }
-.input-wrapper input:focus{
-    border-color: #e5e6e7 !important;
-}
+
 .input-wrapper{
     position: relative;
 }
 .input-wrapper .baseUrl{
     position: absolute;
-    height:31px;
     line-height:31px;
     display: inline-block;
     padding:0 10px;
     left:0;
     top:0;
-    background: linear-gradient(to bottom,#fff,#f9fafb);
-    border-color: #e5e6e7 !important;
-    border:1px solid;
-    border-right:0;
 }
 
 .seo-canonical{
-    color:navy;
     font-weight:600;
 }
 
-.button-fix{
+.button-fix {
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.button-fixed {
     position: fixed;
-    bottom:30px;
-    right:30px;
+    bottom: 90px;
+    right: 20px;
+    z-index: 2;
 }
 
 .w .select2-container--default{

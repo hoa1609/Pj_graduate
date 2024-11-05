@@ -65,7 +65,7 @@
                         <div class="collapse " id="sidebarElements">
                             <ul class="nav flex-column">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="ui-alerts.html">Quản lý nhóm bài viết</a>
+                                    <a class="nav-link" href="{{route('post.catalogue.index')}}">Quản lý nhóm bài viết</a>
                                     <a class="nav-link" href="ui-alerts.html">Quản lý bài viết</a>
                                 </li>
                             </ul>

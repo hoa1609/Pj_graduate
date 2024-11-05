@@ -1,4 +1,4 @@
-@include('backend.dashboard.component.nav', ['title' => $config['seo']['create']['title']])
+@include('backend.dashboard.component.nav', ['title' => $config['seo'][$config['method']]['title']])
 
 <div class="container-xxl">
     <div class="row">

@@ -38,15 +38,15 @@ class UserService implements UserServiceInterface
         ];
      }
 
-    public function paginate($request, $perPage = [])
-    {
-        $condition['keyword'] = $request->input('keyword');
-        $users = $this->userRepository->pagination(
+     public function paginate($request){
+        $condition['keyword'] = addslashes($request->input('keyword'));
+        $condition['publish'] = $request->integer('publish');
+        $perPage = $request->integer('perpage');
+        $users = $this->userRepository->userPagination(
             $this->paginateSelect(),
             $condition,
-            [] ,
+            $perPage,
             ['path' => 'user/index'],
-            $perPage
         );
 
         return $users;

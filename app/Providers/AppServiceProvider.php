@@ -24,6 +24,9 @@ class AppServiceProvider extends ServiceProvider
         'App\Services\Interfaces\SlideServiceInterface' => 'App\Services\SlideService',
         'App\Repositories\Interfaces\SlideRepositoryInterface' =>'App\Repositories\SlideRepository',
 
+        'App\Services\Interfaces\PostCatalogueServiceInterface' =>'App\Services\PostCatalogueService',
+        'App\Repositories\Interfaces\PostCatalogueRepositoryInterface' =>'App\Repositories\PostCatalogueRepository',
+
     ];
 
     public function register(): void

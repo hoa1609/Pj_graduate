@@ -16,37 +16,41 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         $this->model = $model;
     }
 
-    public function pagination(
+    public function userPagination(
         array $column = ['*'],
         array $condition = [],
-        array $join = [],
+        int $perPage = 1,
         array $extend = [],
-              $perPage = '',
-        array $relation = []
+        array $orderBy = ['id', 'DESC'],
+        array $join = [],
+        array $relations = [],
     ){
+
         $query = $this->model->select($column)->where(function($query) use ($condition){
-            if(isset($condition['keyword']) && !empty($condition['keyword'])) {
-                $query->where('name', 'LIKE', '%' .$condition['keyword']. '%')
-                ->orwhere('email', 'LIKE', '%' .$condition['keyword']. '%')
-                ->orwhere('phone', 'LIKE', '%' .$condition['keyword']. '%')
-                ->orwhere('address', 'LIKE', '%' .$condition['keyword']. '%');
+            if(isset($condition['keyword']) && !empty($condition['keyword'])){
+                $query->where('name', 'LIKE', '%'.$condition['keyword'].'%')
+                      ->orWhere('email', 'LIKE', '%'.$condition['keyword'].'%')
+                      ->orWhere('address', 'LIKE', '%'.$condition['keyword'].'%')
+                      ->orWhere('phone', 'LIKE', '%'.$condition['keyword'].'%');
             }
+            if(isset($condition['publish']) && $condition['publish'] != 0){
+                $query->where('publish', '=', $condition['publish']);
+            }
+            return $query;
         })->with('user_catalogues');
         if(!empty($join)){
-            $query->joins(...$join);
+            $query->join(...$join);
         }
 
-        return $query
-        ->paginate($perPage)
-        ->withQueryString()
-        ->withPath(env('APP_URL').$extend['path']);
+        return $query->paginate($perPage)
+                    ->withQueryString()->withPath(env('APP_URL').$extend['path']);
     }
 
-    public function updateByWhereIn($column, $values, $payload)
-    {
-        return DB::table('users') 
-            ->whereIn($column, $values)
-            ->update($payload);
-    }
+    // public function updateByWhereIn($column, $values, $payload)
+    // {
+    //     return DB::table('users')
+    //         ->whereIn($column, $values)
+    //         ->update($payload);
+    // }
 
 }

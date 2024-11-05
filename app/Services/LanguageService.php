@@ -37,18 +37,17 @@ class LanguageService implements LanguageServiceInterface
         ];
     }
 
-    public function paginate($request, $perPage = [])
-    {
-        $condition['keyword'] = $request->input('keyword');
+    public function paginate($request){
+
+        $condition['keyword'] = addslashes($request->input('keyword'));
+        $condition['publish'] = $request->integer('publish');
+        $perPage = $request->integer('perpage');
         $languages = $this->languageRepository->pagination(
             $this->paginateSelect(),
             $condition,
-            [],
-            ['path' => 'language/index'],
             $perPage,
-            []
+            ['path' => 'language/index'],
         );
-
         return $languages;
     }
 

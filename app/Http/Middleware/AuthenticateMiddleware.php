@@ -18,7 +18,7 @@ class AuthenticateMiddleware
     public function handle(Request $request, Closure $next): Response
     {
        if(Auth::id() == null){
-        return redirect()-> route('auth.login')->with('error','Bạn đang vượt link !');
+        return redirect()->route('auth.login')->with('error','Bạn đang vượt link !');
        }
 
        return $next($request);

@@ -4,10 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\QueryScopes;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
 class UserCatalogue extends Model
 {
-    use HasFactory;
+    use HasApiTokens, HasFactory, Notifiable, QueryScopes;
+
     protected $fillable = [
         'name',
         'description',

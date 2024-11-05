@@ -7,6 +7,9 @@ return [
     'create' => [
         'title' => 'Thêm Mới Slide'
     ],
+    'edit' => [
+        'title' => 'Cập Nhật Slide'
+    ],
     'delete' => [
         'title' => 'Xóa Slide'
     ]

@@ -1,4 +1,4 @@
-@include('backend.dashboard.component.nav', ['title' => $config['seo']['create']['title']])
+@include('backend.dashboard.component.nav', ['title' => $config['seo'][$config['method']]['title']])
 @php
     $url = $config['method'] == 'create' ? route('slide.store') : route('slide.update', $slide->id);
 @endphp

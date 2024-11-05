@@ -2,83 +2,115 @@
 
 namespace App\Repositories;
 
-use App\Models\Base;
-use Illuminate\Database\Eloquent\Model;
 use App\Repositories\Interfaces\BaseRepositoryInterface;
-
-
+use Illuminate\Database\Eloquent\Model;
+use App\Models\Base;
+/**
+ * Class BaseService
+ * @package App\Services
+ */
 class BaseRepository implements BaseRepositoryInterface
 {
     protected $model;
-    public function __construct(Model $model) {
-        $this->model  = $model;
-    }
 
-    public function create(array $payload = []){
-        $model =  $this->model->create($payload);
-        return $model->fresh();
-
-    }
-
-    public function update(int $id = 0, $payload = [])
-    {
-        $model = $this->findById($id);
-        return $model->update($payload);
-    }
-
-    public function delete(int $id = 0)
-    {
-        return $this->findById($id)->delete();
-    }
-
-    public function updateByWhere($condition = [], array $payload = [])
-    {
-        $query = $this->model->newQuery();
-        foreach ($condition as $key => $val) {
-            $query->where( $val[0], $val[1], $val[2]);
-        }
-        return $query->update($payload);
+    public function __construct(
+        Model $model
+    ){
+        $this->model = $model;
     }
 
     public function pagination(
         array $column = ['*'],
         array $condition = [],
-        array $join = [],
+        int $perPage = 1,
         array $extend = [],
-              $perPage = '',
-        array $relations = []
+        array $orderBy = ['id', 'DESC'],
+        array $join = [],
+        array $relations = [],
+        array $rawQuery = []
+
     ){
-        $query = $this->model->select($column)->where(function($query) use ($condition){
-            if(isset($condition['keyword']) && !empty($condition['keyword'])) {
-                $query->where('name', 'LIKE', '%' .$condition['keyword']. '%');
-            }
-        });
-
-        if(isset($relations) && !empty($relations)) {
-            foreach($relations as $relation){
-                $query->withCount($relation);
-            }
-        }
-
-        if(!empty($join)){
-            $query->joins(...$join);
-        }
-
+        $query = $this->model->select($column);
         return $query
-        ->paginate($perPage)
-        ->withQueryString()
-        ->withPath(env('APP_URL').$extend['path']);
+                ->keyword($condition['keyword'] ?? null)
+                ->publish($condition['publish'] ?? null)
+                ->relationCount($relations ?? null)
+                ->CustomWhere($condition['where'] ?? null)
+                ->customWhereRaw($rawQuery['whereRaw'] ?? null)
+                ->customJoin($join ?? null)
+                ->customGroupBy($extend['groupBy'] ?? null)
+                ->customOrderBy($orderBy ?? null)
+                ->paginate($perPage)
+                ->withQueryString()->withPath(env('APP_URL').$extend['path']);
     }
 
-    public function all() {
-        return $this->model->all();
+    public function create(array $payload = []){
+        $model = $this->model->create($payload);
+        return $model->fresh();
+    }
+
+    public function update(int $id = 0, array $payload = []){
+       $model = $this->findById($id);
+       return $model->update($payload);
+    }
+
+    public function updateByWhereIn(string $whereInField = '', array $whereIn = [], array $payload = []){
+        return $this->model->whereIn($whereInField, $whereIn)->update($payload);
+    }
+
+    public function updateByWhere($condition = [], array $payload = []){
+        $query = $this->model->newQuery();
+        foreach($condition as $key => $val){
+            $query->where($val[0], $val[1] , $val[2]);
+        }
+        return $query->update($payload);
+    }
+
+
+    public function delete(int $id = 0){
+        return $this->findById($id)->delete();
+    }
+
+    public function forceDelete(int $id = 0){
+        return $this->findById($id)->forceDelete();
+    }
+
+    public function forceDeleteByCondition(array $condition = []){
+        $query = $this->model->newQuery();
+        foreach($condition as $key => $val){
+            $query->where($val[0], $val[1] , $val[2]);
+        }
+        return $query->forceDelete();
+    }
+
+    public function all(array $relation = []){
+        return $this->model->with($relation)->get();
     }
 
     public function findById(
         int $modelId,
         array $column = ['*'],
-        array $relation = [],
-    ) {
+        array $relation = []
+    ){
         return $this->model->select($column)->with($relation)->findOrFail($modelId);
     }
+
+    public function findByCondition($condition = []){
+        $query = $this->model->newQuery();
+        foreach($condition as $key => $val){
+            $query->where($val[0], $val[1] , $val[2]);
+        }
+        return $query->first();
+    }
+
+    // public function createPivot($model, array $payload = [], string $relation = ''){
+    //     return $model->{$relation}()->attach($model->id, $payload);
+    // }
+
+    public function createLanguagePivot($model, array $payload = []){
+        return $model->languages()->attach($model->id, $payload);
+    }
+
+
+
 }
