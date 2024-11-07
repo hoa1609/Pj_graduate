@@ -1,4 +1,4 @@
-<script src="frontend/assets/js/vendor/jquery-3.5.1.min.js"></script>
+    <script src="frontend/assets/js/vendor/jquery-3.5.1.min.js"></script>
 
     <script src="frontend/assets/js/vendor/popper.min.js"></script>
     <script src="frontend/assets/js/vendor/bootstrap.min.js"></script>
@@ -24,3 +24,21 @@
     <script src="frontend/assets/function.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
+
+
+
+    @php
+        $coreScript = [
+
+        ];
+
+
+        if(isset($config['js'])){
+            foreach ($config['js'] as $key => $value) {
+                array_push($coreScript, $value);
+            }
+        }
+    @endphp
+    @foreach ($coreScript as $item)
+        <script src="{{ asset($item) }}"></script>
+    @endforeach

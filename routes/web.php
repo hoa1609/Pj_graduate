@@ -19,22 +19,33 @@ use App\Http\Controllers\Ajax\AttributeController as AjaxAttributeController;
 use App\Http\Controllers\Backend\SlideController;
 
 
-
-
-
-
 use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Frontend\RouterController;
+use App\Http\Controllers\Frontend\CartController;
+
 use Illuminate\Routing\RouteGroup;
 
 
 
 
+/*FRONT END ROUTER */
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
+Route::get('{canonical}'.config('apps.general.suffix'), [RouterController::class, 'index'])->name('router.index');
+
+Route::get('thanh-toan', [CartController::class, 'checkout'])->name('cart.checkout');
 
 
 
+
+
+
+
+
+
+
+
+/*BACK END ROUTER */
 Route::middleware(['admin', 'locale'])->group(function () {
-
     Route::get('dashboard/index', [DashboardController::class, 'index'])->name('dashboard.index');
 
     Route::group(['prefix' => 'user'], function () {
