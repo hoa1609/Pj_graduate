@@ -54,8 +54,7 @@ class SlideController extends Controller
 
     }
 
-    public function create()
-    {
+    public function create(){
         $config['seo'] = config('apps.slide');
         $config['method'] = 'create';
         $template = 'backend.slide.slide.store';
