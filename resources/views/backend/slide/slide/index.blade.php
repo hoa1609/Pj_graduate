@@ -1,4 +1,4 @@
-@include('backend.dashboard.component.nav',['title' => $config['seo']['index']['title']])
+{{-- @include('backend.dashboard.component.nav',['title' => $config['seo']['index']['title']]) --}}
 <div class="container-xxl">
     <div class="row justify-content-center">
         <div class="col-md-12 col-lg-12">
