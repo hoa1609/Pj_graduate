@@ -1,5 +1,3 @@
-@include('backend.dashboard.component.nav', ['title' => $config['seo']['create']['title']])
-
 <div class="container-xxl">
     <div class="row">
         <div class="col-12">
@@ -22,14 +20,14 @@
                                         </div>
                                         
                                     </div>
-                                </div><!--end col-->
+                                </div>
                                     <button type="submit" class="btn btn-danger mt-3">Xóa</button>
-                            </form> <!--end form-->
-                        </div><!--end col-->
+                            </form> 
+                        </div>
 
-                    </div><!--end row-->
+                    </div>
                 </div>
             </div>
-        </div> <!-- end col -->
-    </div> <!-- end row -->
-</div><!-- container -->
+        </div>
+    </div> 
+</div>

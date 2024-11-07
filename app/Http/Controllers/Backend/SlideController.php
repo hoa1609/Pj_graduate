@@ -34,16 +34,20 @@ class SlideController extends Controller
     }
 
     public function index (Request $request){
+        $perPage = $request->integer('perpage');
         $slides = $this->slideService->paginate($request, $this->language);
-          foreach ($slides as $slide) {
+        foreach ($slides as $slide) {
             if (is_string($slide->item)) {
                 $slide->items = json_decode($slide->item, true);
             } else {
 
                 $slide->items = $slide->item;
             }
-    }
-        // $config = $this->config();
+        }
+
+        $config = [
+            'model' => 'Slide',
+        ];
         $config['seo'] = config('apps.slide');
         $template = 'backend.slide.slide.index';
         return view('backend.dashboard.layout', compact(
