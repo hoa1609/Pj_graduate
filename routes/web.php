@@ -183,4 +183,4 @@ Route::post('login', [AuthController::class, 'login'])->name('auth.login');
 Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
 
-    
+
