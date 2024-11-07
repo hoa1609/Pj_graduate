@@ -17,7 +17,20 @@ use App\Http\Controllers\Backend\AttributeCatalogueController;
 use App\Http\Controllers\Ajax\DashboardController as AjaxDashboardController;
 use App\Http\Controllers\Ajax\AttributeController as AjaxAttributeController;
 use App\Http\Controllers\Backend\SlideController;
+
+
+
+
+
+
+use App\Http\Controllers\Frontend\HomeController;
 use Illuminate\Routing\RouteGroup;
+
+
+
+
+Route::get('/', [HomeController::class, 'index'])->name('home.index');
+
 
 
 Route::middleware(['admin', 'locale'])->group(function () {
@@ -133,10 +146,10 @@ Route::middleware(['admin', 'locale'])->group(function () {
         Route::get('index', [SlideController::class, 'index'])-> name('slide.index');
         Route::get('create', [SlideController::class, 'create'])-> name('slide.create');
         Route::post('store', [SlideController::class, 'store'])-> name('slide.store');
-        Route::get('edit/{id}', [SlideController::class, 'edit'])->where(['id' => '[0-9]+'])-> name('slide.edit');
-        Route::post('update/{id}', [SlideController::class, 'update'])->where(['id' => '[0-9]+'])-> name('slide.update');
-        Route::get('delete/{id}', [SlideController::class, 'delete'])->where(['id' => '[0-9]+'])-> name('slide.delete');
-        Route::delete('destroy/{id}', [SlideController::class, 'destroy'])->where(['id' => '[0-9]+'])-> name('slide.destroy');
+        Route::get('edit/{id}', [SlideController::class, 'edit'])-> name('slide.edit');
+        Route::post('update/{id}', [SlideController::class, 'update'])-> name('slide.update');
+        Route::get('delete/{id}', [SlideController::class, 'delete'])-> name('slide.delete');
+        Route::delete('destroy/{id}', [SlideController::class, 'destroy'])-> name('slide.destroy');
     });
 
 

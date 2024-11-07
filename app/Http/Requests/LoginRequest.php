@@ -6,15 +6,12 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class LoginRequest extends FormRequest
 {
-<<<<<<< HEAD
 
     public function authorize(): bool
     {
         return true;
     }
 
-=======
->>>>>>> syupload
     
     public function rules(): array
     {
