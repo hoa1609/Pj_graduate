@@ -4,23 +4,28 @@
 	var timer;
 
 	HT.swiperOption = (setting) => {
-		console.log(setting);
 		let option = {}
 		if(setting.animation.length){
 			option.effect = setting.animation;
 		}	
-		if(setting.arrow === 'accept'){
+
+		if (setting.arrow === 'accept') {
 			option.navigation = {
 				nextEl: '.swiper-button-next',
 				prevEl: '.swiper-button-prev',
-			}
+			};
+		} else {
+			$('.swiper-button-next, .swiper-button-prev').remove();
 		}
+
 		if(setting.autoplay === 'accept'){
 			option.autoplay = {
-			    delay: 2000,
+			    delay: 4000,
 			    disableOnInteraction: false,
 			}
 		}
+
+
 		if(setting.navigate === 'dots'){
 			option.pagination = {
 				el: '.swiper-pagination',
@@ -34,8 +39,10 @@
 		if($('.panel-slide').length){
 			let setting = JSON.parse($('.panel-slide').attr('data-setting'))
 			let option = HT.swiperOption(setting)
-			// console.log(setting); 
 			var swiper = new Swiper(".panel-slide .swiper-container", option);
+
+			// Kiểm tra nếu `pauseHover` là 'accept' và dừng autoplay khi hover
+			
 		}
 	}
 

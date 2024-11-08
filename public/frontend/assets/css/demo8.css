@@ -10,131 +10,16 @@
 /*-------------------------------------------------
   Fonts Family & Style CSS
 ---------------------------------------------------*/
-@font-face {
-  font-family: "Poppins, sans-serif";
-  src: url("../fonts/poppins/Poppins-Thin.ttf") format("truetype");
-  font-weight: 100;
-  font-style: normal;
-}
-@font-face {
-  font-family: "Poppins, sans-serif";
-  src: url("../fonts/poppins/Poppins-ExtraLight.ttf") format("truetype");
-  font-weight: 200;
-  font-style: normal;
-}
-@font-face {
-  font-family: "Poppins, sans-serif";
-  src: url("../fonts/poppins/Poppins-Light.ttf");
-  font-weight: 300;
-  font-style: normal;
-}
-@font-face {
-  font-family: "Poppins, sans-serif";
-  src: url("../fonts/poppins/Poppins-Regular.ttf") format("truetype");
-  font-weight: 400;
-  font-style: normal;
-}
-@font-face {
-  font-family: "Poppins, sans-serif";
-  src: url("../fonts/poppins/Poppins-Medium.ttf") format("truetype");
-  font-weight: 500;
-  font-style: normal;
-}
-@font-face {
-  font-family: "Poppins, sans-serif";
-  src: url("../fonts/poppins/Poppins-SemiBold.ttf") format("truetype");
-  font-weight: 600;
-  font-style: normal;
-}
-@font-face {
-  font-family: "Poppins, sans-serif";
-  src: url("../fonts/poppins/Poppins-Bold.ttf") format("truetype");
-  font-weight: 700;
-  font-style: normal;
-}
-@font-face {
-  font-family: "Poppins, sans-serif";
-  src: url("../fonts/poppins/Poppins-ExtraBold.ttf") format("truetype");
-  font-weight: 800;
-  font-style: normal;
-}
-@font-face {
-  font-family: "Poppins, sans-serif";
-  src: url("../fonts/poppins/Poppins-Black.ttf") format("truetype");
-  font-weight: 900;
-  font-style: normal;
-}
-@font-face {
-  font-family: "Fjalla One";
-  src: url("../fonts/fjalla/FjallaOne-Regular.ttf") format("truetype");
-}
-@font-face {
-  font-family: "Montserrat";
-  src: url("../fonts/montserrat/Montserrat-Regular.ttf") format("truetype");
-  font-weight: 400;
-  font-style: normal;
-}
-@font-face {
-  font-family: "Montserrat";
-  src: url("../fonts/montserrat/Montserrat-SemiBold.ttf") format("truetype");
-  font-weight: 700;
-  font-style: normal;
-}
-@font-face {
-  font-family: "Montserrat";
-  src: url("../fonts/montserrat/Montserrat-Bold.ttf") format("truetype");
-  font-weight: 800;
-  font-style: normal;
-}
-@font-face {
-  font-family: "Montserrat";
-  src: url("../fonts/montserrat/Montserrat-ExtraBold.ttf") format("truetype");
-  font-weight: 900;
-  font-style: normal;
-}
-@font-face {
-  font-family: "Oswald";
-  src: url("../fonts/oswald/Oswald-ExtraLight.ttf") format("truetype");
-  font-weight: 200;
-  font-style: normal;
-}
-@font-face {
-  font-family: "Oswald";
-  src: url("../fonts/oswald/Oswald-Light.ttf") format("truetype");
-  font-weight: 300;
-  font-style: normal;
-}
-@font-face {
-  font-family: "Oswald";
-  src: url("../fonts/oswald/Oswald-Regular.ttf");
-  font-weight: 400;
-  font-style: normal;
-}
-@font-face {
-  font-family: "Oswald";
-  src: url("../fonts/oswald/Oswald-Medium.ttf") format("truetype");
-  font-weight: 500;
-  font-style: normal;
-}
-@font-face {
-  font-family: "Oswald";
-  src: url("../fonts/oswald/Oswald-SemiBold.ttf") format("truetype");
-  font-weight: 600;
-  font-style: normal;
-}
-@font-face {
-  font-family: "Oswald";
-  src: url("../fonts/oswald/Oswald-Bold.ttf") format("truetype");
-  font-weight: 700;
-  font-style: normal;
-}
-/*-------------------------------------------------
-  Helper Class
----------------------------------------------------*/
+
+
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
 body {
   margin: 0 auto;
   background-color: #ffffff;
-  font-family: "Poppins, sans-serif";
+  font-family: "Roboto", sans-serif;
   font-size: 14px;
   font-weight: 400;
   font-style: normal;
@@ -2521,12 +2406,6 @@ textarea.form-control.is-invalid {
 .btn.disabled {
   pointer-events: none;
   opacity: 0.65;
-}
-
-.btn-primary {
-  color: #ffffff;
-  background-color: #3474d4;
-  border-color: #3474d4;
 }
 .btn-primary:hover {
   color: #ffffff;
@@ -17955,12 +17834,7 @@ section.ec-instagram-section {
   bottom: 25px;
 }
 
-.ec-slide-content {
-  width: 50%;
-  padding-left: 85px;
-  position: relative;
-  z-index: 9;
-}
+
 .ec-slide-content .ec-slide-title {
   font-size: 55px;
   color: #222;
@@ -18027,8 +17901,8 @@ section.ec-instagram-section {
 }
 
 .main-slider-dot .swiper-pagination-bullet {
-  width: 15px;
-  height: 15px;
+  width: 10px;
+  height: 10px;
   display: inline-block;
   border-radius: 6px;
   opacity: 1;
@@ -18045,7 +17919,7 @@ section.ec-instagram-section {
 }
 .main-slider-dot .swiper-pagination-bullet.swiper-pagination-bullet-active {
   background-color: #ff909d;
-  width: 30px;
+  width: 40px;
 }
 
 .main-slider-dot.dot-color-white .swiper-pagination-bullet:hover {
