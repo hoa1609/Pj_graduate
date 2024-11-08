@@ -40,7 +40,7 @@
             this.value = formatPrice(value);
         });
 
-       
+
         document.addEventListener('scroll', function() {
             var fixedSaveProduct = document.querySelector('.fixed-save-product');
             if (window.scrollY > 500) {
@@ -51,3 +51,6 @@
         });
 
     </script>
+
+<script src="backend/assets/library/menu.js"></script>
+

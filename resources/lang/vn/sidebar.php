@@ -85,6 +85,18 @@ return [
 
             ]
         ],
+        [
+            'dropdown' => 'menu',
+            'title' => 'QL Menu',
+            'icon' => 'fa fa-bars',
+            'subModule' => [
+                [
+                    'title' => 'Cài đặt menu',
+                    'route' => 'menu.index'
+                ],
+
+            ]
+        ],
 
     ],
 ];
