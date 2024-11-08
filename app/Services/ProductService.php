@@ -6,6 +6,7 @@ use App\Services\Interfaces\ProductServiceInterface;
 use App\Services\Interfaces\BaseServiceInterface;
 use App\Repositories\Interfaces\ProductRepositoryInterface as ProductRepository;
 use App\Repositories\Interfaces\ProductVariantLanguageRepositoryInterface as ProductVariantLanguageRepository;
+use App\Repositories\Interfaces\ProductVariantAttributeRepositoryInterface as ProductVariantAttributeRepository;
 use App\Repositories\Interfaces\RouterRepositoryInterface as RouterRepository;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -18,22 +19,25 @@ class ProductService extends BaseService implements ProductServiceInterface
     protected $productRepository;
     protected $routerRepository;
     protected $productVariantLanguageRepository;
+    protected $productVariantAttributeRepository;
 
 
     public function __construct(
         ProductRepository $productRepository,
         RouterRepository $routerRepository,
         ProductVariantLanguageRepository $productVariantLanguageRepository,
+        ProductVariantAttributeRepository $productVariantAttributeRepository,
     ){
         $this->productRepository = $productRepository;
         $this->routerRepository = $routerRepository;
         $this->productVariantLanguageRepository = $productVariantLanguageRepository;
+        $this->productVariantAttributeRepository = $productVariantAttributeRepository;
         $this->controllerName = 'ProductController';
     }
 
     public function paginate ($request, $languageId){
         $condition = [
-            'keyword' => addslashes($request->input('keyword')),
+            'keyword' => $request->input('keyword'),
             'publish' => $request->integer('publish'),
             'where' => [
                 ['tb2.language_id', '=', $languageId]
@@ -83,14 +87,12 @@ class ProductService extends BaseService implements ProductServiceInterface
                 $this->updateLanguageForProduct($product, $request, $languageId);
                 $this->updateCatalogueForProduct($product, $request);
                 $this->createRouter($product, $request, $this->controllerName, $languageId);
-
                 $this->createVariant($product, $request, $languageId);
             }
             DB::commit();
             return true;
         }catch(\Exception $e ){
             DB::rollBack();
-            // Log::error($e->getMessage());
             echo $e->getMessage();die();
             return false;
         }
@@ -103,6 +105,8 @@ class ProductService extends BaseService implements ProductServiceInterface
         $variant = $product->product_variants()->createMany($variant);
         $variantId = $variant->pluck('id');
         $productVariantLanguage = [];
+        $variantAttribute = [];
+        $attributeCombines = $this->comebineAttribute(array_values($payload['attribute']));
             if (count($variantId)) {
                 foreach ($variantId as $key => $val) {
                     $productVariantLanguage[] = [
@@ -110,9 +114,32 @@ class ProductService extends BaseService implements ProductServiceInterface
                         'language_id' => $languageId,
                         'name' => $payload['productVariant']['name'][$key],
                     ];
+                    if(count($attributeCombines)){
+                        foreach($attributeCombines[$key] as $attributeId){
+                            $variantAttribute[] = [
+                                'product_variant_id' => $val,
+                                'attribute_id' => $attributeId,
+                            ];
+
+                        }
+                    }
                 }
             }
         $variantLanguage = $this->productVariantLanguageRepository->createBatch($productVariantLanguage);
+        $variantAttribute = $this->productVariantAttributeRepository->createBatch($variantAttribute);
+    }
+
+    private function comebineAttribute($attributes = [], $index = 0){
+        if($index === count($attributes)) return [[]];
+
+        $subcombines = $this->comebineAttribute($attributes, $index +1);
+        $combines = [];
+        foreach($attributes[$index] as $key => $val){
+            foreach($subcombines as $keySub => $valSub){
+                $combines[] = array_merge([$val], $valSub);
+            }
+        }
+        return $combines;
     }
 
     private function createVariantArray(array $payload = []): array{
@@ -142,7 +169,8 @@ class ProductService extends BaseService implements ProductServiceInterface
         $payload['album'] = $this->formatAlbum($request);
         $payload['price'] = convert_price($payload['price']);
         $payload['attributeCatalogue'] = $this->formatJson($request, 'attributeCatalogue');
-        dd($payload);
+        $payload['attribute'] = $this->formatJson($request, 'attribute');
+        $payload['variant'] = $this->formatJson($request, 'variant');
         $product = $this->productRepository->create($payload);
         return $product;
     }
@@ -262,6 +290,7 @@ class ProductService extends BaseService implements ProductServiceInterface
             'product_catalogue_id',
             'attributeCatalogue',
             'attribute',
+            'variant',
         ];
     }
 

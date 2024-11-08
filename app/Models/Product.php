@@ -24,6 +24,7 @@ class Product extends Model
         'code',
         'attributeCatalogue',
         'attribute',
+        'variant',
     ];
 
     protected $table = 'products';

@@ -229,7 +229,7 @@ table strong{
     bottom: 90px;
     left: 0;
     z-index: 10000;
-    transition: .5s ease;
+    transition: 1s ease;
 }
 .sticky-find {
     position: sticky;
