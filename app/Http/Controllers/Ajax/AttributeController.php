@@ -42,7 +42,7 @@ class AttributeController extends Controller
         $payload['attribute'] = json_decode(base64_decode($request->input('attribute')), true);
         $payload['attibuteCatalogueId'] = $request->input('attributeCatalogueId');
         $attributeArray = $payload['attribute'][$payload['attibuteCatalogueId']];
-
+        
         $attributes = [];
         if(count($attributeArray)){
             $attributes = $this->attributeRepository->findAttributeByIdArray($attributeArray, $this-> language);

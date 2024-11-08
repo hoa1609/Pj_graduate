@@ -152,36 +152,13 @@ table strong{
 .mb30{
     margin-bottom:30px;
 }
-.clearfix:before {
-    content: "";
-    display: table-cell;
-}
-
-.clearfix:after {
-    content: "";
-    display: table;
-    clear: both;
-}
 .sortui{
     list-style: none;
     padding-left:0;
 }
 .sortui .ui-state-default {
-    /* width: calc(20% - 2px);
-    float: left;
-    padding-left: 10px;
-    margin: 0 0 10px 0;
-    margin-bottom: 10px; */
     cursor: move;
-    /* background: transparent;
-    box-shadow: none;
-    border:0; */
 }
-/* .sortui .ui-state-default .thumb{
-    border:1px solid #ddd;
-    height:150px;
-    background:#fafbfc;
-} */
 .img-scaledown {
     display: block;
     width: 100%;
@@ -328,6 +305,7 @@ table strong{
     display: -webkit-box;
     -webkit-box-orient: vertical;
 }
+
 .click-to-upload{
     text-align: center;
     padding: 20px 0;
@@ -369,3 +347,46 @@ input:disabled {
     font-size: 14px;
     z-index: 100000;
 }
+.ui-sortable{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    grid-gap: 10px;
+    padding: 0;
+    list-style-type: none;
+}
+
+.ui-sortable li {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: relative; 
+}
+.ui-sortable li .thumb {
+    position: relative; 
+}
+.ui-sortable li .thumb img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+}
+.ui-sortable li .thumb button {
+    position: absolute;
+    top: 8px; 
+    right: 8px; 
+    background: #ffff; 
+    border: none;
+    color: #e32828;
+    padding: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s;
+}
+.ui-sortable li .thumb button:hover {
+    background-color: rgba(217, 83, 79, 0.8); 
+}
+

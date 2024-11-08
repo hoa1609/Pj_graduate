@@ -12,10 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
-/**
- * Class ProductService
- * @package App\Services
- */
+
 class ProductService extends BaseService implements ProductServiceInterface
 {
     protected $productRepository;
@@ -144,6 +141,8 @@ class ProductService extends BaseService implements ProductServiceInterface
         $payload['user_id'] = Auth::id();
         $payload['album'] = $this->formatAlbum($request);
         $payload['price'] = convert_price($payload['price']);
+        $payload['attributeCatalogue'] = $this->formatJson($request, 'attributeCatalogue');
+        dd($payload);
         $product = $this->productRepository->create($payload);
         return $product;
     }
@@ -261,6 +260,8 @@ class ProductService extends BaseService implements ProductServiceInterface
             'made_in',
             'code',
             'product_catalogue_id',
+            'attributeCatalogue',
+            'attribute',
         ];
     }
 

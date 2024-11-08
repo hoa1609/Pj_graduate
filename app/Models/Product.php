@@ -22,6 +22,8 @@ class Product extends Model
         'price',
         'made_in',
         'code',
+        'attributeCatalogue',
+        'attribute',
     ];
 
     protected $table = 'products';

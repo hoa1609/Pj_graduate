@@ -7,7 +7,7 @@
 <script src="backend/assets/data/stock-prices.js"></script>
 <script src="backend/assets/libs/jsvectormap/js/jsvectormap.min.js"></script>
 <script src="backend/assets/libs/jsvectormap/maps/world.js"></script>
-<script src="backend/assets/js/pages/form-validation.js"></script>
+{{-- <script src="backend/assets/js/pages/form-validation.js"></script> --}}
 <script src="backend/assets/js/app.js"></script>
 
 <script src="backend/assets/library/location.js"></script>
