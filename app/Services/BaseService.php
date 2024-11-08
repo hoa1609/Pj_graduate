@@ -40,25 +40,26 @@ class BaseService  implements BaseServiceInterface
         $this->nestedset->Action();
     }
 
-    public function formatRouterPayload($model, $request, $controllerName){
+    public function formatRouterPayload($model, $request, $controllerName, $languageId){
         $router = [
             'canonical' => $request->input('canonical'),
             'module_id' => $model->id,
-            'controllers' => 'App\Http\Controllers\Fontend\\'.$controllerName.'',
+            'language_id' => $languageId,
+            'controllers' => 'App\Http\Controllers\Frontend\\'.$controllerName.'',
         ];
         return $router;
     }
 
-    public function createRouter($model, $request, $controllerName){
-        $router = $this->formatRouterPayload($model, $request, $controllerName);
+    public function createRouter($model, $request, $controllerName, $languageId){
+        $router = $this->formatRouterPayload($model, $request, $controllerName, $languageId);
         $this->routerRepository->create($router);
     }
 
-    public function updateRouter($model, $request, $controllerName){
-        $payload = $this->formatRouterPayload($model, $request, $this->controllerName);
+    public function updateRouter($model, $request, $controllerName, $languageId){
+        $payload = $this->formatRouterPayload($model, $request, $this->controllerName, $languageId);
         $condition = [
             ['module_id', '=', $model->id],
-            ['controllers', '=', 'App\Http\Controllers\Fontend\\'.$controllerName.''],
+            ['controllers', '=', 'App\Http\Controllers\Frontend\\'.$controllerName.''],
         ];
         $router = $this->routerRepository->findByCondition($condition);
         $res = $this->routerRepository->update($router->id, $payload);

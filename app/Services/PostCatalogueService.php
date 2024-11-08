@@ -59,7 +59,7 @@ class PostCatalogueService extends BaseService implements PostCatalogueServiceIn
             $postCatalogue = $this->createCatalogue($request);
             if($postCatalogue->id >0){
                 $this->updateLanguageForCatalogue($postCatalogue, $request, $languageId);
-                $this->createRouter($postCatalogue, $request, $this->controllerName);
+                $this->createRouter($postCatalogue, $request, $this->controllerName, $languageId);
                 $this->nestedset = new Nestedsetbie([
                     'table' => 'post_catalogues',
                     'foreignkey' => 'post_catalogue_id',
@@ -115,7 +115,7 @@ class PostCatalogueService extends BaseService implements PostCatalogueServiceIn
             $flag = $this->updateCatalogue($postCatalogue, $request);
             if($flag == TRUE){
                 $this->updateLanguageForCatalogue($postCatalogue, $request, $languageId);
-                $this->updateRouter($postCatalogue, $request, $this->controllerName);
+                $this->updateRouter($postCatalogue, $request, $this->controllerName, $languageId);
                 $this->nestedset = new Nestedsetbie([
                     'table' => 'post_catalogues',
                     'foreignkey' => 'post_catalogue_id',

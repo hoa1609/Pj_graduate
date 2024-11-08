@@ -62,7 +62,7 @@ class AttributeCatalogueService extends BaseService implements AttributeCatalogu
             $attributeCatalogue = $this->createCatalogue($request);
             if($attributeCatalogue->id >0){
                 $this->updateLanguageForCatalogue($attributeCatalogue, $request, $languageId);
-                $this->createRouter($attributeCatalogue, $request, $this->controllerName);
+                $this->createRouter($attributeCatalogue, $request, $this->controllerName, $languageId);
                 $this->nestedset = new Nestedsetbie([
                     'table' => 'attribute_catalogues',
                     'foreignkey' => 'attribute_catalogue_id',
@@ -117,7 +117,7 @@ class AttributeCatalogueService extends BaseService implements AttributeCatalogu
             $flag = $this->updateCatalogue($attributeCatalogue, $request);
             if($flag == TRUE){
                 $this->updateLanguageForCatalogue($attributeCatalogue, $request, $languageId);
-                $this->updateRouter($attributeCatalogue, $request, $this->controllerName);
+                $this->updateRouter($attributeCatalogue, $request, $this->controllerName, $languageId);
                 $this->nestedset = new Nestedsetbie([
                     'table' => 'attribute_catalogues',
                     'foreignkey' => 'attribute_catalogue_id',

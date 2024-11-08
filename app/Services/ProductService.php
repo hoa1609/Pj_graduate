@@ -87,6 +87,7 @@ class ProductService extends BaseService implements ProductServiceInterface
                 $this->updateLanguageForProduct($product, $request, $languageId);
                 $this->updateCatalogueForProduct($product, $request);
                 $this->createRouter($product, $request, $this->controllerName, $languageId);
+
                 $this->createVariant($product, $request, $languageId);
             }
             DB::commit();
@@ -214,7 +215,14 @@ class ProductService extends BaseService implements ProductServiceInterface
             if( $this->uploadProduct($product, $request)){
                 $this->updateLanguageForProduct($product, $request, $languageId);
                 $this->updateCatalogueForProduct($product, $request);
-                $this->updateRouter($product, $request, $this->controllerName);
+                $this->updateRouter($product, $request, $this->controllerName, $languageId);
+
+                $product->product_variants()->each(function($variant){
+                    $variant->languages()->detach();
+                    $variant->attributes()->detach();
+                    $variant->delete();
+                }); 
+                $this->createVariant($product, $request, $languageId);
             }
             DB::commit();
             return true;
