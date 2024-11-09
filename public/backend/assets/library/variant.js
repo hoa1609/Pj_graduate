@@ -496,7 +496,7 @@
         let variantAlbumItem = HT.variantAlbumList(variantAlbum)
         let html = ''
         html += '<tr class="updateVariantTr">'
-        html += '<td colspan="6">'
+        html += '<td colspan="12">'
         html += '<div class="updateVariant">'
         html += '<div class="uk-flex uk-flex-middle uk-flex-space-between mb-2">'
         html += '<div class="card-title fs-16">Cập nhật thông tin phiên bản</div>'
@@ -674,7 +674,7 @@
                 { name: 'variant[album][]', class: 'variant_album', value: variant.album[index] },
             ]
             for(let i = 0; i < inputHiddenFields.length; i++){
-                _this.find('.' + inputHiddenFields[i].class).val((inputHiddenFields[i].value) ? inputHiddenFields[i].value : 0 )
+                _this.find('.' + inputHiddenFields[i].class).val((inputHiddenFields[i].value) ? inputHiddenFields[i].value : '' )
             }
 
             let album = variant.album[index]

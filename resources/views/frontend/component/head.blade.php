@@ -1,12 +1,23 @@
 <meta charset="UTF-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-    <title>4AM Style - Fashion</title>
+<meta http-equiv="x-ua-compatible" content="ie=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
 
-   <link rel="icon" href="frontend/assets/images/favicon/favicon-8.png" sizes="32x32" />
-   <link rel="apple-touch-icon" href="frontend/assets/images/favicon/favicon-8.png" />
-   <meta name="msapplication-TileImage" content="frontend/assets/images/favicon/favicon-8.png" />
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<meta name="robots" content="index/follow" />
+<meta name="author" content="" />
+<meta http-equiv="refresh" content="1800" />
+<link rel="icon" href="frontend/assets/images/favicon/favicon-8.png" sizes="32x32" />
+
+{{-- gg --}}
+<title>4AM Style - Fashion</title>
+<meta name="description" content="" />
+<meta name="canonical" content="" />
+
+
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 
 @php
     $coreCss = [
