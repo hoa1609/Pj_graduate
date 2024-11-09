@@ -14,6 +14,7 @@ use App\Http\Controllers\Backend\ProductCatalogueController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\AttributeController;
 use App\Http\Controllers\Backend\AttributeCatalogueController;
+use App\Http\Controllers\Backend\PromotionController;
 use App\Http\Controllers\Ajax\DashboardController as AjaxDashboardController;
 use App\Http\Controllers\Ajax\AttributeController as AjaxAttributeController;
 use App\Http\Controllers\Backend\SlideController;
@@ -166,11 +167,23 @@ Route::middleware(['admin', 'locale'])->group(function () {
         Route::delete('destroy/{id}', [SlideController::class, 'destroy'])-> name('slide.destroy');
     });
 
+    Route::group(['prefix' => 'promotion'], function () {
+        Route::get('index', [PromotionController::class, 'index'])->name('promotion.index');
+        Route::get('create', [PromotionController::class, 'create'])->name('promotion.create');
+        Route::post('store', [PromotionController::class, 'store'])->name('promotion.store');
+        Route::get('edit/{id}', [PromotionController::class, 'edit'])->name('promotion.edit');
+        Route::post('update/{id}', [PromotionController::class, 'update'])->name('promotion.update');
+        Route::get('delete/{id}', [PromotionController::class, 'delete'])->name('promotion.delete');
+        Route::delete('destroy/{id}', [PromotionController::class, 'destroy'])->name('promotion.destroy');
+
+    });
+
 
     /* AJAX */
     Route::get('ajax/location/getLocation', [LocationController::class, 'getLocation'])->name('ajax.location.index');
     Route::post('ajax/dashboard/changeStatus', [AjaxDashboardController::class, 'changeStatus'])->name('ajax.dashboard.changeStatus');
     Route::post('ajax/dashboard/changeStatusAll', [AjaxDashboardController::class, 'changeStatusAll'])->name('ajax.dashboard.changeStatusAll');
+    Route::get('ajax/dashboard/findPromotionObject', [AjaxDashboardController::class, 'findPromotionObject'])->name('ajax.dashboard.findPromotionObject');
     Route::get('ajax/attribute/getAttribute', [AjaxAttributeController::class, 'getAttribute'])->name('ajax.attribute.getAttribute');
     Route::get('ajax/attribute/loadAttribute', [AjaxAttributeController::class, 'loadAttribute'])->name('ajax.attribute.loadAttribute');
 
@@ -183,4 +196,4 @@ Route::post('login', [AuthController::class, 'login'])->name('auth.login');
 Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
 
-    
+

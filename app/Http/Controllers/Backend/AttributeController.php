@@ -25,7 +25,7 @@ class AttributeController extends Controller{
         $this->middleware(function($request, $next){
             $locale = app()->getLocale();
             $language = Language::where('canonical', $locale)->first();
-            $this->language = $language ? $language->id : 1; 
+            $this->language = $language ? $language->id : 1;
             $this->initialize();
             return $next($request);
         });
@@ -34,7 +34,7 @@ class AttributeController extends Controller{
         $this->attributeRepository = $attributeRepository;
     }
 
-   
+
 
 
     public function index(Request $request){
@@ -47,7 +47,7 @@ class AttributeController extends Controller{
         $dropdown = $this->nestedset->Dropdown();
         $template = 'backend.attribute.attribute.index';
         $config['seo'] = config('apps.attribute.index');
-        
+
         return view('backend.dashboard.layout', compact(
             'config',
             'template',
@@ -112,7 +112,7 @@ class AttributeController extends Controller{
         }
         return redirect()->route('attribute.index')->with('error', 'Cập nhập nhóm thành viên thất bại !');
     }
-    
+
     public function destroy($id){
         $this->authorize('modules', 'attribute.destroy');
         if ($this->attributeService->destroy($id, $this->language)) {
@@ -128,7 +128,7 @@ class AttributeController extends Controller{
             'foreignkey' => 'product_catalogue_id',
             'language_id' =>  $this->language,
         ]);
-    } 
+    }
 
 
 }

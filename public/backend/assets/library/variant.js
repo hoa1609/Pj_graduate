@@ -1,6 +1,6 @@
 (function($) {
 	"use strict";
-	var HT = {}; 
+	var HT = {};
 
     HT.niceSelect = () => {
         $('.niceSelect').niceSelect();
@@ -40,14 +40,14 @@
     }
 
 
-       
+
     HT.addVariant = () => {
         if ($('.add-variant').length) {
             $(document).on('click', '.add-variant', function () {
-                let html = HT.renderVariantItem(attributeCatalogue); 
-                $('.variant-body').append(html); 
-                $('.variantTable thead').html(''); 
-                $('.variantTable tbody').html(''); 
+                let html = HT.renderVariantItem(attributeCatalogue);
+                $('.variant-body').append(html);
+                $('.variantTable thead').html('');
+                $('.variantTable tbody').html('');
                 HT.destroyNiceSelect();
                 HT.niceSelect();
                 HT.checkMaxAttributeGroup(attributeCatalogue);
@@ -63,12 +63,12 @@
             options += `<option value="${attributeCatalogue[i].id}">${attributeCatalogue[i].name}</option>`;
         }
         return `
-            <div class="row pb-2 variant-item"> 
+            <div class="row pb-2 variant-item">
                 <div class="col-lg-3 p-0">
                     <div class="attribute-catalogue">
                         <select name="attributeCatalogue[]" id="" class="select-option choose-attribute niceSelect">
                             <option value="">-- Chọn thuộc tính --</option>
-                            ${options} 
+                            ${options}
                         </select>
                     </div>
                 </div>
@@ -140,8 +140,8 @@
             HT.createVariant()
         })
     }
-    
-    
+
+
     HT.destroyNiceSelect = () => {
         if($('.niceSelect').length){
             $('.niceSelect').niceSelect('destroy')
@@ -177,7 +177,7 @@
                     }
                 },
                 cache: true
-              
+
               }
         });
     }
@@ -261,14 +261,14 @@
     }
 
 
-    
+
     HT.createVariantRow = (attributeItem, variantItem) =>{
         let attributeString = Object.values(attributeItem).join(', ')
         let attributeId = Object.values(variantItem).join(', ')
         let classModified = attributeId.replace(/, /g,'-')
 
         let $row = $('<tr>').addClass('variant-row tr-variant-' +classModified)
-        let $td 
+        let $td
 
         $td = $('<td>').append(
             $('<img>').attr('src', '/userfiles/image/product/no-image.jpg').attr('width', '50px').addClass('imageSrc')
@@ -391,7 +391,7 @@
     }
 
 
-    
+
 
     HT.browseVariantServerAlbum = () => {
         var type = 'Images';
@@ -423,7 +423,7 @@
 
         finder.popup();
     };
-    
+
 
 
 
@@ -496,7 +496,7 @@
         let variantAlbumItem = HT.variantAlbumList(variantAlbum)
         let html = ''
         html += '<tr class="updateVariantTr">'
-        html += '<td colspan="6">'
+        html += '<td colspan="12">'
         html += '<div class="updateVariant">'
         html += '<div class="uk-flex uk-flex-middle uk-flex-space-between mb-2">'
         html += '<div class="card-title fs-16">Cập nhật thông tin phiên bản</div>'
@@ -674,7 +674,7 @@
                 { name: 'variant[album][]', class: 'variant_album', value: variant.album[index] },
             ]
             for(let i = 0; i < inputHiddenFields.length; i++){
-                _this.find('.' + inputHiddenFields[i].class).val((inputHiddenFields[i].value) ? inputHiddenFields[i].value : 0 )
+                _this.find('.' + inputHiddenFields[i].class).val((inputHiddenFields[i].value) ? inputHiddenFields[i].value : '' )
             }
 
             let album = variant.album[index]
@@ -693,7 +693,7 @@
         let formattedValue = HT.addCommas($(this).val());
         $(this).val(formattedValue);
     });
-    
+
 
     $(document).ready(function () {
         HT.addVariant()

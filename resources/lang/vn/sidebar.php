@@ -67,7 +67,7 @@ return [
         [
             'dropdown' => 'sidebarUser',
             'title' => 'QL Thành Viên',
-            'icon' => 'fa fa-user',
+            'icon' => 'fa fa-user menu-icon',
             'subModule' => [
                 [
                     'title' => 'QL Nhóm',
@@ -81,6 +81,22 @@ return [
                     'title' => 'Thêm quyền',
                     'route' => 'permission.index'
                 ],
+
+            ]
+        ],
+        [
+            'dropdown' => 'sidebarMaketing',
+            'title' => 'QL Maketing',
+            'icon' => 'icofont-money ',
+            'subModule' => [
+                [
+                    'title' => 'Khuyến mãi',
+                    'route' => 'promotion.index'
+                ],
+                // [
+                //     'title' => 'Mã giảm giá',
+                //     'route' => 'coupon.index'
+                // ],
 
             ]
         ],

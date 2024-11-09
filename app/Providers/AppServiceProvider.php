@@ -55,6 +55,10 @@ class AppServiceProvider extends ServiceProvider
         'App\Services\Interfaces\SlideServiceInterface' => 'App\Services\SlideService',
         'App\Repositories\Interfaces\SlideRepositoryInterface' =>'App\Repositories\SlideRepository',
 
+        /* ProductVariantAttribute */
+        'App\Repositories\Interfaces\ProductVariantAttributeRepositoryInterface' =>'App\Repositories\ProductVariantAttributeRepository',
+
+
         /* router */
         'App\Services\Interfaces\RouterServiceInterface' => 'App\Services\RouterService',
         'App\Repositories\Interfaces\RouterRepositoryInterface' => 'App\Repositories\RouterRepository',
@@ -63,9 +67,12 @@ class AppServiceProvider extends ServiceProvider
         'App\Repositories\Interfaces\ProvinceRepositoryInterface' => 'App\Repositories\ProvinceRepository',
         'App\Repositories\Interfaces\DistrictRepositoryInterface' => 'App\Repositories\DistrictRepository',
 
+        /* Promotion */
+       'App\Services\Interfaces\PromotionServiceInterface' => 'App\Services\PromotionService',
+        'App\Repositories\Interfaces\PromotionRepositoryInterface' =>'App\Repositories\PromotionRepository',
 
-        
-        
+
+
     ];
 
     public function register(): void

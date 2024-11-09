@@ -3,8 +3,8 @@
         <div class="col-md-12 col-lg-12">
             <div class="card">
 
-                @include('backend.slide.slide.component.filter')
-                @include('backend.slide.slide.component.table')
+                @include('backend.promotion.promotion.component.filter')
+                @include('backend.promotion.promotion.component.table')
             </div>
         </div>
     </div>

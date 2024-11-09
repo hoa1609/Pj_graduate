@@ -18,13 +18,13 @@
                     <div class="card-body pt-0">
                         <div class="row mb-2">
                             <div class="col-md-12 position-relative">
-                                <label class="form-label">Tiêu đề nhóm bài viết 
+                                <label class="form-label">Tiêu đề nhóm bài viết
                                     <span class="text-danger fs-10"> (*)</span>
                                 </label>
-                                <input 
-                                    type="text" 
-                                    name="name" 
-                                    class="form-control" 
+                                <input
+                                    type="text"
+                                    name="name"
+                                    class="form-control"
                                     placeholder="nhập tên bài viết..."
                                     value="{{ old('name', ($product-> name) ?? '' ) }}"
                                     >
@@ -33,13 +33,13 @@
                         <div class="row mb-4">
                             <div class="col-md-12 position-relative">
                                 <label class="form-label">Mô tả ngắn</label>
-                                <textarea 
-                                    name="description" 
-                                    class="form-control textarea-10 ck-editor" 
+                                <textarea
+                                    name="description"
+                                    class="form-control textarea-10 ck-editor"
                                     placeholder="nhập mô tả"
                                     id="ckDescription"
                                     data-height="200"
-                                    {{ (isset($disabled)) ? 'disabled' : '' }} 
+                                    {{ (isset($disabled)) ? 'disabled' : '' }}
                                     >
                                     {{ old('description', ($product-> description) ?? '') }}
                                 </textarea>
@@ -51,10 +51,10 @@
                                     <label class="form-label">Nội dung</label>
                                     <a href="" class="multipleUploadImageCkeditor" data-target="ckContent">Upload nhiều hình ảnh</a>
                                 </div>
-                                <textarea 
-                                    name="content" 
-                                    class="form-control textarea-10 ck-editor" 
-                                    rows="5" 
+                                <textarea
+                                    name="content"
+                                    class="form-control textarea-10 ck-editor"
+                                    rows="5"
                                     placeholder="nhập mô tả"
                                     id="ckContent"
                                     data-height="350"
@@ -79,8 +79,8 @@
                                 </div>
                                 <select name="product_catalogue_id" class="form-control setupSelect2" id="">
                                     @foreach($dropdown as $key => $val)
-                                    <option {{ 
-                                        $key == old('product_catalogue_id', (isset($product->product_catalogue_id)) ? $product->product_catalogue_id : '') ? 'selected' : '' 
+                                    <option {{
+                                        $key == old('product_catalogue_id', (isset($product->product_catalogue_id)) ? $product->product_catalogue_id : '') ? 'selected' : ''
                                         }} value="{{ $key }}">{{ $val }}</option>
                                     @endforeach
                                 </select>
@@ -93,7 +93,7 @@
                                 <label class="form-label">Danh mục phụ (nếu có) </label>
                                 <select multiple name="catalogue[]" class="form-select setUpSelect2 border-select-2">
                                     @foreach($dropdown as $key => $val)
-                                        <option 
+                                        <option
                                             value="{{ $key }}"
                                                 @if (in_array($key, $catalogue) && (!isset($post->post_catalogue_id) || $key != $post->post_catalogue_id))
                                                     selected
@@ -115,25 +115,25 @@
                             </div>
                             <div class="col-md-12 position-relative mb-2">
                                 <label class="form-label">Mã sản phẩm</label>
-                                <input type="text" 
-                                    class="form-control" 
+                                <input type="text"
+                                    class="form-control"
                                     name="code"
                                     value="{{ old('code', ($product->code) ?? '') }}"
                                 >
                             </div>
                             <div class="col-md-12 position-relative mb-2">
                                 <label class="form-label">Xuất xứ</label>
-                                <input type="text" 
-                                    class="form-control" 
+                                <input type="text"
+                                    class="form-control"
                                     name="made_in"
                                     value="{{ old('made_in', ($product->made_in) ?? '') }}"
                                 >
                             </div>
                             <div class="col-md-12 position-relative">
                                 <label class="form-label">Giá sản phẩm</label>
-                                <input type="text" 
+                                <input type="text"
                                     min="0"
-                                    class="form-control" 
+                                    class="form-control"
                                     name="price"
                                     id="priceInput"
                                     value="{{ old('price', ($product->price) ?? '') }}"
@@ -150,8 +150,8 @@
                             </div>
                             <span class="image img-cover image-target">
                                 @php
-                                    $image = old('image', $product->image ?? ''); 
-                                    $image = $image ?: 'backend/assets/images/no-img.jpg'; 
+                                    $image = old('image', $product->image ?? '');
+                                    $image = $image ?: 'backend/assets/images/no-img.jpg';
                                 @endphp
                                 <img src="{{ $image }}" alt="img" width="200px">
                             </span>
@@ -163,7 +163,7 @@
                     <div class="card-body pt-10">
                         <div class="row">
                             <div class="col-md-12 position-relative">
-                                <label class="form-label mb-3">Chọn trình trạng 
+                                <label class="form-label mb-3">Chọn trình trạng
                                     <span class="text-danger fs-10">(*)</span>
                                 </label>
                                 <div class="mb-2">
@@ -222,9 +222,9 @@
                                     </label>
                                     <label>12 kí tự</label>
                                 </div>
-                                <input class="form-control" 
-                                    name="meta_title" 
-                                    type="text" 
+                                <input class="form-control"
+                                    name="meta_title"
+                                    type="text"
                                     placeholder="nhập tên bài viết..."
                                     value="{{ old('meta_title', ($product-> meta_title) ?? '' ) }}"
                                     >
@@ -236,7 +236,7 @@
                                     <label class="form-label">Từ khóa SEO<span class="text-danger fs-10"> (*)</span></label>
                                     <label>12 kí tự</label>
                                 </div>
-                                <input class="form-control mb-2" 
+                                <input class="form-control mb-2"
                                 name="meta_keyword"
                                 placeholder="nhập từ khóa"
                                 value="{{ old('meta_keyword', ($product-> meta_keyword) ?? '' ) }}"
@@ -249,10 +249,10 @@
                                     <label class="form-label">Mô tả SEO <span class="text-danger fs-10"> (*)</span></label>
                                     <label>12 kí tự</label>
                                 </div>
-                                <textarea  
-                                    class="form-control" 
-                                    rows="3" 
-                                    name="meta_description" 
+                                <textarea
+                                    class="form-control"
+                                    rows="3"
+                                    name="meta_description"
                                     placeholder="nhập mô tả"
                                 >{{ old('meta_description', ($product-> meta_description) ?? '') }}</textarea>
                             </div>
@@ -264,10 +264,10 @@
                                 </div>
                                 <div class="input-group mb-3">
                                     <span class="input-group-text baseUrl" id="basic-addon3">{{ config('app.url') }}</span>
-                                    <input 
+                                    <input
                                         type="text"
                                         class="form-control"
-                                        name="canonical" 
+                                        name="canonical"
                                         value="{{ old('name', ($product-> canonical) ?? '' ) }}"
                                         >
                                 </div>

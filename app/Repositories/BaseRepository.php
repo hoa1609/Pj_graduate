@@ -23,14 +23,14 @@ class BaseRepository implements BaseRepositoryInterface
         array $extend = [],
         array $orderBy = ['id', 'DESC'],
         array $join = [],
-        array $relations = [], 
+        array $relations = [],
         array $rawQuery = []
     ){
         $query = $this->model->select($column);
         return $query
                 ->keyword($condition['keyword'] ?? null)
                 ->publish($condition['publish'] ?? null)
-                ->userCatalogueId($condition['user_role_id'] ?? null) 
+                ->userCatalogueId($condition['user_role_id'] ?? null)
                 ->relationCount($relations ?? null)
                 ->CustomWhere($condition['where'] ?? null)
                 ->customWhereRaw($rawQuery['whereRaw'] ?? null)
@@ -40,7 +40,7 @@ class BaseRepository implements BaseRepositoryInterface
                 ->paginate($perPage)
                 ->withQueryString()->withPath(env('APP_URL') . $extend['path']);
     }
-    
+
 
     public function all(array $relation = []){
         return $this->model->with($relation)->get();
@@ -108,5 +108,19 @@ class BaseRepository implements BaseRepositoryInterface
     public function createPivot($model, array $payload = [], string $relation = ''){
         return $model->{$relation}()->attach($model->id, $payload);
       }
+
+    public function findWidgetItem (array $condition = [], int $language_id = 1, string $alias = ''){
+        return $this->model->with([
+            'languages' => function($query) use ($language_id) {
+                $query->where('language_id', $language_id);
+            }
+        ])
+        ->whereHas('languages', function ($query) use ($condition, $alias) {
+            foreach($condition as $key => $val) {
+                $query->where($alias . '.' . $val[0], $val[1], $val[2]);
+            }
+        })->get ();
+
+    }
 
 }

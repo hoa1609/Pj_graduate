@@ -8,14 +8,14 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <link rel="shortcut icon" href="backend/assets/images/favicon32.png">
-    
+
 
     <link href="backend/assets/libs/jsvectormap/css/jsvectormap.min.css" rel="stylesheet" >
     <link href="backend/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="backend/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
     <link href="backend/assets/css/app.min.css" rel="stylesheet" type="text/css" />
     <link href="backend/assets/css/customize.css" rel="stylesheet" type="text/css" />
-    
+
     <link href="backend/assets/libs/simple-datatables/style.css" rel="stylesheet" type="text/css" />
     <link href="backend/assets/css/select2.min.css" rel="stylesheet" type="text/css" />
 

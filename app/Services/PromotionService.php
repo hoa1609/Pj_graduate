@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\Services\Interfaces\SlideServiceInterface;
-use App\Repositories\Interfaces\SlideRepositoryInterface as SlideRepository ;
+use App\Services\Interfaces\PromotionServiceInterface;
+use App\Repositories\Interfaces\PromotionRepositoryInterface as PromotionRepository ;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Carbon;
@@ -13,17 +13,17 @@ use Illuminate\Support\Facades\Auth;
 
 
 /**
- * Class SlideService
+ * Class PromotionService
  * @package App\Services
  */
-class SlideService  extends BaseService implements SlideServiceInterface
+class PromotionService  extends BaseService implements PromotionServiceInterface
 {
-    protected $slideRepository;
+    protected $promotionRepository;
 
     public function __construct(
-        SlideRepository $slideRepository
+        PromotionRepository $promotionRepository
     ) {
-        $this->slideRepository = $slideRepository;
+        $this->promotionRepository = $promotionRepository;
     }
 
     private function paginateSelect(){
@@ -40,14 +40,14 @@ class SlideService  extends BaseService implements SlideServiceInterface
 
         $perPage = $request->integer('perpage', 10);
         $condition['keyword'] = $request->input('keyword');
-        $slides = $this->slideRepository->pagination(
+        $promotions = $this->promotionRepository->pagination(
             $this->paginateSelect(),
             $condition,
             $perPage,
-            ['path' => 'slide/index'],
+            ['path' => 'promotion/index'],
         );
 
-        return $slides;
+        return $promotions;
     }
 
 
@@ -56,8 +56,7 @@ class SlideService  extends BaseService implements SlideServiceInterface
         try{
             $payload = $request->only(['_token', 'name', 'keyword', 'setting', 'short_code']);
             $payload['user_id'] =  Auth::id();
-            $payload['item'] = $this->handleSlideItem($request, $languageId);
-            $slide = $this->slideRepository->create($payload);
+            $promotion = $this->promotionRepository->create($payload);
              DB::commit();
               return true;
             }catch(\Exception $e ){
@@ -70,19 +69,14 @@ class SlideService  extends BaseService implements SlideServiceInterface
     public function update($id, $request, $languageId){
         DB::beginTransaction();
         try{
-            $slide = $this->slideRepository->findById($id);
-            $slideItem = $slide->item;
-            unset($slideItem[$languageId]);
             $payload = $request->only(['_token', 'name', 'keyword', 'setting', 'short_code']);
-            $payload['item'] = $this->handleSlideItem($request, $languageId) + $slideItem;
-            // dd($payload);
-            $slide = $this->slideRepository->update($id, $payload);
+            $promotion = $this->promotionRepository->update($id, $payload);
              DB::commit();
               return true;
             }catch(\Exception $e ){
                 DB::rollBack();
                 // Log::error($e->getMessage());
-                echo $e->getMessage(); die();
+                // echo $e->getMessage(); die();
                 return false;
             }
     }
@@ -90,7 +84,7 @@ class SlideService  extends BaseService implements SlideServiceInterface
     public function destroy($id){
         DB::beginTransaction();
         try{
-            $slide = $this->slideRepository->delete($id);
+            $promotion = $this->promotionRepository->delete($id);
              DB::commit();
               return true;
             }catch(\Exception $e ){
@@ -101,12 +95,12 @@ class SlideService  extends BaseService implements SlideServiceInterface
             }
     }
 
-    public function updateStatus($slide = [])
+    public function updateStatus($promotion = [])
     {
         DB::beginTransaction();
         try {
-            $payload = [$slide['field'] =>(($slide['value'] == 1) ? 2 : 1)];
-            $slide = $this->slideRepository->update($slide['modelId'], $payload);
+            $payload = [$promotion['field'] =>(($promotion['value'] == 1) ? 2 : 1)];
+            $promotion = $this->promotionRepository->update($promotion['modelId'], $payload);
 
             DB::commit();
             return true;
@@ -118,11 +112,11 @@ class SlideService  extends BaseService implements SlideServiceInterface
         }
     }
 
-    public function updateStatusAll($slide){
+    public function updateStatusAll($promotion){
         DB::beginTransaction();
         try{
-            $payload[$slide['field']] = $slide['value'];
-            $flag = $this->slideRepository->updateByWhereIn('id', $slide['id'], $payload);
+            $payload[$promotion['field']] = $promotion['value'];
+            $flag = $this->promotionRepository->updateByWhereIn('id', $promotion['id'], $payload);
             DB::commit();
             return true;
         }catch(\Exception $e ){
@@ -130,38 +124,6 @@ class SlideService  extends BaseService implements SlideServiceInterface
             echo $e->getMessage();die();
             return false;
         }
-    }
-
-
-
-    private function handleSlideItem($request, $languageId)
-    {
-        $slide = $request->input('slide');
-        $temp = [];
-        foreach($slide['image'] as $key => $val) {
-            $temp[$languageId][] = [
-                'image' => $val,
-                'name' => $slide['name'][$key],
-                'description' => $slide['description'][$key],
-                'canonical' => $slide['canonical'][$key],
-                'alt' => $slide['alt'][$key],
-                'window' => (isset($slide['window'][$key])) ? $slide['window'][$key] : '',
-            ];
-        }
-        return $temp;
-    }
-
-    public function coverSlideArray(array $slide = []): array
-    {
-        $temp = [];
-        $fields = ['image', 'description', 'window', 'canonical', 'name', 'alt'];
-        // dd($slide);
-        foreach ($slide as $key => $val) {
-            foreach($fields as $field) {
-                $temp[$field][] = $val[$field];
-            }
-        }
-        return $temp;
     }
 
 }
