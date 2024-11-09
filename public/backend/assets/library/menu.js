@@ -62,19 +62,14 @@
     HT.createMenuRow = () => {
         $(document).on('click', '.add-menu', function (e) {
             e.preventDefault();
-
-            // Thêm một dòng mới vào bảng
             let newRow = HT.menuRowHtml();
-
-            $('.menu-table tbody').append(newRow);  // Thêm dòng vào tbody của bảng
-
-            // Ẩn thông báo nếu có dòng nhập liệu
-            $('.hid').hide().append(HT.menuRowHtml);
+            $('.menu-table tbody').append(newRow);
+            HT.checkMenuLength();
         });
     };
 
     HT.menuRowHtml = () => {
-        let row = $('<tr>');  // Tạo dòng mới
+        let row = $('<tr>');
 
         let nameColumn = $('<td>').append(
             $('<input>').attr({
@@ -117,18 +112,64 @@
         $(document).on('click', '.btn-link.text-danger', function (e) {
             e.preventDefault();
 
-            // Xác định dòng cần xóa (dòng chứa nút xóa được nhấn)
             let row = $(this).closest('tr');
-
-            // Xóa dòng khỏi bảng
             row.remove();
 
-            // Kiểm tra lại số lượng dòng trong bảng
-            if ($('.menu-table tbody tr').length === 0) {  // Nếu không còn dòng nào
-                $('.hid').show();  // Hiển thị thông báo nếu không còn dòng nhập liệu
-            } else {
-                $('.hid').hide();  // Ẩn thông báo nếu còn dòng nhập liệu
+            HT.checkMenuLength();
+        });
+    };
+
+
+    HT.checkMenuLength = () => {
+        let rowCount = $('.menu-table tbody tr').not('.hid').length;
+
+        if (rowCount === 0) {
+            $('.hid').show();
+        } else {
+            $('.hid').hide();
+        }
+    };
+
+    HT.getMenu = () => {
+        $('#menuAccordion').on('click', '.menu-module', function (e) {
+            e.preventDefault();
+            let _this = $(this);
+            let model = _this.attr('data-model');
+
+            if (_this.hasClass('loading')) {
+                return;
             }
+
+            _this.addClass('loading');
+            _this.find('.menu-text').hide();
+            _this.find('.menu-loading').removeClass('d-none');
+
+            $.ajax({
+                url: `{{ route('ajax.dashboard.getMenu') }}?model=${model}`,
+                type: 'GET',
+                dataType: 'json',
+                success: function (res) {
+                    _this.removeClass('loading');
+                    _this.find('.menu-text').show();
+                    _this.find('.menu-loading').addClass('d-none');
+
+                    if (res.data) {
+                        let menuList = _this.closest('.accordion-item').find('.menu-list');
+                        if (menuList.length) {
+                            menuList.html(res.data);
+                        }
+                    } else {
+                        alert('Không có dữ liệu để hiển thị.');
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    _this.removeClass('loading');
+                    _this.find('.menu-text').show();
+                    _this.find('.menu-loading').addClass('d-none');
+                    console.error('Lỗi:', textStatus, errorThrown);
+                    alert('Không thể tải dữ liệu. Vui lòng thử lại sau.');
+                }
+            });
         });
     };
 
@@ -138,6 +179,7 @@
         HT.createMenuCatalogue();
         HT.createMenuRow();
         HT.deleteRow();
+        HT.getMenu();
     });
 
 

@@ -340,6 +340,7 @@ input:disabled {
     z-index: 100000;
 }
 
+/* Quyen customize menu */
 .mb15 {
     margin-bottom: 15px;
 }
@@ -353,3 +354,5 @@ input:disabled {
 .form-error{
     display: none;
 }
+/* Quyen customize menu */
+

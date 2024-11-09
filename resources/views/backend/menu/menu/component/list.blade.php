@@ -29,37 +29,32 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Nhóm bài viết -->
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="headingTwo">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#collapseGroupPosts" aria-expanded="false" aria-controls="collapseGroupPosts">
-                        Nhóm bài viết
-                    </button>
-                </h2>
-                <div id="collapseGroupPosts" class="accordion-collapse collapse" aria-labelledby="headingTwo"
-                    data-bs-parent="#menuAccordion">
-                    <div class="accordion-body">
-                        {{-- a????????? --}}
+            @foreach (__('module.model') as $key => $value)
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="heading{{ $key }}">
+                        <a href="{{ $key }}" class="accordion-button collapsed menu-module" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#collapseGroupPosts{{ $key }}"
+                            data-model="{{ $key }}" aria-expanded="false"
+                            aria-controls="collapseGroupPosts{{ $key }}">
+                            <span class="menu-text">{{ $value }}</span>
+                            <span class="spinner-border spinner-border-sm menu-loading d-none" role="status"
+                                aria-hidden="true"></span>
+                        </a>
+                    </h2>
+                    <div id="collapseGroupPosts{{ $key }}" class="accordion-collapse collapse"
+                        aria-labelledby="heading{{ $key }}" data-bs-parent="#menuAccordion">
+                        <div class="accordion-body">
+                            <form action="" method="get" data-model="{{ $key }}" class="search-model">
+                                <div class="form-row">
+                                    <input type="text" class="form-control" name="keyword"
+                                        placeholder="Nhập 2 ký tự để tìm kiếm...">
+                                </div>
+                            </form>
+                            <div class="menu-list"></div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <!-- Bài viết -->
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="headingThree">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#collapsePosts" aria-expanded="false" aria-controls="collapsePosts">
-                        Bài viết
-                    </button>
-                </h2>
-                <div id="collapsePosts" class="accordion-collapse collapse" aria-labelledby="headingThree"
-                    data-bs-parent="#menuAccordion">
-                    <div class="accordion-body">
-                        {{-- a????????? --}}
-                    </div>
-                </div>
-            </div>
+            @endforeach
         </div>
     </div>
     <div class="col-lg-7">
@@ -78,7 +73,8 @@
                         <tr class="text-wp">
                             <td colspan="4" class="text-center text-muted hid">
                                 <p>Danh sách liên kết này chưa có bất kì đường dẫn nào.</p>
-                                <p>Hãy nhấn vào <a href="#" class="text-primary">Thêm đường dẫn</a> để bắt đầu thêm.</p>
+                                <p>Hãy nhấn vào <a href="#" class="text-primary">Thêm đường dẫn</a> để bắt đầu
+                                    thêm.</p>
                             </td>
                         </tr>
                         <tr>
@@ -86,7 +82,8 @@
                             <td><input type="text" class="form-control" placeholder="Đường dẫn"></td>
                             <td><input type="text" class="form-control" placeholder="Vị trí"></td>
                             <td class="text-center">
-                                <button type="button" class="btn btn-link text-danger"><i class="fas fa-times"></i></button>
+                                <button type="button" class="btn btn-link text-danger"><i
+                                        class="fas fa-times"></i></button>
                             </td>
                         </tr>
                     </tbody>
