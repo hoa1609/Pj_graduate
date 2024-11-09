@@ -11,13 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('product_variant_language', function (Blueprint $table) {
+        Schema::create('systems', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('product_variant_id');
             $table->unsignedBigInteger('language_id');
-            $table->foreign('product_variant_id')->references('id')->on('product_variants')->onDelete('cascade');
+            $table->unsignedBigInteger('user_id');
             $table->foreign('language_id')->references('id')->on('languages')->onDelete('cascade');
-            $table->string('name');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->string('keyword', 50);
+            $table->text('content')->nullable();
             $table->timestamps();
         });
     }
@@ -27,6 +28,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('product_variant_language');
+        Schema::dropIfExists('systems');
     }
 };
+
+
+

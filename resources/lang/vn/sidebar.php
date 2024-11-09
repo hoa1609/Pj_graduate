@@ -90,8 +90,16 @@ return [
             'icon' => 'fa fa-wrench',
             'subModule' => [
                 [
-                    'title' => 'Ngôn ngữ',
+                    'title' => 'cấu hình ngôn ngữ',
                     'route' => 'language.index'
+                ],
+                [
+                    'title' => 'Cấu hình chung',
+                    'route' => 'generate.index'
+                ],
+                [
+                    'title' => 'Cấu hình hệ thống',
+                    'route' => 'system.index'
                 ],
 
             ]

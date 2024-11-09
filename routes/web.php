@@ -17,6 +17,9 @@ use App\Http\Controllers\Backend\AttributeCatalogueController;
 use App\Http\Controllers\Ajax\DashboardController as AjaxDashboardController;
 use App\Http\Controllers\Ajax\AttributeController as AjaxAttributeController;
 use App\Http\Controllers\Backend\SlideController;
+use App\Http\Controllers\Backend\SystemController;
+
+
 
 
 
@@ -94,6 +97,7 @@ Route::middleware(['admin', 'locale'])->group(function () {
         Route::delete('destroy/{id}', [PostCatalogueController::class, 'destroy'])->name('post.catalogue.destroy');
     });
 
+
     Route::group(['prefix' => 'post'], function () {
         Route::get('index', [PostController::class, 'index'])->name('post.index');
         Route::get('create', [PostController::class, 'create'])->name('post.create');
@@ -165,6 +169,25 @@ Route::middleware(['admin', 'locale'])->group(function () {
         Route::get('delete/{id}', [SlideController::class, 'delete'])-> name('slide.delete');
         Route::delete('destroy/{id}', [SlideController::class, 'destroy'])-> name('slide.destroy');
     });
+
+
+    /* ROUTER GENERAL */
+    Route::group(['prefix' => 'generate'], function () {
+        Route::get('index', [GenerateController::class, 'index'])->name('generate.index');
+        Route::get('create', [GenerateController::class, 'create'])->name('generate.create');
+        Route::post('store', [GenerateController::class, 'store'])->name('generate.store');
+        Route::get('edit/{id}', [GenerateController::class, 'edit'])->name('generate.edit');
+        Route::post('update/{id}', [GenerateController::class, 'update'])->name('generate.update');
+        Route::get('delete/{id}', [GenerateController::class, 'delete'])->name('generate.delete');
+        Route::delete('destroy/{id}', [GenerateController::class, 'destroy'])->name('generate.destroy');
+    });
+
+    Route::group(['prefix' => 'system'], function () {
+        Route::get('index', [SystemController::class, 'index'])->name('system.index');
+        Route::post('store', [SystemController::class, 'store'])->name('system.store');
+
+    });
+
 
 
     /* AJAX */
