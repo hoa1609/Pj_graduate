@@ -389,7 +389,6 @@ input:disabled {
 .ui-sortable li .thumb button:hover {
     background-color: rgba(217, 83, 79, 0.8); 
 }
-
 /* widget */
 
 .search-model{
@@ -425,5 +424,4 @@ input:disabled {
     left: 0;
     z-index: 9999;
     background-color: #fff ;
-    
 }

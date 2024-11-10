@@ -34,7 +34,6 @@ class HomeController extends FrontendController{
 
         $slides = $this->slideRepository->findByCondition(...$this->slideAgrument());
         $products = $this->productRepository->all(['languages', 'product_variants']);
-        dd($products->toArray());
         foreach ($products as $product) {
             foreach ($product->languages as $language) {
                 $pivotName = $language->pivot['name'];
