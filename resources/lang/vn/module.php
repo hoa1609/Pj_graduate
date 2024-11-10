@@ -7,4 +7,9 @@ return [
         'ProductCatalogue' => 'Nhóm sản phẩm',
         'Product' => 'Sản phẩm',
     ],
+    'type' => [
+        'dropdown-menu ' => 'Dropdown menu',
+        'mega-menu ' => 'Mega menu',
+    ]
+
 ];

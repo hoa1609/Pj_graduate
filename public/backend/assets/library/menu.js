@@ -139,9 +139,8 @@
             let option = {
                 model: _this.attr('data-model')
             };
-
-            HT.sendAjaxGetMenu(option, _this);
-
+            let target = _this.parents('.accordion-item').find('.menu-list');
+            HT.sendAjaxGetMenu(option, target, _this);
         });
     };
 
@@ -186,61 +185,40 @@
 
     HT.menuLinks = (links) => {
         let paginationUl = $('<ul>').addClass('pagination');
-
         $.each(links, function (index, link) {
             let liClass = 'page-item';
-            if (link.active) {
-                liClass += ' active';
-            } else if (!link.url) {
-                liClass += ' disabled';
-            }
+            if (link.active) liClass += ' active';
+            else if (!link.url) liClass += ' disabled';
 
             let li = $('<li>').addClass(liClass);
             if (link.label === 'pagination.previous') {
-                let span = $('<span>').addClass('page-link').attr('aria-hidden', true).html('‹');
-                li.append(span);
+                li.append($('<span>').addClass('page-link').html('‹'));
+            } else if (link.label === 'pagination.next') {
+                li.append($('<span>').addClass('page-link').html('›'));
+            } else if (link.url) {
+                li.append($('<a>').addClass('page-link').attr('href', link.url).text(link.label).attr('data-page', link.label));
             }
-
-            else if (link.label === 'pagination.next') {
-                let span = $('<span>').addClass('page-link').attr('aria-hidden', true).html('›');
-                li.append(span);
-            }
-
-            else if (link.url) {
-                let a = $('<a>').addClass('page-link').text(link.label).attr('href', link.url);
-                li.append(a);
-            }
-
             paginationUl.append(li);
         });
+        return $('<nav>').append(paginationUl).prop('outerHTML');
+    };
 
-        let nav = $('<nav>').append(paginationUl);
-
-        return nav.prop('outerHTML');
-    }
-
-    HT.sendAjaxGetMenu = (option, _this) => {
+    HT.sendAjaxGetMenu = (option, target, _this) => {
         $.ajax({
             url: 'ajax/dashboard/getMenu',
             type: 'GET',
             data: option,
             dataType: 'json',
             beforeSend: function () {
-                _this.parents('.accordion-item').find('.menu-list').html('');
+                target.html('');
             },
             success: function (res) {
-                console.log(res);
-                console.log(res.links)
                 let html = '';
-                for (let i = 0; i < res.data.length; i++) {
-                    html += HT.renderModelMenu(res.data[i]);
-                }
-
+                res.data.forEach(item => {
+                    html += HT.renderModelMenu(item);
+                });
                 html += HT.menuLinks(res.links);
-
-                _this.parents('.accordion-item').find('.menu-list').html(html);
-
-                console.log($('#paginationMenu').html());
+                target.html(html);
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.error('Error:', textStatus, errorThrown);
@@ -250,16 +228,17 @@
 
     HT.getPaginationMenu = () => {
         $(document).on('click', '.page-link', function (e) {
-            e.preventDefault()
+            e.preventDefault();
             let _this = $(this);
             let option = {
-                model: _this.parents('.accordion-collapse').attr('id'),
-                page: _this.text()
-            }
-            console.log(option);
-
-        })
+                model: _this.closest('.accordion-body').find('.search-model').data('model'),
+                page: _this.attr('href').split('page=')[1] // Lấy số trang từ URL
+            };
+            let target = _this.closest('.menu-list');
+            HT.sendAjaxGetMenu(option, target, _this);
+        });
     };
+
 
 
     $(document).ready(function () {

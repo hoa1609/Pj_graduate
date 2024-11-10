@@ -64,6 +64,10 @@ class DashboardController extends Controller
         ]);
 
         $model = $request->input('model');
+
+        $page = $request->input('page') ?? 1;
+        // echo $page;die();
+
         $serviceInterfaceNamespace = '\App\Repositories\\' . ucfirst($model) . 'Repository';
 
         // Kiểm tra xem repository class có tồn tại không
