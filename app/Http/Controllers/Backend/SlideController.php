@@ -34,6 +34,8 @@ class SlideController extends Controller
     }
 
     public function index (Request $request){
+        $this->authorize('modules', 'slide.index');
+
         $perPage = $request->integer('perpage');
         $slides = $this->slideService->paginate($request, $this->language);
         foreach ($slides as $slide) {
@@ -59,6 +61,8 @@ class SlideController extends Controller
     }
 
     public function create(){
+        $this->authorize('modules', 'slide.create');
+        
         $config['seo'] = config('apps.slide');
         $config['method'] = 'create';
         $template = 'backend.slide.slide.store';
@@ -76,8 +80,8 @@ class SlideController extends Controller
         return redirect()->route('slide.index')->with('error', 'Thêm mới bản ghi không thành công. Hãy thử lại.');
     }
 
-    public function edit($id)
-    {
+    public function edit($id){
+        $this->authorize('modules', 'slide.edit');
         $slide = $this->slideRepository->findById($id);
         $slideItem = $this->slideService->coverSlideArray($slide->item[$this->language]);
         $config['seo'] = config('apps.slide');
@@ -91,16 +95,16 @@ class SlideController extends Controller
         ));
     }
 
-    public function update($id, UpdateSlideRequest $request)
-    {
+    public function update($id, UpdateSlideRequest $request){
         if($this->slideService->update($id, $request, $this->language)){
             return redirect()->route('slide.index')->with('success', 'Cập nhật bản ghi thành công');
         }
         return redirect()->route('slide.index')->with('error', 'Cập nhật bản ghi không thành công. Hãy thử lại.');
     }
 
-    public function delete($id)
-    {
+    public function delete($id){
+        $this->authorize('modules', 'slide.delete');
+
         $slide = $this->slideRepository->findById($id);
         $config['seo'] = config('apps.slide');
         $template = 'backend.slide.slide.delete';
@@ -111,8 +115,9 @@ class SlideController extends Controller
         ));
     }
 
-    public function destroy($id)
-    {
+    public function destroy($id){
+        $this->authorize('modules', 'slide.destroy');
+
         if($this->slideService->destroy($id)){
             return redirect()->route('slide.index')->with('success', 'Xóa bản ghi thành công');
         }

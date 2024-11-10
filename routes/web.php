@@ -17,8 +17,7 @@ use App\Http\Controllers\Backend\AttributeCatalogueController;
 use App\Http\Controllers\Ajax\DashboardController as AjaxDashboardController;
 use App\Http\Controllers\Ajax\AttributeController as AjaxAttributeController;
 use App\Http\Controllers\Backend\SlideController;
-
-
+use App\Http\Controllers\Backend\WidgetController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\RouterController;
 use App\Http\Controllers\Frontend\CartController;
@@ -162,12 +161,25 @@ Route::middleware(['admin', 'locale'])->group(function () {
         Route::get('delete/{id}', [SlideController::class, 'delete'])-> name('slide.delete');
         Route::delete('destroy/{id}', [SlideController::class, 'destroy'])-> name('slide.destroy');
     });
+    
+    Route::group(['prefix' => 'widget'], function (){
+        Route::get('index', [WidgetController::class, 'index'])-> name('widget.index');
+        Route::get('create', [WidgetController::class, 'create'])-> name('widget.create');
+        Route::post('store', [WidgetController::class, 'store'])-> name('widget.store');
+        Route::get('edit/{id}', [WidgetController::class, 'edit'])-> name('widget.edit');
+        Route::post('update/{id}', [WidgetController::class, 'update'])-> name('widget.update');
+        Route::get('delete/{id}', [WidgetController::class, 'delete'])-> name('widget.delete');
+        Route::delete('destroy/{id}', [WidgetController::class, 'destroy'])-> name('widget.destroy');
+    });
 
 
     /* AJAX */
     Route::get('ajax/location/getLocation', [LocationController::class, 'getLocation'])->name('ajax.location.index');
     Route::post('ajax/dashboard/changeStatus', [AjaxDashboardController::class, 'changeStatus'])->name('ajax.dashboard.changeStatus');
     Route::post('ajax/dashboard/changeStatusAll', [AjaxDashboardController::class, 'changeStatusAll'])->name('ajax.dashboard.changeStatusAll');
+    
+    // widget
+    Route::get('ajax/dashboard/findModelObject', [AjaxDashboardController::class, 'findModelObject'])->name('ajax.dashboard.findModelObject');
     Route::get('ajax/attribute/getAttribute', [AjaxAttributeController::class, 'getAttribute'])->name('ajax.attribute.getAttribute');
     Route::get('ajax/attribute/loadAttribute', [AjaxAttributeController::class, 'loadAttribute'])->name('ajax.attribute.loadAttribute');
 

@@ -69,9 +69,9 @@ class AppServiceProvider extends ServiceProvider
         'App\Repositories\Interfaces\ProvinceRepositoryInterface' => 'App\Repositories\ProvinceRepository',
         'App\Repositories\Interfaces\DistrictRepositoryInterface' => 'App\Repositories\DistrictRepository',
 
-
-        
-        
+        // widget
+        'App\Services\Interfaces\WidgetServiceInterface' => 'App\Services\WidgetService',
+        'App\Repositories\Interfaces\WidgetRepositoryInterface' =>'App\Repositories\WidgetRepository',
     ];
 
     public function register(): void
