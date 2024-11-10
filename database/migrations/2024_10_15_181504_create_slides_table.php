@@ -18,10 +18,10 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->longText('item');
             $table->longText('setting');
-            $table->string('short_code');
+            $table->string('short_code')->nullable();
             $table->unsignedbigInteger('user_id');
             $table->tinyInteger('publish')->default(1);
-            $table->timestamp('delete_at')->nullable();
+            $table->timestamp('deleted_at')->nullable();
             
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();

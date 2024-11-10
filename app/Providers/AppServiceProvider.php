@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
+use App\Http\ViewComposers\SystemCoposer;
+use App\Models\Language;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -84,6 +86,18 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+
+        // $locale = app()->getLocale();
+        // $language = Language::where('canonical', $locale)->first();
+        // dd($language->id);
+
+        // view()->composer('frontend.homepage.layout', function($view) use ($language){
+        //     $composer = app()->make(SystemCoposer::class, ['language' => $language->id]);
+        //     $composer->compose($view);
+        // });
+
+
+
         Schema::defaultStringLength(191);
     }
 }

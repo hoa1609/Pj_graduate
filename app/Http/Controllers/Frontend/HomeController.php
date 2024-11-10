@@ -12,13 +12,16 @@ use Illuminate\Http\Request;
 class HomeController extends FrontendController{
 
     protected $language;
+    protected $systemRepository;
     protected $slideRepository;
     protected $productRepository;
 
     public function __construct(
+        // SystemRepository $systemRepository,
         SlideRepository $slideRepository,
         ProductRepository $productRepository
     ){
+        // $this->systemRepository = $systemRepository;
         $this->slideRepository = $slideRepository;
         $this->productRepository = $productRepository;
 
@@ -29,20 +32,10 @@ class HomeController extends FrontendController{
 
 
      public function index(){
-        $config = $this->config();
-
 
         $slides = $this->slideRepository->findByCondition(...$this->slideAgrument());
         $products = $this->productRepository->all(['languages', 'product_variants']);
-        foreach ($products as $product) {
-            foreach ($product->languages as $language) {
-                $pivotName = $language->pivot['name'];
-               
-            }
-        }
-
-
-        
+        $config = $this->config();
         return view('frontend.homepage.home.index', compact(
             'config',
             'slides',

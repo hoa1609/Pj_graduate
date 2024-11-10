@@ -88,7 +88,9 @@ class ProductService extends BaseService implements ProductServiceInterface
                 $this->updateCatalogueForProduct($product, $request);
                 $this->createRouter($product, $request, $this->controllerName, $languageId);
 
-                $this->createVariant($product, $request, $languageId);
+                if($request->input('attribute')){
+                    $this->createVariant($product, $request, $languageId);
+                }
             }
             DB::commit();
             return true;
@@ -168,7 +170,7 @@ class ProductService extends BaseService implements ProductServiceInterface
         $payload = $request->only($this->payload());
         $payload['user_id'] = Auth::id();
         $payload['album'] = $this->formatAlbum($request);
-        $payload['price'] = convert_price($payload['price']);
+        $payload['price'] = convert_price(($payload['price']) ?? 0);
         $payload['attributeCatalogue'] = $this->formatJson($request, 'attributeCatalogue');
         $payload['attribute'] = $this->formatJson($request, 'attribute');
         $payload['variant'] = $this->formatJson($request, 'variant');
@@ -179,7 +181,7 @@ class ProductService extends BaseService implements ProductServiceInterface
     private function uploadProduct($product, $request){
         $payload = $request->only($this->payload());
         $payload['album'] = $this->formatAlbum($request);
-        $payload['price'] = convert_price($payload['price']);
+        $payload['price'] = convert_price(($payload['price']) ?? 0);
         return $this->productRepository->update($product->id, $payload);
     }
 
@@ -222,7 +224,9 @@ class ProductService extends BaseService implements ProductServiceInterface
                     $variant->attributes()->detach();
                     $variant->delete();
                 }); 
-                $this->createVariant($product, $request, $languageId);
+                if($request->input('attribute')){
+                    $this->createVariant($product, $request, $languageId);
+                }
             }
             DB::commit();
             return true;

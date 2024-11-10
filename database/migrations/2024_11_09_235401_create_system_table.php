@@ -11,16 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('languages', function (Blueprint $table) {
+        Schema::create('systems', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 50);
-            $table->string('canonical', 10)->unique();
-            $table->string('image')->nullable();
-            $table->unsignedbigInteger('user_id');
-            $table->string('description')->nullable();
-            $table->tinyInteger('publish')->default(1);
+            $table->unsignedBigInteger('language_id');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('language_id')->references('id')->on('languages')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->timestamp('deleted_at')->nullable();
+            $table->string('keyword', 50);
+            $table->text('content')->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +28,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('languages');
+        Schema::dropIfExists('systems');
     }
 };
+
+
+

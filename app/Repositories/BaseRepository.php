@@ -97,12 +97,23 @@ class BaseRepository implements BaseRepositoryInterface
         return $query->forceDelete();
     }
 
-    public function findByCondition($condition = []){
+    public function findByCondition(
+        $condition = [],
+        $flag = false,
+        $relation =[],
+        array $orderBy = ['id', 'desc'],
+        array $param = [],
+    ){
         $query = $this->model->newQuery();
         foreach($condition as $key => $val){
             $query->where($val[0], $val[1] , $val[2]);
         }
-        return $query->first();
+        if(isset($param['whereIn'])){
+            $query->whereIn($param['whereInFied'], $param['WhereIn']);
+        }
+        $query->with($relation);
+        $query->orderBy($orderBy[0], $orderBy[1]);
+        return ($flag == false) ? $query->first() : $query->get();
     }
 
     public function createPivot($model, array $payload = [], string $relation = ''){
