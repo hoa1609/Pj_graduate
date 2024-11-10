@@ -93,6 +93,10 @@ return [
                     'title' => 'Ngôn ngữ',
                     'route' => 'language.index'
                 ],
+                [
+                    'title' => 'QL Widget',
+                    'route' => 'widget.index'
+                ],
 
             ]
         ],

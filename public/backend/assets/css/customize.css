@@ -390,3 +390,40 @@ input:disabled {
     background-color: rgba(217, 83, 79, 0.8); 
 }
 
+/* widget */
+
+.search-model{
+    border-radius: 5px; 
+    height: 42px;
+    padding-left: 35px; 
+    font-size: 14px;
+    border: 1px solid #e3e9ed;
+    outline: 0;
+}
+
+.search-model-box{
+    position: relative;
+}
+
+.search-model-box .fa{
+    position: absolute;
+    top: 15px;
+    left: 15px;
+}
+
+.delete button {
+    font-size: 25px;
+}
+
+.list-group li:hover{
+    background-color: #f0f8ff;
+}
+
+.ajax-search-result {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 9999;
+    background-color: #fff ;
+    
+}
