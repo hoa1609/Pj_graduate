@@ -68,13 +68,14 @@
         });
     };
 
-    HT.menuRowHtml = () => {
-        let row = $('<tr>');
+    HT.menuRowHtml = (option) => {
+        let row = $('<tr>').addClass((typeof option !== 'undefined' && option.name) ? option.name : 'default-class');
 
         let nameColumn = $('<td>').append(
             $('<input>').attr({
                 type: 'text',
                 name: 'menu[name][]',
+                value: (typeof (option) != 'undefined') ? option.name : '',
                 placeholder: 'Tên Menu'
             }).addClass('form-control')
         );
@@ -83,6 +84,7 @@
             $('<input>').attr({
                 type: 'text',
                 name: 'menu[canonical][]',
+                value: (typeof (option) != 'undefined') ? option.canonical : '',
                 placeholder: 'Đường dẫn'
             }).addClass('form-control')
         );
@@ -91,6 +93,7 @@
             $('<input>').attr({
                 type: 'text',
                 name: 'menu[order][]',
+                value: '',
                 placeholder: 'Vị trí'
             }).addClass('form-control')
         );
@@ -131,48 +134,132 @@
     };
 
     HT.getMenu = () => {
-        $('#menuAccordion').on('click', '.menu-module', function (e) {
-            e.preventDefault();
+        $(document).on('click', '.menu-module', function () {
             let _this = $(this);
-            let model = _this.attr('data-model');
+            let option = {
+                model: _this.attr('data-model')
+            };
 
-            if (_this.hasClass('loading')) {
-                return;
-            }
+            HT.sendAjaxGetMenu(option, _this);
 
-            _this.addClass('loading');
-            _this.find('.menu-text').hide();
-            _this.find('.menu-loading').removeClass('d-none');
-
-            $.ajax({
-                url: `{{ route('ajax.dashboard.getMenu') }}?model=${model}`,
-                type: 'GET',
-                dataType: 'json',
-                success: function (res) {
-                    _this.removeClass('loading');
-                    _this.find('.menu-text').show();
-                    _this.find('.menu-loading').addClass('d-none');
-
-                    if (res.data) {
-                        let menuList = _this.closest('.accordion-item').find('.menu-list');
-                        if (menuList.length) {
-                            menuList.html(res.data);
-                        }
-                    } else {
-                        alert('Không có dữ liệu để hiển thị.');
-                    }
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    _this.removeClass('loading');
-                    _this.find('.menu-text').show();
-                    _this.find('.menu-loading').addClass('d-none');
-                    console.error('Lỗi:', textStatus, errorThrown);
-                    alert('Không thể tải dữ liệu. Vui lòng thử lại sau.');
-                }
-            });
         });
     };
 
+
+
+    HT.renderModelMenu = (object) => {
+        let html = '';
+
+        html += '<div class="m-item">';
+        html += '<div class="uk-flex uk-flex-middle">';
+        html += '<input type="checkbox" class="m0 choose-menu" value="' + object.canonical + '" name="" id="id_' + object.canonical + '">';
+        html += '<label for="id_' + object.canonical + '">' + object.name + '</label>';
+        html += '</div>';
+        html += '</div>';
+
+        return html;
+    };
+
+    HT.chooseMenu = () => {
+        $(document).on('click', '.choose-menu', function () {
+            let _this = $(this);
+            let canonical = _this.val();
+            let name = _this.siblings('label').text();
+            let $row = HT.menuRowHtml({
+                name: name,
+                canonical: canonical,
+            });
+
+            if (_this.prop('checked')) {
+                $('.menu-wrapper').append($row);
+                $('.menu-table').find('.not').hide();
+            } else {
+                $('.menu-wrapper tr').each(function () {
+                    let rowCanonical = $(this).find('input[name="menu[canonical][]"]').val();
+                    if (rowCanonical === canonical) {
+                        $(this).remove();
+                    }
+                });
+            }
+        });
+    };
+
+    HT.menuLinks = (links) => {
+        let paginationUl = $('<ul>').addClass('pagination');
+
+        $.each(links, function (index, link) {
+            let liClass = 'page-item';
+            if (link.active) {
+                liClass += ' active';
+            } else if (!link.url) {
+                liClass += ' disabled';
+            }
+
+            let li = $('<li>').addClass(liClass);
+            if (link.label === 'pagination.previous') {
+                let span = $('<span>').addClass('page-link').attr('aria-hidden', true).html('‹');
+                li.append(span);
+            }
+
+            else if (link.label === 'pagination.next') {
+                let span = $('<span>').addClass('page-link').attr('aria-hidden', true).html('›');
+                li.append(span);
+            }
+
+            else if (link.url) {
+                let a = $('<a>').addClass('page-link').text(link.label).attr('href', link.url);
+                li.append(a);
+            }
+
+            paginationUl.append(li);
+        });
+
+        let nav = $('<nav>').append(paginationUl);
+
+        return nav.prop('outerHTML');
+    }
+
+    HT.sendAjaxGetMenu = (option, _this) => {
+        $.ajax({
+            url: 'ajax/dashboard/getMenu',
+            type: 'GET',
+            data: option,
+            dataType: 'json',
+            beforeSend: function () {
+                _this.parents('.accordion-item').find('.menu-list').html('');
+            },
+            success: function (res) {
+                console.log(res);
+                console.log(res.links)
+                let html = '';
+                for (let i = 0; i < res.data.length; i++) {
+                    html += HT.renderModelMenu(res.data[i]);
+                }
+
+                html += HT.menuLinks(res.links);
+
+                _this.parents('.accordion-item').find('.menu-list').html(html);
+
+                console.log($('#paginationMenu').html());
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.error('Error:', textStatus, errorThrown);
+            }
+        });
+    };
+
+    HT.getPaginationMenu = () => {
+        $(document).on('click', '.page-link', function (e) {
+            e.preventDefault()
+            let _this = $(this);
+            let option = {
+                model: _this.parents('.accordion-collapse').attr('id'),
+                page: _this.text()
+            }
+            console.log(option);
+
+        })
+    };
 
 
     $(document).ready(function () {
@@ -180,6 +267,8 @@
         HT.createMenuRow();
         HT.deleteRow();
         HT.getMenu();
+        HT.chooseMenu();
+        HT.getPaginationMenu();
     });
 
 

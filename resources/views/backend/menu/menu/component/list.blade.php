@@ -37,8 +37,6 @@
                             data-model="{{ $key }}" aria-expanded="false"
                             aria-controls="collapseGroupPosts{{ $key }}">
                             <span class="menu-text">{{ $value }}</span>
-                            <span class="spinner-border spinner-border-sm menu-loading d-none" role="status"
-                                aria-hidden="true"></span>
                         </a>
                     </h2>
                     <div id="collapseGroupPosts{{ $key }}" class="accordion-collapse collapse"
@@ -50,7 +48,9 @@
                                         placeholder="Nhập 2 ký tự để tìm kiếm...">
                                 </div>
                             </form>
-                            <div class="menu-list"></div>
+                            <div class="menu-list mt20">
+                                <div id="paginationMenu"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -69,7 +69,7 @@
                             <th class="fw-bold">Xóa</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="menu-wrapper">
                         <tr class="text-wp">
                             <td colspan="4" class="text-center text-muted hid">
                                 <p>Danh sách liên kết này chưa có bất kì đường dẫn nào.</p>
