@@ -44,8 +44,8 @@
                         <div class="accordion-body">
                             <form action="" method="get" data-model="{{ $key }}" class="search-model">
                                 <div class="form-row">
-                                    <input type="text" class="form-control" name="keyword"
-                                        placeholder="Nhập 2 ký tự để tìm kiếm...">
+                                    <input type="text" class="form-control search-menu" name="keyword"
+                                        data-model="someModel" placeholder="Nhập 2 ký tự để tìm kiếm...">
                                 </div>
                             </form>
                             <div class="menu-list mt20">

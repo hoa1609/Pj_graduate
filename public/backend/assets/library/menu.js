@@ -69,7 +69,7 @@
     };
 
     HT.menuRowHtml = (option) => {
-        let row = $('<tr>').addClass((typeof option !== 'undefined' && option.name) ? option.name : 'default-class');
+        let row = $('<tr>').addClass((typeof option !== 'undefined' && option.canonical) ? option.canonical : 'default-class');
 
         let nameColumn = $('<td>').append(
             $('<input>').attr({
@@ -140,24 +140,97 @@
                 model: _this.attr('data-model')
             };
             let target = _this.parents('.accordion-item').find('.menu-list');
-            HT.sendAjaxGetMenu(option, target, _this);
+
+            let menuRowClass = HT.checkMenuRowExists();
+            console.log(menuRowClass);
+
+            HT.sendAjaxGetMenu(option, target, _this, menuRowClass);
+        });
+    };
+
+    HT.checkMenuRowExists = () => {
+        let menuRowClass = $('tr').map(function () {
+            // Lấy các lớp của thẻ <tr>, kiểm tra nếu lớp không tồn tại thì trả về chuỗi rỗng
+            let classAttr = $(this).attr('class');
+            if (classAttr) {
+                // Tách lớp và trả về lớp đầu tiên
+                let classes = classAttr.split(' ');
+                return classes[0];
+            }
+            return ''; // Trả về chuỗi rỗng nếu không có lớp
+        }).get();
+
+        return menuRowClass;
+    };
+
+
+    // HT.renderModelMenu = (object, renderModelMenu) => {
+    //     let html = '';
+
+    //     html += '<div class="m-item">';
+    //     html += '<div class="uk-flex uk-flex-middle">';
+    //     html += '<input type="checkbox" ' + ((renderModelMenu.includes(object.canonical)) ? 'checked' : '') + ' class="m0 choose-menu" value="' + object.canonical + '" name="" id="id_' + object.canonical + '">';
+    //     html += '<label for="id_' + object.canonical + '">' + object.name + '</label>';
+    //     html += '</div>';
+    //     html += '</div>';
+
+    //     return html;
+    // };
+
+    HT.renderModelMenu = (object, renderModelMenu) => {
+        let html = '';
+
+        if (Array.isArray(renderModelMenu) && renderModelMenu.includes(object.canonical)) {
+            html += '<div class="m-item">';
+            html += '<div class="uk-flex uk-flex-middle">';
+            html += '<input type="checkbox" checked class="m0 choose-menu" value="' + object.canonical + '" name="" id="id_' + object.canonical + '">';
+            html += '<label for="id_' + object.canonical + '">' + object.name + '</label>';
+            html += '</div>';
+            html += '</div>';
+        } else {
+            html += '<div class="m-item">';
+            html += '<div class="uk-flex uk-flex-middle">';
+            html += '<input type="checkbox" class="m0 choose-menu" value="' + object.canonical + '" name="" id="id_' + object.canonical + '">';
+            html += '<label for="id_' + object.canonical + '">' + object.name + '</label>';
+            html += '</div>';
+            html += '</div>';
+        }
+
+        return html;
+    };
+
+    HT.searchMenu = () => {
+        let typingTimer;
+        let doneTypingInterval = 1000;
+
+        $(document).on('keyup', '.search-menu', function (e) {
+            let _this = $(this);
+            let keyword = _this.val();
+            clearTimeout(typingTimer);
+
+            let option = {
+                model: _this.closest('.accordion-item').find('a').data('model'),
+                keyword: keyword
+            };
+
+            typingTimer = setTimeout(function () {
+                if (keyword.length >= 2) {
+                    let target = _this.closest('.accordion-body').find('.menu-list');
+                    let menuRowClass = HT.checkMenuRowExists();
+
+                    HT.sendAjaxGetMenu(option, target, _this, menuRowClass);
+                } else if (keyword.length === 0) {
+                    let target = _this.closest('.accordion-body').find('.menu-list');
+                    let menuRowClass = HT.checkMenuRowExists();
+
+                    HT.sendAjaxGetMenu({ model: option.model, keyword: '' }, target, _this, menuRowClass);
+                }
+            }, doneTypingInterval);
         });
     };
 
 
 
-    HT.renderModelMenu = (object) => {
-        let html = '';
-
-        html += '<div class="m-item">';
-        html += '<div class="uk-flex uk-flex-middle">';
-        html += '<input type="checkbox" class="m0 choose-menu" value="' + object.canonical + '" name="" id="id_' + object.canonical + '">';
-        html += '<label for="id_' + object.canonical + '">' + object.name + '</label>';
-        html += '</div>';
-        html += '</div>';
-
-        return html;
-    };
 
     HT.chooseMenu = () => {
         $(document).on('click', '.choose-menu', function () {
@@ -200,10 +273,12 @@
             }
             paginationUl.append(li);
         });
+
         return $('<nav>').append(paginationUl).prop('outerHTML');
     };
 
-    HT.sendAjaxGetMenu = (option, target, _this) => {
+
+    HT.sendAjaxGetMenu = (option, target, _this, menuRowClass) => {
         $.ajax({
             url: 'ajax/dashboard/getMenu',
             type: 'GET',
@@ -215,7 +290,7 @@
             success: function (res) {
                 let html = '';
                 res.data.forEach(item => {
-                    html += HT.renderModelMenu(item);
+                    html += HT.renderModelMenu(item, menuRowClass);
                 });
                 html += HT.menuLinks(res.links);
                 target.html(html);
@@ -235,7 +310,8 @@
                 page: _this.attr('href').split('page=')[1] // Lấy số trang từ URL
             };
             let target = _this.closest('.menu-list');
-            HT.sendAjaxGetMenu(option, target, _this);
+            let menuRowClass = HT.checkMenuRowExists();
+            HT.sendAjaxGetMenu(option, target, _this, menuRowClass);
         });
     };
 
@@ -248,6 +324,7 @@
         HT.getMenu();
         HT.chooseMenu();
         HT.getPaginationMenu();
+        HT.searchMenu();
     });
 
 
