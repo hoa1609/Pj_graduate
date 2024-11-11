@@ -14,7 +14,7 @@
                 let price = $('input[name=price]').val();
                 let code = $('input[name=code]').val();
 
-                if (price == '' && code == '') {
+                if (price == '' || code == '') {
                     displayNotification('Bạn phải nhập mục giá tiền và code sản phẩm để sử dụng chức năng này!', 'error');
                     return false;
                 }

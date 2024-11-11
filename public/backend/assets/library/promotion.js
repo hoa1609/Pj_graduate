@@ -1,6 +1,8 @@
 (function($) {
     "use strict";
     var HT = {};
+    var typingTimer;
+    var doneTyingInterval = 500;
 
     $.fn.elExist = function () {
         return this.length > 0;
@@ -30,9 +32,11 @@
                     { id: 1, name: 'Tiktok' },
                     { id: 2, name: 'Shopee' }
                 ];
-                let sourceHtml = HT.renderPromotionSource(sourceData).prop('outerHTML');
-                _this.parents('.content-source').append(sourceHtml);
-                HT.promotionMultipleSelect2();
+                if(!$('.source-wrapper').length){
+                    let sourceHtml = HT.renderPromotionSource(sourceData).prop('outerHTML');
+                    _this.parents('.content-source').append(sourceHtml);
+                    HT.promotionMultipleSelect2();
+                }
             }
         });
     };
@@ -434,52 +438,42 @@
             <table class="table table-centered  mb-3">
                 <thead class="table-light">
                     <tr>
-                        <th style="width: 300px">Sản phẩm mua</th>
+                        <th style="width: 400px">Sản phẩm mua</th>
                         <th style="width: 80px">Tối thiểu</th>
-                        <th>Giới hạn khuyến mãi </th>
+                        <th>Giới hạn KM </th>
                         <th class="text-end">Chiết khấu</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td class="order_amount_range_from td-range">
-                            <select
-                                type="text"
-                                name="amountFrom[]"
-                                class="form-select multipleSelect2"
-                                value=""
-                                data-model="Product"
-                                multiple
-                            >
-                            </select>
+                        <td class="chooseProductPromotionTd">
+                            <div class="product-quantity" data-bs-toggle="modal" data-bs-target="#finbdProduct">
+                                <div class="boxWrapper">
+                                    <div class="boxSearchIcon pe-2">
+                                        <i class="iconoir-search"></i>
+                                    </div>
+                                    <div class="boxSearchInput fixGrid6">
+                                        <p>Tìm kiếm theo tên...</p>
+                                    </div>
+                                </div>
+                            </div>
+
                         </td>
                         <td class="order_amount_range_to td-range">
-                            <input
-                                type="text"
-                                name="amountTo[]"
-                                class="form-control int"
-                                value="1"
-                            >
+                            <input type="text" name="amountTo[]" class="form-control int"
+                                value="1">
                         </td>
                         <td class="order_amount_range_to td-range">
-                            <input
-                                type="text"
-                                name="amountTo[]"
-                                class="form-control int"
-                                placeholder="0"
-                                value="0"
-                            >
+                            <input type="text" name="amountTo[]" class="form-control int"
+                                placeholder="0" value="0">
                         </td>
                         <td class="discountType">
                             <div class="uk-flex uk-flex-middle">
-                                <input
-                                    type="text"
-                                    name="amountValue[]"
-                                    class="form-control int me-2"
-                                    placeholder="0"
-                                    value="0"
-                                >
-                                <select class="multipleSelect2 disountType" name="amountType" id="">
+                                <input type="text" name="amountValue[]"
+                                    class="form-control int me-2" placeholder="0"
+                                    value="0">
+                                <select class="multipleSelect2 disountType" name="amountType"
+                                    id="">
                                     <option value="cash">đ</option>
                                     <option value="percent">%</option>
                                 </select>
@@ -497,6 +491,322 @@
         $('.promotion-container').html(html)
         HT.promotionMultipleSelect2();
     }
+
+    HT.loadProduct = (option) => {
+        $.ajax({
+            url: 'ajax/product/loadProductPromotion',
+            type: 'GET',
+            data: option,
+            dataType: 'json',
+            success: function(res) {
+                HT.fillToObjectList(res)
+            },
+        })
+    }
+
+    HT.getPaginationMenu = () => {
+        $(document).on('click', '.page-link', function(e) {
+            e.preventDefault();
+            let _this = $(this);
+            let option = {
+                model: $('.select-product-and-quantity').val(),
+                page: _this.text(),
+                keyword: $('.search-model').val()
+            };
+            HT.loadProduct(option);
+        });
+    }
+
+
+    HT.productQuantityListProduct = () => {
+        $(document).on('click', '.product-quantity', function(e) {
+            e.preventDefault()
+            let option = {
+                model: $('.select-product-and-quantity').val(),
+            }
+            HT.loadProduct(option)
+        })
+    }
+
+    HT.fillToObjectList = (data) => {
+        switch (data.model) {
+            case "Product":
+                HT.fillProductToList(data.objects)
+                break;
+            case "ProductCatalogue":
+                HT.fillProducCataloguetToList(data.objects)
+                break;
+        }
+    }
+
+    HT.fillProducCataloguetToList = (object) => {
+        let html = ''
+        if(object.data.length) {
+            let model = $('.select-product-and-quantity').val()
+            for(let i = 0; i < object.data.length; i++) {
+                let name = object.data[i].name
+                let id = object.data[i].id
+                let classBox = model + '_' + id
+                let isChecked = ($('.boxWrapper .'+classBox+'').length) ? true : false
+
+                html += `
+                <div class="search-object-item" data-productid="${id}" data-name="${name}">
+                <div class="d-flex align-items-center mb-3" >
+                    <input
+                        type="checkbox"
+                        class="form-check-input me-2"
+                        value="${id}"
+                        ${ (isChecked) ? 'checked' : ''}
+                    >
+                    <div class="flex-grow-1">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="fw-bold">${name}</span>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                <div class="hr-custom"></div>`
+
+            }
+        }
+        html += HT.paginationLinks(object.links).html();
+        $('.product-list').html(html);
+    }
+
+    HT.fillProductToList = (object) => {
+        let html = ''
+        if(object.data.length) {
+            let model = $('.select-product-and-quantity').val()
+            for(let i = 0; i < object.data.length; i++) {
+                let image = object.data[i].image
+                let name = object.data[i].variant_name
+                let product_variant_id = object.data[i].product_variant_id
+                let product_id = object.data[i].id
+                let sku = object.data[i].sku
+                let price = object.data[i].price
+                let inventory = (typeof object.data.inventory != 'undefined') ? inventory : 0
+                let couldSell = (typeof object.data.couldSell != 'undefined') ? couldSell : 0
+                let classBox = model + '_' + product_id + '_' + product_variant_id
+                let isChecked = ($('.boxWrapper .'+classBox+'').length) ? true : false
+
+                html += `
+                <div class="search-object-item" data-productid="${product_id}"
+                data-variant_id="${product_variant_id}" data-name="${name}">
+                <div class="d-flex align-items-center mb-3" >
+                    <input
+                        type="checkbox"
+                        class="form-check-input me-2"
+                        value="${product_id+'_'+product_variant_id}"
+                        ${ (isChecked) ? 'checked' : ''}
+                    >
+                    <img src="${image}" alt="${name}" class="img-thumbnail me-3" style="width: 50px; height: 50px;">
+                    <div class="flex-grow-1">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="fw-bold">${name}</span>
+                            <span class="text-danger fs-5">${addCommas(price)} ₫</span>
+                        </div>
+
+                        <div class="d-flex justify-content-between text-muted pt-1">
+                            <div class="d-flex">
+                                <span>Mã sản phẩm: </span>
+                                <span class="code-product text-primary ms-1">${sku}</span>
+                            </div>
+                            <div class="d-flex">
+                                <div class="d-flex">
+                                    <span>Tồn kho: </span>
+                                    <span class="stock-number text-primary ms-1">${inventory}</span>
+                                </div>
+                                <span class="mx-2">|</span>
+                                <div class="d-flex">
+                                    <span>Có thể bán: </span>
+                                    <span class="available-for-sale text-primary ms-1">${couldSell}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                <div class="hr-custom"></div>`
+
+            }
+        }
+        html += HT.paginationLinks(object.links).html();
+        $('.product-list').html(html);
+    }
+
+
+    HT.paginationLinks = (links) => {
+        let nav = $('<nav>');
+        if (links.length > 0) {
+            let paginationUl = $('<ul>').addClass('pagination');
+
+            $.each(links, function(index, link) {
+                let liClass = 'page-item';
+
+                if (link.active) {
+                    liClass += ' active d-none';
+                } else if (!link.url) {
+                    liClass += ' d-none';
+                }
+
+                let li = $('<li>').addClass(liClass);
+
+                if (link.label == 'pagination.previous') {
+                    let span = $('<span>').addClass('page-link').attr('aria-hidden', true).html('<');
+                    li.append(span);
+                } else if (link.label == 'pagination.next') {
+                    let span = $('<span>').addClass('page-link').attr('aria-hidden', true).html('>');
+                    li.append(span);
+                } else if (link.url) {
+                    let a = $('<a>')
+                        .addClass('page-link')
+                        .html(link.label)
+                        .attr('href', link.url)
+                        .attr('data-page', link.label);
+                    li.append(a);
+                }
+
+                paginationUl.append(li);
+            });
+
+            nav.append(paginationUl);
+        }
+
+        return nav;
+    };
+
+    HT.searchObject = () => {
+        $(document).on('keyup', '.search-model',function(e){
+            let _this = $(this)
+            let keyword = _this.val()
+            let option = {
+                model: $('.select-product-and-quantity').val(),
+                keyword: keyword
+
+            }
+            clearTimeout(typingTimer);
+            typingTimer = setTimeout(function(){
+                HT.loadProduct (option)
+
+                } , doneTyingInterval)
+            })
+    }
+
+    var objectChoose = []
+    HT.chooseProductPromotion = () => {
+        $(document).on('click', '.search-object-item', function(e) {
+            e.preventDefault()
+            let _this = $(this)
+            let isChecked = _this.find('input[type=checkbox]').prop('checked')
+            let objectItem = {
+                product_id: _this.attr('data-productid'),
+                product_variant_id: _this.attr('data-variant_id'),
+                name: _this.attr('data-name')
+            }
+
+            if(isChecked){
+                objectChoose = objectChoose.filter(item => item.product_id !== objectItem.product_id)
+                _this.find('input[type=checkbox]').prop('checked', false)
+            }else {
+                objectChoose.push(objectItem)
+                _this.find('input[type=checkbox]').prop('checked', true)
+            }
+        })
+    }
+
+    HT.confirmProductPromotion = () => {
+        $(document).on('click', '.confirm-product-promotion', function(){
+            let html = ''
+            let model = $('.select-product-and-quantity').val()
+            if(objectChoose.length){
+                for(let i = 0; i < objectChoose.length; i++){
+                    let product_id = objectChoose[i].product_id
+                    let product_variant_id = objectChoose[i].product_variant_id
+                    let name = objectChoose[i].name
+                    let classBox = model + '_' + product_id + '_' + product_variant_id
+                    if(!$(`.boxWrapper .${classBox}`).length) {
+                        html += `
+                        <div class="fixGrid6 ${classBox}">
+                            <div class="goods-item ">
+                                <span class="goods-item-name" title="${name}">${name}</span>
+                                <button class="delete-goods-item">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                                <div class="hidden">
+                                    <input name="object[id][]" value="${product_id}">
+                                    <input name="object[product_variant_id][]" value="${product_variant_id}">
+                                </div>
+                            </div>
+                        </div>
+                        `
+                    }
+
+                }
+            }
+            HT.checkFixGrid(html)
+        })
+    }
+
+    HT.checkFixGrid = (html) => {
+        if($('.fixGrid6').elExist){
+            $('.boxSearchIcon').remove()
+            $('.boxWrapper').prepend(html)
+        }else {
+           $('.fixGrid6').remove()
+           $('.boxWrapper').prepend(HT.boxSearchIcon())
+        }
+    }
+
+    HT.boxSearchIcon = () => {
+        return ` <div class="boxSearchIcon pe-2">
+                <i class="iconoir-search"></i>
+            </div>`
+    }
+
+// ---------------BUG Ở ĐÂY NÈ------------
+
+    HT.changePromotionMethod = () => {
+        $(document).on('change', '.select-product-and-quantity', function(){
+            $('.fixGrid6').remove()
+            objectChoose = []
+        })
+    }
+
+    // HT.deleteGoodsItem = () => {
+    //     $(document).on('click', '.delete-goods-item', function(e){
+    //         e.stopPropagation()
+    //         let _button = $(this)
+    //         _button.parents('.fixGrid6').remove()
+    //     })
+    // }
+
+    HT.deleteGoodsItem = () => {
+        $(document).on('click', '.delete-goods-item', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            let _button = $(this);
+
+            // Lấy cả product_id và product_variant_id để xác định đúng sản phẩm cần xóa
+            let product_id = _button.siblings('.hidden').find('input[name="object[id][]"]').val();
+            let product_variant_id = _button.siblings('.hidden').find('input[name="object[product_variant_id][]"]').val();
+
+            // Xóa sản phẩm tương ứng khỏi mảng objectChoose
+            objectChoose = objectChoose.filter(item =>
+                item.product_id !== product_id || item.product_variant_id !== product_variant_id
+            );
+
+            // Xóa phần tử .fixGrid6 chứa sản phẩm đã được chọn
+            _button.parents('.fixGrid6').remove();
+
+            // Bỏ chọn checkbox tương ứng với variant cụ thể trong danh sách sản phẩm
+            $(`.search-object-item[data-productid="${product_id}"][data-variant_id="${product_variant_id}"] input[type=checkbox]`).prop('checked', false);
+        });
+    }
+
+    // ------------END BUG NÈ------------------
+
+
 
     // HT.setupAjaxSearch = () => {
 
@@ -542,7 +852,13 @@
         HT.btnJs100();
         HT.deleteAmountRangeCondition();
         HT.renderOrderRangeConditionContainer();
-        HT.setupAjaxSearch();
+        HT.productQuantityListProduct();
+        HT.getPaginationMenu();
+        HT.searchObject();
+        HT.chooseProductPromotion();
+        HT.confirmProductPromotion();
+        HT.deleteGoodsItem();
+        HT.changePromotionMethod()
     });
 
 })(jQuery);

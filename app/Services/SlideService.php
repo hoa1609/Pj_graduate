@@ -133,7 +133,6 @@ class SlideService  extends BaseService implements SlideServiceInterface
     }
 
 
-
     private function handleSlideItem($request, $languageId)
     {
         $slide = $request->input('slide');

@@ -29,12 +29,21 @@
 
                         <td>
                             <div class="form-check form-switch">
+<<<<<<< HEAD
                                 <input class="form-check-input status js-switch-{{ $slide-> id }}"
                                     data-field="publish" data-model="Slide"
                                     value="{{ $slide->publish }}"
                                     type="checkbox" id="flexSwitchCheckDefault"
                                     data-modeId="{{ $slide->id }}"
                                     {{ $slide->publish == 2 ? 'checked' : '' }}
+=======
+                                <input class="form-check-input status js-switch-{{ $slide-> id }}" 
+                                    data-field="publish" data-model="Slide"
+                                    value="{{ $slide->publish }}" 
+                                    type="checkbox" id="flexSwitchCheckDefault"
+                                    data-modeId="{{ $slide->id }}"
+                                    {{ $slide->publish == 2 ? 'checked' : '' }} 
+>>>>>>> c19ccca6a0bd79bf048ff87ad1a93ed0b5a650b8
                                     >
                             </div>
                         </td>

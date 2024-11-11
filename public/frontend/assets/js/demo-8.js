@@ -151,6 +151,7 @@ function ecCheckCookie()
     });
 
     /*----------------------------- Siderbar Product Slider -------------------------------- */ 
+<<<<<<< HEAD
     $(document).ready(function(){
         $('.ec-sidebar-slider .ec-sb-pro-sl').slick({
             rows: 4,
@@ -184,6 +185,41 @@ function ecCheckCookie()
             ]
         });
     });
+=======
+    // $(document).ready(function(){
+    //     $('.ec-sidebar-slider .ec-sb-pro-sl').slick({
+    //         rows: 4,
+    //         dots: false,
+    //         arrows: true,
+    //         infinite: true,
+    //         speed: 500,
+    //         slidesToShow: 1,
+    //         slidesToScroll: 1,
+    //         autoplay: true,
+    //         autoplaySpeed: 8000,
+    //         responsive: [
+    //         {
+    //             breakpoint: 992,
+    //             settings: {
+    //                 rows: 4,
+    //                 slidesToShow: 1,
+    //                 slidesToScroll: 1,
+    //                 dots: false
+    //             }
+    //         },
+    //         {
+    //             breakpoint: 479,
+    //             settings: {
+    //                 rows: 4,
+    //                 slidesToShow: 1,
+    //                 slidesToScroll: 1,
+    //                 dots: false
+    //             }
+    //         }
+    //         ]
+    //     });
+    // });
+>>>>>>> c19ccca6a0bd79bf048ff87ad1a93ed0b5a650b8
 
     /*----------------------------- Slider Price -------------------------------- */
     const slider = document.getElementById('ec-sliderPrice');

@@ -90,12 +90,12 @@ return [
             'icon' => 'icofont-money ',
             'subModule' => [
                 [
-                    'title' => 'Khuyến mãi',
+                    'title' => 'QL Khuyến mãi',
                     'route' => 'promotion.index'
                 ],
                 // [
-                //     'title' => 'Mã giảm giá',
-                //     'route' => 'coupon.index'
+                //     'title' => 'QL Nguồn Khách',
+                //     'route' => 'source.index'
                 // ],
 
             ]

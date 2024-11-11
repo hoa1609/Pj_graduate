@@ -10,6 +10,7 @@
 /*-------------------------------------------------
   Fonts Family & Style CSS
 ---------------------------------------------------*/
+<<<<<<< HEAD
 @font-face {
   font-family: "Poppins, sans-serif";
   src: url("../fonts/poppins/Poppins-Thin.ttf") format("truetype");
@@ -135,6 +136,18 @@ body {
   margin: 0 auto;
   background-color: #ffffff;
   font-family: "Poppins, sans-serif";
+=======
+
+
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+body {
+  margin: 0 auto;
+  background-color: #ffffff;
+  font-family: "Roboto", sans-serif;
+>>>>>>> c19ccca6a0bd79bf048ff87ad1a93ed0b5a650b8
   font-size: 14px;
   font-weight: 400;
   font-style: normal;
@@ -2522,12 +2535,15 @@ textarea.form-control.is-invalid {
   pointer-events: none;
   opacity: 0.65;
 }
+<<<<<<< HEAD
 
 .btn-primary {
   color: #ffffff;
   background-color: #3474d4;
   border-color: #3474d4;
 }
+=======
+>>>>>>> c19ccca6a0bd79bf048ff87ad1a93ed0b5a650b8
 .btn-primary:hover {
   color: #ffffff;
   background-color: #555;
@@ -17936,7 +17952,11 @@ section.ec-instagram-section {
 }
 
 .ec-main-slider .swiper-container {
+<<<<<<< HEAD
   border-radius: 50px;
+=======
+  border-radius: 20px;
+>>>>>>> c19ccca6a0bd79bf048ff87ad1a93ed0b5a650b8
 }
 .ec-main-slider .slide-1 {
   background-image: url("../images/main-slider-banner/20.jpg");
@@ -17944,6 +17964,7 @@ section.ec-instagram-section {
   background-repeat: no-repeat;
   background-size: cover;
 }
+<<<<<<< HEAD
 .ec-main-slider .slide-2 {
   background-image: url("../images/main-slider-banner/21.jpg");
   background-position: center;
@@ -17956,6 +17977,9 @@ section.ec-instagram-section {
   background-repeat: no-repeat;
   background-size: cover;
 }
+=======
+
+>>>>>>> c19ccca6a0bd79bf048ff87ad1a93ed0b5a650b8
 .ec-main-slider * {
   direction: ltr;
 }
@@ -17966,12 +17990,16 @@ section.ec-instagram-section {
   bottom: 25px;
 }
 
+<<<<<<< HEAD
 .ec-slide-content {
   width: 50%;
   padding-left: 85px;
   position: relative;
   z-index: 9;
 }
+=======
+
+>>>>>>> c19ccca6a0bd79bf048ff87ad1a93ed0b5a650b8
 .ec-slide-content .ec-slide-title {
   font-size: 55px;
   color: #222;
@@ -18038,8 +18066,13 @@ section.ec-instagram-section {
 }
 
 .main-slider-dot .swiper-pagination-bullet {
+<<<<<<< HEAD
   width: 15px;
   height: 15px;
+=======
+  width: 10px;
+  height: 10px;
+>>>>>>> c19ccca6a0bd79bf048ff87ad1a93ed0b5a650b8
   display: inline-block;
   border-radius: 6px;
   opacity: 1;
@@ -18056,7 +18089,11 @@ section.ec-instagram-section {
 }
 .main-slider-dot .swiper-pagination-bullet.swiper-pagination-bullet-active {
   background-color: #ff909d;
+<<<<<<< HEAD
   width: 30px;
+=======
+  width: 40px;
+>>>>>>> c19ccca6a0bd79bf048ff87ad1a93ed0b5a650b8
 }
 
 .main-slider-dot.dot-color-white .swiper-pagination-bullet:hover {

@@ -71,7 +71,7 @@
                             </div>
                             <div class="col-md-12 col-lg-12">
                                 <div class="promotion-container">
-                                    <table class="table table-centered  mb-3">
+                                    {{-- <table class="table table-centered  mb-3">
                                         <thead class="table-light">
                                             <tr>
                                                 <th style="width: 400px">Sản phẩm mua</th>
@@ -82,31 +82,18 @@
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td class="order_amount_range_from td-range">
-                                                    <div class="product-quantity">
-                                                        <div class="d-flex align-items-center">
-                                                            <div class="boxWrapper">
-                                                                <div class="row">
-                                                                    @for($i = 0; $i<9; $i++)
-                                                                    <div class="col-lg-6">
-                                                                        <div class="goods-item d-none">
-                                                                            <span class="goods-item-name">Iphone 20 Promaxmẫmmxamxa</span>
-                                                                            <button class="delete-goods-item">
-                                                                                <i class="fas fa-times"></i>
-                                                                            </button>
-                                                                        </div>
-                                                                    </div>
-                                                                    @endfor
-                                                                    <div class="col-xs-6">
-                                                                        <div class="boxSearchInput" data-bs-toggle="modal" data-bs-target="#searchModal">
-                                                                            <i class="iconoir-search"></i>
-                                                                            <p class="placeholderSearch">Tìm kiếm theo tên sản phẩm...</p>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
+                                                <td class="chooseProductPromotionTd">
+                                                    <div class="product-quantity" data-bs-toggle="modal" data-bs-target="#finbdProduct">
+                                                        <div class="boxWrapper">
+                                                            <div class="boxSearchIcon pe-2">
+                                                                <i class="iconoir-search"></i>
+                                                            </div>
+                                                            <div class="boxSearchInput fixGrid6">
+                                                                <p>Tìm kiếm theo tên...</p>
                                                             </div>
                                                         </div>
                                                     </div>
+
                                                 </td>
                                                 <td class="order_amount_range_to td-range">
                                                     <input type="text" name="amountTo[]" class="form-control int"
@@ -131,7 +118,7 @@
 
                                             </tr>
                                         </tbody>
-                                    </table>
+                                    </table> --}}
 
                                 </div>
                             </div>
@@ -260,3 +247,5 @@
         }
     });
 </script>
+
+

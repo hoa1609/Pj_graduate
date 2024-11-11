@@ -64,7 +64,7 @@ class ProductCatalogueService extends BaseService implements ProductCatalogueSer
             $productCatalogue = $this->createCatalogue($request);
             if($productCatalogue->id >0){
                 $this->updateLanguageForCatalogue($productCatalogue, $request, $languageId);
-                $this->createRouter($productCatalogue, $request, $this->controllerName);
+                $this->createRouter($productCatalogue, $request, $this->controllerName, $languageId);
                 $this->nestedset = new Nestedsetbie([
                     'table' => 'product_catalogues',
                     'foreignkey' => 'product_catalogue_id',
@@ -119,7 +119,7 @@ class ProductCatalogueService extends BaseService implements ProductCatalogueSer
             $flag = $this->updateCatalogue($productCatalogue, $request);
             if($flag == TRUE){
                 $this->updateLanguageForCatalogue($productCatalogue, $request, $languageId);
-                $this->updateRouter($productCatalogue, $request, $this->controllerName);
+                $this->updateRouter($productCatalogue, $request, $this->controllerName, $languageId);
                 $this->nestedset = new Nestedsetbie([
                     'table' => 'product_catalogues',
                     'foreignkey' => 'product_catalogue_id',

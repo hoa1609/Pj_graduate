@@ -56,8 +56,8 @@ class AppServiceProvider extends ServiceProvider
         'App\Repositories\Interfaces\SlideRepositoryInterface' =>'App\Repositories\SlideRepository',
 
         /* ProductVariantAttribute */
+        'App\Services\Interfaces\ProductVariantAttributeServiceInterface' => 'App\Services\ProductVariantAttributeService',
         'App\Repositories\Interfaces\ProductVariantAttributeRepositoryInterface' =>'App\Repositories\ProductVariantAttributeRepository',
-
 
         /* router */
         'App\Services\Interfaces\RouterServiceInterface' => 'App\Services\RouterService',

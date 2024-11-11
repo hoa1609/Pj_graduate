@@ -29,7 +29,7 @@
         @php
             $variantCatalogue = old('attributeCatalogue', (isset($product->attributeCatalogue) ? json_decode($product->attributeCatalogue, TRUE) : [] ));
         @endphp
-            <div class="card-body variant-wrapper pb-5 {{ (count($variantCatalogue)) ? '' : 'hidden' }}">
+            <div class="card-body variant-wrapper pb-5 {{ (isset($variantCatalogue)) ? '' : 'hidden' }}">
                 <div class="row mb-1">
                     <div class="col-lg-3 position-relative">
                         <div class="attribute-title">Chọn thuộc tính</div>

@@ -18,6 +18,7 @@
                                             <input class="form-control" type="text" name="name"
                                                 value="{{ old('name', ($slide->name) ?? '') }}" readonly>
                                         </div>
+<<<<<<< HEAD
 
                                     </div>
                                 </div>
@@ -25,9 +26,22 @@
                             </form>
                         </div>
 
+=======
+                                        
+                                    </div>
+                                </div>
+                                    <button type="submit" class="btn btn-danger mt-3">Xóa</button>
+                            </form> 
+                        </div>
+
+>>>>>>> c19ccca6a0bd79bf048ff87ad1a93ed0b5a650b8
                     </div>
                 </div>
             </div>
         </div>
+<<<<<<< HEAD
     </div>
+=======
+    </div> 
+>>>>>>> c19ccca6a0bd79bf048ff87ad1a93ed0b5a650b8
 </div>
