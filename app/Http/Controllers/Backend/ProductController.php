@@ -100,7 +100,6 @@ class ProductController extends Controller{
         $config['seo'] = config('apps.product.edit');
         $album = json_decode($product->album);
         $attributeCatalogue = $this->attributeCatalogue->getAll($this->language);
-
         $dropdown = $this->nestedset->Dropdown();
         $template = 'backend.product.product.store';
         return view('backend.dashboard.layout', compact(

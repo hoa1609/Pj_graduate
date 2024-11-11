@@ -79,7 +79,7 @@ class AttributeService extends BaseService implements AttributeServiceInterface
             if($attribute->id > 0){
                 $this->updateLanguageForAttribute($attribute, $request, $languageId);
                 $this->updateCatalogueForAttribute($attribute, $request);
-                $this->createRouter($attribute, $request, $this->controllerName);
+                $this->createRouter($attribute, $request, $this->controllerName, $languageId);
             }
             DB::commit();
             return true;
@@ -138,7 +138,7 @@ class AttributeService extends BaseService implements AttributeServiceInterface
             if( $this->uploadAttribute($attribute, $request)){
                 $this->updateLanguageForAttribute($attribute, $request, $languageId);
                 $this->updateCatalogueForAttribute($attribute, $request);
-                $this->updateRouter($attribute, $request, $this->controllerName);
+                $this->updateRouter($attribute, $request, $this->controllerName, $languageId);
             }
             DB::commit();
             return true;

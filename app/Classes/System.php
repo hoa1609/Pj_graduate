@@ -43,16 +43,25 @@ class System{
                 'map' => ['type' => 'textarea' , 'label' => 'bản đồ'],
 
 
-
-
-
-
-
-
-
             ],
             
+        ];
+
+        $data['seo'] = [
+            'label' => 'Cấu hình seo dành cho trang chủ ',
+            'description' => 'Cài đặt đầy đủ thông tin về SEO của website, Bao gồm tiêu đề, từ khóa , mô tả.',
+            'value' => [
+                'meta_title' => ['type' => 'text', 'label' => 'Tên tiêu đề'],
+                'meta_keyword' => ['type' => 'text', 'label' => 'Từ khóa SEO'],
+                'meta_description' => ['type' => 'text', 'label' => 'Mô tả SEO'],
+                'meta_images' => ['type' => 'images', 'label' => 'Ảnh SEO'],
+                
+                
+            ],
             ];
+            
+            
+        
 
         return $data;
     }

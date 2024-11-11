@@ -5,7 +5,6 @@
 </head>
     <body>
         @include('frontend.component.header')
-
         @yield('content')
 
         @include('frontend.component.footer')

@@ -79,7 +79,7 @@ class PostService extends BaseService implements PostServiceInterface
             if($post->id > 0){
                 $this->updateLanguageForPost($post, $request, $languageId);
                 $this->updateCatalogueForPost($post, $request);
-                $this->createRouter($post, $request, $this->controllerName);
+                $this->createRouter($post, $request, $this->controllerName, $languageId);
             }
             DB::commit();
             return true;
@@ -137,7 +137,7 @@ class PostService extends BaseService implements PostServiceInterface
             if( $this->uploadPost($post, $request)){
                 $this->updateLanguageForPost($post, $request, $languageId);
                 $this->updateCatalogueForPost($post, $request);
-                $this->updateRouter($post, $request, $this->controllerName);
+                $this->updateRouter($post, $request, $this->controllerName, $languageId);
             }
             DB::commit();
             return true;

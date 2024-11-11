@@ -25,4 +25,5 @@ interface BaseRepositoryInterface
         );
     public function createPivot($model, array $payload = [], string $relation = '');
     public function createBatch(array $payload = []);
+    public function update0rInsert(array $payload = [], array $condition = []);
 }

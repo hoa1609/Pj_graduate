@@ -55,6 +55,10 @@ class AppServiceProvider extends ServiceProvider
         'App\Services\Interfaces\SlideServiceInterface' => 'App\Services\SlideService',
         'App\Repositories\Interfaces\SlideRepositoryInterface' =>'App\Repositories\SlideRepository',
 
+        /* ProductVariantAttribute */
+        'App\Services\Interfaces\ProductVariantAttributeServiceInterface' => 'App\Services\ProductVariantAttributeService',
+        'App\Repositories\Interfaces\ProductVariantAttributeRepositoryInterface' =>'App\Repositories\ProductVariantAttributeRepository',
+
         /* router */
         'App\Services\Interfaces\RouterServiceInterface' => 'App\Services\RouterService',
         'App\Repositories\Interfaces\RouterRepositoryInterface' => 'App\Repositories\RouterRepository',
@@ -63,9 +67,9 @@ class AppServiceProvider extends ServiceProvider
         'App\Repositories\Interfaces\ProvinceRepositoryInterface' => 'App\Repositories\ProvinceRepository',
         'App\Repositories\Interfaces\DistrictRepositoryInterface' => 'App\Repositories\DistrictRepository',
 
-        //system//
-        'App\Services\Interfaces\SystemServiceInterface' => 'App\Services\RouterService',
-        'App\Repositories\Interfaces\SystemRepositoryInterface' => 'App\Repositories\SystemRepository',
+        /* system */
+        'App\Services\Interfaces\SystemServiceInterface' => 'App\Services\SystemService',
+        'App\Repositories\Interfaces\SystemRepositoryInterface' =>'App\Repositories\SystemRepository',
 
 
 

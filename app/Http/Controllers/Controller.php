@@ -10,7 +10,4 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, ValidatesRequests;
     
-    public function currentLanguage(){
-        return 1;
-    }
 }

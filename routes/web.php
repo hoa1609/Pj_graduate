@@ -18,15 +18,11 @@ use App\Http\Controllers\Ajax\DashboardController as AjaxDashboardController;
 use App\Http\Controllers\Ajax\AttributeController as AjaxAttributeController;
 use App\Http\Controllers\Backend\SlideController;
 use App\Http\Controllers\Backend\SystemController;
+use App\Http\Controllers\Backend\GenerateController;
 
 
 
 
-
-
-
-
-use App\Http\Controllers\Frontend\HomeController;
 use Illuminate\Routing\RouteGroup;
 
 
@@ -39,19 +35,11 @@ use Illuminate\Routing\RouteGroup;
 
 
 
-Route::get('/', [HomeController::class, 'index'])->name('home.index');
 
 
 
-
-
-
-
-
-
-
+/*BACK END ROUTER */
 Route::middleware(['admin', 'locale'])->group(function () {
-
     Route::get('dashboard/index', [DashboardController::class, 'index'])->name('dashboard.index');
 
     Route::group(['prefix' => 'user'], function () {

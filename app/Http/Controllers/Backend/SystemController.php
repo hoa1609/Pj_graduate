@@ -5,12 +5,28 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Classes\System;
+use App\Services\Interfaces\SystemServiceInterface as SystemService;
+use App\Models\Language;
 
 class SystemController extends Controller
 {
     protected $systemLibrary;
-    public function __construct(System $systemLibrary){
+    protected $systemService;
+    protected $language;
+
+    public function __construct(
+        System $systemLibrary,
+        SystemService $systemService,
+    ) {
+        $this->middleware(middleware: function($request, $next){
+            $locale = app()->getLocale(); 
+            $language = Language::where('canonical', $locale)->first();
+            $this->language = $language ? $language->id : 1;
+            return $next($request);
+        });
+
         $this->systemLibrary = $systemLibrary;
+        $this->systemService = $systemService;
     }
 
     public function index(){
@@ -21,19 +37,19 @@ class SystemController extends Controller
         return view('backend.dashboard.layout', compact(
             'template',
             'config',
-                    'system',
+            'system',
         ));
     }
 
-    public function store(StoreSystemRequest $request){
-        if ($this->SystemService->create($request, $this->language)) {
-            return redirect()->route('System.index')->with('success', 'Cập nhật bản ghi thành công !');
+    public function store(Request $request){
+        if ($this->systemService->save($request, $this->language)) { // Xóa $this->language nếu không cần
+            return redirect()->route('system.index')->with('success', 'Cập nhật bản ghi thành công !');
         }
-        return redirect()->route('System.index')->with('error', 'Cập nhật bản ghi thất bại !');
+        return redirect()->route('system.index')->with('error', 'Cập nhật bản ghi thất bại !');
     }
 
-    
-    private function config(){
+    private function config()
+    {
         return [
             'js' => [
                 'backend/plugins/ckfinder_2/ckfinder.js',
@@ -41,5 +57,4 @@ class SystemController extends Controller
             ]
         ];
     }
-
 }

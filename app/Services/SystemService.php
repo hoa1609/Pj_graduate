@@ -5,9 +5,9 @@ namespace App\Services;
 use App\Services\Interfaces\SystemServiceInterface;
 use App\Repositories\Interfaces\SystemRepositoryInterface as SystemRepository;
 
+// use Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 
 class SystemService implements SystemServiceInterface
@@ -25,10 +25,24 @@ class SystemService implements SystemServiceInterface
 
     
 
-    public function save($request){
+    public function save($request,$languageId){
         DB::beginTransaction();
         try {
-            $payload = $request->except('_token','send',);
+            $config = $request->input('config') ;
+            $payload= [];
+            if(count($config)){
+                foreach($config as $key => $val){
+                    $payload[]=[
+                        'keyword' => $key,
+                        'content' => $val,
+                        'language_id' =>$languageId,
+                        'user_id' => Auth::id(),
+                    ];
+                    $condition = ['keyword' => $key];
+                     $this->SystemRepository->update0rInsert($payload,$condition );
+
+                }
+            }
            
             DB::commit();
             return true;

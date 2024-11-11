@@ -17,4 +17,5 @@
 			
 		],
 		'suffix' => '.html',
+		'defaultPublish' =>['publish', '=', 2]
 	];

@@ -10,7 +10,7 @@ if(!function_exists('renderSystemInput')){
     function renderSystemInput(string $name = ''){
         return '<input
             type="text"
-            name=".$name."
+            name="config['.$name.']"
             value="'.old($name).'"
             class= "form-control"
             placeholder = ""
