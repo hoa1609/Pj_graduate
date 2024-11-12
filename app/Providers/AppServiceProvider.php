@@ -74,6 +74,10 @@ class AppServiceProvider extends ServiceProvider
         'App\Services\Interfaces\MenuServiceInterface' => 'App\Services\MenuService',
         'App\Repositories\Interfaces\MenuRepositoryInterface' => 'App\Repositories\MenuRepository',
 
+        /* system */
+        'App\Services\Interfaces\SystemServiceInterface' => 'App\Services\SystemService',
+        'App\Repositories\Interfaces\SystemRepositoryInterface' => 'App\Repositories\SystemRepository',
+
         /* menu catalogue*/
         'App\Services\Interfaces\MenuCatalogueServiceInterface' => 'App\Services\MenuCatalogueService',
         'App\Repositories\Interfaces\MenuCatalogueRepositoryInterface' => 'App\Repositories\MenuCatalogueRepository',

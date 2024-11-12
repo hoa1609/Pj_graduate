@@ -35,6 +35,59 @@ if (!function_exists('loadClass')) {
     }
 }
 
+if(!function_exists('renderSystemInput')){
+    function renderSystemInput(string $name = '', $systems = null){
+        return '<input
+            type="text" 
+            name="config['.$name.']" 
+            value="'.old($name, ($systems[$name] ?? '')).'"
+            class="form-control" 
+            placeholder="nhập tên bài viết..." 
+        >';
+    }
+}
+
+if(!function_exists('renderSystemImages')){
+    function renderSystemImages(string $name = '', $systems = null){
+        return '<input
+            type="text" 
+            name="config['.$name.']"  
+            value="'.old($name, ($systems[$name] ?? '')).'"
+            class="form-control upload-image" 
+            placeholder="nhập tên bài viết..." 
+        >';
+    }
+}
+
+if(!function_exists('renderSystemTextarea')){
+    function renderSystemTextarea(string $name = '', $systems = null){
+        return '<textarea name="config['.$name.']" class="form-control">'.old($name, ($systems[$name] ?? '')).'</textarea>';
+    }
+}
+
+if(!function_exists('renderSystemLink')){
+    function renderSystemLink(array $item = [], $systems = null){
+        return (isset($item['link'])) ? '<a href="'.$item['link']['href'].'">'.$item['link']['text'].'</a>' : '';
+    }
+}
+
+if (!function_exists('renderSystemSelect')) {
+    function renderSystemSelect(array $item, string $name = '', $systems = null): string {
+        if (!isset($item['option']) || !is_array($item['option'])) {
+            return '<select class="form-control" name="config['.$name.']" ></select>';
+        }
+        $html = '<select class="form-control form-select" name="config['.$name.']" >';
+        foreach ($item['option'] as $key => $val) {
+            $html .= '<option value="' . ((isset($systems[$name]) && $key == ($systems[$name] ?? '')) ? 'selected' : '') . '">' . ($val) . '</option>';
+        }
+        $html .= '</select>';
+        return $html;
+    }
+}
+
+
+
+
 if (!function_exists('convertArrayByKey')) {
     function convertArrayByKey($object = null, $fields = [])
     {

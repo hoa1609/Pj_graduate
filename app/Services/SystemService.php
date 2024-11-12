@@ -1,0 +1,50 @@
+<?php
+
+namespace App\Services;
+
+use App\Services\Interfaces\SystemServiceInterface;
+use App\Repositories\Interfaces\SystemRepositoryInterface as SystemRepository;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+
+
+class SystemService implements SystemServiceInterface
+{
+    protected $systemRepository;
+
+    public function __construct(
+        SystemRepository $systemRepository
+    ) {
+        $this->systemRepository = $systemRepository;
+    }
+    
+    public function save($request, $languageId){
+        DB::beginTransaction();
+        try {
+
+            $config = $request->input('config');
+            $payload = [];
+            if(count($config)){
+                foreach($config as $key => $val){
+                    $payload = [
+                        'keyword' => $key,
+                        'content' => $val,
+                        'language_id' =>$languageId,
+                        'user_id' => Auth::id(),
+                    ];
+                    $condition = ['keyword' => $key];
+                    $this->systemRepository->updateOrInsert($payload, $condition);
+                }
+            }
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollback();
+            echo $e->getMessage();
+            die();
+            return false;
+        }
+    }
+
+}
+ 

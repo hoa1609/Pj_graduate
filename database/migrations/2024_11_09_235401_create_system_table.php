@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreign('language_id')->references('id')->on('languages')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('keyword', 50);
-            $table->text('content')->nullable();
+            $table->longText('content')->nullable();
             $table->timestamps();
         });
     }

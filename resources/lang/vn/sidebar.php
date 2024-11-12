@@ -97,6 +97,10 @@ return [
                     'title' => 'QL Widget',
                     'route' => 'widget.index'
                 ],
+                [
+                    'title' => 'Cấu hình hệ thống',
+                    'route' => 'system.index'
+                ],
 
             ]
         ],

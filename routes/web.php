@@ -23,7 +23,7 @@ use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\RouterController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Ajax\MenuController as AjaxMenuController;
-
+use App\Http\Controllers\Backend\SystemController;
 use Illuminate\Routing\RouteGroup;
 
 
@@ -46,7 +46,7 @@ Route::get('thanh-toan', [CartController::class, 'checkout'])->name('cart.checko
 
 
 /*BACK END ROUTER */
-Route::middleware(['admin', 'locale'])->group(function () {
+Route::middleware(['admin', 'locale', 'backend_default_locale'])->group(function () {
     Route::get('dashboard/index', [DashboardController::class, 'index'])->name('dashboard.index');
 
     Route::group(['prefix' => 'user'], function () {
@@ -171,6 +171,12 @@ Route::middleware(['admin', 'locale'])->group(function () {
         Route::post('update/{id}', [WidgetController::class, 'update'])-> name('widget.update');
         Route::get('delete/{id}', [WidgetController::class, 'delete'])-> name('widget.delete');
         Route::delete('destroy/{id}', [WidgetController::class, 'destroy'])-> name('widget.destroy');
+    });
+
+    Route::group(['prefix' => 'system'], function (){
+        Route::get('index', [SystemController::class, 'index'])-> name('system.index');
+        Route::post('store', [SystemController::class, 'store'])-> name('system.store');
+        
     });
 
 
