@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Services\Interfaces\ProductServiceInterface;
-use App\Services\Interfaces\BaseServiceInterface;
 use App\Repositories\Interfaces\ProductRepositoryInterface as ProductRepository;
 use App\Repositories\Interfaces\ProductVariantLanguageRepositoryInterface as ProductVariantLanguageRepository;
 use App\Repositories\Interfaces\ProductVariantAttributeRepositoryInterface as ProductVariantAttributeRepository;
@@ -104,14 +103,14 @@ class ProductService extends BaseService implements ProductServiceInterface
     private function createVariant($product, $request, $languageId){
         $payload = $request->only(['variant','productVariant', 'attribute']);
         $variant = $this->createVariantArray($payload);
-        $product->product_variants()->delete();
         $variant = $product->product_variants()->createMany($variant);
         $variantId = $variant->pluck('id');
+
         $productVariantLanguage = [];
         $variantAttribute = [];
         $attributeCombines = $this->comebineAttribute(array_values($payload['attribute']));
             if (count($variantId)) {
-                foreach ($variantId as $key => $val) {
+                foreach ($variantId as $key => $val){
                     $productVariantLanguage[] = [
                         'product_variant_id' => $val,
                         'language_id' => $languageId,
@@ -210,6 +209,7 @@ class ProductService extends BaseService implements ProductServiceInterface
         return [$request->product_catalogue_id];
     }
 
+
     public function update($id, $request, $languageId){
         DB::beginTransaction();
         try{
@@ -245,7 +245,6 @@ class ProductService extends BaseService implements ProductServiceInterface
             return true;
         }catch(\Exception $e ){
             DB::rollBack();
-            // Log::error($e->getMessage());
             echo $e->getMessage();die();
             return false;
         }

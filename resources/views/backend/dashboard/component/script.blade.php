@@ -3,7 +3,7 @@
 {{-- <script src="backend/assets/libs/simple-datatables/umd/simple-datatables.js"></script> --}}
 {{-- <script src="backend/assets/js/pages/datatable.init.js"></script>   --}}
 {{-- <script src="backend/assets/libs/apexcharts/apexcharts.min.js"></script> --}}
-<script src="backend/assets/js/pages/index.init.js"></script>
+{{-- <script src="backend/assets/js/pages/index.init.js"></script> --}}
 <script src="backend/assets/data/stock-prices.js"></script>
 <script src="backend/assets/libs/jsvectormap/js/jsvectormap.min.js"></script>
 <script src="backend/assets/libs/jsvectormap/maps/world.js"></script>
@@ -20,7 +20,7 @@
 <script src="backend/assets/library/seo.js"></script>
 <script src="backend/assets/library/slide.js"></script>
 <script src="backend/plugins/jquery-ui.js"></script>
-<script src="backend/assets/library/widget.js"></script>
+{{-- <script src="backend/assets/library/widget.js"></script> --}}
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script src="backend/plugins/nice-select/js/jquery.nice-select.min.js"></script>
 
@@ -31,7 +31,7 @@
         @endforeach
     @endif
 
-    <script>
+    {{-- <script>
         const formatPrice = (value) => {
             value = value.replace(/\D/g, '');
             if (!value) return '';
@@ -42,7 +42,7 @@
             this.value = formatPrice(value);
         });
 
-       
+
         document.addEventListener('scroll', function() {
             var fixedSaveProduct = document.querySelector('.fixed-save-product');
             if (window.scrollY > 500) {
@@ -52,4 +52,7 @@
             }
         });
 
-    </script>
+    </script> --}}
+
+<script src="backend/assets/library/menu.js"></script>
+

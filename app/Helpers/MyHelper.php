@@ -7,6 +7,23 @@ if (!function_exists('convert_price')) {
     }
 }
 
+if (!function_exists('convert_array')) {
+    function convert_array($system = null, $keyword = '', $value = ''){
+        $temp = [];
+        if(is_array(($system))){
+            foreach($system as $key => $val){
+                $system[$val[$keyword]] = $val[$value];
+            }
+        }
+        if(is_object($system)){
+            foreach($system as $key => $val){
+                $temp[$val->{$keyword}] = $val->{$value};
+            }
+        }
+        return $temp;
+    }
+}
+
 if (!function_exists('loadClass')) {
     function loadClass(string $model = '', $interface = 'Repository')
     {

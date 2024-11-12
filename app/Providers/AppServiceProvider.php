@@ -4,7 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
-use App\Http\ViewComposers\SystemCoposer;
+use App\Http\Controllers\ViewComposers\SystemComposer;
+use App\Http\Controllers\ViewComposers\MenuComposer;
 use App\Models\Language;
 
 class AppServiceProvider extends ServiceProvider
@@ -69,6 +70,14 @@ class AppServiceProvider extends ServiceProvider
         'App\Repositories\Interfaces\ProvinceRepositoryInterface' => 'App\Repositories\ProvinceRepository',
         'App\Repositories\Interfaces\DistrictRepositoryInterface' => 'App\Repositories\DistrictRepository',
 
+        /* menu */
+        'App\Services\Interfaces\MenuServiceInterface' => 'App\Services\MenuService',
+        'App\Repositories\Interfaces\MenuRepositoryInterface' => 'App\Repositories\MenuRepository',
+
+        /* menu catalogue*/
+        'App\Services\Interfaces\MenuCatalogueServiceInterface' => 'App\Services\MenuCatalogueService',
+        'App\Repositories\Interfaces\MenuCatalogueRepositoryInterface' => 'App\Repositories\MenuCatalogueRepository',
+
         // widget
         'App\Services\Interfaces\WidgetServiceInterface' => 'App\Services\WidgetService',
         'App\Repositories\Interfaces\WidgetRepositoryInterface' =>'App\Repositories\WidgetRepository',
@@ -87,17 +96,20 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
 
-        // $locale = app()->getLocale();
-        // $language = Language::where('canonical', $locale)->first();
-        // dd($language->id);
+        $locale = app()->getLocale();
+        $language = Language::where('canonical', $locale)->first();
 
         // view()->composer('frontend.homepage.layout', function($view) use ($language){
-        //     $composer = app()->make(SystemCoposer::class, ['language' => $language->id]);
-        //     $composer->compose($view);
+
+        //     $composerClass = [
+        //         SystemComposer::class,
+        //         MenuComposer::class,
+        //     ];
+        //     foreach($composerClass as $key => $val){
+        //         $composer = app()->make($val, ['language' => $language->id]);
+        //         $composer->compose($view);
+        //     }   
         // });
-
-
-
         Schema::defaultStringLength(191);
     }
 }

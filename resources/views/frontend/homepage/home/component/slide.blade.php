@@ -1,5 +1,5 @@
-@if(count($slides->item))
-    <div class="ec-main-slider section section-space-pb">
+<div class="ec-main-slider section section-space-pb">
+    @if(count($slides->item))
         <div class="container">
             <div class="panel-slide" data-setting="{{ json_encode($slides->setting) }}">
                 <div class="swiper-container main-slider-dot">
@@ -29,5 +29,5 @@
                 </div>
             </div>
         </div>
-    </div>  
-@endif
+    @endif
+</div>  
