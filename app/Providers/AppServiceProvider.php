@@ -103,17 +103,17 @@ class AppServiceProvider extends ServiceProvider
         $locale = app()->getLocale();
         $language = Language::where('canonical', $locale)->first();
 
-        // view()->composer('frontend.homepage.layout', function($view) use ($language){
+        view()->composer('frontend.homepage.layout', function($view) use ($language){
 
-        //     $composerClass = [
-        //         SystemComposer::class,
-        //         MenuComposer::class,
-        //     ];
-        //     foreach($composerClass as $key => $val){
-        //         $composer = app()->make($val, ['language' => $language->id]);
-        //         $composer->compose($view);
-        //     }   
-        // });
+            $composerClass = [
+                SystemComposer::class,
+                // MenuComposer::class,
+            ];
+            foreach($composerClass as $key => $val){
+                $composer = app()->make($val, ['language' => $language->id]);
+                $composer->composer($view);
+            }   
+        });
         Schema::defaultStringLength(191);
     }
 }

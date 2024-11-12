@@ -138,4 +138,54 @@ class WidgetService implements WidgetServiceInterface
             'short_code'
         ];
     }
+
+    /*FRONT END SERVICE*/
+    public function findWidgetByKeyword(string $keyword = '', int $language = 1, $param = []){
+        $widget = $this->widgetRepository->findByCondition(
+            [
+                ['keyword', '=', $keyword],
+                config('apps.general.defaultPublish')
+            ]
+        );
+
+        $class = loadClass($widget->model);
+        $agrument = $this->widgetAgrument($widget, $language, $param);
+        $object = $class->findByCondition(...$agrument);
+        dd($object->toArray());
+    } 
+
+    private function widgetAgrument($widget, $language, $param){
+
+        $relation = [
+            'languages' => function($query) use ($language){
+                $query->where('language_id', $language);
+            }
+        ];
+        $withCount = [];
+
+        if(strpos($widget->model, 'Catalogue') && isset($param['children'])){
+            $model = lcfirst(str_replace('Catalogue','', $widget->model)).'s';
+            $relation[$model] = function($query) use ($param, $language){
+                $query->limit(($param['limit']) ?? 8);
+                $query->where('publish', 2);
+                $query->with('languages', function($query) use ($language){
+                    $query->where('language_id', $language);
+                });
+            };
+            $withCount[] = $model;
+        }
+
+        return [
+            'condition' => [
+                config('apps.general.defaultPublish')
+            ],
+            'flag' => true,
+            'relation' => $relation,
+            'param' => [
+                'WhereIn' => $widget->model_id,
+                'whereInField' => 'id'
+            ],
+            'withCount' => $withCount
+        ];
+    }
 }

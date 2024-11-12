@@ -64,7 +64,7 @@ class BaseRepository implements BaseRepositoryInterface
     }
 
     public function updateOrInsert(array $payload = [], array $condition = []){
-        return $this->model->updateOrInsert($payload, $condition);
+        return $this->model->updateOrInsert($condition, $payload);
     }
 
     public function update(int $id = 0, array $payload = [])
@@ -116,15 +116,17 @@ class BaseRepository implements BaseRepositoryInterface
         $relation =[],
         array $orderBy = ['id', 'desc'],
         array $param = [],
+        array $withCount = [],
     ){
         $query = $this->model->newQuery();
         foreach ($condition as $key => $val) {
             $query->where($val[0], $val[1], $val[2]);
         }
         if(isset($param['whereIn'])){
-            $query->whereIn($param['whereInFied'], $param['WhereIn']);
+            $query->whereIn($param['whereInField'], $param['WhereIn']);
         }
         $query->with($relation);
+        $query->withCount($withCount);
         $query->orderBy($orderBy[0], $orderBy[1]);
         return ($flag == false) ? $query->first() : $query->get();
     }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\FrontendController;
 use App\Repositories\Interfaces\SlideRepositoryInterface as SlideRepository;
 use App\Repositories\Interfaces\ProductRepositoryInterface as ProductRepository;
+use App\Services\Interfaces\WidgetServiceInterface as WidgetService;
 
 use Illuminate\Http\Request;
 
@@ -12,19 +13,18 @@ use Illuminate\Http\Request;
 class HomeController extends FrontendController{
 
     protected $language;
-    protected $systemRepository;
     protected $slideRepository;
     protected $productRepository;
+    protected $widgetService;
 
     public function __construct(
-        // SystemRepository $systemRepository,
         SlideRepository $slideRepository,
-        ProductRepository $productRepository
+        ProductRepository $productRepository,
+        WidgetService $widgetService,
     ){
-        // $this->systemRepository = $systemRepository;
         $this->slideRepository = $slideRepository;
         $this->productRepository = $productRepository;
-
+        $this->widgetService = $widgetService;
 
         parent::__construct();
      }
@@ -32,10 +32,14 @@ class HomeController extends FrontendController{
 
 
      public function index(){
+         $config = $this->config();
+
+         $widget = [
+            'category' => $this->widgetService->findWidgetByKeyword('category', $this->language, ['children' => true]),
+         ];
 
         $slides = $this->slideRepository->findByCondition(...$this->slideAgrument());
         $products = $this->productRepository->all(['languages', 'product_variants']);
-        $config = $this->config();
         return view('frontend.homepage.home.index', compact(
             'config',
             'slides',

@@ -9,10 +9,10 @@ class SystemComposer
 
 
     public function __construct(
-        // SystemRepository $systemRepository,
+        SystemRepository $systemRepository,
         $language,
     ){
-        // $this->systemRepository = $systemRepository;
+        $this->systemRepository = $systemRepository;
         $this->language = $language;
      }
 
@@ -26,8 +26,7 @@ class SystemComposer
             TRUE
         );
         $systeArray = convert_array($system, 'keyword', 'content');
-        dd($systeArray);
-
         $view->with('system', $systeArray);
+        // dd($system['homepage_logo']);
     }
 }

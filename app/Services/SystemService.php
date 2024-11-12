@@ -32,7 +32,7 @@ class SystemService implements SystemServiceInterface
                         'language_id' =>$languageId,
                         'user_id' => Auth::id(),
                     ];
-                    $condition = ['keyword' => $key];
+                    $condition = ['keyword' => $key, 'language_id' => $languageId];
                     $this->systemRepository->updateOrInsert($payload, $condition);
                 }
             }

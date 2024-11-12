@@ -85,6 +85,21 @@ if (!function_exists('renderSystemSelect')) {
     }
 }
 
+if(!function_exists('write_url')){
+    function write_url(string $canonical = '', bool $fullDomain = true, $suffix = false){
+        if(strpos($canonical, 'http') !== false){
+            return $canonical;
+        }
+        $fullUrl = (($fullDomain === true) ? config('app.url') : '').$canonical.(($suffix == true) ? config('app.general.suffix') : '');
+        return $fullUrl;
+    }
+}
+
+
+if(!function_exists('frontend_recursive_menu')){
+    function frontend_recursive_menu($data, $parentId = 0){
+    }
+}
 
 
 
