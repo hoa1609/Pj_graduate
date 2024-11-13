@@ -10,11 +10,7 @@
                 @include('backend.slide.slide.component.list')
             </div>
 
-<<<<<<< HEAD
             </div>
-=======
-            </div> 
->>>>>>> c19ccca6a0bd79bf048ff87ad1a93ed0b5a650b8
             <div class="col-lg-3">
                 @include('backend.slide.slide.component.aside')
             </div>

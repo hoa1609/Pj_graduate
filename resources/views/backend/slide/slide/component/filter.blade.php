@@ -1,16 +1,9 @@
 <div class="card-header">
     <div class="row align-items-center">
-<<<<<<< HEAD
         <div class="col">
             <h4 class="card-title">Bảng danh sách </h4>
         </div>
         <div class="col-auto">
-=======
-        <div class="col">                      
-            <h4 class="card-title">Bảng danh sách </h4>                      
-        </div>
-        <div class="col-auto"> 
->>>>>>> c19ccca6a0bd79bf048ff87ad1a93ed0b5a650b8
             <form class="row g-2">
                 <div class="col-auto">
                     <a class="btn bg-primary-subtle text-primary dropdown-toggle d-flex align-items-center arrow-none" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false" data-bs-auto-close="outside">
@@ -31,15 +24,9 @@
                         </div>
                     </div>
                 </div>
-<<<<<<< HEAD
             </form>
         </div>
     </div>
-=======
-            </form>    
-        </div>
-    </div>                                     
->>>>>>> c19ccca6a0bd79bf048ff87ad1a93ed0b5a650b8
 </div>
 
 <form action="{{ route('slide.index') }}">

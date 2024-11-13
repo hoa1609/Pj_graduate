@@ -5,9 +5,10 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Services\Interfaces\PromotionServiceInterface as PromotionService;
 use App\Repositories\Interfaces\PromotionRepositoryInterface as PromotionRepository;
+use App\Repositories\Interfaces\SourceRepositoryInterface as SourceRepository;
 
-use App\Http\Requests\PromotionRequest;
-use App\Http\Requests\UpdatePromotionRequest;
+use App\Http\Requests\Promotion\StorePromotionRequest;
+use App\Http\Requests\Promotion\UpdatePromotionRequest;
 use Illuminate\Http\Request;
 use App\Classes\Nestedsetbie;
 use App\Models\Language;
@@ -16,12 +17,18 @@ class PromotionController extends Controller{
 
     protected $promotionService;
     protected $promotionRepository;
+    protected $sourceRepository;
     protected $language;
 
     public function __construct(
         PromotionService $promotionService,
         PromotionRepository $promotionRepository,
+        SourceRepository $sourceRepository,
     ) {
+        $this->promotionService = $promotionService;
+        $this->promotionRepository = $promotionRepository;
+        $this->sourceRepository = $sourceRepository;
+
         $this->middleware(function($request, $next){
             $locale = app()->getLocale();
             $language = Language::where('canonical', $locale)->first();
@@ -29,13 +36,7 @@ class PromotionController extends Controller{
             $this->initialize();
             return $next($request);
         });
-
-        $this->promotionService = $promotionService;
-        $this->promotionRepository = $promotionRepository;
     }
-
-
-
 
     public function index(Request $request){
         $config = [
@@ -56,9 +57,9 @@ class PromotionController extends Controller{
         ));
     }
 
-
     public function create(){
         $this->authorize('modules', 'promotion.create');
+        $sources = $this->sourceRepository->all();
         $config['method'] = 'create';
         $config['seo'] = config('apps.promotion.create');
         $dropdown = $this->nestedset->Dropdown();
@@ -67,17 +68,16 @@ class PromotionController extends Controller{
             'config',
             'template',
             'dropdown',
+            'sources'
         ));
     }
 
-
-    public function store(PromotionRequest $request){
+    public function store(StorePromotionRequest $request){
         if ($this->promotionService->create($request, $this->language)) {
             return redirect()->route('promotion.index')->with('success', 'Thêm nhóm thành viên thành công !');
         }
         return redirect()->route('promotion.index')->with('error', 'Thêm nhóm thành viên thất bại !');
     }
-
 
     public function edit($id){
         $this->authorize('modules', 'promotion.edit');

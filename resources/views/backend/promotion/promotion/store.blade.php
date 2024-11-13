@@ -11,7 +11,7 @@
 @php
     $url = $config['method'] == 'create' ? route('promotion.store') : route('promotion.update', $promotion->id);
 @endphp
-<form action="{{ $url }}" method="promotion">
+<form action="{{ $url }}" method="POST">
     @csrf
     <div class="container-xxl">
         <div class="row justify-content-star">
@@ -36,6 +36,7 @@
                             </div>
                             <div class="col-md-6 position-relative">
                                 <label class="form-label">Mã khuyến mại</label>
+                                <span class="text-danger fs-10"> (*)</span>
                                 <input type="text" name="code" class="form-control"
                                     placeholder="Nhập tên mã khuyến mại..."
                                     value="{{ old('code', $promotion->code ?? '') }}">
@@ -62,7 +63,7 @@
                         <div class="row mb-2">
                             <div class="col-md-12 position-relative mb-2">
                                 <label class="form-label">Chọn hình thức khuyến mãi</label>
-                                <select name="" class="form-select setUpSelect2 promotionMethod">
+                                <select name="method" class="form-select setUpSelect2 promotionMethod">
                                     <option value="none">Chọn hình thức</option>
                                     @foreach (__('module.promotion') as $key => $val)
                                         <option value="{{ $key }}">{{ $val }}</option>
@@ -71,54 +72,6 @@
                             </div>
                             <div class="col-md-12 col-lg-12">
                                 <div class="promotion-container">
-                                    {{-- <table class="table table-centered  mb-3">
-                                        <thead class="table-light">
-                                            <tr>
-                                                <th style="width: 400px">Sản phẩm mua</th>
-                                                <th style="width: 80px">Tối thiểu</th>
-                                                <th>Giới hạn KM </th>
-                                                <th class="text-end">Chiết khấu</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td class="chooseProductPromotionTd">
-                                                    <div class="product-quantity" data-bs-toggle="modal" data-bs-target="#finbdProduct">
-                                                        <div class="boxWrapper">
-                                                            <div class="boxSearchIcon pe-2">
-                                                                <i class="iconoir-search"></i>
-                                                            </div>
-                                                            <div class="boxSearchInput fixGrid6">
-                                                                <p>Tìm kiếm theo tên...</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                </td>
-                                                <td class="order_amount_range_to td-range">
-                                                    <input type="text" name="amountTo[]" class="form-control int"
-                                                        value="1">
-                                                </td>
-                                                <td class="order_amount_range_to td-range">
-                                                    <input type="text" name="amountTo[]" class="form-control int"
-                                                        placeholder="0" value="0">
-                                                </td>
-                                                <td class="discountType">
-                                                    <div class="uk-flex uk-flex-middle">
-                                                        <input type="text" name="amountValue[]"
-                                                            class="form-control int me-2" placeholder="0"
-                                                            value="0">
-                                                        <select class="multipleSelect2 disountType" name="amountType"
-                                                            id="">
-                                                            <option value="cash">đ</option>
-                                                            <option value="percent">%</option>
-                                                        </select>
-                                                    </div>
-                                                </td>
-
-                                            </tr>
-                                        </tbody>
-                                    </table> --}}
 
                                 </div>
                             </div>
@@ -134,23 +87,27 @@
                             <div class="col-md-12 position-relative pb-2">
                                 <label class="card-title fs-16">Thời gian áp dụng chương trình</label>
                                 <div class="col-sm-12">
-                                    <label class="form-label col-sm-12 col-form-label">Ngày bắt đầu</label>
+                                    <label class="form-label col-sm-12 col-form-label">Ngày bắt đầu <span
+                                            class="text-danger fs-10"> (*)</span></label>
                                     <input class="form-control datepicker" type="datetime-local" name="startDate"
-                                        id="startDate">
+                                        id="startDate" value="{{ old('startDate', $promotion->startDate ?? '') }}">
                                 </div>
                             </div>
                             <div class="col-md-12 position-relative pb-2">
                                 <div class="col-sm-12">
                                     <label class="form-label col-sm-12 col-form-label">Ngày kết thúc</label>
                                     <input class="form-control datepicker" type="datetime-local" name="endDate"
-                                        id="endDate">
+                                        id="endDate" value="{{ old('endDate', $promotion->endDate ?? '') }}"
+                                        @if (old('neverEndDate', $promotion->neverEndDate ?? '') == 'accept') readonly @endif>
                                 </div>
                             </div>
                             <div class="col-md-12 position-relative pb-2 d-flex align-items-center">
-                                <input type="checkbox" name="" class="form-check-input me-2" value="accept"
-                                    id="neverEnd">
-                                <label for="neverEnd" class="control-label ">Không có ngày kết thúc</label>
+                                <input type="checkbox" name="neverEndDate" class="form-check-input me-2" value="accept"
+                                    id="neverEnd"
+                                    {{ old('neverEndDate', $promotion->neverEndDate ?? '') == 'accept' ? 'checked' : '' }}>
+                                <label for="neverEnd" class="control-label">Không có ngày kết thúc</label>
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -160,19 +117,40 @@
                             <div class="content-source">
                                 <div class="col-md-12 position-relative pb-2">
                                     <label class="card-title fs-16">Nguồn khách áp dụng </label>
+                                    @php
+                                        $sourceStatus = old('source', $promotion->sourceStatus ?? null);
+                                    @endphp
                                     <div class="col-md-12 position-relative pb-2 d-flex align-items-center">
                                         <input type="radio" name="source" id="allSource"
-                                            class="form-check-input me-2 chooseSource" value="all" checked="">
+                                            class="form-check-input me-2 chooseSource" value="all"
+                                            {{ old('source', $promotion->sourceStatus ?? '') === 'all' || !old('source') ? 'checked' : '' }}>
                                         <label class="control-label" for="allSource">Áp dụng cho toàn bộ nguồn khách
                                         </label>
                                     </div>
                                 </div>
                                 <div class="col-md-12 position-relative pb-2 d-flex align-items-center">
                                     <input type="radio" name="source" id="chooseSource"
-                                        class="form-check-input me-2 chooseSource" value="choose">
+                                        class="form-check-input me-2 chooseSource" value="choose"
+                                        {{ old('source', $promotion->sourceStatus ?? '') === 'choose' ? 'checked' : '' }}>
                                     <label class="control-label" for="chooseSource">Chọn nguồn khách áp dụng</label>
                                 </div>
                             </div>
+                            @if ($sourceStatus === 'choose')
+                                @php
+                                    $sourceValue = old('sourceValue', $promotion->sourceValue ?? []);
+                                @endphp
+                                <div class="source-wrapper">
+                                    <select name="sourceValue[]" id="" class="multipleSelect2" multiple>
+                                        @foreach ($sources as $key => $val)
+                                            <option value="{{ $val->id }}"
+                                                {{ in_array($val->id, $sourceValue) ? 'selected' : '' }}>
+                                                {{ $val->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -183,19 +161,35 @@
                                 <div class="col-md-12 position-relative pb-2">
                                     <label class="card-title fs-16">Đối tượng áp dụng </label>
                                     <div class="col-md-12 position-relative pb-2 d-flex align-items-center">
-                                        <input type="radio" name="apply" id="allApply"
-                                            class="form-check-input me-2 chooseApply" value="all" checked="">
-                                        <label class="control-label" for="allApply">Áp dụng toàn bộ khách hàng
+                                        <input type="radio" name="applyStatus" id="allApply"
+                                            class="form-check-input me-2 chooseApply" value="all"
+                                            {{ old('applyStatus', $promotion->applyStatus ?? '') === 'all' || !old('applyStatus') ? 'checked' : '' }}>
+                                        <label class="control-label" for="allApply">Áp dụng toàn bộ đối tượng
                                         </label>
                                     </div>
                                 </div>
 
                                 <div class="col-md-12 position-relative pb-2 d-flex align-items-center">
-                                    <input type="radio" name="apply" id="chooseApply"
-                                        class="form-check-input me-2 chooseApply" value="choose">
-                                    <label class="control-label" for="chooseApply">Chọn đối tượng khách hàng</label>
+                                    <input type="radio" name="applyStatus" id="chooseApply"
+                                        class="form-check-input me-2 chooseApply" value="choose"
+                                        {{ old('applyStatus', $promotion->sourceStatus ?? '') === 'choose' ? 'checked' : '' }}>
+                                    <label class="control-label" for="chooseApply">Chọn đối tượng đối tượng</label>
                                 </div>
                             </div>
+                            @php
+                                $applyStatus = old('applyStatus', $promotion->applyStatus ?? null);
+                                $applyValue = old('applyValue', $promotion->applyValue ?? []);
+                            @endphp
+                            @if ($applyStatus)
+                                <div class="apply-wrapper">
+                                    <select name="applyValue[]" id="" class="multipleSelect2 conditionItem" multiple>
+                                        @foreach (__('module.applyStatus') as $key => $val)
+                                            <option value="{{ $val['id'] }}"> {{ $val['name'] }}</option>
+                                        @endforeach
+                                    </select>
+                                    <div class="wrapper-condition"></div>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -208,44 +202,31 @@
 </form>
 @include('backend.promotion.promotion.component.popup')
 <input type="hidden" class="input-product-and-quantity" value="{{ json_encode(__('module.item')) }}">
+
+<input type="hidden" class="applyStatusList" value="{{ json_encode(__('module.applyStatus')) }}">
+
+<input type="hidden" name="" class="conditionItemSelected" value="{{ json_encode($applyValue) }}">
+@if(count($applyValue))
+    @foreach ($applyValue as $key => $val)
+        <input type="hidden" name="" class="condition_input_{{ $val}}" value="{{ json_encode(old($val)) }}">
+    @endforeach
+@endif
+
+<input type="hidden" name="" class="preload_promotionMethod" value="{{ old('method', ($promotion->method) ?? null) }}">
+<input type="hidden" name="" class="preload_select-product-and-quantity" value="{{ old('module_type', ($promotion->method) ?? null) }}">
+<input type="hidden" name="" class="input_order_amount_range" value="{{ json_encode( old('promotion_order_amount_range', ($promotion->promotion_order_amount_range) ?? [])) }}">
+<input type="hidden" name="" class="input_product_and_quantity" value="{{ json_encode(old('product_and_quantity')) }}">
+<input type="hidden" name="" class="input_object" value="{{ json_encode(old('object')) }}">
 <script>
-    // Hàm để lấy ngày giờ hiện tại và format đúng chuẩn "datetime-local" (YYYY-MM-DDTHH:MM)
-    function getVietnamTime() {
-        const now = new Date();
-        const offset = now.getTimezoneOffset();
-        const vietnamTime = new Date(now.getTime() - (offset * 60 * 1000)); // Chuyển sang giờ Việt Nam
-        return vietnamTime.toISOString().slice(0, 16); // Format thành "YYYY-MM-DDTHH:MM"
-    }
-
-    // Thiết lập giá trị mặc định và minDate cho startDate và endDate
-    function setDefaultDateTime() {
-        const currentDateTime = getVietnamTime();
-        document.getElementById("startDate").value = currentDateTime; // Hiển thị ngày hiện tại
-        document.getElementById("endDate").value = currentDateTime;
-        document.getElementById("startDate").min = currentDateTime;
-        document.getElementById("endDate").min = currentDateTime;
-    }
-
-    setDefaultDateTime();
-
-    // Thiết lập minDate của endDate dựa trên startDate
-    document.getElementById("startDate").addEventListener("change", function() {
-        document.getElementById("endDate").min = this.value;
-    });
-
     $(document).on('input', '.form-control.int', function() {
         let value = $(this).val().replace(/\./g, '');
-
         if (/[^0-9]/.test(value)) {
             $(this).val(value.replace(/[^0-9]/g, ''));
             return;
         }
-
         // Định dạng lại giá trị với dấu phân cách nhóm hàng nghìn
         if (!isNaN(value) && value !== '') {
             $(this).val(parseFloat(value).toLocaleString('de-DE'));
         }
     });
 </script>
-
-

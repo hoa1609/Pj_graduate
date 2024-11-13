@@ -1,4 +1,4 @@
-<div class="modal fade" id="finbdProduct" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true" style="background: rgba(0, 0, 0, 0.5);">
+<div class="modal fade" id="findProduct" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true" style="background: rgba(0, 0, 0, 0.5);">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header bg-primary">

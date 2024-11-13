@@ -42,8 +42,6 @@
             });
         })
     }
-
-
     HT.changeStatusAll = () => {
         if($('.changeStatusAll').length){
             $(document).on('click', '.changeStatusAll', function(e){

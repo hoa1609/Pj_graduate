@@ -2,9 +2,12 @@
 
 namespace App\Providers;
 
+use Dotenv\Validator;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
-
+// use Illuminate\Support\Facades\Validator;
+// use Carbon\Carbon;
+// use DateTime;
 class AppServiceProvider extends ServiceProvider
 {
 
@@ -71,8 +74,21 @@ class AppServiceProvider extends ServiceProvider
        'App\Services\Interfaces\PromotionServiceInterface' => 'App\Services\PromotionService',
         'App\Repositories\Interfaces\PromotionRepositoryInterface' =>'App\Repositories\PromotionRepository',
 
+        /* Promotion-Source */
+       'App\Services\Interfaces\SourceServiceInterface' => 'App\Services\SourceService',
+       'App\Repositories\Interfaces\SourceRepositoryInterface' =>'App\Repositories\SourceRepository',
 
+        /* Customer */
+        'App\Services\Interfaces\CustomerServiceInterface' => 'App\Services\CustomerService',
+        'App\Repositories\Interfaces\CustomerRepositoryInterface' => 'App\Repositories\CustomerRepository',
 
+        /* Customer_catalogue */
+        'App\Services\Interfaces\CustomerCatalogueServiceInterface' => 'App\Services\CustomerCatalogueService',
+        'App\Repositories\Interfaces\CustomerCatalogueRepositoryInterface' => 'App\Repositories\CustomerCatalogueRepository',
+
+        // widget
+        'App\Services\Interfaces\WidgetServiceInterface' => 'App\Services\WidgetService',
+        'App\Repositories\Interfaces\WidgetRepositoryInterface' =>'App\Repositories\WidgetRepository',
     ];
 
     public function register(): void
@@ -87,6 +103,17 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Validator::extend('custom_date_format', function($attribute, $value, $parameters, $validator){
+        //     return DateTime::createFromFormat('d/m/Y H:i', $value) !== false;
+        // });
+
+        // Validator::extend('custom_after', function($attribute, $value, $parameters, $validator){
+        //     $starDate = Carbon::createFromFormat('d/m/Y H:i',$validator->getData()[$parameters[0]]) ;
+        //     $enDate = Carbon::createFromFormat('d/m/Y H:i', $value);
+
+        //     return $enDate->greaterThan($starDate) !== false;
+        // });
+
         Schema::defaultStringLength(191);
     }
 }
