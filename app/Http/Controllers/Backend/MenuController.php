@@ -9,10 +9,12 @@ use App\Repositories\Interfaces\MenuCatalogueRepositoryInterface as MenuCatalogu
 
 use App\Http\Requests\StoreMenuRequest;
 use App\Http\Requests\UpdateMenuRequest;
+use App\Models\Language;
 use Illuminate\Http\Request;
 
 
-class MenuController extends Controller{
+class MenuController extends Controller
+{
 
     protected $menuService;
     protected $menuRepository;
@@ -26,9 +28,16 @@ class MenuController extends Controller{
         $this->menuService = $menuService;
         $this->menuRepository = $menuRepository;
         $this->menuCatalogueRepository = $menuCatalogueRepository;
+        $this->middleware(function ($request, $next) {
+            $locale = app()->getLocale();
+            $language = Language::where('canonical', $locale)->first();
+            $this->language = $language ? $language->id : 1;
+            return $next($request);
+        });
     }
 
-    public function index(Request $request){
+    public function index(Request $request)
+    {
         $this->authorize('modules', 'menu.index');
 
         $perPage = $request->integer('perPage', 10);
@@ -44,7 +53,8 @@ class MenuController extends Controller{
     }
 
 
-    public function create(){
+    public function create()
+    {
         $this->authorize('modules', 'menu.create');
         $menuCatalogues = $this->menuCatalogueRepository->all();
 
@@ -60,15 +70,17 @@ class MenuController extends Controller{
     }
 
 
-    // public function store(StoreMenuRequest $request){
-    //     if ($this->menuService->create($request)) {
-    //         return redirect()->route('menu.index')->with('success', 'Thêm thành viên thành công !');
-    //     }
-    //     return redirect()->route('menu.index')->with('error', 'Thêm thành viên thất bại !');
-    // }
+    public function store(StoreMenuRequest $request)
+    {
+        if ($this->menuService->create($request, $this->language)) {
+            return redirect()->route('menu.index')->with('success', 'Thêm menu thành công !');
+        }
+        return redirect()->route('menu.index')->with('error', 'Thêm menu thất bại !');
+    }
 
 
-    public function edit($id){
+    public function edit($id)
+    {
         $this->authorize('modules', 'menu.edit');
 
         $user = $this->menuRepository->findById($id);
@@ -86,18 +98,19 @@ class MenuController extends Controller{
 
     // public function update($id, UpdateMenuRequest $request){
     //     if ($this->menuService->update($id, $request)) {
-    //         return redirect()->route('menu.index')->with('success', 'Cập nhập thành viên thành công !');
+    //         return redirect()->route('menu.index')->with('success', 'Cập nhập menu thành công !');
     //     }
-    //     return redirect()->route('menu.index')->with('error', 'Cập nhập thành viên thất bại !');
+    //     return redirect()->route('menu.index')->with('error', 'Cập nhập menu thất bại !');
     // }
 
 
-    public function destroy($id){
+    public function destroy($id)
+    {
         $this->authorize('modules', 'menu.destroy');
 
         if ($this->menuService->destroy($id)) {
-            return redirect()->route('menu.index')->with('success', 'Xóa thành viên thành công !');
+            return redirect()->route('menu.index')->with('success', 'Xóa menu thành công !');
         }
-        return redirect()->route('menu.index')->with('error', 'Xóa thành viên thất bại !');
+        return redirect()->route('menu.index')->with('error', 'Xóa menu thất bại !');
     }
 }

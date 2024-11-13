@@ -7,315 +7,136 @@
         $(document).on('submit', '.create-menu-catalogue', function (e) {
             e.preventDefault();
             let _form = $(this);
-
             let option = {
-                'name': _form.find('input[name="name"]').val(),
-                'keyword': _form.find('input[name="keyword"]').val(),
-                '_token': _token
+                name: _form.find('input[name="name"]').val(),
+                keyword: _form.find('input[name="keyword"]').val(),
+                _token
             };
 
-            $.ajax({
-                url: 'ajax/menu/createCatalogue',
-                type: 'POST',
-                data: option,
-                dataType: 'json',
+            $.post('ajax/menu/createCatalogue', option, function (res) {
+                const formError = $('.form-error').removeClass('text-danger text-success');
+                formError.addClass(res.code === 0 ? 'text-success' : 'text-danger').html(res.message).show();
 
-                success: function (res) {
-                    console.log(res);
-
-                    if (res.code == 0) {
-                        $('.form-error').removeClass('text-danger').addClass('text-success')
-                            .html(res.message).show();
-
-                        const menuCatalogueSelect = $('select[name=menu_catalogue_id]');
-                        menuCatalogueSelect.append('<option value="' + res.data.id + '">' + res.data.name + '</option>');
-                    } else {
-                        $('.form-error').removeClass('text-success').addClass('text-danger')
-                            .html(res.message).show();
-                    }
-                },
-
-                beforeSend: function () {
-                    _form.find('.error').html('');
-                },
-
-                error: function (jqXHR, textStatus, errorThrown) {
-                    if (jqXHR.status === 422) {
-                        let errors = jqXHR.responseJSON.errors;
-                        for (let field in errors) {
-                            let errorMessage = errors[field];
-                            let errorContainer = $('.' + field);
-                            errorContainer.html('');
-                            errorMessage.forEach(function (message) {
-                                errorContainer.append('<p class="text-danger">' + message + '</p>');
-                            });
-                        }
-                    } else {
-                        console.log('Lỗi: ' + textStatus + ' ' + errorThrown);
-                    }
+                if (res.code === 0) {
+                    $('select[name=menu_catalogue_id]').append(`<option value="${res.data.id}">${res.data.name}</option>`);
                 }
-
-            });
+            }, 'json').fail(handleAjaxErrors);
         });
     };
 
     HT.createMenuRow = () => {
         $(document).on('click', '.add-menu', function (e) {
             e.preventDefault();
-            let newRow = HT.menuRowHtml();
-            $('.menu-table tbody').append(newRow);
+            $('.menu-table tbody').append(HT.menuRowHtml());
             HT.checkMenuLength();
         });
     };
 
-    HT.menuRowHtml = (option) => {
-        let row = $('<tr>').addClass((typeof option !== 'undefined' && option.canonical) ? option.canonical : 'default-class');
-
-        let nameColumn = $('<td>').append(
-            $('<input>').attr({
-                type: 'text',
-                name: 'menu[name][]',
-                value: (typeof (option) != 'undefined') ? option.name : '',
-                placeholder: 'Tên Menu'
-            }).addClass('form-control')
+    HT.menuRowHtml = (option = {}) => {
+        return $('<tr>').addClass(option.canonical || 'default-class').append(
+            $('<td>').append($('<input>', { type: 'text', name: 'menu[name][]', value: option.name || '', placeholder: 'Tên Menu', class: 'form-control' })),
+            $('<td>').append($('<input>', { type: 'text', name: 'menu[canonical][]', value: option.canonical || '', placeholder: 'Đường dẫn', class: 'form-control' })),
+            $('<td>').append($('<input>', { type: 'text', name: 'menu[order][]', placeholder: 'Vị trí', class: 'form-control' })),
+            $('<td>', { class: 'text-center' }).append($('<button>', { type: 'button', class: 'btn btn-link text-danger' }).append($('<i>', { class: 'fas fa-times' })))
         );
-
-        let canonicalColumn = $('<td>').append(
-            $('<input>').attr({
-                type: 'text',
-                name: 'menu[canonical][]',
-                value: (typeof (option) != 'undefined') ? option.canonical : '',
-                placeholder: 'Đường dẫn'
-            }).addClass('form-control')
-        );
-
-        let orderColumn = $('<td>').append(
-            $('<input>').attr({
-                type: 'text',
-                name: 'menu[order][]',
-                value: '',
-                placeholder: 'Vị trí'
-            }).addClass('form-control')
-        );
-
-        let deleteColumn = $('<td>').addClass('text-center').append(
-            $('<button>').attr({
-                type: 'button'
-            }).addClass('btn btn-link text-danger').append(
-                $('<i>').addClass('fas fa-times')
-            )
-        );
-
-        row.append(nameColumn, canonicalColumn, orderColumn, deleteColumn);
-
-        return row;
     };
 
     HT.deleteRow = () => {
-        $(document).on('click', '.btn-link.text-danger', function (e) {
-            e.preventDefault();
-
-            let row = $(this).closest('tr');
-            row.remove();
-
+        $(document).on('click', '.btn-link.text-danger', function () {
+            $(this).closest('tr').remove();
             HT.checkMenuLength();
         });
     };
 
-
     HT.checkMenuLength = () => {
-        let rowCount = $('.menu-table tbody tr').not('.hid').length;
-
-        if (rowCount === 0) {
-            $('.hid').show();
-        } else {
-            $('.hid').hide();
-        }
+        $('.hid').toggle($('.menu-table tbody tr').not('.hid').length === 0);
     };
 
     HT.getMenu = () => {
         $(document).on('click', '.menu-module', function () {
-            let _this = $(this);
-            let option = {
-                model: _this.attr('data-model')
-            };
-            let target = _this.parents('.accordion-item').find('.menu-list');
-
-            let menuRowClass = HT.checkMenuRowExists();
-            console.log(menuRowClass);
-
-            HT.sendAjaxGetMenu(option, target, _this, menuRowClass);
+            let target = $(this).closest('.accordion-item').find('.menu-list');
+            let option = { model: $(this).data('model') };
+            HT.sendAjaxGetMenu(option, target);
         });
     };
 
-    HT.checkMenuRowExists = () => {
-        let menuRowClass = $('tr').map(function () {
-            // Lấy các lớp của thẻ <tr>, kiểm tra nếu lớp không tồn tại thì trả về chuỗi rỗng
-            let classAttr = $(this).attr('class');
-            if (classAttr) {
-                // Tách lớp và trả về lớp đầu tiên
-                let classes = classAttr.split(' ');
-                return classes[0];
-            }
-            return ''; // Trả về chuỗi rỗng nếu không có lớp
-        }).get();
-
-        return menuRowClass;
+    HT.sendAjaxGetMenu = (option, target) => {
+        $.getJSON('ajax/dashboard/getMenu', option, function (res) {
+            // let html = res.data.map(item => HT.renderModelMenu(item)).join('') + HT.menuLinks(res.links);
+            let html = res.data.map(item => HT.renderModelMenu(item)).join('');
+            target.html(html);
+        }).fail(logAjaxError);
     };
 
-
-    // HT.renderModelMenu = (object, renderModelMenu) => {
-    //     let html = '';
-
-    //     html += '<div class="m-item">';
-    //     html += '<div class="uk-flex uk-flex-middle">';
-    //     html += '<input type="checkbox" ' + ((renderModelMenu.includes(object.canonical)) ? 'checked' : '') + ' class="m0 choose-menu" value="' + object.canonical + '" name="" id="id_' + object.canonical + '">';
-    //     html += '<label for="id_' + object.canonical + '">' + object.name + '</label>';
-    //     html += '</div>';
-    //     html += '</div>';
-
-    //     return html;
-    // };
-
-    HT.renderModelMenu = (object, renderModelMenu) => {
-        let html = '';
-
-        if (Array.isArray(renderModelMenu) && renderModelMenu.includes(object.canonical)) {
-            html += '<div class="m-item">';
-            html += '<div class="uk-flex uk-flex-middle">';
-            html += '<input type="checkbox" checked class="m0 choose-menu" value="' + object.canonical + '" name="" id="id_' + object.canonical + '">';
-            html += '<label for="id_' + object.canonical + '">' + object.name + '</label>';
-            html += '</div>';
-            html += '</div>';
-        } else {
-            html += '<div class="m-item">';
-            html += '<div class="uk-flex uk-flex-middle">';
-            html += '<input type="checkbox" class="m0 choose-menu" value="' + object.canonical + '" name="" id="id_' + object.canonical + '">';
-            html += '<label for="id_' + object.canonical + '">' + object.name + '</label>';
-            html += '</div>';
-            html += '</div>';
-        }
-
-        return html;
+    HT.renderModelMenu = (object) => {
+        let checked = object.isChecked ? 'checked' : '';
+        return `
+            <div class="m-item">
+                <div class="uk-flex uk-flex-middle">
+                    <input type="checkbox" class="m0 choose-menu" value="${object.canonical}" ${checked} id="id_${object.canonical}">
+                    <label for="id_${object.canonical}">${object.name}</label>
+                </div>
+            </div>`;
     };
 
     HT.searchMenu = () => {
         let typingTimer;
-        let doneTypingInterval = 1000;
-
-        $(document).on('keyup', '.search-menu', function (e) {
-            let _this = $(this);
-            let keyword = _this.val();
+        $(document).on('keyup', '.search-menu', function () {
             clearTimeout(typingTimer);
+            let keyword = $(this).val();
+            let target = $(this).closest('.accordion-body').find('.menu-list');
+            let model = $(this).closest('.accordion-item').find('a').data('model');
 
-            let option = {
-                model: _this.closest('.accordion-item').find('a').data('model'),
-                keyword: keyword
-            };
-
-            typingTimer = setTimeout(function () {
-                if (keyword.length >= 2) {
-                    let target = _this.closest('.accordion-body').find('.menu-list');
-                    let menuRowClass = HT.checkMenuRowExists();
-
-                    HT.sendAjaxGetMenu(option, target, _this, menuRowClass);
-                } else if (keyword.length === 0) {
-                    let target = _this.closest('.accordion-body').find('.menu-list');
-                    let menuRowClass = HT.checkMenuRowExists();
-
-                    HT.sendAjaxGetMenu({ model: option.model, keyword: '' }, target, _this, menuRowClass);
-                }
-            }, doneTypingInterval);
+            typingTimer = setTimeout(() => {
+                HT.sendAjaxGetMenu({ model, keyword }, target);
+            }, keyword.length >= 2 ? 1000 : 0);
         });
     };
-
-
-
 
     HT.chooseMenu = () => {
         $(document).on('click', '.choose-menu', function () {
-            let _this = $(this);
-            let canonical = _this.val();
-            let name = _this.siblings('label').text();
-            let $row = HT.menuRowHtml({
-                name: name,
-                canonical: canonical,
-            });
+            let canonical = $(this).val();
+            let name = $(this).siblings('label').text();
 
-            if (_this.prop('checked')) {
-                $('.menu-wrapper').append($row);
-                $('.menu-table').find('.not').hide();
+            if ($(this).is(':checked')) {
+                $('.menu-wrapper').append(HT.menuRowHtml({ name, canonical }));
+                $('.menu-table .not').hide();
             } else {
-                $('.menu-wrapper tr').each(function () {
-                    let rowCanonical = $(this).find('input[name="menu[canonical][]"]').val();
-                    if (rowCanonical === canonical) {
-                        $(this).remove();
-                    }
-                });
+                $(`.menu-wrapper tr input[value="${canonical}"]`).closest('tr').remove();
             }
         });
     };
 
-    HT.menuLinks = (links) => {
-        let paginationUl = $('<ul>').addClass('pagination');
-        $.each(links, function (index, link) {
-            let liClass = 'page-item';
-            if (link.active) liClass += ' active';
-            else if (!link.url) liClass += ' disabled';
+    // HT.menuLinks = (links) => {
+    //     return `<nav><ul class="pagination">` + links.map(link => {
+    //         let classes = `page-item${link.active ? ' active' : ''}${link.url ? '' : ' disabled'}`;
+    //         let content = link.label === 'pagination.previous' ? '‹' : link.label === 'pagination.next' ? '›' : link.label;
+    //         return `<li class="${classes}"><a class="page-link" href="${link.url}" data-page="${link.label}">${content}</a></li>`;
+    //     }).join('') + `</ul></nav>`;
+    // };
 
-            let li = $('<li>').addClass(liClass);
-            if (link.label === 'pagination.previous') {
-                li.append($('<span>').addClass('page-link').html('‹'));
-            } else if (link.label === 'pagination.next') {
-                li.append($('<span>').addClass('page-link').html('›'));
-            } else if (link.url) {
-                li.append($('<a>').addClass('page-link').attr('href', link.url).text(link.label).attr('data-page', link.label));
+    // HT.getPaginationMenu = () => {
+    //     $(document).on('click', '.page-link', function (e) {
+    //         e.preventDefault();
+    //         let target = $(this).closest('.menu-list');
+    //         let model = $(this).closest('.accordion-body').find('.search-model').data('model');
+    //         let page = new URL($(this).attr('href')).searchParams.get('page');
+    //         HT.sendAjaxGetMenu({ model, page }, target);
+    //     });
+    // };
+
+    const handleAjaxErrors = (jqXHR) => {
+        if (jqXHR.status === 422) {
+            let errors = jqXHR.responseJSON.errors;
+            for (let field in errors) {
+                $(`.${field}`).html(errors[field].map(msg => `<p class="text-danger">${msg}</p>`).join(''));
             }
-            paginationUl.append(li);
-        });
-
-        return $('<nav>').append(paginationUl).prop('outerHTML');
+        } else {
+            console.error('Error:', jqXHR.statusText);
+        }
     };
 
-
-    HT.sendAjaxGetMenu = (option, target, _this, menuRowClass) => {
-        $.ajax({
-            url: 'ajax/dashboard/getMenu',
-            type: 'GET',
-            data: option,
-            dataType: 'json',
-            beforeSend: function () {
-                target.html('');
-            },
-            success: function (res) {
-                let html = '';
-                res.data.forEach(item => {
-                    html += HT.renderModelMenu(item, menuRowClass);
-                });
-                html += HT.menuLinks(res.links);
-                target.html(html);
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                console.error('Error:', textStatus, errorThrown);
-            }
-        });
-    };
-
-    HT.getPaginationMenu = () => {
-        $(document).on('click', '.page-link', function (e) {
-            e.preventDefault();
-            let _this = $(this);
-            let option = {
-                model: _this.closest('.accordion-body').find('.search-model').data('model'),
-                page: _this.attr('href').split('page=')[1] // Lấy số trang từ URL
-            };
-            let target = _this.closest('.menu-list');
-            let menuRowClass = HT.checkMenuRowExists();
-            HT.sendAjaxGetMenu(option, target, _this, menuRowClass);
-        });
-    };
-
-
+    const logAjaxError = (jqXHR) => console.error('Error:', jqXHR.statusText);
 
     $(document).ready(function () {
         HT.createMenuCatalogue();
@@ -323,9 +144,8 @@
         HT.deleteRow();
         HT.getMenu();
         HT.chooseMenu();
-        HT.getPaginationMenu();
+        // HT.getPaginationMenu();
         HT.searchMenu();
     });
-
 
 })(jQuery);

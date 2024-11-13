@@ -29,16 +29,16 @@ class MenuService extends BaseService implements MenuServiceInterface
         return [];
     }
 
-    public function create($request, $languageId)
-    {
+    public function create($request){
         DB::beginTransaction();
         try {
-
+            $payload = $request->except('_token','send','re_password');
+            // dd($payload);
+            // $user = $this->menuRepository->create($payload);
             DB::commit();
             return true;
         } catch (\Exception $e) {
-            DB::rollBack();
-            // Log::error($e->getMessage());
+            DB::rollback();
             echo $e->getMessage();
             die();
             return false;

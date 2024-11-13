@@ -42,14 +42,15 @@
                     <div id="collapseGroupPosts{{ $key }}" class="accordion-collapse collapse"
                         aria-labelledby="heading{{ $key }}" data-bs-parent="#menuAccordion">
                         <div class="accordion-body">
-                            <form action="" method="get" data-model="{{ $key }}" class="search-model">
+                            <div data-model="{{ $key }}" class="search-model">
                                 <div class="form-row">
                                     <input type="text" class="form-control search-menu" name="keyword"
                                         data-model="someModel" placeholder="Nhập 2 ký tự để tìm kiếm...">
                                 </div>
-                            </form>
+                            </div>
                             <div class="menu-list mt20">
-                                <div id="paginationMenu"></div>
+                                {{-- <div id="paginationMenu"></div> --}}
+                                
                             </div>
                         </div>
                     </div>
@@ -77,7 +78,7 @@
                                     thêm.</p>
                             </td>
                         </tr>
-                        <tr>
+                        {{-- <tr>
                             <td><input type="text" class="form-control" placeholder="Tên Menu"></td>
                             <td><input type="text" class="form-control" placeholder="Đường dẫn"></td>
                             <td><input type="text" class="form-control" placeholder="Vị trí"></td>
@@ -85,7 +86,7 @@
                                 <button type="button" class="btn btn-link text-danger"><i
                                         class="fas fa-times"></i></button>
                             </td>
-                        </tr>
+                        </tr> --}}
                     </tbody>
                 </table>
             </div>
@@ -93,3 +94,7 @@
 
     </div>
 </div>
+@php
+echo '<pre>';
+    print_r(old('menu'))
+@endphp

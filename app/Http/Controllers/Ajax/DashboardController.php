@@ -120,7 +120,7 @@ class DashboardController extends Controller
         return [
             'select' => ['id', 'name', 'canonical'],
             'condition' => $condition,
-            'perpage' => 2,
+            'perpage' => 5,
             'paginationConfig' => [
                 'path' => $model . '.index',
                 'groupBy' => ['id', 'name', 'canonical']

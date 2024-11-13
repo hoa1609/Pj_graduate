@@ -25,7 +25,7 @@ class MenuController extends Controller
     public function createCatalogue(StoreMenuCatalogueRequest $request)
     {
         $menuCatalogue = $this->menuCatalogueService->create($request);
-        if ($menuCatalogue !== FAlse) {
+        if ($menuCatalogue !== false) {
             return response()->json([
                 'code' => 0,
                 'message' => 'Tạo menu nhóm thành công',
