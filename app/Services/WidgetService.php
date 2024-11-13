@@ -139,6 +139,7 @@ class WidgetService implements WidgetServiceInterface
         ];
     }
 
+
     /*FRONT END SERVICE*/
     public function findWidgetByKeyword(string $keyword = '', int $language = 1, $param = []){
         $widget = $this->widgetRepository->findByCondition(
@@ -148,14 +149,15 @@ class WidgetService implements WidgetServiceInterface
             ]
         );
 
-        $class = loadClass($widget->model);
-        $agrument = $this->widgetAgrument($widget, $language, $param);
-        $object = $class->findByCondition(...$agrument);
-        dd($object->toArray());
+        if(!is_null($widget)){
+            $class = loadClass($widget->model);
+            $agrument = $this->widgetAgrument($widget, $language, $param);
+            $object = $class->findByCondition(...$agrument)->toArray();
+            dd($object);
+        }
     } 
 
     private function widgetAgrument($widget, $language, $param){
-
         $relation = [
             'languages' => function($query) use ($language){
                 $query->where('language_id', $language);
