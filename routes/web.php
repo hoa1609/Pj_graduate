@@ -45,7 +45,7 @@ use Illuminate\Routing\RouteGroup;
 
 
 
-// Route::get('/', [HomeController::class, 'index'])->name('home.index');
+Route::get('/', [HomeController::class, 'index'])->name('home.index');
 
 
 
