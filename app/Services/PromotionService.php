@@ -64,10 +64,14 @@ class PromotionService  extends BaseService implements PromotionServiceInterface
             'code',
             'description',
             'method',
+            'discountValue',
             'startDate',
             'endDate',
             'neverEndDate'
         );
+        $payload['maxDiscountValue'] = $request->input(PromotionEnum::PRODUCT_AND_QUANTITY.'.maxDiscountValue');
+        $payload['discountValue'] = convert_price($request->input(PromotionEnum::PRODUCT_AND_QUANTITY.'.discountValue'));
+        $payload['discountType'] = $request->input(PromotionEnum::PRODUCT_AND_QUANTITY.'.discountType');
 
         if (isset($payload['neverEndDate']) && $payload['neverEndDate'] === 'accept') {
             $payload['endDate'] = null;
@@ -99,7 +103,6 @@ class PromotionService  extends BaseService implements PromotionServiceInterface
         try{
 
             $payload = $this->request($request);
-            // dd($payload);
             $promotion = $this->promotionRepository->create($payload);
             if($promotion->id > 0 ) {
                 $this->handRelation($request, $promotion);
@@ -139,7 +142,7 @@ class PromotionService  extends BaseService implements PromotionServiceInterface
                 foreach($object['id'] as $key => $val) {
                     $payload[] = [
                         'product_id' => $val,
-                        'product_variant_id' => $object['product_variant_id'][$key],
+                        'variant_uuid' => $object['variant_uuid'][$key],
                         'model' => $request->input(PromotionEnum::MODULE_TYPE),
                     ];
                 }

@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Ramsey\Uuid\Uuid;
+
 
 
 class ProductService extends BaseService implements ProductServiceInterface
@@ -103,7 +105,7 @@ class ProductService extends BaseService implements ProductServiceInterface
 
     private function createVariant($product, $request, $languageId){
         $payload = $request->only(['variant','productVariant', 'attribute']);
-        $variant = $this->createVariantArray($payload);
+        $variant = $this->createVariantArray($payload, $product);
         $product->product_variants()->delete();
         $variant = $product->product_variants()->createMany($variant);
         $variantId = $variant->pluck('id');
@@ -145,13 +147,14 @@ class ProductService extends BaseService implements ProductServiceInterface
         return $combines;
     }
 
-    private function createVariantArray(array $payload = []): array{
+    private function createVariantArray(array $payload = [], $product): array{
         $variant = [];
         if(isset($payload['variant']['sku']) && count($payload['variant']['sku']) ){
             foreach($payload['variant']['sku'] as $key => $val){
+                $uuid = Uuid::uuid5(Uuid::NAMESPACE_DNS, $product->id.', '.$payload['productVariant']['id'][$key]);
                 $variant[] = [
-                    'code' =>  ($payload['attribute']['id'][$key]) ?? '',
-
+                    'code' =>  ($payload['productVariant']['id'][$key]) ?? '',
+                    'uuid' => $uuid,
                     'sku' => $val,
                     'quantity' => ($payload['variant']['quantity'][$key]) ?? '',
                     'price' => ($payload['variant']['price'][$key]) ? convert_price($payload['variant']['price'][$key]) : '',

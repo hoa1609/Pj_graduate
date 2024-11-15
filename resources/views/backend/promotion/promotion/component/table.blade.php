@@ -21,9 +21,10 @@
                     $startDate = coverDatetime($promotion->startDate);
                     $endDate = coverDatetime($promotion->endDate);
                     $status = '';
-                    if($promotion->endDate !== NULL && strtotime($promotion->endDate ) - strtotime(now()) <= 0){
+                    if($promotion->endDate !== NULL && strtotime($promotion->endDate) - strtotime(now()) <= 0 && !$promotion->neverEndDate) {
                         $status = '<span class="badge bg-danger-subtle text-danger"><i class="fas fa-xmark me-1"></i>Hết hạn</span>';
                     }
+
                 @endphp
                     <tr>
                         <td><input type="checkbox" value="{{ $promotion->id }}" class="form-check-input checkBoxItem"></td>

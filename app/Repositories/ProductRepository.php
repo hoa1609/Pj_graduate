@@ -69,6 +69,7 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
             'products.id',
             'products.image',
             'tb2.name',
+            'tb3.uuid',
             'tb3.id as product_variant_id',
             DB::raw('CONCAT(tb2.name, " - ", COALESCE(tb4.name, "default")) as variant_name'),
             DB::raw('COALESCE(tb3.sku, products.code) as sku'),
@@ -77,7 +78,7 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
         $query->join('product_language as tb2', 'products.id', '=', 'tb2.product_id');
         $query->leftJoin('product_variants as tb3', 'products.id', '=', 'tb3.product_id');
         $query->leftJoin('product_variant_language as tb4', 'tb3.id', '=', 'tb4.product_variant_id');
-        
+
         foreach ($condition as $key => $val) {
             $query->where($val[0], $val[1], $val[2]);
         }

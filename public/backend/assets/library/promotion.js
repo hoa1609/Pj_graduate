@@ -612,7 +612,6 @@
                 let id = object.data[i].id
                 let classBox = model + '_' + id
                 let isChecked = ($('.boxWrapper .'+classBox+'').length) ? true : false
-
                 html += `
                 <div class="search-object-item" data-productid="${id}" data-name="${name}">
                 <div class="d-flex align-items-center" >
@@ -652,10 +651,11 @@
                 let couldSell = (typeof object.data.couldSell != 'undefined') ? couldSell : 0
                 let classBox = model + '_' + product_id + '_' + product_variant_id
                 let isChecked = ($('.boxWrapper .'+classBox+'').length) ? true : false
+                let uuid = object.data[i].uuid
 
                 html += `
                 <div class="search-object-item" data-productid="${product_id}"
-                data-variant_id="${product_variant_id}" data-name="${name}">
+                data-variant_id="${product_variant_id}" data-name="${name}" data-uuid="${uuid}">
                 <div class="d-flex align-items-center" >
                     <input
                         type="checkbox"
@@ -765,7 +765,8 @@
             let objectItem = {
                 product_id: _this.attr('data-productid'),
                 product_variant_id: _this.attr('data-variant_id'),
-                name: _this.attr('data-name')
+                name: _this.attr('data-name'),
+                uuid: _this.attr('data-uuid')
             }
 
             if(isChecked){
@@ -784,12 +785,14 @@
             id: [],
             product_variant_id: [],
             name: [],
+            variant_uuid: [],
         }
 
         let objectArray = preloadObject.id.map((id, index) => ({
             product_id: id,
             product_variant_id: preloadObject.product_variant_id[index] || 'null',
-            name: preloadObject.name[index]
+            name: preloadObject.name[index],
+            variant_uuid: preloadObject.variant_uuid[index] || 'null',
         }))
         if(objectArray.length && typeof objectArray !== 'undefined'){
             let preloadHtml = HT.renderBoxWrapper(objectArray)
@@ -799,7 +802,7 @@
         $(document).on('click', '.confirm-product-promotion', function(){
             let html = HT.renderBoxWrapper(objectChoose)
             HT.checkFixGrid(html)
-            $('#findProduct').model('hide')
+            $('#findProduct').modal('hide')
         })
     }
 
@@ -808,7 +811,7 @@
         let model = $('.select-product-and-quantity').val()
         if(objectData.length){
             for(let i = 0; i < objectData.length; i++){
-                let {product_id, product_variant_id, name} = objectData[i]
+                let {product_id, product_variant_id, name, uuid} = objectData[i]
                 let classBox = `${model}_${product_id}_${product_variant_id}`
                 if(!$(`.boxWrapper .${classBox}`).length) {
                     html += `
@@ -821,6 +824,7 @@
                             <div class="hidden">
                                 <input name="object[id][]" value="${product_id}">
                                 <input name="object[product_variant_id][]" value="${product_variant_id}">
+                                <input name="object[variant_uuid][]" value="${uuid}">
                                 <input name="object[name][]" value="${name}">
                             </div>
                         </div>
@@ -868,8 +872,6 @@
     HT.deleteGoodsItem = () => {
         $(document).on('click', '.delete-goods-item', function(e) {
             e.preventDefault();
-            e.stopPropagation();
-
             let _button = $(this);
             let product_id = _button.siblings('.hidden').find('input[name="object[id][]"]').val();
             let product_variant_id = _button.siblings('.hidden').find('input[name="object[product_variant_id][]"]').val();
@@ -888,7 +890,6 @@
         let checkedValue = $('.conditionItemSelected').val()
         if(checkedValue.length && $('.conditionItem').length){
             checkedValue = JSON.parse(checkedValue)
-            console.log(checkedValue)
             $('.conditionItem').val(checkedValue).trigger('change')
             HT.chooseApplyItem()
         }
