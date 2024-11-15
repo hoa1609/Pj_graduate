@@ -74,51 +74,60 @@ class PromotionController extends Controller{
 
     public function store(StorePromotionRequest $request){
         if ($this->promotionService->create($request, $this->language)) {
-            return redirect()->route('promotion.index')->with('success', 'Thêm nhóm thành viên thành công !');
+            return redirect()->route('promotion.index')->with('success', 'Thêm khuyến mãi thành công !');
         }
-        return redirect()->route('promotion.index')->with('error', 'Thêm nhóm thành viên thất bại !');
+        return redirect()->route('promotion.index')->with('error', 'Thêm khuyến mãi thất bại !');
     }
 
     public function edit($id){
         $this->authorize('modules', 'promotion.edit');
-        $promotion = $this->promotionRepository->getPromotionById($id, $this->language);
+        $sources = $this->sourceRepository->all();
+        $promotion = $this->promotionRepository->findById($id);
+        // dd($promotion->discountInformation);
         $config['method'] = 'edit';
         $config['seo'] = config('apps.promotion.edit');
-        $album = json_decode($promotion->album);
-        $dropdown = $this->nestedset->Dropdown();
         $template = 'backend.promotion.promotion.store';
         return view('backend.dashboard.layout', compact(
-            'config',
             'template',
-            'dropdown',
+            'config',
             'promotion',
-            'album',
+            'sources'
         ));
     }
 
+    // public function delete($id){
+    //     $this->authorize('modules', 'promotion.delete');
+    //     $promotion = $this->promotionRepository->getPromotionById($id, $this->language);
+    //     $template = 'backend.promotion.promotion.delete';
+    //     return view('backend.dashboard.layout', compact(
+    //         'template',
+    //         'promotion',
+    //     ));
+    // }
+
     public function delete($id){
         $this->authorize('modules', 'promotion.delete');
-        $promotion = $this->promotionRepository->getPromotionById($id, $this->language);
+        $promotion = $this->promotionRepository->findById($id);
         $template = 'backend.promotion.promotion.delete';
         return view('backend.dashboard.layout', compact(
             'template',
             'promotion',
+
         ));
     }
-
     public function update($id, UpdatePromotionRequest $request){
         if ($this->promotionService->update($id, $request, $this->language)) {
-            return redirect()->route('promotion.index')->with('success', 'Cập nhập nhóm thành viên thành công !');
+            return redirect()->route('promotion.index')->with('success', 'Cập nhập khuyến mãi thành công !');
         }
-        return redirect()->route('promotion.index')->with('error', 'Cập nhập nhóm thành viên thất bại !');
+        return redirect()->route('promotion.index')->with('error', 'Cập nhập khuyến mãi thất bại !');
     }
 
     public function destroy($id){
         $this->authorize('modules', 'promotion.destroy');
         if ($this->promotionService->destroy($id, $this->language)) {
-            return redirect()->route('promotion.index')->with('success', 'Xóa nhóm thành viên thành công!');
+            return redirect()->route('promotion.index')->with('success', 'Xóa khuyến mãi thành công!');
         }
-        return redirect()->route('promotion.index')->with('error', 'Xóa nhóm thành viên thất bại!');
+        return redirect()->route('promotion.index')->with('error', 'Xóa khuyến mãi thất bại!');
     }
 
 

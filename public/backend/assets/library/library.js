@@ -33,6 +33,8 @@
                     if (res.flag == true) {
                         _this.val(inputValue)
                     }
+                    alert('Cập nhật thành công');
+
                 },
 
                 error: function(jqXHR, textStatus, errorThrown) {
@@ -75,6 +77,7 @@
 
                                 if(checkbox.length){
                                     checkbox.prop('checked', option.value == 2);
+
                                 }
                             });
                         } else {

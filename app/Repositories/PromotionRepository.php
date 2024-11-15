@@ -21,6 +21,20 @@ class PromotionRepository extends BaseRepository implements PromotionRepositoryI
     }
 
 
+    public function update(int $id = 0, array $payload = [])
+    {
+        // Tìm đối tượng Promotion dựa trên ID
+        $promotion = $this->findById($id);
+
+        if ($promotion) {
+            // Thực hiện cập nhật dữ liệu
+            $promotion->update($payload);
+            // Trả về đối tượng Promotion sau khi cập nhật
+            return $promotion;
+        }
+
+        return false; // Trả về false nếu không tìm thấy promotion
+    }
 
 
 

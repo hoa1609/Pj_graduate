@@ -18,6 +18,28 @@ if (!function_exists('loadClass')) {
     }
 }
 
+if(!function_exists('covertDatetime')) {
+    function coverDatetime(string $data = '', string $format = 'd/m/Y H:i' ){
+        $carbonDate = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $data);
+        return $carbonDate->format($format);
+    }
+}
+
+if(!function_exists('renderDiscountInformation')) {
+    function renderDiscountInformation($promotion = []){
+        if($promotion->method === 'product_and_quantity'){
+            $discountValue = $promotion->discountInformation['info']['discountValue'];
+            $discountType = ($promotion->discountInformation['info']['discountType'] == 'percent') ? '%' : 'đ';
+            return '
+                <div class="badge bg-primary text-small">
+                     '.$discountValue. $discountType.'
+                </div>
+                ';
+        }
+        return '<div><a href="'.route('promotion.edit', $promotion->id).'">Xem chi tiết</a></div>';
+    }
+}
+
 if (!function_exists('convertArrayByKey')) {
     function convertArrayByKey($object = null, $fields = [])
     {

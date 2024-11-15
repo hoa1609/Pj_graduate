@@ -197,17 +197,10 @@
             let _this = $(this);
             let conditionItemValue = _this.attr('data-condition-item'); // Lấy giá trị điều kiện cần xóa
             let conditionWrapper = _this.closest('.wrapperConditionItem'); // Tìm phần tử chứa điều kiện cần xóa
-
-            // Xóa phần tử điều kiện khỏi DOM
             conditionWrapper.remove();
 
-            // Lấy danh sách các giá trị đã chọn trong conditionItem
             let selectedItems = $('.conditionItem').val() || [];
-
-            // Tìm vị trí của conditionItemValue trong danh sách các giá trị đã chọn
             let index = selectedItems.indexOf(conditionItemValue);
-
-            // Nếu giá trị tồn tại trong danh sách đã chọn, xóa nó
             if (index !== -1) {
                 selectedItems.splice(index, 1); // Xóa giá trị từ danh sách
                 $('.conditionItem').val(selectedItems).trigger('change'); // Cập nhật lại select2 với danh sách mới
@@ -325,11 +318,11 @@
     //         amountValue: ['0'],
     //         amountType: ['cash'],
     //     }
-    //     for(let i = 0; i < order_amount_range.amountFrom.length; i++ ){
+    //     for(let i = 0; i < order_amount_range.amountFrom.length; i++){
     //         let $amountFrom = order_amount_range.amountFrom[i]
     //         let $amountTo = order_amount_range.amountTo[i]
-    //         let $amountValue = order_amount_range.amountValue[i]
     //         let $amountType = order_amount_range.amountType[i]
+    //         let $amountValue = order_amount_range.amountValue[i]
 
     //         $tr +=`<tr>
     //         <td class="order_amount_range_from td-range">
@@ -449,7 +442,9 @@
                         </select>
                     </div>
                 </td>
-                <td></td>
+                <td>
+                    <div class="delete-order-amount-range-condition"><i class="btn btn-danger fa fa-trash rounded"></i></div>
+                </td>
             </tr>`
         }
 
@@ -507,7 +502,7 @@
             <table class="table table-centered  mb-3">
                 <thead class="table-light">
                     <tr>
-                        <th style="width: 400px">Sản phẩm mua</th>
+                        <th style="width: 350px">Sản phẩm mua</th>
                         <th style="width: 80px">Tối thiểu</th>
                         <th>Giới hạn KM </th>
                         <th class="text-end">Chiết khấu</th>
@@ -536,7 +531,7 @@
                             <input type="text" name="product_and_quantity[maxDiscountValue]" class="form-control int"
                                 placeholder="0" value="${preloadData.maxDiscountValue}">
                         </td>
-                        <td class="discountType">
+                        <td class="discountType" >
                             <div class="uk-flex uk-flex-middle">
                                 <input type="text" name="product_and_quantity[discountValue]"
                                     class="form-control int me-2" placeholder="0"
@@ -620,7 +615,7 @@
 
                 html += `
                 <div class="search-object-item" data-productid="${id}" data-name="${name}">
-                <div class="d-flex align-items-center mb-3" >
+                <div class="d-flex align-items-center" >
                     <input
                         type="checkbox"
                         class="form-check-input me-2"
@@ -661,7 +656,7 @@
                 html += `
                 <div class="search-object-item" data-productid="${product_id}"
                 data-variant_id="${product_variant_id}" data-name="${name}">
-                <div class="d-flex align-items-center mb-3" >
+                <div class="d-flex align-items-center" >
                     <input
                         type="checkbox"
                         class="form-check-input me-2"
@@ -784,36 +779,57 @@
     }
 
     HT.confirmProductPromotion = () => {
+
+        let preloadObject = JSON.parse($('.input_object').val()) || {
+            id: [],
+            product_variant_id: [],
+            name: [],
+        }
+
+        let objectArray = preloadObject.id.map((id, index) => ({
+            product_id: id,
+            product_variant_id: preloadObject.product_variant_id[index] || 'null',
+            name: preloadObject.name[index]
+        }))
+        if(objectArray.length && typeof objectArray !== 'undefined'){
+            let preloadHtml = HT.renderBoxWrapper(objectArray)
+            HT.checkFixGrid(preloadHtml)
+        }
+
         $(document).on('click', '.confirm-product-promotion', function(){
-            let html = ''
-            let model = $('.select-product-and-quantity').val()
-            if(objectChoose.length){
-                for(let i = 0; i < objectChoose.length; i++){
-                    let product_id = objectChoose[i].product_id
-                    let product_variant_id = objectChoose[i].product_variant_id
-                    let name = objectChoose[i].name
-                    let classBox = model + '_' + product_id + '_' + product_variant_id
-                    if(!$(`.boxWrapper .${classBox}`).length) {
-                        html += `
-                        <div class="fixGrid6 ${classBox}">
-                            <div class="goods-item ">
-                                <span class="goods-item-name" title="${name}">${name}</span>
-                                <button class="delete-goods-item">
-                                    <i class="fas fa-times"></i>
-                                </button>
-                                <div class="hidden">
-                                    <input name="object[id][]" value="${product_id}">
-                                    <input name="object[product_variant_id][]" value="${product_variant_id}">
-                                </div>
+            let html = HT.renderBoxWrapper(objectChoose)
+            HT.checkFixGrid(html)
+            $('#findProduct').model('hide')
+        })
+    }
+
+    HT.renderBoxWrapper = (objectData) => {
+        let html = ''
+        let model = $('.select-product-and-quantity').val()
+        if(objectData.length){
+            for(let i = 0; i < objectData.length; i++){
+                let {product_id, product_variant_id, name} = objectData[i]
+                let classBox = `${model}_${product_id}_${product_variant_id}`
+                if(!$(`.boxWrapper .${classBox}`).length) {
+                    html += `
+                    <div class="fixGrid6 ${classBox}">
+                        <div class="goods-item ">
+                            <span class="goods-item-name" title="${name}">${name}</span>
+                            <button class="delete-goods-item">
+                                <i class="fas fa-times"></i>
+                            </button>
+                            <div class="hidden">
+                                <input name="object[id][]" value="${product_id}">
+                                <input name="object[product_variant_id][]" value="${product_variant_id}">
+                                <input name="object[name][]" value="${name}">
                             </div>
                         </div>
-                        `
-                    }
-
+                    </div>
+                    `
                 }
             }
-            HT.checkFixGrid(html)
-        })
+        }
+        return html
     }
 
     HT.checkFixGrid = (html) => {
@@ -874,6 +890,7 @@
             checkedValue = JSON.parse(checkedValue)
             console.log(checkedValue)
             $('.conditionItem').val(checkedValue).trigger('change')
+            HT.chooseApplyItem()
         }
     }
 

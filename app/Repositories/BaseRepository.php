@@ -63,9 +63,17 @@ class BaseRepository implements BaseRepositoryInterface
         return $this->findById($id)->forceDelete();
     }
 
+    // 103 chỉnh như update như vậy
+    // public function update(int $id = 0, array $payload = [])
+    // {
+    //     $model = $this->findById($id);
+    //     return $model->update($payload);
+    // }
     public function update(int $id = 0, array $payload = [])
     {
         $model = $this->findById($id);
+        $model->fill($payload);
+        $model->save();
         return $model->update($payload);
     }
 

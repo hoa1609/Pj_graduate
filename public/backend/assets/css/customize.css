@@ -354,6 +354,7 @@ input:disabled {
     height: auto;
 }
 
+
 .multipleSelect2 {
     width: 100% !important;
 }
@@ -386,6 +387,10 @@ input:disabled {
 .img-thumbnail {
     object-fit: cover;
     border-radius: 5px;
+}
+
+.chooseProductPromotionTd {
+    width: 200px !important;
 }
 
 .modal-body input[type="text"] {
@@ -463,6 +468,15 @@ input:disabled {
     transition: color 0.2s ease, transform 0.2s ease;
     position: absolute;
 }
+
+.promotion-name {
+    display: inline-block;
+    max-width: 210px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 
 /* End promotion css */
 

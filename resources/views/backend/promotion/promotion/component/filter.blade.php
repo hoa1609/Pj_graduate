@@ -29,7 +29,7 @@
     </div>
 </div>
 
-<form action="{{ route('slide.index') }}">
+<form action="{{ route('promotion.index') }}">
     <div class="filter-wrapper">
         <div class="uk-flex uk-flex-middle uk-flex-space-between">
             <div class="perpage">
@@ -63,7 +63,7 @@
                            </span>
                         </div>
                     </div>
-                    <a href="{{route('slide.create')}}" class="btn btn-danger"><i class="fa fa-plus mr5"></i>Thêm mới slide</a>
+                    <a href="{{route('promotion.create')}}" class="btn btn-danger"><i class="fa fa-plus mr5"></i>Thêm mới khuyến mại</a>
                 </div>
             </div>
         </div>

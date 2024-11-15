@@ -10,6 +10,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
 use App\Services\BaseService;
 use Illuminate\Support\Facades\Auth;
+use App\Enums\PromotionEnum;
 
 
 /**
@@ -30,9 +31,16 @@ class PromotionService  extends BaseService implements PromotionServiceInterface
         return [
              'id',
              'name',
-             'keyword',
+             'code',
+             'description',
+             'order',
+             'method',
+             'discountInformation',
+             'neverEndDate',
+             'startDate',
+             'endDate',
+             'order',
              'publish',
-             'item',
         ];
      }
 
@@ -44,19 +52,59 @@ class PromotionService  extends BaseService implements PromotionServiceInterface
             $this->paginateSelect(),
             $condition,
             $perPage,
-            ['path' => 'promotion/index'],
+            ['path' => 'promotion/index']
+        );
+        return $promotions;
+    }
+
+    private function request($request)
+    {
+        $payload = $request->only(
+            'name',
+            'code',
+            'description',
+            'method',
+            'startDate',
+            'endDate',
+            'neverEndDate'
         );
 
-        return $promotions;
+        if (isset($payload['neverEndDate']) && $payload['neverEndDate'] === 'accept') {
+            $payload['endDate'] = null;
+        } elseif (!empty($payload['endDate'])) {
+            try {
+                $payload['endDate'] = Carbon::createFromFormat('d/m/Y H:i', $payload['endDate']);
+            } catch (\Exception $e) {
+                // Log::error("Lỗi: " . $payload['endDate'] . " | Error: " . $e->getMessage());
+
+                $payload['endDate'] = Carbon::parse($payload['endDate']);
+            }
+        }
+        $payload['code'] = (empty($payload['code'])) ? time() : $payload['code'];
+        switch ($payload['method']) {
+            case PromotionEnum::ORDER_AMOUNT_RANGE:
+                $payload[PromotionEnum::DISCOUNT] = $this->orderByRange($request);
+                break;
+            case PromotionEnum::PRODUCT_AND_QUANTITY:
+                $payload[PromotionEnum::DISCOUNT] = $this->productAndQuantity($request);
+
+                break;
+        }
+        return $payload;
     }
 
 
     public function create($request, $languageId){
         DB::beginTransaction();
         try{
-            $payload = $request->only(['_token', 'name', 'keyword', 'setting', 'short_code']);
-            $payload['user_id'] =  Auth::id();
+
+            $payload = $this->request($request);
+            // dd($payload);
             $promotion = $this->promotionRepository->create($payload);
+            if($promotion->id > 0 ) {
+                $this->handRelation($request, $promotion);
+            }
+            // $payload['user_id'] =  Auth::id();
              DB::commit();
               return true;
             }catch(\Exception $e ){
@@ -66,19 +114,76 @@ class PromotionService  extends BaseService implements PromotionServiceInterface
             }
     }
 
-    public function update($id, $request, $languageId){
+    public function update($id, $request)
+    {
         DB::beginTransaction();
-        try{
-            $payload = $request->only(['_token', 'name', 'keyword', 'setting', 'short_code']);
+        try {
+            $payload = $this->request($request);
             $promotion = $this->promotionRepository->update($id, $payload);
-             DB::commit();
-              return true;
-            }catch(\Exception $e ){
-                DB::rollBack();
-                // Log::error($e->getMessage());
-                // echo $e->getMessage(); die();
-                return false;
+            // dd($promotion);
+            $this->handRelation($request, $promotion, 'update');
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollback();
+            echo $e->getMessage();
+            die();
+            return false;
+        }
+    }
+    private function handRelation($request, $promotion, $method = 'create') {
+        if($request->input('method') === PromotionEnum::PRODUCT_AND_QUANTITY){
+            $object = $request->input('object');
+            $payload = [];
+            if(!is_null($object)) {
+                foreach($object['id'] as $key => $val) {
+                    $payload[] = [
+                        'product_id' => $val,
+                        'product_variant_id' => $object['product_variant_id'][$key],
+                        'model' => $request->input(PromotionEnum::MODULE_TYPE),
+                    ];
+                }
             }
+            if($method == 'update') {
+                $promotion->products()->detach();
+            }
+            $promotion->products()->sync($payload);
+        }
+    }
+
+
+    private function handleSourceAndCondition($request)
+    {
+        $data = [
+            'source' => [
+                'status' => $request->input('source'),
+                'data' => $request->input('sourceValue'),
+            ],
+            'apply' => [
+                'status' => $request->input('applyStatus'),
+                'data' => $request->input('applyValue'),
+
+            ]
+        ];
+        if(!is_null($data['apply']['data']))
+        foreach ($data['apply']['data'] as $key => $val) {
+            $data['apply']['condition'][$val] = $request->input($val);
+        }
+        return $data;
+    }
+    private function orderByRange($request)
+    {
+        $data['info'] = $request->input('promotion_order_amount_range');
+        return $data + $this->handleSourceAndCondition($request);
+    }
+
+    private function productAndQuantity($request)
+    {
+        $data['info'] = $request->input('product_and_quantity');
+        $data['info']['model'] = $request->input(PromotionEnum::MODULE_TYPE);
+        $data['info']['object'] = $request->input('object');
+        return $data + $this->handleSourceAndCondition($request);
+
     }
 
     public function destroy($id){
