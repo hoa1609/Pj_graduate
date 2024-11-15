@@ -425,7 +425,7 @@ input:disabled {
     border-radius: 8px;
     padding: 10px;
     text-align: center;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px rgba(48, 48, 48, 0.1);
     position: relative; 
 }
 .ui-sortable li .thumb {

@@ -2,7 +2,7 @@
     <div class="col-md-9 col-lg-9">
         <div class="card">
             @php
-                $album = (isset($model->album) && is_array($model->album))? $model->album : ( (!empty($model->album) ) ? json_decode($model->album) : []);
+                // $album = (!empty($model->album)) ? json_decode($model->album) : [];
                 $gallery = (isset($album) && count($album) ) ? $album : old('album');
             @endphp
             <div class="card-header">

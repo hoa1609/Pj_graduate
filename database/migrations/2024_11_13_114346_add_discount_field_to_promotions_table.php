@@ -9,22 +9,22 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
-    {
-        Schema::table('promotions', function (Blueprint $table) {
-            $table->integer('discountValue')->default(0);
-            $table->string('discountType', 10);
-            $table->integer('maxDiscountValue');
-        });
-    }
+    // public function up(): void
+    // {
+    //     Schema::table('promotions', function (Blueprint $table) {
+    //         $table->integer('discountValue')->default(0);
+    //         $table->string('discountType', 10);
+    //         $table->integer('maxDiscountValue');
+    //     });
+    // }
 
     /**
      * Reverse the migrations.
      */
-    public function down(): void
-    {
-        Schema::table('promotions', function (Blueprint $table) {
-            Schema::dropIfExists(['discountValue', 'discountType', 'maxDiscountValue']);
-        });
-    }
+    // public function down(): void
+    // {
+    //     Schema::table('promotions', function (Blueprint $table) {
+    //         Schema::dropIfExists(['discountValue', 'discountType', 'maxDiscountValue']);
+    //     });
+    // }
 };
