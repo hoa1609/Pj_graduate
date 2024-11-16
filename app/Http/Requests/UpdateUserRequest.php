@@ -6,14 +6,14 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateUserRequest extends FormRequest
 {
-   
+
     public function authorize(): bool
     {
         return true;
     }
 
-    
-    public function rules(): array 
+
+    public function rules(): array
     {
         return [
             'name' => 'required|string|max:50',
@@ -46,7 +46,7 @@ class UpdateUserRequest extends FormRequest
 
             'address.required' => 'Bạn chưa nhập rõ địa chỉ.',
             'address.max' => 'Độ dài phần địa chỉ đã quá 191 kí tự',
-            
+
         ];
     }
 }

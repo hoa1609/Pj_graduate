@@ -39,6 +39,21 @@ return [
             ],
         ],
         [
+            'dropdown' => 'sidebarCustomer',
+            'title' => 'QL Khách hàng',
+            'icon' => 'fa fa-user menu-icon',
+            'subModule' => [
+                [
+                    'title' => 'QL Nhóm khách hàng',
+                    'route' => 'customer.catalogue.index'
+                ],
+                [
+                    'title' => 'QL khách hàng',
+                    'route' => 'customer.index'
+                ],
+            ]
+        ],
+        [
             'dropdown' => 'sidebarslide',
             'title' => 'QL slide',
             'icon' => 'lar la-image',
@@ -67,7 +82,7 @@ return [
         [
             'dropdown' => 'sidebarUser',
             'title' => 'QL Thành Viên',
-            'icon' => 'fa fa-user',
+            'icon' => 'fa fa-user menu-icon',
             'subModule' => [
                 [
                     'title' => 'QL Nhóm',
@@ -80,6 +95,22 @@ return [
                 [
                     'title' => 'Thêm quyền',
                     'route' => 'permission.index'
+                ],
+
+            ]
+        ],
+        [
+            'dropdown' => 'sidebarMaketing',
+            'title' => 'QL Maketing',
+            'icon' => 'icofont-money ',
+            'subModule' => [
+                [
+                    'title' => 'QL Khuyến mãi',
+                    'route' => 'promotion.index'
+                ],
+                [
+                    'title' => 'QL Nguồn Khách',
+                    'route' => 'source.index'
                 ],
 
             ]

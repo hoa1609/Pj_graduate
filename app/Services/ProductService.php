@@ -285,11 +285,11 @@ class ProductService extends BaseService implements ProductServiceInterface
 
     private function paginateSelect(){
         return [
-            'products.id', 
+            'products.id',
             'products.publish',
             'products.image',
             'products.order',
-            'tb2.name', 
+            'tb2.name',
             'tb2.canonical',
         ];
     }

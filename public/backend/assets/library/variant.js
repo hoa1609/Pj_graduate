@@ -1,6 +1,6 @@
 (function($) {
 	"use strict";
-	var HT = {}; 
+	var HT = {};
 
     HT.niceSelect = () => {
         $('.niceSelect').niceSelect();
@@ -14,7 +14,7 @@
                 let price = $('input[name=price]').val();
                 let code = $('input[name=code]').val();
 
-                if (price == '' && code == '') {
+                if (price == '' || code == '') {
                     displayNotification('Bạn phải nhập mục giá tiền và code sản phẩm để sử dụng chức năng này!', 'error');
                     return false;
                 }
@@ -40,14 +40,14 @@
     }
 
 
-       
+
     HT.addVariant = () => {
         if ($('.add-variant').length) {
             $(document).on('click', '.add-variant', function () {
-                let html = HT.renderVariantItem(attributeCatalogue); 
-                $('.variant-body').append(html); 
-                $('.variantTable thead').html(''); 
-                $('.variantTable tbody').html(''); 
+                let html = HT.renderVariantItem(attributeCatalogue);
+                $('.variant-body').append(html);
+                $('.variantTable thead').html('');
+                $('.variantTable tbody').html('');
                 HT.destroyNiceSelect();
                 HT.niceSelect();
                 HT.checkMaxAttributeGroup(attributeCatalogue);
@@ -63,12 +63,12 @@
             options += `<option value="${attributeCatalogue[i].id}">${attributeCatalogue[i].name}</option>`;
         }
         return `
-            <div class="row pb-2 variant-item"> 
+            <div class="row pb-2 variant-item">
                 <div class="col-lg-3 p-0">
                     <div class="attribute-catalogue">
                         <select name="attributeCatalogue[]" id="" class="select-option choose-attribute niceSelect">
                             <option value="">-- Chọn thuộc tính --</option>
-                            ${options} 
+                            ${options}
                         </select>
                     </div>
                 </div>
@@ -140,8 +140,8 @@
             HT.createVariant()
         })
     }
-    
-    
+
+
     HT.destroyNiceSelect = () => {
         if($('.niceSelect').length){
             $('.niceSelect').niceSelect('destroy')
@@ -177,7 +177,7 @@
                     }
                 },
                 cache: true
-              
+
               }
         });
     }
@@ -261,14 +261,14 @@
     }
 
 
-    
+
     HT.createVariantRow = (attributeItem, variantItem) =>{
         let attributeString = Object.values(attributeItem).join(', ')
         let attributeId = Object.values(variantItem).join(', ')
         let classModified = attributeId.replace(/, /g,'-')
 
         let $row = $('<tr>').addClass('variant-row tr-variant-' +classModified)
-        let $td 
+        let $td
 
         $td = $('<td>').append(
             $('<img>').attr('src', '/userfiles/image/product/no-image.jpg').attr('width', '50px').addClass('imageSrc')
@@ -391,7 +391,7 @@
     }
 
 
-    
+
 
     HT.browseVariantServerAlbum = () => {
         var type = 'Images';
@@ -423,7 +423,7 @@
 
         finder.popup();
     };
-    
+
 
 
 
@@ -693,7 +693,7 @@
         let formattedValue = HT.addCommas($(this).val());
         $(this).val(formattedValue);
     });
-    
+
 
     $(document).ready(function () {
         HT.addVariant()

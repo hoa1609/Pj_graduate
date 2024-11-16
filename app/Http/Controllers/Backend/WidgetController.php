@@ -96,15 +96,15 @@ class WidgetController extends Controller{
         $widgetItem = convertArrayByKey($modelClass->findByConditionEdit(
             ...array_values($this->menuItemAgrument($widget->model_id))
         ),['id','name.languages','image']);
-        // dd($widgetItem);
         $config['method'] = 'edit';
+        $album = ($widget->album);
         $config['seo'] = config('apps.widget.edit');
-
         $template = 'backend.widget.store';
         return view('backend.dashboard.layout', compact(
             'config',
             'template',
             'widget',
+            'album',
             'widgetItem'
         ));
     }

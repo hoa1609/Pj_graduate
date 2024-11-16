@@ -8,7 +8,6 @@ use App\Models\Language;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
-
 class DashboardController extends Controller
 {
     protected $language;
@@ -16,15 +15,9 @@ class DashboardController extends Controller
     public function __construct()
     {
         $this->middleware(function ($request, $next) {
-            $locale = app()->getLocale(); // vn, en, cn,
+            $locale = app()->getLocale();
             $language = Language::where('canonical', $locale)->first();
-
-            if ($language) {
-                $this->language = $language->id;
-            } else {
-                $this->language = 1;
-            }
-
+            $this->language = $language ? $language->id : 1;
             return $next($request);
         });
     }
@@ -43,19 +36,16 @@ class DashboardController extends Controller
 
         return response()->json(['flag' => $flag, 'success' => true]);
     }
+    public function changeStatusAll(Request $request){
 
-    public function changeStatusAll(Request $request)
-    {
         $post = $request->input();
         $serviceInterfaceNamespace = '\App\Services\\' . ucfirst($post['model']) . 'Service';
         if (class_exists($serviceInterfaceNamespace)) {
             $serviceInstance = app($serviceInterfaceNamespace);
         }
         $flag = $serviceInstance->updateStatusAll($post);
-
         return response()->json(['flag' => $flag]);
     }
-
     public function findModelObject(Request $request)
     {
         $get = $request->input();
@@ -78,7 +68,6 @@ class DashboardController extends Controller
         // // dd($object);
         // return response()->json($object);
     }
-
     private function loadClassInterface(string $model = '', $interface = 'Repository')
     {
         $serviceInterfaceNamespace = '\App\Repositories\\' . ucfirst($model) . $interface;
@@ -157,5 +146,79 @@ class DashboardController extends Controller
             'join' => $join,
             'relations' => [],
         ];
+    // public function findModelObject(Request $request) {
+    //     $get = $request->input();
+    //     $alias = Str::snake($get['model']).'_language';
+    //     $class = loadClass($get['model]);
+    //     $object = $class->findWidgetItem([
+    //         ['name', 'LIKE', '%'.$get['keyword'].'%'],
+    //     ], $this->language, $alias);
+    //     return reponse()->json($object);
+    }
+    public function findPromotionObject(Request $request) {
+        $get = $request->input();
+        $model = $get['option']['model'];
+        $keyword = $get['search'];
+        $alias = Str::snake($model).'_language';
+        $class = loadClass($model);
+        $object = $class->findWidgetItem([
+            ['name', 'LIKE', '%'.$keyword.'%'],
+        ], $this->language, $alias);
+        $temp = [];
+        if(count($object)){
+            foreach($object as $key => $val){
+                $temp[] = [
+                    'id' =>$val->id,
+                    'text' => $val->languages->first()->pivot->name,
+                ];
+            }
+            return response()->json(array('items' => $temp));
+        }
+    }
+    public function getPromotionConditionValue(Request $request)
+    {
+        try {
+            $get = $request->input();
+        switch ($get['value']) {
+            case 'staff_take_care_customer':
+                $class = loadClass('User');
+                $object = $class->all()->toArray();
+                break;
+             case 'customer_group':
+                $class = loadClass('CustomerCatalogue');
+                $object = $class->all()->toArray();
+                break;
+             case 'customer_gender':
+                $object = __('module.gender');
+                break;
+             case 'customer_birthday':
+                $object = __('module.day');
+                break;
+            default:
+                break;
+        }
+
+        $temp = [];
+        if(!is_null($object) && count($object)) {
+            foreach ($object as $key => $val) {
+                $temp[] = [
+                    'id' => $val['id'],
+                    'text' => $val['name'],
+                ];
+            }
+        }
+            return response()->json([
+                'data' => $temp,
+                'error' => false,
+            ]);
+
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return response()->json([
+                'error' => true,
+                'messages' => $e->getMessage()
+            ]);
+        }
+
     }
 }

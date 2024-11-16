@@ -43,13 +43,12 @@ table strong {
     min-width: 88px;
     display: inline-block;
 }
-
-.table>thead>tr>th,
-.table>tbody>tr>th,
-.table>tfoot>tr>th,
-.table>thead>tr>td,
-.table>tbody>tr>td,
-.table>tfoot>tr>td {
+.table > thead > tr > th,
+.table > tbody > tr > th,
+.table > tfoot > tr > th,
+.table > thead > tr > td,
+.table > tbody > tr > td,
+.table > tfoot > tr > td {
     vertical-align: middle;
 }
 
@@ -337,7 +336,7 @@ table strong {
     cursor: text;
     padding: 5px 3px;
     position: relative;
-    height: 42px;
+    /* height: 42px; */
 }
 
 .border-table {
@@ -428,38 +427,149 @@ input:disabled {
     box-shadow: 0 4px 6px rgba(48, 48, 48, 0.1);
     position: relative; 
 }
-.ui-sortable li .thumb {
-    position: relative; 
-}
-.ui-sortable li .thumb img {
-    max-width: 100%;
+
+/* PROMOTION CSS */
+.custom-img {
+    width: 60px;
     height: auto;
-    border-radius: 4px;
 }
-.ui-sortable li .thumb button {
-    position: absolute;
-    top: 8px; 
-    right: 8px; 
-    background: #ffff; 
-    border: none;
-    color: #e32828;
-    padding: 5px;
+
+
+.multipleSelect2 {
+    width: 100% !important;
+}
+
+.conditionLabel {
+    color: #208a22;
+}
+
+.errorLine td input{
+    border: 1px solid red
+}
+
+.hr-custom {
+    border-bottom: 1px dashed #ccc;
+    margin-bottom: 10px;
+}
+
+.modal-body.product-list {
+    max-height: 400px;
+    overflow-y: auto;
+    padding-right: 15px;
+}
+
+.hr-custom {
+    border-bottom: 1px dashed #ddd;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.img-thumbnail {
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.chooseProductPromotionTd {
+    width: 200px !important;
+}
+
+.modal-body input[type="text"] {
+    margin-bottom: 20px;
+}
+
+.search-object-item {
     cursor: pointer;
-    font-size: 16px;
+}
+
+.boxWrapper {
     display: flex;
     align-items: center;
-    justify-content: center;
-    transition: background-color 0.3s;
+    width: 100%;
+    flex-wrap: wrap;
 }
+
+.fixGrid6 {
+    max-width: 50%;
+    flex-basis: 50%;
+    flex-grow: 0;
+    padding: 0 6px;
+}
+
+
+.product-quantity {
+    cursor: pointer;
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    border-radius: var(--bs-border-radius);
+    background: #fff;
+    padding: .517rem .95rem;
+    min-height: 40px;
+}
+
+.product-quantity p {
+    margin: 0;
+    color: #888
+}
+
+.product-quantity .boxSearchIcon {
+    width: 29px;
+    height: 16px;
+    text-align: center;
+}
+
+.goods-item {
+    background-color: #20BB59;
+    padding: 5px 10px;
+    margin-bottom: 8px;
+    border-radius: 100px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    text-align: center;
+    position: relative;
+    color: #fff;
+}
+
+.goods-item span {
+    font-size: 13px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    display: block;
+    width: 90%;
+}
+
+.goods-item button {
+    right: 0;
+    top: 2px;
+    border: none;
+    background-color: transparent;
+    color: #ff4d4d;
+    font-size: 16px;
+    cursor: pointer;
+    transition: color 0.2s ease, transform 0.2s ease;
+    position: absolute;
+}
+
+.promotion-name {
+    display: inline-block;
+    max-width: 210px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+/* End promotion css */
+
 .ui-sortable li .thumb button:hover {
-    background-color: rgba(217, 83, 79, 0.8); 
+    background-color: rgba(217, 83, 79, 0.8);
 }
+
 /* widget */
 
 .search-model{
-    border-radius: 5px; 
+    border-radius: 5px;
     height: 42px;
-    padding-left: 35px; 
+    padding-left: 35px;
     font-size: 14px;
     border: 1px solid #e3e9ed;
     outline: 0;

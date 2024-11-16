@@ -28,7 +28,7 @@ class UpdateLanguageRequest extends FormRequest
             'name.required' => 'Bạn chưa nhập vào tên ngôn ngữ',
             'canonical.required' => 'Bạn chưa nhập vào từ điển',
             'canonical.unique' => 'Từ khóa đã tồn tại hãy chọn từ khóa khác',
-            
+
             'description.required' => 'Bạn chưa nhập vào mô tả',
         ];
     }

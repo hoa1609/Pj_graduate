@@ -103,6 +103,28 @@ if(!function_exists('frontend_recursive_menu')){
 
 
 
+if(!function_exists('covertDatetime')) {
+    function coverDatetime(string $data = '', string $format = 'd/m/Y H:i' ){
+        $carbonDate = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $data);
+        return $carbonDate->format($format);
+    }
+}
+
+if(!function_exists('renderDiscountInformation')) {
+    function renderDiscountInformation($promotion = []){
+        if($promotion->method === 'product_and_quantity'){
+            $discountValue = $promotion->discountInformation['info']['discountValue'];
+            $discountType = ($promotion->discountInformation['info']['discountType'] == 'percent') ? '%' : 'đ';
+            return '
+                <div class="badge bg-primary text-small">
+                     '.$discountValue. $discountType.'
+                </div>
+                ';
+        }
+        return '<div><a href="'.route('promotion.edit', $promotion->id).'">Xem chi tiết</a></div>';
+    }
+}
+
 if (!function_exists('convertArrayByKey')) {
     function convertArrayByKey($object = null, $fields = [])
     {
@@ -112,12 +134,12 @@ if (!function_exists('convertArrayByKey')) {
                 if(is_array($object)){
                     $temp[$field][] = $value[$field];
                 }
-                else 
+                else
                 {
                     $extract = explode('.',$field);
                     if(count($extract) == 2) {
                         $temp[$extract[0]][] =   $value->{$extract[1]}->first()->pivot->{$extract[0]};
-                        
+
                     }else {
                         $temp[$field][] = $value->{$field};
                     }

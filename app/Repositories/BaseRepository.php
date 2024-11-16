@@ -67,9 +67,17 @@ class BaseRepository implements BaseRepositoryInterface
         return $this->model->updateOrInsert($condition, $payload);
     }
 
+    // 103 chỉnh như update như vậy
+    // public function update(int $id = 0, array $payload = [])
+    // {
+    //     $model = $this->findById($id);
+    //     return $model->update($payload);
+    // }
     public function update(int $id = 0, array $payload = [])
     {
         $model = $this->findById($id);
+        $model->fill($payload);
+        $model->save();
         return $model->update($payload);
     }
 
@@ -150,7 +158,7 @@ class BaseRepository implements BaseRepositoryInterface
                 }
             }
         });
-        return ($flag == false) ? $query->first() : $query->get() ; 
+        return ($flag == false) ? $query->first() : $query->get() ;
     }
 
     public function findWidgetItem(array $condition = [], int $language_id = 1, string $alias = ''){

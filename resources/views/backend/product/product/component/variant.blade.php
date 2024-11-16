@@ -7,10 +7,10 @@
                     <span class="text-small">*Sản phẩm có nhiều phiên bản với các thuộc tính khác nhau mà người dùng có thể lựa chọn, như <strong class="text-danger">màu sắc</strong> hoặc <strong class="text-danger">kích thước</strong>....</span>
                 </div>
                 <div class="uk-flex uk-flex-middle">
-                    <input 
-                        type="checkbox" 
-                        name="accept" 
-                        class="form-check-input checkBoxItem mr10 turnOnVariant" 
+                    <input
+                        type="checkbox"
+                        name="accept"
+                        class="form-check-input checkBoxItem mr10 turnOnVariant"
                         value="1"
                         {{ (
                             old('accept') == 1
@@ -20,7 +20,7 @@
                                     &&
                                     count($product->product_variants) > 0
                                 )
-                            ) ? 'checked' : '' 
+                            ) ? 'checked' : ''
                         }}
                     >
                     <label>Thêm thuộc tính sản phẩm</label>
@@ -29,7 +29,7 @@
         @php
             $variantCatalogue = old('attributeCatalogue', (isset($product->attributeCatalogue) ? json_decode($product->attributeCatalogue, TRUE) : [] ));
         @endphp
-            <div class="card-body variant-wrapper pb-5 {{ (count($variantCatalogue)) ? '' : 'hidden' }}">
+            <div class="card-body variant-wrapper pb-5 {{ (isset($variantCatalogue)) ? '' : 'hidden' }}">
                 <div class="row mb-1">
                     <div class="col-lg-3 position-relative">
                         <div class="attribute-title">Chọn thuộc tính</div>
@@ -41,7 +41,7 @@
                 <div class="variant-body container">
                     @if($variantCatalogue && count($variantCatalogue))
                         @foreach ($variantCatalogue as $keyAttr => $valAttr)
-                            <div class="row pb-2 variant-item"> 
+                            <div class="row pb-2 variant-item">
                                 <div class="col-lg-3 p-0">
                                     <div class="attribute-catalogue">
                                         <select name="attributeCatalogue[]" id="" class="select-option choose-attribute niceSelect">
@@ -83,9 +83,9 @@
                         <thead></thead>
                         <tbody></tbody>
                         {{-- nội dung table --}}
-                    </table>                    
+                    </table>
                 </div>
-            </div>            
+            </div>
         </div>
     </div>
 </div>

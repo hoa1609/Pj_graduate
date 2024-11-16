@@ -55,9 +55,9 @@ class PermissionController extends Controller{
 
     public function store(PermissionRequest $request){
         if ($this->permissionService->create($request)) {
-            return redirect()->route('permission.index')->with('success', 'Thêm ngôn ngữ thành công !');
+            return redirect()->route('permission.create')->with('success', 'Thêm bản ghi thành công !');
         }
-        return redirect()->route('permission.index')->with('error', 'Thêm ngôn ngữ thất bại !');
+        return redirect()->route('permission.index')->with('error', 'Thêm bản ghi thất bại !');
     }
 
 
@@ -87,17 +87,17 @@ class PermissionController extends Controller{
 
     public function update($id, UpdatePermissionRequest $request){
         if ($this->permissionService->update($id, $request)) {
-            return redirect()->route('permission.index')->with('success', 'Cập nhập ngôn ngữ thành công !');
+            return redirect()->route('permission.index')->with('success', 'Cập nhập bản ghi thành công !');
         }
-        return redirect()->route('permission.index')->with('error', 'Cập nhập ngôn ngữ thất bại !');
+        return redirect()->route('permission.index')->with('error', 'Cập nhập bản ghi thất bại !');
     }
 
     public function destroy($id){
         $this->authorize('modules', 'permission.destroy');
         if ($this->permissionService->destroy($id)) {
-            return redirect()->route('permission.index')->with('success', 'Xóa ngôn ngữ thành công !');
+            return redirect()->route('permission.index')->with('success', 'Xóa bản ghi thành công !');
         }
-        return redirect()->route('permission.index')->with('error', 'Xóa ngôn ngữ thất bại !');
+        return redirect()->route('permission.index')->with('error', 'Xóa bản ghi thất bại !');
     }
 
 }

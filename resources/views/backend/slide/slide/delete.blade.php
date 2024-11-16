@@ -18,16 +18,16 @@
                                             <input class="form-control" type="text" name="name"
                                                 value="{{ old('name', ($slide->name) ?? '') }}" readonly>
                                         </div>
-                                        
+
                                     </div>
                                 </div>
                                     <button type="submit" class="btn btn-danger mt-3">Xóa</button>
-                            </form> 
+                            </form>
                         </div>
 
                     </div>
                 </div>
             </div>
         </div>
-    </div> 
+    </div>
 </div>

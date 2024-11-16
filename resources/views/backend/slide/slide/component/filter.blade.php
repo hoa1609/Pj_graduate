@@ -1,9 +1,9 @@
 <div class="card-header">
     <div class="row align-items-center">
-        <div class="col">                      
-            <h4 class="card-title">Bảng danh sách </h4>                      
+        <div class="col">
+            <h4 class="card-title">Bảng danh sách </h4>
         </div>
-        <div class="col-auto"> 
+        <div class="col-auto">
             <form class="row g-2">
                 <div class="col-auto">
                     <a class="btn bg-primary-subtle text-primary dropdown-toggle d-flex align-items-center arrow-none" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false" data-bs-auto-close="outside">
@@ -24,9 +24,9 @@
                         </div>
                     </div>
                 </div>
-            </form>    
+            </form>
         </div>
-    </div>                                     
+    </div>
 </div>
 
 <form action="{{ route('slide.index') }}">
