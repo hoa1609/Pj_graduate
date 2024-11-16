@@ -4,10 +4,14 @@
 <script src="backend/assets/libs/jsvectormap/js/jsvectormap.min.js"></script>
 <script src="backend/assets/libs/jsvectormap/maps/world.js"></script>
 <script src="backend/assets/js/app.js"></script>
+<script src="backend/assets/library/library.js"></script>
+{{-- <script src="backend/assets/library/menu.js"></script> --}}
 
-@if(isset($config['js']) && is_array($config['js']))
-    @foreach($config['js'] as $key => $val)
-        {!! '<script src="'.$val.'"></script>' !!}
-    @endforeach
-@endif
+
+
+    @if(isset($config['js']) && is_array($config['js']))
+        @foreach($config['js'] as $key => $val)
+            {!! '<script src="'.$val.'"></script>' !!}
+        @endforeach
+    @endif
 
