@@ -40,21 +40,10 @@ class ProductController extends Controller{
         
     }
 
-    private function initialize(){
-        $this->nestedset = new Nestedsetbie([
-            'table' => 'product_catalogues',
-            'foreignkey' => 'product_catalogue_id',
-            'language_id' =>  $this->language,
-        ]);
-    } 
-    
-   
 
     public function index(Request $request){
         $this->authorize('modules', 'product.index');
-        $config = [
-            'model' => 'Product',
-        ];
+        $config = $this->configIndex();
         $perPage = $request->integer('perpage');
         $products = $this->productService->paginate($request, $this->language);
         $dropdown = $this->nestedset->Dropdown();
@@ -72,6 +61,8 @@ class ProductController extends Controller{
     public function create(){
         $this->authorize('modules', 'product.create');
         $attributeCatalogue = $this->attributeCatalogue->getAll($this->language);
+
+        $config = $this->configStore();
         $config['method'] = 'create';
         $config['seo'] = config('apps.product.create');
         $dropdown = $this->nestedset->Dropdown();
@@ -96,6 +87,8 @@ class ProductController extends Controller{
     public function edit($id){
         $this->authorize('modules', 'product.edit');
         $product = $this->productRepository->getProductById($id, $this->language);
+
+        $config = $this->configStore();
         $config['method'] = 'edit';
         $config['seo'] = config('apps.product.edit');
         $album = json_decode($product->album);
@@ -139,5 +132,46 @@ class ProductController extends Controller{
         return redirect()->route('product.index')->with('error', 'Xóa sản phẩm thất bại!');
     }
 
+    
+    private function initialize(){
+        $this->nestedset = new Nestedsetbie([
+            'table' => 'product_catalogues',
+            'foreignkey' => 'product_catalogue_id',
+            'language_id' =>  $this->language,
+        ]);
+    } 
+    
+   
+
+    private function configIndex(){
+        return [
+            'js' => [
+                'backend/assets/js/select2_4.1.min.js',
+            ],
+            'css' => [
+                'backend/assets/css/select2.min.css',
+            ],
+            'model' => 'Product'
+        ];
+    }
+
+    private function configStore(){
+        return [
+            'js' => [
+                'backend/assets/js/select2_4.1.min.js',
+                'backend/plugins/ckfinder_2/ckfinder.js',
+                'backend/assets/library/variant.js',
+                'backend/assets/library/formatprice-scroll/formatPrice.js',
+                'backend/assets/library/formatprice-scroll/productScroll.js',
+                'backend/assets/library/seo.js',
+                'backend/assets/library/finder.js',
+                'backend/plugins/ckeditor/ckeditor.js',
+                'backend/plugins/nice-select/js/jquery.nice-select.min.js',
+            ],
+            'css' => [
+                'backend/assets/css/select2.min.css',
+            ],
+        ];
+    }
 
 }

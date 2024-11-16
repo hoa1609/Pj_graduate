@@ -1,5 +1,5 @@
 <div class="card-body pt-0">
-    <div class="table-responsive">
+    <div class="table-responsive mb-3">
         <table class="table  mb-0 table-centered">
             <thead class="table-light">
             <tr>
@@ -35,7 +35,7 @@
                                 <input class="form-check-input status js-switch-{{ $user-> id }}"
                                     type="checkbox"
                                     data-field="publish"
-                                    data-model="User"
+                                    data-model="{{ $config['model'] }}"
                                     value="{{ $user->publish }}"
                                     data-modeId="{{ $user->id }}"
                                     {{ $user->publish == 2 ? 'checked' : '' }}

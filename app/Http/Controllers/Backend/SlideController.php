@@ -46,10 +46,7 @@ class SlideController extends Controller
                 $slide->items = $slide->item;
             }
         }
-
-        $config = [
-            'model' => 'Slide',
-        ];
+       $config = $this->configIndex();
         $config['seo'] = config('apps.slide');
         $template = 'backend.slide.slide.index';
         return view('backend.dashboard.layout', compact(
@@ -63,6 +60,7 @@ class SlideController extends Controller
     public function create(){
         $this->authorize('modules', 'slide.create');
         
+        $config = $this->configStore();
         $config['seo'] = config('apps.slide');
         $config['method'] = 'create';
         $template = 'backend.slide.slide.store';
@@ -84,6 +82,8 @@ class SlideController extends Controller
         $this->authorize('modules', 'slide.edit');
         $slide = $this->slideRepository->findById($id);
         $slideItem = $this->slideService->coverSlideArray($slide->item[$this->language]);
+
+        $config = $this->configStore();
         $config['seo'] = config('apps.slide');
         $config['method'] = 'edit';
         $template = 'backend.slide.slide.store';
@@ -122,5 +122,32 @@ class SlideController extends Controller
             return redirect()->route('slide.index')->with('success', 'Xóa bản ghi thành công');
         }
         return redirect()->route('slide.index')->with('error', 'Xóa bản ghi thất bại. Hãy thử lại');
+    }
+
+    private function configIndex(){
+        return [
+            'js' => [
+                'backend/assets/js/select2_4.1.min.js',
+            ],
+            'css' => [
+                'backend/assets/css/select2.min.css',
+            ],
+            'model' => 'Slide',
+        ];
+    }
+
+    private function configStore(){
+        return [
+            'js' => [
+                'backend/assets/js/select2_4.1.min.js',
+                'backend/plugins/ckfinder_2/ckfinder.js',
+                'backend/assets/library/finder.js',
+                'backend/assets/library/slide.js',
+                'backend/plugins/ckeditor/ckeditor.js',
+            ],
+            'css' => [
+                'backend/assets/css/select2.min.css',
+            ],
+        ];
     }
 }

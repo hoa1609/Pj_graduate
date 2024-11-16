@@ -31,6 +31,7 @@ class PermissionController extends Controller{
     public function index(Request $request){
         $this->authorize('modules', 'permission.index');
         $permissions = $this->permissionService->paginate($request);
+        $config = $this->configIndex();
         $config['seo'] = config('apps.permission.index');
         $template = 'backend.permission.index';
         return view('backend.dashboard.layout', compact(
@@ -100,4 +101,12 @@ class PermissionController extends Controller{
         return redirect()->route('permission.index')->with('error', 'Xóa bản ghi thất bại !');
     }
 
+    private function configIndex(){
+        return [
+            'js' => [
+                'backend/assets/js/select2_4.1.min.js',
+            ],
+            
+        ];
+    }
 }

@@ -40,6 +40,7 @@ class WidgetController extends Controller{
         $perPage = $request->integer('perPage', 10);
         $widgets = $this->widgetService->paginate($request, $perPage);
         
+        $config = $this->configIndex();
         $config['seo'] = config('apps.widget.index');
         $template = 'backend.widget.index';
         return view('backend.dashboard.layout', compact(
@@ -53,6 +54,7 @@ class WidgetController extends Controller{
     public function create(){
         $this->authorize('modules', 'widget.create');
 
+        $config = $this->configStore();
         $config['method'] = 'create';
         $config['seo'] = config('apps.widget.create');
 
@@ -96,8 +98,10 @@ class WidgetController extends Controller{
         $widgetItem = convertArrayByKey($modelClass->findByConditionEdit(
             ...array_values($this->menuItemAgrument($widget->model_id))
         ),['id','name.languages','image']);
-        $config['method'] = 'edit';
         $album = ($widget->album);
+        
+        $config = $this->configStore();
+        $config['method'] = 'edit';
         $config['seo'] = config('apps.widget.edit');
         $template = 'backend.widget.store';
         return view('backend.dashboard.layout', compact(
@@ -137,4 +141,33 @@ class WidgetController extends Controller{
         }
         return redirect()->route('widget.index')->with('error', 'Xóa thành viên thất bại !');
     }
+
+    private function configIndex(){
+        return [
+            'js' => [
+                'backend/assets/js/select2_4.1.min.js',
+            ],
+            'css' => [
+                'backend/assets/css/select2.min.css',
+            ],
+        ];
+    }
+
+    private function configStore(){
+        return [
+            'js' => [
+                'backend/assets/js/select2_4.1.min.js',
+                'backend/plugins/ckfinder_2/ckfinder.js',
+                'backend/assets/library/seo.js',
+                'backend/assets/library/finder.js',
+                'backend/plugins/ckeditor/ckeditor.js',
+                'backend/assets/library/widget.js',
+                'backend/plugins/nice-select/js/jquery.nice-select.min.js',
+            ],
+            'css' => [
+                'backend/assets/css/select2.min.css',
+            ],
+        ];
+    }
+
 }

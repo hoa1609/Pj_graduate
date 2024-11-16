@@ -1,5 +1,5 @@
 <div class="card-body pt-0">
-    <div class="table-responsive">
+    <div class="table-responsive mb-3">
         <table class="table  mb-0 table-centered">
             <thead class="table-light">
             <tr>
