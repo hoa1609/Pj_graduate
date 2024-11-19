@@ -23,7 +23,7 @@ class PostController extends Controller{
         PostRepository $postRepository,
     ){
         $this->middleware(function($request, $next){
-            $locale = app()->getLocale(); 
+            $locale = app()->getLocale(); // vn en
             $language = Language::where('canonical', $locale)->first();
             $this->language = $language ? $language->id : 1;
             $this->initialize();
@@ -31,12 +31,12 @@ class PostController extends Controller{
         });
 
         $this->postService = $postService;
-        $this->postRepository = $postRepository;     
+        $this->postRepository = $postRepository;   
+        $this->initialize();  
     }
 
 
-    public function index(Request $request){
-        $this->authorize('modules', 'post.index');
+    public function index(Request $request){$this->authorize('modules', 'post.index');
 
         $config = [
             'model' => 'Post',

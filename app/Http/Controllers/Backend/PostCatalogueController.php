@@ -36,9 +36,18 @@ class PostCatalogueController extends Controller{
         $this->postCatalogueService = $postCatalogueService;
         $this->postCatalogueRepository = $postCatalogueRepository;
     }
+ 
+    private function initialize(){
+        $this->nestedset = new Nestedsetbie([
+            'table' => 'post_catalogues',
+            'foreignkey' => 'post_catalogue_id',
+            'language_id' => 1,
+        ]);
+    } 
 
 
     public function index(Request $request){
+        // dd(session('app_locale'));
         $this->authorize('modules', 'post.catalogue.index');
         $config['seo'] = config('apps.postcatalogue.index');
         $perPage = $request->integer('perpage');
@@ -119,14 +128,6 @@ class PostCatalogueController extends Controller{
         return redirect()->route('post.catalogue.index')->with('error', 'Xóa nhóm thành viên thất bại!');
     }
 
-    
-    private function initialize(){
-        $this->nestedset = new Nestedsetbie([
-            'table' => 'post_catalogues',
-            'foreignkey' => 'post_catalogue_id',
-            'language_id' => 1,
-        ]);
-    } 
-
+   
 
 }

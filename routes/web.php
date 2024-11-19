@@ -151,6 +151,10 @@ Route::middleware(['admin', 'locale'])->group(function () {
         Route::delete('destroy/{id}', [LanguageController::class, 'destroy'])->name('language.destroy');
 
         Route::get('switch/{id}', [LanguageController::class, 'swicthBackendLanguage'])->name('language.switch');
+
+        Route::get('{id}/{languageId}/{model}/translate', [LanguageController::class, 'translate'])->where(['id' => '[0-9]+', 'languageId' => '[0-9]+'])->name('language.translate');
+
+        Route::post('storeTranslate', [LanguageController::class, 'storeTranslate'])->name('language.storeTranslate');
     });
 
     Route::group(['prefix' => 'slide'], function (){

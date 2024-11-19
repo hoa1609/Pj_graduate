@@ -7,10 +7,19 @@
                     <input type="checkbox" class="form-check-input checkBoxItem" id="checkAll">                                                    
                 </th>
                 <th>Tên nhóm</th>
+
+                @foreach($languages as $language)
+                            @if(session('app_locale') === $language->canonical)
+                                @continue; 
+                             @endif
+                    <th class="text-center"><span class="image img-scaledown laguange-flag"><img src="{{ $language->image}}" alt="" style="width:40px;"></span></th>
+                @endforeach
+
                 <th>Tình trạng</th>
                 <th class="text-end">Thao tác</th>
             </tr>
             </thead>
+            {{-- @php dd(session('app_locale')) @endphp --}}
             <tbody>
                 @foreach ($postCatalogues as $postCatalogue)
                     <tr>
@@ -18,6 +27,8 @@
                             <input type="checkbox" class="form-check-input checkBoxItem" value="{{ $postCatalogue-> id }}">                                                    
                         </th>
                         <td>{{ str_repeat('|----', (($postCatalogue-> level >0) ?($postCatalogue-> level - 1) : 0)).$postCatalogue-> name }}</td>
+                        
+                        @include('backend.dashboard.component.languageTd', ['model' => $postCatalogue, 'modeling' => 'PostCatalogue']);
                         <td>
                             <div class="form-switch">
                                 <input class="form-check-input status js-switch-{{ $postCatalogue-> id }}" 
