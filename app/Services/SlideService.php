@@ -75,13 +75,11 @@ class SlideService  extends BaseService implements SlideServiceInterface
             unset($slideItem[$languageId]);
             $payload = $request->only(['_token', 'name', 'keyword', 'setting', 'short_code']);
             $payload['item'] = $this->handleSlideItem($request, $languageId) + $slideItem;
-            // dd($payload);
             $slide = $this->slideRepository->update($id, $payload);
              DB::commit();
               return true;
             }catch(\Exception $e ){
                 DB::rollBack();
-                // Log::error($e->getMessage());
                 echo $e->getMessage(); die();
                 return false;
             }
@@ -95,7 +93,6 @@ class SlideService  extends BaseService implements SlideServiceInterface
               return true;
             }catch(\Exception $e ){
                 DB::rollBack();
-                // Log::error($e->getMessage());
                 echo $e->getMessage(); die();
                 return false;
             }
@@ -154,13 +151,39 @@ class SlideService  extends BaseService implements SlideServiceInterface
     {
         $temp = [];
         $fields = ['image', 'description', 'window', 'canonical', 'name', 'alt'];
-        // dd($slide);
         foreach ($slide as $key => $val) {
             foreach($fields as $field) {
                 $temp[$field][] = $val[$field];
             }
         }
         return $temp;
+    }
+
+
+    // ------ OUTPUT SLIDE FE
+    public function getSlide($array = [], $language = 1){
+        $slides = $this->slideRepository->findByCondition(...$this->getSlideAgrument($array));
+        $temp = [];
+        foreach($slides as $key => $val){
+            $temp[$val->keyword]['item'] = $val->item[$language];
+            $temp[$val->keyword]['setting'] = $val->setting;
+        }
+        return $temp;
+    }
+
+    private function getSlideAgrument($array){
+        return [
+            'condition' => [
+                config('apps.general.defaultPublish'),
+            ],
+            'flag' => true,
+            'relation' => [],
+            'orderBy' => ['id', 'desc'],
+            'param' => [
+                'whereIn' => $array,
+                'whereInField' => 'keyword'
+            ]
+        ];
     }
 
 }

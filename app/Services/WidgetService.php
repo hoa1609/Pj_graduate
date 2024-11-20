@@ -5,7 +5,8 @@ namespace App\Services;
 use App\Services\Interfaces\WidgetServiceInterface;
 use App\Repositories\Interfaces\WidgetRepositoryInterface as WidgetRepository;
 use App\Repositories\Interfaces\PromotionRepositoryInterface as PromotionRepository;
-
+use App\Repositories\Interfaces\ProductCatalogueRepositoryInterface as ProductCatalogueRepository;
+use App\Services\Interfaces\ProductServiceInterface as ProductService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
@@ -13,12 +14,23 @@ use Carbon\Carbon;
 
 class WidgetService implements WidgetServiceInterface
 {
+
     protected $widgetRepository;
+    protected $promotionRepository;
+    protected $productCatalogueRepository;
+    protected $productService;
+
 
     public function __construct(
-        WidgetRepository $widgetRepository
+        WidgetRepository $widgetRepository,
+        PromotionRepository $promotionRepository,
+        ProductCatalogueRepository $productCatalogueRepository,
+        ProductService $productService,
     ) {
         $this->widgetRepository = $widgetRepository;
+        $this->promotionRepository = $promotionRepository;
+        $this->productCatalogueRepository = $productCatalogueRepository;
+        $this->productService = $productService;
     }
 
     public function paginate($request, $perPage = [])
@@ -141,34 +153,64 @@ class WidgetService implements WidgetServiceInterface
     }
 
 
-    /*FRONT END SERVICE*/
-    public function findWidgetByKeyword(string $keyword = '', int $language = 1, $param = []){
-        $widget = $this->widgetRepository->findByCondition(
-            [
-                ['keyword', '=', $keyword],
-                config('apps.general.defaultPublish')
-            ]
-        );
-        if(!is_null($widget)){
-            $class = loadClass($widget->model);
-            $agrument = $this->widgetAgrument($widget, $language, $param);
-            $object = $class->findByCondition(...$agrument);
-            $model = lcfirst(str_replace('Catalogue','', $widget->model));
-            if(strpos($widget->model, 'Catalogue') && isset($param['children']) && $model == 'product'){
-                if(count($object)){
-                    foreach($object as $key =>$val){
+    /*--------------FRONT END SERVICE-----------------*/
 
-                        if($val->id != 4) continue;
-                        $productId = $val->products->pluck('id');
-                        $promotions = $this->promotionRepository->findByProduct($productId);
-                    }
-                }
-
-
-            };
-
+    public function getWidget(array $params = [], int $language){
+        $whereIn = [];
+        $whereInField = 'keyword';
+        if(count($params)){
+            foreach($params as $key =>$val){
+                $whereIn[] = $val['keyword'];
+            }
         }
-    } 
+        $widgets = $this->widgetRepository->getWidgetWhereIn($whereIn);
+        if(!is_null($widgets)){
+            $temp = [];
+            foreach($widgets as $key => $widget){
+                $class = loadClass($widget->model);
+                $agrument = $this->widgetAgrument($widget, $language, $params[$key]);
+                $object = $class->findByCondition(...$agrument);
+                $model = lcfirst(str_replace('Catalogue','', $widget->model));
+                if(count($object) && strpos($widget->model, 'Catalogue')){
+                    $objectId = $object->pluck('id')->toArray();
+                    if(isset($params[$key]['children']) && $params[$key]['children'] ){
+                        $childrenAgrument = $this->childrenAgrument($objectId, $language);
+                        $object->childrens = $class->findByCondition(...$childrenAgrument);
+                    //------------------------------------------------
+
+                    # lấy toàn bộ mục danh mục bao gồm chính nó
+                        
+                    }
+                    //---------------- LẤY SẢN PHẨM --------------------------//
+                        $parameters = implode(',', $objectId);
+                        $childId = $class->recursiveCategory($parameters, $model);
+                        $ids = [];
+                        foreach($childId as $child_id){
+                            $ids[] = $child_id->id;
+                        }
+                        $classRepo = loadClass( ucfirst($model) );
+                        $replace = $model.'s';
+                        foreach($object as $val){
+                            if($val->rgt - $val->lft > 1){
+                                $val->{$replace} = $classRepo->findObjectByCatelogueIds($ids, $model, $language);
+                            }
+                            if( 
+                            isset($params[$key]['promotion']) 
+                                && 
+                                $params[$key]['promotion'] == true
+                            ){
+                                $productId = $val->{$replace}->pluck('id')->toArray();
+                                $val->{$replace} = $this->productService->combineProductsAndPromotion($productId, $val->{$replace});
+                            }
+                        }
+                    $widget->object = $object;
+                }
+                $temp[$widget->keyword] = $widgets[$key];
+            }
+        }
+        return $temp;
+    }
+
 
     private function widgetAgrument($widget, $language, $param){
         $relation = [
@@ -177,18 +219,19 @@ class WidgetService implements WidgetServiceInterface
             }
         ];
         $withCount = [];
-        if(strpos($widget->model, 'Catalogue') && isset($param['children'])){
+        if(strpos($widget->model, 'Catalogue') && isset($param['object'])){
             $model = lcfirst(str_replace('Catalogue','', $widget->model)).'s';
             $relation[$model] = function($query) use ($param, $language){
-                $query->limit(($param['limit']) ?? 8);
-                $query->where('publish', 2);
-                $query->with('languages', function($query) use ($language){
+                
+                $query->whereHas('languages', function($query) use ($language){
                     $query->where('language_id', $language);
                 });
-
-                
+                $query->take(($param['limit']) ?? 8);
+                $query->orderBy('order', 'desc');
             };
-            $withCount[] = $model;
+            if(isset($param['countObject'])){
+                $withCount[] = $model;
+            }
         }
 
         return [
@@ -198,53 +241,29 @@ class WidgetService implements WidgetServiceInterface
             'flag' => true,
             'relation' => $relation,
             'param' => [
-                'WhereIn' => $widget->model_id,
+                'whereIn' => $widget->model_id,
                 'whereInField' => 'id'
             ],
             'withCount' => $withCount
         ];
     }
+
+    private function childrenAgrument($objectId, $language){
+        return [
+            'condition' => [
+                config('apps.general.defaultPublish')
+            ],
+            'flag' => true,
+            'relation' => [
+                'languages' =>function($query) use ($language){
+                    $query->where('language_id', $language);
+                }
+            ],
+            'param' => [
+                'whereIn' => $objectId,
+                'whereInField' => 'parent_id'
+            ]
+        ];
+    }
+
 }
-
-
-// $query->with('promotions', function($query){
-//     $query->select(
-//         'promotions.id',
-//         'promotions.discountValue',
-//         'promotions.discountType',
-//         'promotions.maxDiscountValue',
-//         DB::raw(
-//             "
-//             IF(promotions.maxdiscountValue != 0,
-//                 LEAST(
-//                     CASE
-//                         WHEN discountType = 'cash' THEN (SELECT price FROM products
-//                         WHERE products.id = product_id) - discountValue 
-//                         WHEN discountType = 'percent' THEN (SELECT price FROM
-//                         products WHERE products.id = product_id) - ((SELECT price FROM products
-//                         WHERE products.id = product_id)*discountValue/100)
-//                         ELSE (SELECT price FROM products
-//                         WHERE products.id = product_id)
-//                     END,
-//                     promotions.maxDiscountValue
-//                 ),
-
-//                 CASE
-//                     WHEN discountType = 'cash' THEN (SELECT price FROM products
-//                     WHERE products.id = product_id) - discountValue 
-//                     WHEN discountType = 'percent' THEN (SELECT price FROM
-//                     products WHERE products.id = product_id) - ((SELECT price FROM products
-//                     WHERE products.id = product_id)*discountValue/100)
-//                     ELSE (SELECT price FROM products
-//                     WHERE products.id = product_id)
-//                 END
-//             )
-//                 as discount
-//             "
-//         )
-//     );
-//     $query->where('publish', 2);
-//     $query->where('endDate', '>', now());
-//     $query->orderBy('discount', 'asc');
-//     $query->take(5);
-// });

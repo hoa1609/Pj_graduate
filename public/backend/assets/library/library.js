@@ -33,8 +33,7 @@
                     if (res.flag == true) {
                         _this.val(inputValue)
                     }
-                    alert('Cập nhật thành công');
-
+                    // alert('Cập nhật thành công');
                 },
 
                 error: function(jqXHR, textStatus, errorThrown) {

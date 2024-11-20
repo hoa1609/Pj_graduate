@@ -1,9 +1,8 @@
 <?php
 
 if (!function_exists('convert_price')) {
-    function convert_price(string $price = '')
-    {
-        return str_replace('.', '', $price);
+    function convert_price(string $price = '', $flag = false){
+        return ($flag === false) ? str_replace('.','', $price) : number_format($price, 0, ',', '.');
     }
 }
 
@@ -23,6 +22,80 @@ if (!function_exists('convert_array')) {
         return $temp;
     }
 }
+
+if (!function_exists('pre')) {
+    function pre($data, $exit = false) {
+        echo '<pre>';
+        print_r($data);
+        echo '</pre>';
+        if ($exit) {
+            exit; 
+        }
+    }
+}
+
+
+if (!function_exists('image')) {
+    function image(string $image = ''){
+        return $image;
+    }
+}
+
+
+if (!function_exists('getPercent')) {
+    function getPercent($product = null, $discountValue = 0){
+         dd($product->price > 0) ? round($discountValue/$product->price*100) : 0;
+    }
+}
+
+if (!function_exists('getPromotionPrice')) {
+    function getPromotionPrice($priceMain = 0, $discountValue = 0, $discountType = ''){
+        $priceSale = 0;
+        if($discountType == 'percent'){
+            $priceSale = $priceMain - ($priceMain*$discountValue/100);
+        }else{
+            $priceMain = $priceMain - $discountValue;
+        }
+        return $priceSale;
+    }
+}
+
+
+if (!function_exists('getPrice')) {
+    function getPrice($product = null,){
+        $result = [
+            'price' => $product->price, 
+            'priceSale' => 0, 
+            'percent' => 0, 
+            'html' => '',
+        ];
+        if(isset($product->promotions) && count($product->promotions->toArray())){
+            $result['percent'] = ($product->promotions->first()->discountType == 'percent') ? $product->promotions->first()->discountValue : getPercent($product, $product->promotions->first()->discountValue); 
+            if($product->promotions->first()->discountValue > 0){
+                $result['priceSale'] = getPromotionPrice($product->price, $product->promotions->first()->discountValue, $product->promotions->first()->discountType);
+            }
+        }
+
+        $result['html'] .= '<span class="ec-price">';
+            $result['html'] .= '<span class="new-price">'.(($result['priceSale'] > 0) ? convert_price($result['priceSale'], true) : convert_price($result['price'], true)).'</span>';
+            if($result['priceSale'] > 0){
+                $result['html'] .= '<span class="old-price">'.convert_price($result['price'], true).'</span>';
+                $result['html'] .= '</span>';
+            }
+        return $result;
+    }
+}
+
+
+if (!function_exists('getReview')) {
+    function getReview(string $product = ''){
+        return [
+            'star' => rand(1, 5),
+            'count' => rand(0, 100),
+        ];
+    }
+}
+
 
 if (!function_exists('loadClass')) {
     function loadClass(string $model = '', $interface = 'Repository')
@@ -76,17 +149,18 @@ if (!function_exists('renderSystemSelect')) {
         if (!isset($item['option']) || !is_array($item['option'])) {
             return '<select class="form-control" name="config['.$name.']" ></select>';
         }
-        $html = '<select class="form-control form-select" name="config['.$name.']" >';
+        $result['html'] = '<select class="form-control form-select" name="config['.$name.']" >';
         foreach ($item['option'] as $key => $val) {
-            $html .= '<option value="' . ((isset($systems[$name]) && $key == ($systems[$name] ?? '')) ? 'selected' : '') . '">' . ($val) . '</option>';
+            $result['html'] .= '<option value="' . ((isset($systems[$name]) && $key == ($systems[$name] ?? '')) ? 'selected' : '') . '">' . ($val) . '</option>';
         }
-        $html .= '</select>';
-        return $html;
+        $result['html'] .= '</select>';
+        return $result['html'];
     }
 }
 
 if(!function_exists('write_url')){
-    function write_url(string $canonical = '', bool $fullDomain = true, $suffix = false){
+    function write_url($canonical = null, bool $fullDomain = true, $suffix = false){
+        $canonical = ($canonical) ?? '';
         if(strpos($canonical, 'http') !== false){
             return $canonical;
         }

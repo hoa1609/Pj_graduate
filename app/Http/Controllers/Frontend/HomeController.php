@@ -4,58 +4,50 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\FrontendController;
 use App\Repositories\Interfaces\SlideRepositoryInterface as SlideRepository;
-use App\Repositories\Interfaces\ProductRepositoryInterface as ProductRepository;
 use App\Services\Interfaces\WidgetServiceInterface as WidgetService;
+use App\Services\Interfaces\SlideServiceInterface as SlideService;
 
 use Illuminate\Http\Request;
+use App\Enums\SlideEnum;
 
 
 class HomeController extends FrontendController{
 
     protected $language;
     protected $slideRepository;
-    protected $productRepository;
     protected $widgetService;
+    protected $slideService;
 
     public function __construct(
         SlideRepository $slideRepository,
-        ProductRepository $productRepository,
         WidgetService $widgetService,
+        SlideService $slideService,
     ){
         $this->slideRepository = $slideRepository;
-        $this->productRepository = $productRepository;
         $this->widgetService = $widgetService;
+        $this->slideService = $slideService;
 
         parent::__construct();
      }
   
 
-
      public function index(){
          $config = $this->config();
 
-         $widget = [
-            'category' => $this->widgetService->findWidgetByKeyword('category', $this->language, ['children' => true]),
-            // 'blog' => $this->widgetService->findWidgetByKeyword('blog', $this->language),
-         ];
+         $widgets = $this->widgetService->getWidget([
+            ['keyword' =>'category', 'countObject' => true],
+            ['keyword' =>'product'],
+            ['keyword' =>'other-product', 'children' => true, 'promotion' => true, 'object' => true],
+         ], $this->language);
 
-        $slides = $this->slideRepository->findByCondition(...$this->slideAgrument());
-        $products = $this->productRepository->all(['languages', 'product_variants']);
+
+
+        $slides = $this->slideService->getSlide([SlideEnum::MAIN], $this->language);
         return view('frontend.homepage.home.index', compact(
             'config',
             'slides',
+            'widgets',
         ));
-    }
-
-
-
-    private function slideAgrument(){
-        return [
-            'condition' => [
-                config('apps.general.defaultPublish'),
-                ['keyword', '=', 'slide_main']
-            ]
-        ];
     }
 
 
@@ -65,3 +57,4 @@ class HomeController extends FrontendController{
 
 
 }
+// ['keyword' => 'category','children' => true, 'promotion' => true,'object' => true, 'countObject' => true], 

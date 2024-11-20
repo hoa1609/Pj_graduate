@@ -59,6 +59,10 @@ class ProductCatalogue extends Model
         } 
 
         return true;
+    }
+
+    public function getNameByLanguage($id, $language){
         
     }
+
 }
