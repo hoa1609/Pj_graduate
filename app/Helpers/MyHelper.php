@@ -77,9 +77,9 @@ if (!function_exists('getPrice')) {
         }
 
         $result['html'] .= '<span class="ec-price">';
-            $result['html'] .= '<span class="new-price">'.(($result['priceSale'] > 0) ? convert_price($result['priceSale'], true) : convert_price($result['price'], true)).'</span>';
+            $result['html'] .= '<span class="new-price">'.(($result['priceSale'] > 0) ? convert_price($result['priceSale'], true) : convert_price($result['price'], true)).'₫</span>';
             if($result['priceSale'] > 0){
-                $result['html'] .= '<span class="old-price">'.convert_price($result['price'], true).'</span>';
+                $result['html'] .= '<span class="old-price">'.convert_price($result['price'], true).'₫</span>';
                 $result['html'] .= '</span>';
             }
         return $result;
@@ -224,3 +224,20 @@ if (!function_exists('convertArrayByKey')) {
     }
 }
 
+if (!function_exists('renderQuickBuy')) {
+    function renderQuickBuy($product, string $canonical = '', string $name = ''){
+
+        $class = 'btn-addCart';
+        $openModal = '';
+        if(isset($product->product_variants) && count(($product->product_variants))){
+            $class = '';
+            $canonical = '#popup';
+            $openModal = 'data-uk-modal';
+        }
+
+        $html = '<a href="'.$canonical.'" '.$openModal.' class="btn-addCart" data-link-action="quickview" title="'.$name.'" data-bs-toggle="modal" data-bs-target="#ec_quickview_modal">
+            <i class="fi-rr-shopping-basket"></i>
+        </a>';
+        return $html;
+    }
+} 

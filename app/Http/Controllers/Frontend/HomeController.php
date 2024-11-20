@@ -38,8 +38,8 @@ class HomeController extends FrontendController{
             ['keyword' =>'category', 'countObject' => true],
             ['keyword' =>'product'],
             ['keyword' =>'other-product', 'children' => true, 'promotion' => true, 'object' => true],
+            ['keyword' =>'best-seller'],
          ], $this->language);
-
 
 
         $slides = $this->slideService->getSlide([SlideEnum::MAIN], $this->language);

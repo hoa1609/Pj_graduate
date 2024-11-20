@@ -171,43 +171,44 @@ class WidgetService implements WidgetServiceInterface
                 $agrument = $this->widgetAgrument($widget, $language, $params[$key]);
                 $object = $class->findByCondition(...$agrument);
                 $model = lcfirst(str_replace('Catalogue','', $widget->model));
+                $replace = $model.'s';
+                $service = $model.'Service';
                 if(count($object) && strpos($widget->model, 'Catalogue')){
-                    $objectId = $object->pluck('id')->toArray();
-                    if(isset($params[$key]['children']) && $params[$key]['children'] ){
-                        $childrenAgrument = $this->childrenAgrument($objectId, $language);
-                        $object->childrens = $class->findByCondition(...$childrenAgrument);
-                    //------------------------------------------------
 
-                    # lấy toàn bộ mục danh mục bao gồm chính nó
-                        
-                    }
-                    //---------------- LẤY SẢN PHẨM --------------------------//
-                        $parameters = implode(',', $objectId);
-                        $childId = $class->recursiveCategory($parameters, $model);
+                    $classRepo = loadClass( ucfirst($model) );
+                    foreach($object as $objectKey => $objectValue){
+                        if(isset($params[$key]['children']) && $params[$key]['children'] ){
+                            $childrenAgrument = $this->childrenAgrument([$objectValue->id], $language);
+                            $objectValue->childrens = $class->findByCondition(...$childrenAgrument);
+                        }
+                            //---------------- LẤY SẢN PHẨM --------------------------//
+                        $childId = $class->recursiveCategory($objectValue->id, $model);
                         $ids = [];
                         foreach($childId as $child_id){
                             $ids[] = $child_id->id;
                         }
-                        $classRepo = loadClass( ucfirst($model) );
-                        $replace = $model.'s';
-                        foreach($object as $val){
-                            if($val->rgt - $val->lft > 1){
-                                $val->{$replace} = $classRepo->findObjectByCatelogueIds($ids, $model, $language);
-                            }
-                            if( 
-                            isset($params[$key]['promotion']) 
-                                && 
-                                $params[$key]['promotion'] == true
-                            ){
-                                $productId = $val->{$replace}->pluck('id')->toArray();
-                                $val->{$replace} = $this->productService->combineProductsAndPromotion($productId, $val->{$replace});
-                            }
+                        if($objectValue->rgt - $objectValue->lft > 1){
+                            $objectValue->{$replace} = $classRepo->findObjectByCatelogueIds($ids, $model, $language);
                         }
+                        if( 
+                        isset($params[$key]['promotion']) 
+                            && 
+                            $params[$key]['promotion'] == true
+                        ){
+                            $productId = $objectValue->{$replace}->pluck('id')->toArray();
+                            $objectValue->{$replace} = $this->{$service}->combineProductsAndPromotion($productId, $objectValue->{$replace});
+                        }
+                        $widgets[$key]->object = $object;
+                    }
+                }else{
+                    $productId = $object->pluck('id')->toArray();
+                    $object = $this->{$service}->combineProductsAndPromotion($productId, $object);
                     $widget->object = $object;
                 }
                 $temp[$widget->keyword] = $widgets[$key];
             }
         }
+        // dd($temp);
         return $temp;
     }
 
@@ -219,21 +220,30 @@ class WidgetService implements WidgetServiceInterface
             }
         ];
         $withCount = [];
-        if(strpos($widget->model, 'Catalogue') && isset($param['object'])){
-            $model = lcfirst(str_replace('Catalogue','', $widget->model)).'s';
-            $relation[$model] = function($query) use ($param, $language){
-                
-                $query->whereHas('languages', function($query) use ($language){
+
+        if(strpos($widget->model, 'Catalogue')){
+            if(isset($param['object'])){
+                $model = lcfirst(str_replace('Catalogue','', $widget->model)).'s';
+                $relation[$model] = function($query) use ($param, $language){
+                    $query->whereHas('languages', function($query) use ($language){
+                        $query->where('language_id', $language);
+                    });
+                    $query->take(($param['limit']) ?? 8);
+                    $query->orderBy('order', 'desc');
+                };
+                if(isset($param['countObject'])){
+                    $withCount[] = $model;
+                }
+            }
+            
+        }else{
+            $model = lcfirst($widget->model).'_catalogues';
+            $relation[$model] = function($query) use ($language){
+                $query->with('languages', function($query) use ($language){
                     $query->where('language_id', $language);
                 });
-                $query->take(($param['limit']) ?? 8);
-                $query->orderBy('order', 'desc');
             };
-            if(isset($param['countObject'])){
-                $withCount[] = $model;
-            }
         }
-
         return [
             'condition' => [
                 config('apps.general.defaultPublish')

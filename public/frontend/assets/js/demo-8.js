@@ -466,7 +466,7 @@ function ecCheckCookie()
 
     /*--------------------- Category Slider -------------------------------- */   
     /*--------------------- Blog Owl Slider -------------------------------- */ 
-    $('.ec-blog-slider, #ec-cat-slider').owlCarousel({
+    $('#ec-cat-slider').owlCarousel({
         margin:30,
         loop: true,
         dots:false,
@@ -500,6 +500,37 @@ function ecCheckCookie()
                 items: 4,
                 nav:false
             }
+        }
+    }); 
+
+
+
+    $('.ec-blog-slider').owlCarousel({
+        margin:30,
+        loop: true,
+        dots:false,
+        nav:false,
+        smartSpeed: 1000,
+        autoplay:true,
+        items:3,
+        responsiveClass: true,
+        responsive: {
+            0: {
+                items: 1,
+                nav:false
+            },
+            576: {
+                items: 2,
+                nav:false
+            },
+            768: {
+                items: 3,
+                nav:false
+            },
+            992: {
+                items: 4,
+                nav:false
+            },
         }
     }); 
 
@@ -839,49 +870,6 @@ function ecCheckCookie()
         slidesToScroll: 1
     });
 
-    /*--------------------- Blog Owl Slider -------------------------------- */ 
-    $('.ec-blog-slider, #ec-cat-slider').owlCarousel({
-    margin:30,
-    loop: true,
-    dots:false,
-    nav:true,
-    smartSpeed: 1000,
-    autoplay:false,
-    items:3,
-    responsiveClass: true,
-    responsive: {
-		0: {
-			items: 1,
-			dots:true,
-			nav:false
-		},
-		576: {
-			items: 2,
-			dots:true,
-			nav:false
-		},
-		768: {
-			items: 2,
-			dots:true,
-			nav:false
-		},
-		992: {
-			items: 3,
-			dots:true,
-			nav:false
-		},
-		1200: {
-			items:4,
-			dots:true,
-			nav:false
-		},
-		1367: {
-			items: 4,
-			dots:true,
-			nav:false
-		}
-	}
-});
      /*----------------------------- Sidebar js | Toggle Icon OnClick Open sidebar  -----------------------------------*/
 
 	$(".ec-sidebar-toggle").on("click", function () {

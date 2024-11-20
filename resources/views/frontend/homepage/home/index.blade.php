@@ -4,7 +4,7 @@
     @include('frontend.homepage.home.component.productcatelogue')
     @include('frontend.homepage.home.component.otherproduct')
     @include('frontend.homepage.home.component.dealofday')
-    @include('frontend.homepage.home.component.product')
+    @include('frontend.homepage.home.component.bestsale')
 
     @include('frontend.homepage.home.component.information')
     @include('frontend.homepage.home.component.blog')

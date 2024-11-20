@@ -7432,10 +7432,6 @@ textarea.form-control.is-invalid {
   padding-bottom: 50px;
 }
 
-.pl-0 {
-  padding-left: 0;
-}
-
 .pl-1 {
   padding-left: 5px;
 }
@@ -15870,16 +15866,10 @@ body {
   padding-bottom: 15px;
 }
 .section-title .ec-title {
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 600;
-  margin-bottom: 0;
   color: #222;
-  letter-spacing: 0.4px;
-  position: relative;
-  display: inline;
-  padding: 0;
   text-transform: capitalize;
-  line-height: 1;
 }
 
 .text-upper {
@@ -18352,8 +18342,7 @@ section.ec-instagram-section {
 .ec-product-inner .ec-pro-image {
   position: relative;
   width: 100%; 
-  /* max-width: 200px;  */
-  height: 300px; 
+  height: 100%; 
   overflow: hidden; 
   margin: 0 auto;
 }
@@ -18361,7 +18350,6 @@ section.ec-instagram-section {
   position: relative;
   display: block;
   overflow: hidden;
-  pointer-events: none;
 }
 .ec-product-inner .ec-pro-image .image img {
   width: 100%;
@@ -18568,17 +18556,15 @@ section.ec-instagram-section {
   position: relative;
 }
 .ec-product-inner:hover {
-  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
-  -webkit-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
-  -moz-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.05);
 }
 .ec-product-inner:hover .ec-pro-actions {
   opacity: 1;
   right: 10px;
 }
 .ec-product-inner:hover .ec-pro-image .image img {
-  -webkit-transform: scale(1.1);
-          transform: scale(1.1);
+  -webkit-transform: scale(1.04);
+          transform: scale(1.04);
 }
 .ec-product-inner:hover .ec-pro-image .image img:not(:last-child) {
   opacity: 0;
@@ -18609,8 +18595,6 @@ section.ec-instagram-section {
   text-transform: uppercase;
 }
 .ec-product-inner .ec-pro-content .ec-pro-rat-price {
-  margin-top: 5px;
-  margin-bottom: 15px;
   padding: 0 20px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -18623,15 +18607,14 @@ section.ec-instagram-section {
 .ec-product-inner .ec-pro-content .ec-pro-title {
   padding: 0 20px;
   font-size: 16px;
-  margin: 0 0 5px;
 }
 .ec-product-inner .ec-pro-content .ec-pro-title a {
   text-decoration: none;
   color: #777;
   display: block;
-  font-size: 13px;
+  font-size: 16px;
   line-height: 20px;
-  font-weight: 300;
+  font-weight: 400;
   letter-spacing: 0.85px;
   text-transform: capitalize;
 }
@@ -19213,10 +19196,9 @@ i.ecicon.eci-star.fill {
 /*-------------------------------------------------
     Special Section
 ---------------------------------------------------*/
-.ec-spe-section .ec-spe-products {
-  margin: 30px auto 0 auto;
-  border: 1px solid #eeeeee;
-  border-radius: 30px;
+.ec-spe-products {
+  display: block; /* Đảm bảo không bị ảnh hưởng bởi flex hoặc grid */
+  overflow: hidden; /* Quan trọng để tránh hiển thị lỗi */
 }
 .ec-spe-section .ec-spe-pro-inner {
   padding: 30px;
@@ -20224,9 +20206,9 @@ i.ecicon.eci-star.fill {
     right: -14px;
     top: 18%;
   }
-  .ec-spe-section .ec-spe-products {
+  /* .ec-spe-section .ec-spe-products {
     min-height: 406px;
-  }
+  } */
   .ec-test-outer {
     height: unset;
   }
@@ -20999,9 +20981,9 @@ i.ecicon.eci-star.fill {
         -ms-flex-pack: center;
             justify-content: center;
   }
-  .ec-spe-section .ec-spe-products {
+  /* .ec-spe-section .ec-spe-products {
     min-height: unset;
-  }
+  } */
   .ec-test-section .ec-test-desc {
     line-height: 1.5;
   }

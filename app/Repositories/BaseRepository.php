@@ -214,24 +214,32 @@ class BaseRepository implements BaseRepositoryInterface
     }
 
     public function findObjectByCatelogueIds($catIds = [], $model, $language){
-        return $this->model->select(
-            $model.'s.*',
-        )
-        ->where(
-            [config('apps.general.defaultPublish')]
-        )
-        ->with('languages', function($query) use ($language){
-            $query->where('language_id', $language);
-        })
-        ->with($model.'_catalogues', function($query) use ($language){
-            $query->with('languages', function($query) use ($language){
+        $query = $this->model->newQuery();
+        $this->model->select(
+                $model.'s.*',
+            )
+            ->where(
+                [config('apps.general.defaultPublish')]
+            )
+            ->with('languages', function($query) use ($language){
                 $query->where('language_id', $language);
+            })
+            ->with($model.'_catalogues', function($query) use ($language){
+                $query->with('languages', function($query) use ($language){
+                    $query->where('language_id', $language);
+                });
             });
-        })
-        ->join($model.'_catalogue_'.$model.' as tb2', 'tb2.'.$model.'_id', '=', $model.'s.id')
-        ->whereIn('tb2.'.$model.'_catalogue_id', $catIds)
-        ->orderBy('order', 'desc')
-        ->limit(8)
-        ->get();
+
+            if($model === 'product'){
+                $query ->with('product_variants');
+            }
+
+            $query->join($model.'_catalogue_'.$model.' as tb2', 'tb2.'.$model.'_id', '=', $model.'s.id')
+            ->whereIn('tb2.'.$model.'_catalogue_id', $catIds)
+            ->orderBy('order', 'desc')
+            ->limit(8)
+            ->get();
+
+        return $query->get();
     }
 }

@@ -3,7 +3,7 @@
         @php
             $catName = $category->languages->first()->pivot->name;
             $catCanonical = write_url($category->languages->first()->pivot->canonical);
-            $childrens = ($widgets['other-product']->object->childrens) ?? null ;
+            $childrens = ($category->childrens) ?? null ;
         @endphp
         <section class="section ec-product-tab section-space-p">
             <div class="container">
@@ -31,14 +31,16 @@
                         </div>
                     @endif
                    <!------san pham--->
-                    @if(count($category->products))
+                    @if(isset($category->products) && count($category->products))
                         <div class="row margin-minus-b-15">
                             <div class="col">
                                 <div class="tab-content">
                                     <div class="tab-pane fade show active" id="all">
                                         <div class="row">
                                         @foreach ($category->products as $product)
-                                            @include('frontend.homepage.home.component.product-item')
+                                            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 ec-product-content">
+                                                @include('frontend.homepage.home.component.product-item')
+                                            </div>
                                         @endforeach
                                         </div>
                                     </div>
