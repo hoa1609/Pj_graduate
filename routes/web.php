@@ -46,9 +46,11 @@ use Illuminate\Routing\RouteGroup;
 
 
 
+/*FE ROUTER */
 
 
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
+Route::get('{canonical}'.config('apps.general.suffix'), [RouterController::class, 'index'])->name('router.index');
 
 
 

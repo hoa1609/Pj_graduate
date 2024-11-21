@@ -115,7 +115,7 @@ if(!function_exists('renderSystemInput')){
             name="config['.$name.']" 
             value="'.old($name, ($systems[$name] ?? '')).'"
             class="form-control" 
-            placeholder="nhập tên bài viết..." 
+            placeholder="nhập nội dung..." 
         >';
     }
 }
@@ -127,7 +127,7 @@ if(!function_exists('renderSystemImages')){
             name="config['.$name.']"  
             value="'.old($name, ($systems[$name] ?? '')).'"
             class="form-control upload-image" 
-            placeholder="nhập tên bài viết..." 
+            placeholder="nhập nội dung..." 
         >';
     }
 }
@@ -159,13 +159,24 @@ if (!function_exists('renderSystemSelect')) {
 }
 
 if(!function_exists('write_url')){
-    function write_url($canonical = null, bool $fullDomain = true, $suffix = false){
+    function write_url($canonical = null, bool $fullDomain = true, $suffix = true){
         $canonical = ($canonical) ?? '';
         if(strpos($canonical, 'http') !== false){
             return $canonical;
         }
-        $fullUrl = (($fullDomain === true) ? config('app.url') : '').$canonical.(($suffix == true) ? config('app.general.suffix') : '');
+        $fullUrl = (($fullDomain === true) ? config('app.url') : '').$canonical.(($suffix == true) ? config('apps.general.suffix') : '');
         return $fullUrl;
+    }
+}
+
+if(!function_exists('seo')){
+    function seo($model = null){
+        return [
+            'meta_title' => ($model->meta_title) ?? $model->name,
+            'meta_keyword' => ($model->meta_keyword) ?? '',
+            'meta_description' => ($model->meta_description) ?? cut_string_and_code($model->description, 168),
+            'canonical' => write_url($model->canonical, true, true),
+        ];
     }
 }
 
@@ -241,3 +252,12 @@ if (!function_exists('renderQuickBuy')) {
         return $html;
     }
 } 
+
+if(!function_exists('cut_string_and_code')) {
+    function cut_string_and_code($str = null, $n = 200){
+        $str = html_entity_decode(($str));
+        $str = strip_tags($str);
+        $str = cutnchar($str, $n);
+        return $str;
+    }
+}

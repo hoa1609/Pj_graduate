@@ -222,8 +222,8 @@ class WidgetService implements WidgetServiceInterface
         $withCount = [];
 
         if(strpos($widget->model, 'Catalogue')){
+            $model = lcfirst(str_replace('Catalogue','', $widget->model)).'s';
             if(isset($param['object'])){
-                $model = lcfirst(str_replace('Catalogue','', $widget->model)).'s';
                 $relation[$model] = function($query) use ($param, $language){
                     $query->whereHas('languages', function($query) use ($language){
                         $query->where('language_id', $language);
@@ -231,9 +231,9 @@ class WidgetService implements WidgetServiceInterface
                     $query->take(($param['limit']) ?? 8);
                     $query->orderBy('order', 'desc');
                 };
-                if(isset($param['countObject'])){
-                    $withCount[] = $model;
-                }
+            }
+            if(isset($param['countObject'])){
+                $withCount[] = $model;
             }
             
         }else{

@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\FrontendController;
-use Illuminate\Http\Request;
+use App\Models\System;
 use App\Repositories\Interfaces\ProductCatalogueRepositoryInterface as ProductCatalogueRepository;
+
+use Illuminate\Http\Request;
 
 
 class ProductCatalogueController extends FrontendController{
@@ -13,24 +15,29 @@ class ProductCatalogueController extends FrontendController{
     protected $system;
     protected $productCatalogueRepository;
 
+
     public function __construct(
-        ProductCatalogueRepository $productCatalogueRepository
+        ProductCatalogueRepository $productCatalogueRepository,
     ){
         $this->productCatalogueRepository = $productCatalogueRepository;
         parent::__construct();
      }
-  
 
 
-     public function index($id, $language){
-        $productCatalogue = $this->productCatalogueRepository->getProductCatalogueById($id, $language);
-
+     public function index($id){
+        $productCatalogue = $this->productCatalogueRepository->getProductCatalogueById($id, $this->language);
+        
+        $config = $this->config();
         $system = $this->system;
-
-        $slides = $this->slideRepository->findByCondition(...$this->slideAgrument());
-        return view('frontend.homepage.home.index', compact(
+       
+        $seo = [
+            
+        ];
+        return view('frontend.product.catalogue.index', compact(
             'config',
-            'slides',
+            'system',
+            'seo',
+            'productCatalogue',
         ));
     }
 
@@ -38,7 +45,9 @@ class ProductCatalogueController extends FrontendController{
 
 
     private function config(){
-        return [];
+        return [
+            'language' => $this->language,
+        ];
     }
 
 

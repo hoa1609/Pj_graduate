@@ -43,7 +43,7 @@ class SystemController extends Controller{
                 ['language_id', '=', $this->language]
             ],TRUE
         ), 'keyword', 'content');
-        $config = $this->config();
+        $config = $this->configIndex();
         $template = 'backend.system.index';
         return view('backend.dashboard.layout', compact(
             'template',
@@ -61,11 +61,17 @@ class SystemController extends Controller{
     }
 
 
-    private function config(){
+    private function configIndex(){
         return [
-            'js' =>[
-
-            ]
+            'js' => [
+                'backend/assets/js/select2_4.1.min.js',
+                'backend/plugins/ckfinder_2/ckfinder.js',
+                'backend/assets/library/finder.js',
+                'backend/plugins/ckeditor/ckeditor.js',
+            ],
+            'css' => [
+                'backend/assets/css/select2.min.css',
+            ],
         ];
     }
 

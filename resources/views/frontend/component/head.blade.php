@@ -1,20 +1,16 @@
 <base href="{{ config('app.url') }}">
 <meta charset="UTF-8">
-<meta http-equiv="x-ua-compatible" content="ie=edge" />
+<meta http-equiv="x-ua-compatible" content="ie=edge"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
 
-<meta name="robots" content="index/follow" />
-<meta name="author" content="" />
-<meta http-equiv="refresh" content="1800" />
-<link rel="icon" href="frontend/assets/images/favicon/favicon-8.png" sizes="32x32" />
+<meta name="robots" content="index/follow"/>
+<meta name="author" content="{{ $system['homepage_company'] }}"/>
+<meta http-equiv="refresh" content="1800"/>
+<link rel="icon" href="{{ $system['homepage_favicon'] ?? ''}}" sizes="32x32"/>
 
-{{-- gg --}}
-<title>4AM Style - Fashion</title>
-<meta name="description" content="" />
-<meta name="canonical" content="" />
-
-
-
+<title>{{ $seo['meta_title'] }}</title>
+<meta name="keyword" content="{{ $seo['meta_keyword'] }}"/>
+<meta name="description" content="{{ $seo['meta_description'] }}"/>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 @php

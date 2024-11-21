@@ -100,7 +100,7 @@
                     <!-- Ec Header Logo Start -->
                     <div class="align-self-center">
                         <div class="header-logo">
-                            <a href="index.html">
+                            <a href="{{ route('home.index') }}">
                                 <img src="{{ $system['homepage_logo'] }}" alt="Site Logo" style="width: 80px" />
                             </a>
                         </div>
@@ -160,7 +160,7 @@
                 <!-- Ec Header Logo Start -->
                 <div class="col">
                     <div class="header-logo">
-                        <a href="index.html">
+                        <a href="{{ route('home.index') }}">
                             <img src="{{ $system['homepage_logo'] }}" alt="Site Logo" style="width: 50px" />
                     </div>
                 </div>
