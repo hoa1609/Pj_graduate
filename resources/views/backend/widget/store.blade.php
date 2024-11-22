@@ -79,7 +79,7 @@ $url = ($config['method'] == 'create') ? route('widget.store') : route('widget.u
                 </div>
             </div>
         </div>
-        @include('backend.dashboard.component.album',['model' => $widget ?? null])
+        @include('backend.dashboard.component.album')
         <div class="row justify-content-star">
             <div class="col-md-9 col-lg-9">
                 <div class="card">

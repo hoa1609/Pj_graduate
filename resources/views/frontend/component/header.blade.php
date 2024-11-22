@@ -24,7 +24,7 @@
                 <!-- Header Top Message Start -->
                 <div class="col text-center header-top-center">
                     <div class="header-top-message text-upper">
-                        <span>Free Shipping</span>This Week Order Over - $75
+                        <span>{{ $system['homepage_slogan'] }}</span>
                     </div>
                 </div>
                 <!-- Header Top Message End -->
@@ -100,9 +100,9 @@
                     <!-- Ec Header Logo Start -->
                     <div class="align-self-center">
                         <div class="header-logo">
-                            <a href="index.html"><img src="assets/images/logo/logo-8.png" alt="Site Logo" /><img
-                                    class="dark-logo" src="assets/images/logo/dark-logo-8.png" alt="Site Logo"
-                                    style="display: none;" /></a>
+                            <a href="index.html">
+                                <img src="{{ $system['homepage_logo'] }}" alt="Site Logo" style="width: 80px" />
+                            </a>
                         </div>
                     </div>
                     <!-- Ec Header Logo End -->
@@ -160,9 +160,8 @@
                 <!-- Ec Header Logo Start -->
                 <div class="col">
                     <div class="header-logo">
-                        <a href="index.html"><img src="assets/images/logo/logo-8.png" alt="Site Logo" /><img
-                                class="dark-logo" src="assets/images/logo/dark-logo-8.png" alt="Site Logo"
-                                style="display: none;" /></a>
+                        <a href="index.html">
+                            <img src="{{ $system['homepage_logo'] }}" alt="Site Logo" style="width: 50px" />
                     </div>
                 </div>
                 <!-- Ec Header Logo End -->

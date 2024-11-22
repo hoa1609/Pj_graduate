@@ -33,10 +33,11 @@ class Promotion extends Model
     ];
 
     protected $table = 'promotions';
+    
     public function products(){
         return $this->belongsToMany(Promotion::class, 'promotion_product_variant' , 'promotion_id', 'product_id')
         ->withPivot(
-            'product_variant_id',
+            'variant_uuid',
             'model',
         )->withTimestamps();
     }

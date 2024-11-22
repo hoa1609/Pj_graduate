@@ -14,6 +14,7 @@ use App\Http\Controllers\Backend\PostController;
 use App\Http\Controllers\Backend\PermissionController;
 use App\Http\Controllers\Backend\ProductCatalogueController;
 use App\Http\Controllers\Backend\ProductController;
+use App\Http\Controllers\Backend\MenuController;
 use App\Http\Controllers\Backend\AttributeController;
 use App\Http\Controllers\Backend\AttributeCatalogueController;
 use App\Http\Controllers\Backend\PromotionController;
@@ -22,6 +23,7 @@ use App\Http\Controllers\Ajax\AttributeController as AjaxAttributeController;
 use App\Http\Controllers\Ajax\ProductController as AjaxProductController;
 use App\Http\Controllers\Ajax\SourceController as AjaxSourceController;
 use App\Http\Controllers\Backend\SlideController;
+use App\Http\Controllers\Backend\OrderController;
 
 
 use App\Http\Controllers\Backend\SourceController;
@@ -29,6 +31,8 @@ use App\Http\Controllers\Backend\WidgetController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\RouterController;
 use App\Http\Controllers\Frontend\CartController;
+use App\Http\Controllers\Ajax\MenuController as AjaxMenuController;
+use App\Http\Controllers\Backend\SystemController;
 
 
 
@@ -45,7 +49,7 @@ use Illuminate\Routing\RouteGroup;
 
 
 
-// Route::get('/', [HomeController::class, 'index'])->name('home.index');
+Route::get('/', [HomeController::class, 'index'])->name('home.index');
 
 
 
@@ -56,8 +60,9 @@ use Illuminate\Routing\RouteGroup;
 
 
 
-Route::middleware(['admin', 'locale'])->group(function () {
 
+/*BACK END ROUTER */
+Route::middleware(['admin', 'locale', 'backend_default_locale'])->group(function () {
     Route::get('dashboard/index', [DashboardController::class, 'index'])->name('dashboard.index');
 
     Route::group(['prefix' => 'user'], function () {
@@ -68,7 +73,6 @@ Route::middleware(['admin', 'locale'])->group(function () {
         Route::get('delete/{id}', [UserController::class, 'delete'])->name('user.delete');
         Route::post('update/{id}', [UserController::class, 'update'])->name('user.update');
         Route::delete('destroy/{id}', [UserController::class, 'destroy'])->name('user.destroy');
-
     });
 
     Route::group(['prefix' => 'user/role'], function () {
@@ -206,6 +210,21 @@ Route::middleware(['admin', 'locale'])->group(function () {
         Route::delete('destroy/{id}', [WidgetController::class, 'destroy'])-> name('widget.destroy');
     });
 
+    Route::group(['prefix' => 'system'], function (){
+        Route::get('index', [SystemController::class, 'index'])-> name('system.index');
+        Route::post('store', [SystemController::class, 'store'])-> name('system.store');
+
+    });
+
+
+    Route::group(['prefix' => 'menu'], function () {
+        Route::get('index', [MenuController::class, 'index'])->name('menu.index');
+        Route::get('create', [MenuController::class, 'create'])->name('menu.create');
+        Route::post('store', [MenuController::class, 'store'])->name('menu.store');
+        Route::get('edit/{id}', [MenuController::class, 'edit'])->name('menu.edit');
+        Route::post('update/{id}', [MenuController::class, 'update'])->name('menu.update');
+        Route::delete('destroy/{id}', [MenuController::class, 'destroy'])->name('menu.destroy');
+    });
     Route::group(['prefix' => 'source'], function (){
         Route::get('index', [SourceController::class, 'index'])-> name('source.index');
         Route::get('create', [SourceController::class, 'create'])-> name('source.create');
@@ -226,6 +245,11 @@ Route::middleware(['admin', 'locale'])->group(function () {
         Route::delete('destroy/{id}', [PromotionController::class, 'destroy'])->name('promotion.destroy');
     });
 
+    Route::group(['prefix' => 'order'], function () {
+        Route::get('index', [OrderController::class, 'index'])->name('order.index');
+        Route::get('detail/{id}', [OrderController::class, 'detail'])->name('order.detail');
+    });
+
 
     /* AJAX */
     Route::get('ajax/location/getLocation', [LocationController::class, 'getLocation'])->name('ajax.location.index');
@@ -239,6 +263,10 @@ Route::middleware(['admin', 'locale'])->group(function () {
     Route::get('ajax/attribute/getAttribute', [AjaxAttributeController::class, 'getAttribute'])->name('ajax.attribute.getAttribute');
     Route::get('ajax/attribute/loadAttribute', [AjaxAttributeController::class, 'loadAttribute'])->name('ajax.attribute.loadAttribute');
 
+    Route::get('ajax/attribute/getAttribute', [AjaxAttributeController::class, 'getAttribute'])->name('ajax.attribute.getAttribute');
+    Route::get('ajax/attribute/loadAttribute', [AjaxAttributeController::class, 'loadAttribute'])->name('ajax.attribute.loadAttribute');
+    Route::post('ajax/menu/createCatalogue', [AjaxMenuController::class, 'createCatalogue'])->name('ajax.menu.createCatalogue');
+    Route::get('ajax/dashboard/getMenu', [AjaxDashboardController::class, 'getMenu'])->name('ajax.dashboard.getMenu');
 });
 
 

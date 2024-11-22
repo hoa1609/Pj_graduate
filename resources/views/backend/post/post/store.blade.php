@@ -84,7 +84,7 @@
                             <div class="col-md-12 position-relative pb-3">
                                 <label class="card-title fs-16">Chọn danh mục cha </label>
                                 <div class="fs-10 mb-2">
-                                    <span class="text-danger">*</span> Chọn root để tạo danh mục cha mới
+                                    <span class="text-danger">*</span> Chọn danh mục
                                 </div>
                                 <select name="post_catalogue_id" class="form-select form-select-important">
                                     @foreach ($dropdown as $key => $val)
@@ -100,7 +100,7 @@
                                 // Mảng lưu các post_catalogues đã được chọn
                                 $catalogue = old('catalogue', isset($post) ? $post->post_catalogues->pluck('id')->toArray() : []);
                             @endphp
-                            <div class="col-md-12 position-relative pb-3">
+                            <div class="col-md-12 position-relative">
                                 <label class="form-label">Danh mục phụ </label>
                                 <select multiple name="catalogue[]" class="form-select form-select-important setUpSelect2 border-select-2">
                                     @foreach($dropdown as $key => $val)
@@ -119,10 +119,10 @@
                     </div>
                 </div>
                 <div class="card">
-                    <div class="card-body pt-10">
+                    <div class="card-body">
                         <div class="row">
                             <div class="col-md-12 position-relative">
-                                <label class="form-label">Chọn ảnh đại diện <span class="text-danger fs-10">(*)</span></label>
+                                <label class="form-label">Chọn ảnh đại diện</label>
                             </div>
                             <span class="image img-cover image-target">
                                 @php
@@ -139,9 +139,7 @@
                     <div class="card-body pt-10">
                         <div class="row">
                             <div class="col-md-12 position-relative">
-                                <label class="form-label mb-3">Chọn trình trạng 
-                                    <span class="text-danger fs-10">(*)</span>
-                                </label>
+                                <label class="form-label mb-3">Chọn trình trạng</label>
                                 <div class="mb-2">
                                     <select name="publish" class="form-select form-select-important">
                                         @foreach (config('apps.general.publish') as $key => $val)
@@ -194,9 +192,7 @@
                         <div class="row mb-2">
                             <div class="col-md-12 position-relative">
                                 <div class="uk-flex uk-flex-space-between">
-                                    <label class="form-label">Tiêu đề SEO
-                                        <span class="text-danger fs-10"> (*)</span>
-                                    </label>
+                                    <label class="form-label">Tiêu đề SEO</label>
                                     <label>12 kí tự</label>
                                 </div>
                                 <input class="form-control" 
@@ -210,7 +206,7 @@
                         <div class="row mb-2">
                             <div class="col-md-12 position-relative">
                                 <div class="uk-flex uk-flex-space-between">
-                                    <label class="form-label">Từ khóa SEO<span class="text-danger fs-10"> (*)</span></label>
+                                    <label class="form-label">Từ khóa SEO</label>
                                     <label>12 kí tự</label>
                                 </div>
                                 <input class="form-control mb-2" 
@@ -223,7 +219,7 @@
                         <div class="row mb-2">
                             <div class="col-md-12 position-relative">
                                 <div class="uk-flex uk-flex-space-between">
-                                    <label class="form-label">Mô tả SEO <span class="text-danger fs-10"> (*)</span></label>
+                                    <label class="form-label">Mô tả SEO</label>
                                     <label>12 kí tự</label>
                                 </div>
                                 <textarea  

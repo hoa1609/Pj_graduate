@@ -19,7 +19,7 @@
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="mb-3 row">
-                                    <label class="col-sm-2 col-form-label">Tên</label>
+                                    <label class="col-sm-2 col-form-label">Tên<span class="text-danger fs-10"> (*)</span></label>
                                     <div class="col-sm-9">
                                         <input class="form-control"
                                         name="name"
@@ -30,7 +30,7 @@
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
-                                    <label class="col-sm-2 col-form-label">Email</label>
+                                    <label class="col-sm-2 col-form-label">Email<span class="text-danger fs-10"> (*)</span></label>
                                     <div class="col-sm-9">
                                         <input class="form-control"
                                         name="email"
@@ -41,7 +41,7 @@
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
-                                    <label class="col-sm-2 col-form-label">Điện thoại</label>
+                                    <label class="col-sm-2 col-form-label">Điện thoại<span class="text-danger fs-10"> (*)</span></label>
                                     <div class="col-sm-9">
                                         <input class="form-control"
                                         name="phone"
@@ -76,7 +76,7 @@
 
                                 @if($config['method'] == 'create' )
                                     <div class="mb-3 row">
-                                        <label class="col-sm-2 col-form-label">Mật khẩu</label>
+                                        <label class="col-sm-2 col-form-label">Mật khẩu<span class="text-danger fs-10"> (*)</span></label>
                                         <div class="col-sm-9">
                                             <input class="form-control"
                                             name="password"
@@ -86,7 +86,7 @@
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
-                                        <label class="col-sm-2 col-form-label">Nhập lại mật khẩu</label>
+                                        <label class="col-sm-2 col-form-label">Nhập lại mật khẩu<span class="text-danger fs-10"> (*)</span></label>
                                         <div class="col-sm-9">
                                             <input class="form-control"
                                             name="re_password"
@@ -101,7 +101,7 @@
                             <div class="col-lg-6">
                                 <div class="row pb-4">
                                     <div class="col-md-12">
-                                        <label class="form-label">Nhóm thành viên</label>
+                                        <label class="form-label">Nhóm thành viên<span class="text-danger fs-10"> (*)</span></label>
                                         <select name="user_role_id" class="form-select" >
                                             @foreach(config('apps.general.roleUser') as $key => $item)
                                                 <option {{$key == old('user_role_id', (isset($user->user_role_id)) ? $user->user_role_id : '') ? 'selected' : ''

@@ -1,3 +1,15 @@
+.uk-flex{
+    display: flex;
+}
+.uk-align-center{
+    align-items: center;
+}
+.uk-space-between{
+    justify-content: space-between;
+}
+.fi-rr-shopping-basket{
+    font-size: 18px;
+}
 .swiper-slide {
     display: flex;
     flex-direction: column;
@@ -81,4 +93,41 @@
 }
 .swiper-button-prev:after {
     content: '\f104'; 
+}
+.title-sub h3{
+    font-size: 25px !important;
+    color: #252525 !important;
+    padding: 0 0 15px;
+}
+.title-header h3{
+    font-size: 18px;
+    text-transform: capitalize;
+    padding-bottom: 10px;
+}
+.description p{
+    font-size: 16px;
+    padding: 10px 0;
+    color: #5e5e5e;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+} 
+.text-truncate{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.pl-0{
+    padding-left: 0 !important;
+}
+.pb-1{
+    padding-bottom: 10px !important;
+}
+.pb-2{
+    padding-bottom: 20px !important;
+}
+.pb-3{
+    padding-bottom: 30px !important;
 }

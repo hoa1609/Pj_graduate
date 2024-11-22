@@ -33,8 +33,7 @@
                     if (res.flag == true) {
                         _this.val(inputValue)
                     }
-                    alert('Cập nhật thành công');
-
+                    // alert('Cập nhật thành công');
                 },
 
                 error: function(jqXHR, textStatus, errorThrown) {
@@ -132,9 +131,6 @@
         $('#checkAll').prop('checked', allChecked);
     }
 
-
-
-
     $(document).ready(function(){
         HT.select2();
         HT.changeStatus();
@@ -143,7 +139,6 @@
         HT.allChecked();
         HT.changeStatusAll();
         HT.sortui();
-
     });
 
 })(jQuery);

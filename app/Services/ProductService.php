@@ -3,10 +3,10 @@
 namespace App\Services;
 
 use App\Services\Interfaces\ProductServiceInterface;
-use App\Services\Interfaces\BaseServiceInterface;
 use App\Repositories\Interfaces\ProductRepositoryInterface as ProductRepository;
 use App\Repositories\Interfaces\ProductVariantLanguageRepositoryInterface as ProductVariantLanguageRepository;
 use App\Repositories\Interfaces\ProductVariantAttributeRepositoryInterface as ProductVariantAttributeRepository;
+use App\Repositories\Interfaces\PromotionRepositoryInterface as PromotionRepository;
 use App\Repositories\Interfaces\RouterRepositoryInterface as RouterRepository;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -15,13 +15,13 @@ use Illuminate\Support\Str;
 use Ramsey\Uuid\Uuid;
 
 
-
 class ProductService extends BaseService implements ProductServiceInterface
 {
     protected $productRepository;
     protected $routerRepository;
     protected $productVariantLanguageRepository;
     protected $productVariantAttributeRepository;
+    protected $promotionRepository;
 
 
     public function __construct(
@@ -29,11 +29,13 @@ class ProductService extends BaseService implements ProductServiceInterface
         RouterRepository $routerRepository,
         ProductVariantLanguageRepository $productVariantLanguageRepository,
         ProductVariantAttributeRepository $productVariantAttributeRepository,
+        PromotionRepository $promotionRepository,
     ){
         $this->productRepository = $productRepository;
         $this->routerRepository = $routerRepository;
         $this->productVariantLanguageRepository = $productVariantLanguageRepository;
         $this->productVariantAttributeRepository = $productVariantAttributeRepository;
+        $this->promotionRepository = $promotionRepository;
         $this->controllerName = 'ProductController';
     }
 
@@ -109,11 +111,12 @@ class ProductService extends BaseService implements ProductServiceInterface
         $product->product_variants()->delete();
         $variant = $product->product_variants()->createMany($variant);
         $variantId = $variant->pluck('id');
+
         $productVariantLanguage = [];
         $variantAttribute = [];
         $attributeCombines = $this->comebineAttribute(array_values($payload['attribute']));
             if (count($variantId)) {
-                foreach ($variantId as $key => $val) {
+                foreach ($variantId as $key => $val){
                     $productVariantLanguage[] = [
                         'product_variant_id' => $val,
                         'language_id' => $languageId,
@@ -166,6 +169,7 @@ class ProductService extends BaseService implements ProductServiceInterface
                 ];
             }
         }
+        // dd($variant);
         return $variant;
     }
 
@@ -213,6 +217,7 @@ class ProductService extends BaseService implements ProductServiceInterface
         return [$request->product_catalogue_id];
     }
 
+
     public function update($id, $request, $languageId){
         DB::beginTransaction();
         try{
@@ -248,7 +253,6 @@ class ProductService extends BaseService implements ProductServiceInterface
             return true;
         }catch(\Exception $e ){
             DB::rollBack();
-            // Log::error($e->getMessage());
             echo $e->getMessage();die();
             return false;
         }
@@ -306,6 +310,7 @@ class ProductService extends BaseService implements ProductServiceInterface
             'attributeCatalogue',
             'attribute',
             'variant',
+            'uuid',
         ];
     }
 
@@ -320,4 +325,22 @@ class ProductService extends BaseService implements ProductServiceInterface
             'canonical'
         ];
     }
+
+    public function combineProductsAndPromotion($productId = [], $products) {
+        $promotions = $this->promotionRepository->findByProduct($productId);
+        if($promotions){
+            $promotionMap = [];
+            foreach ($promotions as $promotion) {
+                $promotionMap[$promotion['product_id']] = $promotion;
+            }
+            foreach ($products as $product) {
+                if (isset($promotionMap[$product->id])) {
+                    $product->promotions = $promotionMap[$product->id];
+                }
+            }
+        }
+        return $products;
+    }
+
+
 }

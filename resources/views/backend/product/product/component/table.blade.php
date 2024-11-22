@@ -23,11 +23,11 @@
                         <td>
                             <div class="uk-flex flex-direction-column">
                                 <div class="fsz-5">{{ $product->name }}</div>
-                                <div class="uk-flex">
+                                <div class="uk-flex uk-baseline pt-1">
                                     <div class="category">
-                                        <span class="color-note">Nhóm hiển thị: </span>
+                                        <span class="note-tag mr5">Tag: </span>
                                     </div>
-                                    <div class="text-danger">
+                                    <div class="note-tag">
                                         @foreach ($product-> product_catalogues as $val)
                                             @foreach ($val-> product_catalogue_language as $cat)
                                                 <a href="{{ route('product.index', ['product_catalogue_id' => $val-> id]) }}">{{ $cat-> name }} |</a>

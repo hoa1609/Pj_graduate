@@ -33,7 +33,7 @@ class UserRoleController extends Controller{
 
         $perPage = $request->integer('perpage', 10);
         $userRoles = $this->userRoleService->paginate($request, $perPage);
-
+        $config = $this->configIndex();
         $config['seo'] = config('apps.userRole.index');
         $template = 'backend.user.role_user.index';
         return view('backend.dashboard.layout', compact(
@@ -133,4 +133,14 @@ class UserRoleController extends Controller{
         return redirect()->route('user.role.permission')->with('error', 'Cập nhập quyền thất bại !');
     }
 
+    private function configIndex(){
+        return [
+            'js' => [
+                'backend/assets/js/select2_4.1.min.js',
+            ],
+            'css' => [
+                'backend/assets/css/select2.min.css',
+            ],
+        ];
+    }
 }

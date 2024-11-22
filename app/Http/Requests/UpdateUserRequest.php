@@ -20,8 +20,9 @@ class UpdateUserRequest extends FormRequest
             'email' => 'required|email|unique:users,email,' . $this->id,
 
             'phone' => 'required|numeric|digits_between:0,20',
-            'birthday' => 'required',
-            'address' => 'required|max:191',
+            'user_role_id' => 'required|integer|min:1',
+
+            'address' => 'max:191',
             'description' => 'required|max:191',
         ];
     }
@@ -38,13 +39,12 @@ class UpdateUserRequest extends FormRequest
             'email.email' => 'Nhập email chưa đúng. Ví dụ: abc@gmail',
             'email.unique' => 'Email đã tồn tại! Hãy nhập lại email',
 
+            'user_role_id.min' => 'Vui lòng chọn tư cách hợp lệ.',
+
             'phone.required' => 'Bạn chưa nhập số điện thoại',
             'phone.numeric' => 'Số điện thoại chỉ được chứa các chữ số.',
             'phone.digits_between' => 'Số điện thoại phải có từ :min đến :max chữ số.',
 
-            'birthday.required' => 'Bạn chưa nhập sinh nhật',
-
-            'address.required' => 'Bạn chưa nhập rõ địa chỉ.',
             'address.max' => 'Độ dài phần địa chỉ đã quá 191 kí tự',
 
         ];

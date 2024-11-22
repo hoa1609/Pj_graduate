@@ -34,6 +34,8 @@ class SlideController extends Controller
     }
 
     public function index (Request $request){
+        $this->authorize('modules', 'slide.index');
+
         $perPage = $request->integer('perpage');
         $slides = $this->slideService->paginate($request, $this->language);
         foreach ($slides as $slide) {
@@ -44,10 +46,7 @@ class SlideController extends Controller
                 $slide->items = $slide->item;
             }
         }
-
-        $config = [
-            'model' => 'Slide',
-        ];
+       $config = $this->configIndex();
         $config['seo'] = config('apps.slide');
         $template = 'backend.slide.slide.index';
         return view('backend.dashboard.layout', compact(
@@ -59,6 +58,9 @@ class SlideController extends Controller
     }
 
     public function create(){
+        $this->authorize('modules', 'slide.create');
+        
+        $config = $this->configStore();
         $config['seo'] = config('apps.slide');
         $config['method'] = 'create';
         $template = 'backend.slide.slide.store';
@@ -76,10 +78,12 @@ class SlideController extends Controller
         return redirect()->route('slide.index')->with('error', 'Thêm mới bản ghi không thành công. Hãy thử lại.');
     }
 
-    public function edit($id)
-    {
+    public function edit($id){
+        $this->authorize('modules', 'slide.edit');
         $slide = $this->slideRepository->findById($id);
         $slideItem = $this->slideService->coverSlideArray($slide->item[$this->language]);
+
+        $config = $this->configStore();
         $config['seo'] = config('apps.slide');
         $config['method'] = 'edit';
         $template = 'backend.slide.slide.store';
@@ -91,16 +95,16 @@ class SlideController extends Controller
         ));
     }
 
-    public function update($id, UpdateSlideRequest $request)
-    {
+    public function update($id, UpdateSlideRequest $request){
         if($this->slideService->update($id, $request, $this->language)){
             return redirect()->route('slide.index')->with('success', 'Cập nhật bản ghi thành công');
         }
         return redirect()->route('slide.index')->with('error', 'Cập nhật bản ghi không thành công. Hãy thử lại.');
     }
 
-    public function delete($id)
-    {
+    public function delete($id){
+        $this->authorize('modules', 'slide.delete');
+
         $slide = $this->slideRepository->findById($id);
         $config['seo'] = config('apps.slide');
         $template = 'backend.slide.slide.delete';
@@ -111,11 +115,39 @@ class SlideController extends Controller
         ));
     }
 
-    public function destroy($id)
-    {
+    public function destroy($id){
+        $this->authorize('modules', 'slide.destroy');
+
         if($this->slideService->destroy($id)){
             return redirect()->route('slide.index')->with('success', 'Xóa bản ghi thành công');
         }
         return redirect()->route('slide.index')->with('error', 'Xóa bản ghi thất bại. Hãy thử lại');
+    }
+
+    private function configIndex(){
+        return [
+            'js' => [
+                'backend/assets/js/select2_4.1.min.js',
+            ],
+            'css' => [
+                'backend/assets/css/select2.min.css',
+            ],
+            'model' => 'Slide',
+        ];
+    }
+
+    private function configStore(){
+        return [
+            'js' => [
+                'backend/assets/js/select2_4.1.min.js',
+                'backend/plugins/ckfinder_2/ckfinder.js',
+                'backend/assets/library/finder.js',
+                'backend/assets/library/slide.js',
+                'backend/plugins/ckeditor/ckeditor.js',
+            ],
+            'css' => [
+                'backend/assets/css/select2.min.css',
+            ],
+        ];
     }
 }

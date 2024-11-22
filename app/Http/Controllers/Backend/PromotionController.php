@@ -39,14 +39,13 @@ class PromotionController extends Controller{
     }
 
     public function index(Request $request){
-        $config = [
-            'model' => 'Promotion',
-        ];
         $this->authorize('modules', 'promotion.index');
         $perPage = $request->integer('perpage');
         $promotions = $this->promotionService->paginate($request, $this->language);
         $dropdown = $this->nestedset->Dropdown();
         $template = 'backend.promotion.promotion.index';
+
+        $config = $this->configIndex();
         $config['seo'] = config('apps.promotion.index');
 
         return view('backend.dashboard.layout', compact(
@@ -60,6 +59,8 @@ class PromotionController extends Controller{
     public function create(){
         $this->authorize('modules', 'promotion.create');
         $sources = $this->sourceRepository->all();
+
+        $config = $this->configStore();
         $config['method'] = 'create';
         $config['seo'] = config('apps.promotion.create');
         $dropdown = $this->nestedset->Dropdown();
@@ -83,7 +84,8 @@ class PromotionController extends Controller{
         $this->authorize('modules', 'promotion.edit');
         $sources = $this->sourceRepository->all();
         $promotion = $this->promotionRepository->findById($id);
-        // dd($promotion->discountInformation);
+        
+        $config = $this->configStore();
         $config['method'] = 'edit';
         $config['seo'] = config('apps.promotion.edit');
         $template = 'backend.promotion.promotion.store';
@@ -94,16 +96,7 @@ class PromotionController extends Controller{
             'sources'
         ));
     }
-
-    // public function delete($id){
-    //     $this->authorize('modules', 'promotion.delete');
-    //     $promotion = $this->promotionRepository->getPromotionById($id, $this->language);
-    //     $template = 'backend.promotion.promotion.delete';
-    //     return view('backend.dashboard.layout', compact(
-    //         'template',
-    //         'promotion',
-    //     ));
-    // }
+    
 
     public function delete($id){
         $this->authorize('modules', 'promotion.delete');
@@ -123,7 +116,6 @@ class PromotionController extends Controller{
     }
 
     public function destroy($id){
-        $this->authorize('modules', 'promotion.destroy');
         if ($this->promotionService->destroy($id, $this->language)) {
             return redirect()->route('promotion.index')->with('success', 'Xóa khuyến mãi thành công!');
         }
@@ -139,5 +131,32 @@ class PromotionController extends Controller{
         ]);
     }
 
+    private function configIndex(){
+        return [
+            'js' => [
+                'backend/assets/js/select2_4.1.min.js',
+            ],
+            'css' => [
+                'backend/assets/css/select2.min.css',
+            ],
+            'model' => 'Promotion',
+        ];
+    }
+
+    private function configStore(){
+        return [
+            'js' => [
+                'backend/assets/js/select2_4.1.min.js',
+                'backend/plugins/ckfinder_2/ckfinder.js',
+                'backend/assets/library/finder.js',
+                'backend/assets/library/seo.js',
+                'backend/assets/library/promotion.js',
+                'backend/plugins/ckeditor/ckeditor.js',
+            ],
+            'css' => [
+                'backend/assets/css/select2.min.css',
+            ],
+        ];
+    }
 
 }

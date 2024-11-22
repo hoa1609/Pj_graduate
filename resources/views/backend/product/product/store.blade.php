@@ -114,7 +114,7 @@
                                 <label class="card-title fs-14">Thông tin sản phẩm </label>
                             </div>
                             <div class="col-md-12 position-relative mb-2">
-                                <label class="form-label">Mã sản phẩm</label>
+                                <label class="form-label">Mã sản phẩm <span class="text-danger fs-10">(*)</span></label>
                                 <input type="text"
                                     class="form-control"
                                     name="code"
@@ -122,7 +122,7 @@
                                 >
                             </div>
                             <div class="col-md-12 position-relative mb-2">
-                                <label class="form-label">Xuất xứ</label>
+                                <label class="form-label">Xuất xứ <span class="text-danger fs-10">(*)</span></label>
                                 <input type="text"
                                     class="form-control"
                                     name="made_in"
@@ -130,7 +130,7 @@
                                 >
                             </div>
                             <div class="col-md-12 position-relative">
-                                <label class="form-label">Giá sản phẩm</label>
+                                <label class="form-label">Giá sản phẩm <span class="text-danger fs-10">(*)</span></label>
                                 <input type="text"
                                     min="0"
                                     class="form-control"
@@ -146,7 +146,7 @@
                     <div class="card-body pt-10">
                         <div class="row">
                             <div class="col-md-12 position-relative">
-                                <label class="form-label">Chọn ảnh đại diện <span class="text-danger fs-10">(*)</span></label>
+                                <label class="form-label">Chọn ảnh đại diện</label>
                             </div>
                             <span class="image img-cover image-target">
                                 @php
@@ -163,9 +163,7 @@
                     <div class="card-body pt-10">
                         <div class="row">
                             <div class="col-md-12 position-relative">
-                                <label class="form-label mb-3">Chọn trình trạng
-                                    <span class="text-danger fs-10">(*)</span>
-                                </label>
+                                <label class="form-label mb-3">Chọn trình trạng</label>
                                 <div class="mb-2">
                                     <select name="publish" class="form-select form-select-important">
                                         @foreach (config('apps.general.publish') as $key => $val)
@@ -217,9 +215,7 @@
                         <div class="row mb-2">
                             <div class="col-md-12 position-relative">
                                 <div class="uk-flex uk-flex-space-between">
-                                    <label class="form-label">Tiêu đề SEO
-                                        <span class="text-danger fs-10"> (*)</span>
-                                    </label>
+                                    <label class="form-label">Tiêu đề SEO</label>
                                     <label>12 kí tự</label>
                                 </div>
                                 <input class="form-control"
@@ -233,7 +229,7 @@
                         <div class="row mb-2">
                             <div class="col-md-12 position-relative">
                                 <div class="uk-flex uk-flex-space-between">
-                                    <label class="form-label">Từ khóa SEO<span class="text-danger fs-10"> (*)</span></label>
+                                    <label class="form-label">Từ khóa SEO</label>
                                     <label>12 kí tự</label>
                                 </div>
                                 <input class="form-control mb-2"
@@ -246,7 +242,7 @@
                         <div class="row mb-2">
                             <div class="col-md-12 position-relative">
                                 <div class="uk-flex uk-flex-space-between">
-                                    <label class="form-label">Mô tả SEO <span class="text-danger fs-10"> (*)</span></label>
+                                    <label class="form-label">Mô tả SEO</label>
                                     <label>12 kí tự</label>
                                 </div>
                                 <textarea

@@ -39,6 +39,18 @@ return [
             ],
         ],
         [
+            'dropdown' => 'sidebarOrder',
+            'title' => 'QL đơn hàng',
+            'icon' => 'fa fa-shopping-bag menu-icon',
+            'subModule' => [
+                [
+                    'dropdown' => 'sidebarOrders',
+                    'title' => 'QL Đơn hàng',
+                    'route' => 'order.index',
+                ],
+            ],
+        ],
+        [
             'dropdown' => 'sidebarCustomer',
             'title' => 'QL Khách hàng',
             'icon' => 'fa fa-user menu-icon',
@@ -127,6 +139,22 @@ return [
                 [
                     'title' => 'QL Widget',
                     'route' => 'widget.index'
+                ],
+                [
+                    'title' => 'Cấu hình hệ thống',
+                    'route' => 'system.index'
+                ],
+
+            ]
+        ],
+        [
+            'dropdown' => 'menu',
+            'title' => 'QL Menu',
+            'icon' => 'fa fa-bars',
+            'subModule' => [
+                [
+                    'title' => 'Cài đặt menu',
+                    'route' => 'menu.index'
                 ],
 
             ]

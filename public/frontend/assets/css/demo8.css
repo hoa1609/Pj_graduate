@@ -10,133 +10,6 @@
 /*-------------------------------------------------
   Fonts Family & Style CSS
 ---------------------------------------------------*/
-<<<<<<< HEAD
-@font-face {
-  font-family: "Poppins, sans-serif";
-  src: url("../fonts/poppins/Poppins-Thin.ttf") format("truetype");
-  font-weight: 100;
-  font-style: normal;
-}
-@font-face {
-  font-family: "Poppins, sans-serif";
-  src: url("../fonts/poppins/Poppins-ExtraLight.ttf") format("truetype");
-  font-weight: 200;
-  font-style: normal;
-}
-@font-face {
-  font-family: "Poppins, sans-serif";
-  src: url("../fonts/poppins/Poppins-Light.ttf");
-  font-weight: 300;
-  font-style: normal;
-}
-@font-face {
-  font-family: "Poppins, sans-serif";
-  src: url("../fonts/poppins/Poppins-Regular.ttf") format("truetype");
-  font-weight: 400;
-  font-style: normal;
-}
-@font-face {
-  font-family: "Poppins, sans-serif";
-  src: url("../fonts/poppins/Poppins-Medium.ttf") format("truetype");
-  font-weight: 500;
-  font-style: normal;
-}
-@font-face {
-  font-family: "Poppins, sans-serif";
-  src: url("../fonts/poppins/Poppins-SemiBold.ttf") format("truetype");
-  font-weight: 600;
-  font-style: normal;
-}
-@font-face {
-  font-family: "Poppins, sans-serif";
-  src: url("../fonts/poppins/Poppins-Bold.ttf") format("truetype");
-  font-weight: 700;
-  font-style: normal;
-}
-@font-face {
-  font-family: "Poppins, sans-serif";
-  src: url("../fonts/poppins/Poppins-ExtraBold.ttf") format("truetype");
-  font-weight: 800;
-  font-style: normal;
-}
-@font-face {
-  font-family: "Poppins, sans-serif";
-  src: url("../fonts/poppins/Poppins-Black.ttf") format("truetype");
-  font-weight: 900;
-  font-style: normal;
-}
-@font-face {
-  font-family: "Fjalla One";
-  src: url("../fonts/fjalla/FjallaOne-Regular.ttf") format("truetype");
-}
-@font-face {
-  font-family: "Montserrat";
-  src: url("../fonts/montserrat/Montserrat-Regular.ttf") format("truetype");
-  font-weight: 400;
-  font-style: normal;
-}
-@font-face {
-  font-family: "Montserrat";
-  src: url("../fonts/montserrat/Montserrat-SemiBold.ttf") format("truetype");
-  font-weight: 700;
-  font-style: normal;
-}
-@font-face {
-  font-family: "Montserrat";
-  src: url("../fonts/montserrat/Montserrat-Bold.ttf") format("truetype");
-  font-weight: 800;
-  font-style: normal;
-}
-@font-face {
-  font-family: "Montserrat";
-  src: url("../fonts/montserrat/Montserrat-ExtraBold.ttf") format("truetype");
-  font-weight: 900;
-  font-style: normal;
-}
-@font-face {
-  font-family: "Oswald";
-  src: url("../fonts/oswald/Oswald-ExtraLight.ttf") format("truetype");
-  font-weight: 200;
-  font-style: normal;
-}
-@font-face {
-  font-family: "Oswald";
-  src: url("../fonts/oswald/Oswald-Light.ttf") format("truetype");
-  font-weight: 300;
-  font-style: normal;
-}
-@font-face {
-  font-family: "Oswald";
-  src: url("../fonts/oswald/Oswald-Regular.ttf");
-  font-weight: 400;
-  font-style: normal;
-}
-@font-face {
-  font-family: "Oswald";
-  src: url("../fonts/oswald/Oswald-Medium.ttf") format("truetype");
-  font-weight: 500;
-  font-style: normal;
-}
-@font-face {
-  font-family: "Oswald";
-  src: url("../fonts/oswald/Oswald-SemiBold.ttf") format("truetype");
-  font-weight: 600;
-  font-style: normal;
-}
-@font-face {
-  font-family: "Oswald";
-  src: url("../fonts/oswald/Oswald-Bold.ttf") format("truetype");
-  font-weight: 700;
-  font-style: normal;
-}
-/*-------------------------------------------------
-  Helper Class
----------------------------------------------------*/
-body {
-  margin: 0 auto;
-  background-color: #ffffff;
-  font-family: "Poppins, sans-serif";
-=======
 
 
 
@@ -147,7 +20,6 @@ body {
   margin: 0 auto;
   background-color: #ffffff;
   font-family: "Roboto", sans-serif;
->>>>>>> c19ccca6a0bd79bf048ff87ad1a93ed0b5a650b8
   font-size: 14px;
   font-weight: 400;
   font-style: normal;
@@ -2535,15 +2407,6 @@ textarea.form-control.is-invalid {
   pointer-events: none;
   opacity: 0.65;
 }
-<<<<<<< HEAD
-
-.btn-primary {
-  color: #ffffff;
-  background-color: #3474d4;
-  border-color: #3474d4;
-}
-=======
->>>>>>> c19ccca6a0bd79bf048ff87ad1a93ed0b5a650b8
 .btn-primary:hover {
   color: #ffffff;
   background-color: #555;
@@ -7567,10 +7430,6 @@ textarea.form-control.is-invalid {
 
 .pb-10 {
   padding-bottom: 50px;
-}
-
-.pl-0 {
-  padding-left: 0;
 }
 
 .pl-1 {
@@ -16007,16 +15866,10 @@ body {
   padding-bottom: 15px;
 }
 .section-title .ec-title {
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 600;
-  margin-bottom: 0;
   color: #222;
-  letter-spacing: 0.4px;
-  position: relative;
-  display: inline;
-  padding: 0;
   text-transform: capitalize;
-  line-height: 1;
 }
 
 .text-upper {
@@ -17952,11 +17805,7 @@ section.ec-instagram-section {
 }
 
 .ec-main-slider .swiper-container {
-<<<<<<< HEAD
-  border-radius: 50px;
-=======
   border-radius: 20px;
->>>>>>> c19ccca6a0bd79bf048ff87ad1a93ed0b5a650b8
 }
 .ec-main-slider .slide-1 {
   background-image: url("../images/main-slider-banner/20.jpg");
@@ -17964,22 +17813,6 @@ section.ec-instagram-section {
   background-repeat: no-repeat;
   background-size: cover;
 }
-<<<<<<< HEAD
-.ec-main-slider .slide-2 {
-  background-image: url("../images/main-slider-banner/21.jpg");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-.ec-main-slider .slide-3 {
-  background-image: url("../images/main-slider-banner/22.jpg");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-=======
-
->>>>>>> c19ccca6a0bd79bf048ff87ad1a93ed0b5a650b8
 .ec-main-slider * {
   direction: ltr;
 }
@@ -17990,16 +17823,6 @@ section.ec-instagram-section {
   bottom: 25px;
 }
 
-<<<<<<< HEAD
-.ec-slide-content {
-  width: 50%;
-  padding-left: 85px;
-  position: relative;
-  z-index: 9;
-}
-=======
-
->>>>>>> c19ccca6a0bd79bf048ff87ad1a93ed0b5a650b8
 .ec-slide-content .ec-slide-title {
   font-size: 55px;
   color: #222;
@@ -18066,13 +17889,8 @@ section.ec-instagram-section {
 }
 
 .main-slider-dot .swiper-pagination-bullet {
-<<<<<<< HEAD
-  width: 15px;
-  height: 15px;
-=======
   width: 10px;
   height: 10px;
->>>>>>> c19ccca6a0bd79bf048ff87ad1a93ed0b5a650b8
   display: inline-block;
   border-radius: 6px;
   opacity: 1;
@@ -18089,11 +17907,7 @@ section.ec-instagram-section {
 }
 .main-slider-dot .swiper-pagination-bullet.swiper-pagination-bullet-active {
   background-color: #ff909d;
-<<<<<<< HEAD
-  width: 30px;
-=======
   width: 40px;
->>>>>>> c19ccca6a0bd79bf048ff87ad1a93ed0b5a650b8
 }
 
 .main-slider-dot.dot-color-white .swiper-pagination-bullet:hover {
@@ -18523,19 +18337,24 @@ section.ec-instagram-section {
   border: 1px solid #eeeeee;
   cursor: pointer;
   overflow: hidden;
-  border-radius: 30px;
+  border-radius: 2px;
 }
 .ec-product-inner .ec-pro-image {
   position: relative;
-  overflow: hidden;
+  width: 100%; 
+  height: 100%; 
+  overflow: hidden; 
+  margin: 0 auto;
 }
 .ec-product-inner .ec-pro-image .image {
   position: relative;
   display: block;
   overflow: hidden;
-  pointer-events: none;
 }
 .ec-product-inner .ec-pro-image .image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; 
   z-index: 1;
   max-width: 100%;
   -webkit-transition: all 0.3s ease 0s;
@@ -18651,27 +18470,16 @@ section.ec-instagram-section {
 }
 .ec-product-inner .ec-pro-image .percentage {
   position: absolute;
-  z-index: 8;
   top: 15px;
   left: 15px;
   font-size: 13px;
   font-weight: 500;
-  line-height: 19px;
   padding: 0 7px;
   text-align: center;
   text-transform: uppercase;
   color: #ffffff;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  background-color: #46c389;
-  border-radius: 30px;
+  background-color: #c41e1e;
+  border-radius: 2px;
 }
 .ec-product-inner .ec-pro-image .ec-pro-actions {
   -webkit-transition: all 0.3s ease-in-out;
@@ -18748,17 +18556,15 @@ section.ec-instagram-section {
   position: relative;
 }
 .ec-product-inner:hover {
-  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
-  -webkit-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
-  -moz-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.05);
 }
 .ec-product-inner:hover .ec-pro-actions {
   opacity: 1;
   right: 10px;
 }
 .ec-product-inner:hover .ec-pro-image .image img {
-  -webkit-transform: scale(1.1);
-          transform: scale(1.1);
+  -webkit-transform: scale(1.04);
+          transform: scale(1.04);
 }
 .ec-product-inner:hover .ec-pro-image .image img:not(:last-child) {
   opacity: 0;
@@ -18789,8 +18595,6 @@ section.ec-instagram-section {
   text-transform: uppercase;
 }
 .ec-product-inner .ec-pro-content .ec-pro-rat-price {
-  margin-top: 5px;
-  margin-bottom: 15px;
   padding: 0 20px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -18803,15 +18607,14 @@ section.ec-instagram-section {
 .ec-product-inner .ec-pro-content .ec-pro-title {
   padding: 0 20px;
   font-size: 16px;
-  margin: 0 0 5px;
 }
 .ec-product-inner .ec-pro-content .ec-pro-title a {
   text-decoration: none;
   color: #777;
   display: block;
-  font-size: 13px;
+  font-size: 16px;
   line-height: 20px;
-  font-weight: 300;
+  font-weight: 400;
   letter-spacing: 0.85px;
   text-transform: capitalize;
 }
@@ -19393,10 +19196,9 @@ i.ecicon.eci-star.fill {
 /*-------------------------------------------------
     Special Section
 ---------------------------------------------------*/
-.ec-spe-section .ec-spe-products {
-  margin: 30px auto 0 auto;
-  border: 1px solid #eeeeee;
-  border-radius: 30px;
+.ec-spe-products {
+  display: block; /* Đảm bảo không bị ảnh hưởng bởi flex hoặc grid */
+  overflow: hidden; /* Quan trọng để tránh hiển thị lỗi */
 }
 .ec-spe-section .ec-spe-pro-inner {
   padding: 30px;
@@ -20404,9 +20206,9 @@ i.ecicon.eci-star.fill {
     right: -14px;
     top: 18%;
   }
-  .ec-spe-section .ec-spe-products {
+  /* .ec-spe-section .ec-spe-products {
     min-height: 406px;
-  }
+  } */
   .ec-test-outer {
     height: unset;
   }
@@ -21179,9 +20981,9 @@ i.ecicon.eci-star.fill {
         -ms-flex-pack: center;
             justify-content: center;
   }
-  .ec-spe-section .ec-spe-products {
+  /* .ec-spe-section .ec-spe-products {
     min-height: unset;
-  }
+  } */
   .ec-test-section .ec-test-desc {
     line-height: 1.5;
   }

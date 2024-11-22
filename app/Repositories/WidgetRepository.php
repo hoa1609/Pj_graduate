@@ -20,35 +20,16 @@ class WidgetRepository extends BaseRepository implements WidgetRepositoryInterfa
     ){
         $this->model = $model;
     }
+
+    public function getWidgetWhereIn(array $whereIn = [], $whereInField = 'keyword'){
+        return $this->model->where(
+            [
+                config('apps.general.defaultPublish')
+            ]
+        )
+        ->whereIn($whereInField, $whereIn)
+        ->orderByRaw("FIELD(keyword, '". implode("','", $whereIn) ."')")
+        ->get();
+    }
     
-    // public function userPagination(
-    //     array $column = ['*'], 
-    //     array $condition = [], 
-    //     int $perPage = 1,
-    //     array $extend = [],
-    //     array $orderBy = ['id', 'DESC'],
-    //     array $join = [],
-    //     array $relations = [],
-    // ){
-
-    //     $query = $this->model->select($column)->where(function($query) use ($condition){
-    //         if(isset($condition['keyword']) && !empty($condition['keyword'])){
-    //             $query->where('name', 'LIKE', '%'.$condition['keyword'].'%')
-    //                   ->orWhere('email', 'LIKE', '%'.$condition['keyword'].'%')
-    //                   ->orWhere('address', 'LIKE', '%'.$condition['keyword'].'%')
-    //                   ->orWhere('phone', 'LIKE', '%'.$condition['keyword'].'%');
-    //         }
-    //         if(isset($condition['publish']) && $condition['publish'] != 0){
-    //             $query->where('publish', '=', $condition['publish']);
-    //         }
-    //         return $query;
-    //     })->with('user_catalogues');
-        
-    //         if(!empty($join)){
-    //             $query->join(...$join);
-    //         }
-
-    //     return $query->paginate($perPage)
-    //                 ->withQueryString()->withPath(env('APP_URL').$extend['path']);
-    // }
 }

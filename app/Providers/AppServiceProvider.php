@@ -5,9 +5,12 @@ namespace App\Providers;
 use Dotenv\Validator;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
-// use Illuminate\Support\Facades\Validator;
-// use Carbon\Carbon;
-// use DateTime;
+use App\Http\Controllers\ViewComposers\SystemComposer;
+use App\Http\Controllers\ViewComposers\MenuComposer;
+use App\Models\Language;
+use Carbon\Carbon;
+use DateTime;
+
 class AppServiceProvider extends ServiceProvider
 {
 
@@ -62,6 +65,10 @@ class AppServiceProvider extends ServiceProvider
         'App\Services\Interfaces\ProductVariantAttributeServiceInterface' => 'App\Services\ProductVariantAttributeService',
         'App\Repositories\Interfaces\ProductVariantAttributeRepositoryInterface' =>'App\Repositories\ProductVariantAttributeRepository',
 
+        /* ProductVariant */
+        'App\Services\Interfaces\ProductVariantServiceInterface' => 'App\Services\ProductVariantService',
+        'App\Repositories\Interfaces\ProductVariantRepositoryInterface' =>'App\Repositories\ProductVariantRepository',
+
         /* router */
         'App\Services\Interfaces\RouterServiceInterface' => 'App\Services\RouterService',
         'App\Repositories\Interfaces\RouterRepositoryInterface' => 'App\Repositories\RouterRepository',
@@ -70,6 +77,17 @@ class AppServiceProvider extends ServiceProvider
         'App\Repositories\Interfaces\ProvinceRepositoryInterface' => 'App\Repositories\ProvinceRepository',
         'App\Repositories\Interfaces\DistrictRepositoryInterface' => 'App\Repositories\DistrictRepository',
 
+        /* menu */
+        'App\Services\Interfaces\MenuServiceInterface' => 'App\Services\MenuService',
+        'App\Repositories\Interfaces\MenuRepositoryInterface' => 'App\Repositories\MenuRepository',
+
+        /* system */
+        'App\Services\Interfaces\SystemServiceInterface' => 'App\Services\SystemService',
+        'App\Repositories\Interfaces\SystemRepositoryInterface' => 'App\Repositories\SystemRepository',
+
+        /* menu catalogue*/
+        'App\Services\Interfaces\MenuCatalogueServiceInterface' => 'App\Services\MenuCatalogueService',
+        'App\Repositories\Interfaces\MenuCatalogueRepositoryInterface' => 'App\Repositories\MenuCatalogueRepository',
         /* Promotion */
        'App\Services\Interfaces\PromotionServiceInterface' => 'App\Services\PromotionService',
         'App\Repositories\Interfaces\PromotionRepositoryInterface' =>'App\Repositories\PromotionRepository',
@@ -89,6 +107,10 @@ class AppServiceProvider extends ServiceProvider
         // widget
         'App\Services\Interfaces\WidgetServiceInterface' => 'App\Services\WidgetService',
         'App\Repositories\Interfaces\WidgetRepositoryInterface' =>'App\Repositories\WidgetRepository',
+
+        /* Order */
+         'App\Services\Interfaces\OrderServiceInterface' => 'App\Services\OrderService',
+         'App\Repositories\Interfaces\OrderRepositoryInterface' =>'App\Repositories\OrderRepository',
     ];
 
     public function register(): void
@@ -103,15 +125,30 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+
+        $locale = app()->getLocale();
+        $language = Language::where('canonical', $locale)->first();
+
+        view()->composer('frontend.homepage.layout', function($view) use ($language){
+
+            $composerClass = [
+                SystemComposer::class,
+                // MenuComposer::class,
+            ];
+            foreach($composerClass as $key => $val){
+                $composer = app()->make($val, ['language' => $language->id]);
+                $composer->composer($view);
+            }
+        });
         // Validator::extend('custom_date_format', function($attribute, $value, $parameters, $validator){
         //     return DateTime::createFromFormat('d/m/Y H:i', $value) !== false;
         // });
 
         // Validator::extend('custom_after', function($attribute, $value, $parameters, $validator){
         //     $starDate = Carbon::createFromFormat('d/m/Y H:i',$validator->getData()[$parameters[0]]) ;
-        //     $enDate = Carbon::createFromFormat('d/m/Y H:i', $value);
+        //     $endDate = Carbon::createFromFormat('d/m/Y H:i', $value);
 
-        //     return $enDate->greaterThan($starDate) !== false;
+        //     return $endDate->greaterThan($starDate) !== false;
         // });
 
         Schema::defaultStringLength(191);
