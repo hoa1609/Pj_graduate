@@ -36,7 +36,7 @@
                                         </div>
                                         <div class="row ec-blog-slider owl-carousel">
                                             @foreach ($widgets['best-seller']->object as $key => $val)
-                                                @include('frontend.homepage.home.component.product-item', ['product' => $val])
+                                                @include('frontend.component.product-item', ['product' => $val])
                                             @endforeach
                                         </div>
                                     </div>

@@ -77,8 +77,9 @@ class PromotionRepository extends BaseRepository implements PromotionRepositoryI
         ->whereIn('products.id', $productId)
         ->where(function ($query) {
             $query->whereDate('promotions.endDate', '>', now())
-              ->orWhereNull('promotions.endDate');
-            })
+                ->orWhereNull('promotions.endDate')
+                ->orWhere('promotions.neverEndDate', 'accept'); 
+        })
         ->groupBy(
             'products.id',
             'promotions.id',

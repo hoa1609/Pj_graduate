@@ -8,7 +8,7 @@
             let value = input.val()
             $('.meta-title').html(value)
         })
-     
+
        $('input[name=canonical]').on('keyup', function(){
             let input = $(this)
             let value = HT.removeUtf8(input.val())

@@ -72,7 +72,6 @@
 				nextEl: '.swiper-button-next',
 				prevEl: '.swiper-button-prev',
 			},
-			
 		});
 	}
 
@@ -106,15 +105,13 @@
 		});
 	}
 	
-	
-	
 
 	HT.wow = () => {
 		var wow = new WOW(
 			{
-			  boxClass:     'wow',      // animated element css class (default is wow)
-			  animateClass: 'animated', // animation css class (default is animated)
-			  offset:       0,          // distance to the element when triggering the animation (default is 0)
+			  boxClass:     'wow',      
+			  animateClass: 'animated', 
+			  offset:       0,          
 			  mobile:       true,       // trigger animations on mobile devices (default is true)
 			  live:         true,       // act on asynchronously loaded content (default is true)
 			  callback:     function(box) {
@@ -126,9 +123,7 @@
 			}
 		  );
 		  wow.init();
-
-
-	}// arrow function
+	}
 
 	HT.niceSelect = () => {
 		if($('.nice-select').length){
@@ -136,6 +131,20 @@
 		}
 		
 	}
+
+	HT.selectVariantProduct = () => {
+		if ($('.choose-attribute').length) {
+			$(document).on('click', '.choose-attribute', function (e) {
+				e.preventDefault();
+				let _this = $(this);
+				let attribute_id = _this.attr('data-attributeid');
+				let attribute_name = _this.text();
+				_this.addClass('active').siblings().removeClass('active');
+				_this.closest('.variant-item').find('span').html(attribute_name);
+			});
+		}
+	};
+	
 
 	$(document).ready(function(){
 		HT.wow()
@@ -145,6 +154,7 @@
 		/* CORE JS */
 		HT.swiper()
 		HT.niceSelect()		
+		HT.selectVariantProduct()
 	});
 
 })(jQuery);

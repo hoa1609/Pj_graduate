@@ -312,7 +312,7 @@ table strong {
 }
 
 .text-overflow {
-    width: 500px;
+    max-width: 350px;
     text-overflow: ellipsis;
     overflow: hidden;
     -webkit-line-clamp: 2;

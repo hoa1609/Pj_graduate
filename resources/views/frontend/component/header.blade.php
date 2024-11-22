@@ -155,7 +155,7 @@
     <!-- Header responsive Bottom  Start -->
     <div class="ec-header-bottom d-lg-none">
         <div class="container position-relative">
-            <div class="row ">
+            <div class="row">
 
                 <!-- Ec Header Logo Start -->
                 <div class="col">
@@ -186,7 +186,7 @@
                 <div class="col-md-12 align-self-center">
                     <div class="ec-main-menu">
                         <ul>
-                            <li><a href="index.html">Home</a></li>
+                            <li><a href="offer.html">home</a></li>
                             <li class="dropdown position-static"><a href="javascript:void(0)">Categories</a>
                                 <ul class="mega-menu d-block">
                                     <li class="d-flex">

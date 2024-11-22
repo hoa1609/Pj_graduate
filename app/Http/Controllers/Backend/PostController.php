@@ -23,7 +23,7 @@ class PostController extends Controller{
         PostRepository $postRepository,
     ){
         $this->middleware(function($request, $next){
-            $locale = app()->getLocale(); 
+            $locale = app()->getLocale(); // vn en
             $language = Language::where('canonical', $locale)->first();
             $this->language = $language ? $language->id : 1;
             $this->initialize();
@@ -31,12 +31,12 @@ class PostController extends Controller{
         });
 
         $this->postService = $postService;
-        $this->postRepository = $postRepository;     
+        $this->postRepository = $postRepository;   
+        $this->initialize();  
     }
 
 
-    public function index(Request $request){
-        $this->authorize('modules', 'post.index');
+    public function index(Request $request){$this->authorize('modules', 'post.index');
 
         $config = $this->configIndex();
         $perPage = $request->integer('perpage');
@@ -71,9 +71,9 @@ class PostController extends Controller{
 
     public function store(PostRequest $request){
         if ($this->postService->create($request, $this->language)) {
-            return redirect()->route('post.index')->with('success', 'Thêm nhóm thành viên thành công !');
+            return redirect()->route('post.index')->with('success', 'Thêm nhóm bản ghi thành công !');
         }
-        return redirect()->route('post.index')->with('error', 'Thêm nhóm thành viên thất bại !');
+        return redirect()->route('post.index')->with('error', 'Thêm nhóm bản ghi thất bại !');
     }
 
 
@@ -110,19 +110,19 @@ class PostController extends Controller{
 
     public function update($id, UpdatePostRequest $request){
         if ($this->postService->update($id, $request, $this->language)) {
-            return redirect()->route('post.index')->with('success', 'Cập nhập nhóm thành viên thành công !');
+            return redirect()->route('post.index')->with('success', 'Cập nhập nhóm bản ghi thành công !');
         }
-        return redirect()->route('post.index')->with('error', 'Cập nhập nhóm thành viên thất bại !');
+        return redirect()->route('post.index')->with('error', 'Cập nhập nhóm bản ghi thất bại !');
     }
 
     
     public function destroy($id){
         $this->authorize('modules', 'post.destroy');
         if ($this->postService->destroy($id, $this->language)) {
-            return redirect()->route('post.index')->with('success', 'Xóa nhóm thành viên thành công!');
+            return redirect()->route('post.index')->with('success', 'Xóa nhóm bản ghi thành công!');
         }
 
-        return redirect()->route('post.index')->with('error', 'Xóa nhóm thành viên thất bại!');
+        return redirect()->route('post.index')->with('error', 'Xóa nhóm bản ghi thất bại!');
     }
 
     private function initialize(){
