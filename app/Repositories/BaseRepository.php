@@ -237,7 +237,7 @@ class BaseRepository implements BaseRepositoryInterface
             $query->join($model.'_catalogue_'.$model.' as tb2', 'tb2.'.$model.'_id', '=', $model.'s.id')
             ->whereIn('tb2.'.$model.'_catalogue_id', $catIds)
             ->orderBy('order', 'desc')
-            ->limit(8)
+            ->limit(10)
             ->get();
 
         return $query->get();

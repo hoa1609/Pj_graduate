@@ -2,7 +2,7 @@
 <section class="section ec-product-tab section-space-p">
     <div class="container">
         <div class="col-lg-12 col-md-12">
-            <div class="row space-t-50">
+            <div class="row">
                 <div class="col-md-12">
                     <div class="section-title">
                         <h2 class="ec-title">sản phẩm bán chạy</h2>

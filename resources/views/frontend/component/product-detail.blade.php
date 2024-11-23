@@ -31,7 +31,7 @@
         @endif
         <div class="col-md-7 col-sm-12 col-xs-12">
             <div class="quickview-pro-content">
-                <h5 class="ec-quick-title"><a href="product-left-sidebar.html">{{ $name }}</a></h5>
+                <h5 class="ec-quick-title product-main-title">{{ $name }}</h5>
                 <div class="ec-quickview-rating">
                     <i class="ecicon eci-star fill"></i>
                     <i class="ecicon eci-star fill"></i>
@@ -56,3 +56,6 @@
         </div>
     </div>
 </div>
+
+<input type="hidden" class="attributeCatalogue" value="{{ json_encode($attributeCatalogue) }}">
+<input type="hidden" class="productCanonical" value="{{ write_url($product->languages->first()->pivot->canonical) }}">

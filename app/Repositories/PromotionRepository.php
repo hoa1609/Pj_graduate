@@ -88,7 +88,53 @@ class PromotionRepository extends BaseRepository implements PromotionRepositoryI
             'promotions.maxDiscountValue',
             'products.price'
         )
-        ->get()->toArray()
-        ;
+        ->get()->toArray();
+    }
+
+
+    public function findPromotionByVariantUuid($uuid = ''){
+        return $this->model->select(
+            'promotions.id as promotion_id',
+            'promotions.discountValue',
+            'promotions.discountType',
+            'promotions.maxDiscountValue',
+        )
+        ->selectRaw(
+            "
+                MAX(
+                    IF(promotions.maxdiscountValue != 0,
+                        LEAST(
+                            CASE
+                            WHEN discountType = 'cash' THEN discountValue 
+                            WHEN discountType = 'percent' THEN pv.price * discountValue / 100
+                            ELSE 0
+                            END,
+                            promotions.maxDiscountValue
+                        ),
+                            CASE
+                            WHEN discountType = 'cash' THEN discountValue
+                            WHEN discountType = 'percent' THEN pv.price * discountValue / 100
+                            ELSE 0
+                            END
+                    )
+                ) as discount
+            "
+        )
+        ->join('promotion_product_variant as ppv', 'ppv.promotion_id', '=', 'promotions.id')
+        ->join('product_variants as pv', 'pv.uuid', '=', 'ppv.variant_uuid')
+        ->where('promotions.publish', 2)
+        ->where('ppv.variant_uuid', $uuid)
+        ->where(function ($query) {
+            $query->whereDate('promotions.endDate', '>', now())
+                ->orWhereNull('promotions.endDate')
+                ->orWhere('promotions.neverEndDate', 'accept'); 
+        })
+        ->groupBy(
+            'promotions.id', 
+            'promotions.discountValue', 
+            'promotions.discountType', 
+            'promotions.maxDiscountValue'
+        )
+        ->get();
     }
 }

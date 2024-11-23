@@ -156,7 +156,7 @@
 			}
 		})
 
-		if (flag) {
+		if(flag) {
 			$.ajax({
 				url: 'ajax/product/loadVariant',
 				type: 'GET',
@@ -167,39 +167,61 @@
 				},
 				dataType: 'json',
 				beforeSend: function () {
-					// Bạn có thể thêm loading spinner ở đây nếu cần
+					
 				},
 				success: function (res) {
 					let album = res.variant.album.split(','); 
-					HT.setupVariantGallery(album);
+					HT.setVariantPrice(res)
+					// HT.setupVariantGallery(album);
+					HT.setupVariantUrl(res, attribute_id);
 				},
 				error: function () {
-					alert('Có lỗi xảy ra khi tải dữ liệu.');
 				}
 			});
 		}
+	};
+
+	HT.setupVariantUrl = (res, attribute_id) => {
+		let queryString = '?attribute_id=' + attribute_id.join(',')
+		let productCanonical = $('.productCanonical').val()
+		productCanonical = productCanonical + queryString
+		let stateObject = { attribute_id: attribute_id };
+		history.pushState(stateObject, "Page Title", productCanonical);
+
+		console.log(productCanonical)
 	}
 
+	HT.setVariantPrice = (res) =>{
+		$('.quickview-pro-content .ec-price').html(res.variantPrice.html)
+	}
+
+	// để test lai sao
 	// HT.setupVariantGallery = (gallery) => {
 	// 	let html = `
-	// 		<div class="qty-product-cover"></div>
-
-	// 			<div class="qty-slide">
-	// 				<img class="img-responsive" src="${val}" alt="">
-	// 			</div>
+	// 		<div class="qty-product-cover">
+	// 			${gallery.map(val => `
+	// 				<div class="qty-slide">
+	// 					<img class="img-responsive" src="${val}" alt="">
+	// 				</div>
+	// 			`).join('')}
 	// 		</div>
 	// 		<div class="qty-nav-thumb">
-	// 			<div class="qty-slide-thumb">
-	// 				<img class="img-thumb" src="${val}" alt="">
-	// 			</div>
+	// 			${gallery.map(val => `
+	// 				<div class="qty-slide-thumb">
+	// 					<img class="img-thumb" src="${val}" alt="">
+	// 				</div>
+	// 			`).join('')}
 	// 		</div>
 	// 	`;
 	// 	document.querySelector('.gallery-container').innerHTML = html;
 	// };
-	
-	
-	
-	
+
+	HT.loadProductVariant = () => {
+		let attributeCatalogue = JSON.parse($('.attributeCatalogue').val())
+		if(attributeCatalogue.length){
+			HT.selectVariantProduct()
+		}
+	}
 
 
 
@@ -213,6 +235,7 @@
 		HT.swiper()
 		HT.niceSelect()		
 		HT.selectVariantProduct()
+		HT.loadProductVariant()
 	});
 
 })(jQuery);

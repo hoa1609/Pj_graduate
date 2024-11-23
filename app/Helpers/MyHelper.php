@@ -44,7 +44,7 @@ if (!function_exists('image')) {
 
 if (!function_exists('getPercent')) {
     function getPercent($product = null, $discountValue = 0){
-         dd($product->price > 0) ? round($discountValue/$product->price*100) : 0;
+         return ($product->price > 0) ? round($discountValue/$product->price*100) : 0;
     }
 }
 
@@ -63,8 +63,6 @@ if (!function_exists('getPromotionPrice')) {
         return $priceSale;
     }
 }
-
-
 
 if (!function_exists('getPrice')) {
     function getPrice($product = null,){
@@ -87,7 +85,7 @@ if (!function_exists('getPrice')) {
         }
 
         $result['html'] .= '<span class="ec-price">';
-            $result['html'] .= '<span class="new-price">'.(($result['priceSale'] > 0) ? convert_price($result['priceSale'], true) : convert_price($result['price'], true)).'₫</span>';
+            $result['html'] .= '<span class="new-price text-danger">'.(($result['priceSale'] > 0) ? convert_price($result['priceSale'], true) : convert_price($result['price'], true)).'₫</span>';
             if($result['priceSale'] > 0){
                 $result['html'] .= '<span class="old-price">'.convert_price($result['price'], true).'₫</span>';
                 $result['html'] .= '</span>';
@@ -95,6 +93,43 @@ if (!function_exists('getPrice')) {
         return $result;
     }
 }
+
+
+
+if (!function_exists('getVariantPrice')) {
+    function getVariantPrice($variant, $variantPromotion) {
+        $result = [
+            'price' => $variant->price, 
+            'priceSale' => 0, 
+            'percent' => 0, 
+            'html' => '',
+        ];
+
+        if (!is_null($variantPromotion) && $variantPromotion->isNotEmpty()) { 
+            $promotion = $variantPromotion->first();
+
+            if ($promotion) {
+                $result['percent'] = ($promotion->discountType == 'percent') 
+                    ? $promotion->discountValue 
+                    : getPercent($variant, $promotion->discountValue);
+
+                $result['priceSale'] = getPromotionPrice(
+                    $variant->price, 
+                    $promotion->discountValue, 
+                    $promotion->discountType,
+                    $promotion->maxDiscountValue,
+                );
+            }
+        }
+        
+        $result['html'] .= '<span class="new-price text-danger">'.(($result['priceSale'] > 0) ? convert_price($result['priceSale'], true) : convert_price($result['price'], true)).'₫</span>';
+        if ($result['priceSale'] > 0) {
+            $result['html'] .= '<span class="old-price">'.convert_price($result['price'], true).'₫</span>';
+        }
+        return $result;
+    }
+}
+
 
 
 if (!function_exists('getReview')) {
