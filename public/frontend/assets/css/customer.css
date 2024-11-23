@@ -147,7 +147,6 @@ a[data-attributeid] {
 a[data-attributeid]:hover {
     color: #fff; 
     background-color: #e3e3e3b7; 
-    text-decoration: underline;
     cursor: pointer; 
 }
 .ec-pro-variation{
@@ -159,4 +158,14 @@ a[data-attributeid]:hover {
 }
 .qty-slide-thumb{
     margin: 0 10px;
+}
+.capitalize-star::first-letter {
+    text-transform: capitalize;
+}
+.choose-attribute.active {
+    color: rgb(27, 27, 27);        
+    font-weight: bold;
+    border: 1px solid #ee2525 !important;
+    background-color: #eaeaea7f; 
+    border-radius: 2px;  
 }

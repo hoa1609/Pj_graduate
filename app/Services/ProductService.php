@@ -166,15 +166,18 @@ class ProductService extends BaseService implements ProductServiceInterface
         return $combines;
     }
 
+    
     private function createVariantArray(array $payload = [], $product): array{
         $variant = [];
         if(isset($payload['variant']['sku']) && count($payload['variant']['sku']) ){
             foreach($payload['variant']['sku'] as $key => $val){
 
+                $vId = ($payload['productVariant']['id'][$key]) ?? '';
+                $productVariantId = sorString($vId);
                 $uuid = Uuid::uuid5(uuid::NAMESPACE_DNS, $product->id.', '.$payload['productVariant']['id'][$key]);
                 $variant[] = [
                     'uuid' => $uuid,
-                    'code' =>  ($payload['productVariant']['id'][$key]) ?? '',
+                    'code' => $productVariantId,
 
                     'sku' => $val,
                     'quantity' => ($payload['variant']['quantity'][$key]) ?? '',
@@ -187,7 +190,6 @@ class ProductService extends BaseService implements ProductServiceInterface
                 ];
             }
         }
-        // dd($variant);
         return $variant;
     }
 

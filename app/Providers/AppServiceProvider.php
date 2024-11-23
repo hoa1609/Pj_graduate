@@ -57,6 +57,10 @@ class AppServiceProvider extends ServiceProvider
         'App\Services\Interfaces\ProductVariantLanguageServiceInterface' => 'App\Services\ProductVariantLanguageService',
         'App\Repositories\Interfaces\ProductVariantLanguageRepositoryInterface' => 'App\Repositories\ProductVariantLanguageRepository',
 
+        /* product variant */
+        'App\Services\Interfaces\ProductVariantServiceInterface' => 'App\Services\ProductVariantService',
+        'App\Repositories\Interfaces\ProductVariantRepositoryInterface' => 'App\Repositories\ProductVariantRepository',
+
         /* slide */
         'App\Services\Interfaces\SlideServiceInterface' => 'App\Services\SlideService',
         'App\Repositories\Interfaces\SlideRepositoryInterface' =>'App\Repositories\SlideRepository',

@@ -291,6 +291,7 @@ if(!function_exists('cut_string_and_code')) {
         return $str;
     }
 }
+
 if (!function_exists('cutnchar')) {
     function cutnchar($str, $n) {
         if (strlen($str) <= $n) {
@@ -299,3 +300,14 @@ if (!function_exists('cutnchar')) {
         return substr($str, 0, $n) . '...';
     }
 }
+
+if (!function_exists('sorString')) {
+    function sorString($string = '') {
+        $extract = explode(',', $string);
+        $extract = array_map('trim', $extract);
+        sort($extract, SORT_NUMERIC);
+        $newArray = implode(',', $extract);
+        return $newArray;
+    }
+}
+
