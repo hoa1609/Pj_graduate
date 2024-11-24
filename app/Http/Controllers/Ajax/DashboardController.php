@@ -87,6 +87,7 @@ class DashboardController extends Controller
         $model = $request->input('model');
 
         $page = $request->input('page') ?? 1;
+        $keyword = ($request->string('keyword')) ?? null;
         // echo $page;die();
 
         $serviceInterfaceNamespace = '\App\Repositories\\' . ucfirst($model) . 'Repository';
@@ -100,7 +101,7 @@ class DashboardController extends Controller
         // Tạo instance của repository
         $serviceInstance = app($serviceInterfaceNamespace);
 
-        $arguments = $this->paginationArgument($model);
+        $arguments = $this->paginationArgument($model, $keyword);
 
         if (!method_exists($serviceInstance, 'pagination')) {
             Log::error("Pagination method does not exist in repository: {$serviceInterfaceNamespace}");
@@ -116,7 +117,7 @@ class DashboardController extends Controller
         return response()->json($object);
     }
 
-    private function paginationArgument(string $model = ''): array
+    private function paginationArgument(string $model = '', string $keyword): array
     {
         if (empty($model)) {
             throw new \InvalidArgumentException("Model cannot be empty.");
@@ -131,14 +132,16 @@ class DashboardController extends Controller
             $join[] = [$model . '_catalogue_' . $model . ' as tb3', $model . 's.id', '=', 'tb3.' . $model . '_id'];
         }
 
+        $condition = [
+            'where' => [
+                ['tb2.language_id', '=', $this->language ?? 'default_language_id'],
+            ],
+            'keyword' => $keyword
+        ];
         return [
             'select' => ['id', 'name', 'canonical'],
-            'condition' => [
-                'where' => [
-                    ['tb2.language_id', '=', $this->language ?? 'default_language_id'],
-                ]
-            ],
-            'perpage' => 1,
+            'condition' => $condition,
+            'perpage' => 5,
             'paginationConfig' => [
                 'path' => $model . '.index',
                 'groupBy' => ['id', 'name', 'canonical']

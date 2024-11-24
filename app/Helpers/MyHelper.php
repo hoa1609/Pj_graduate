@@ -3,8 +3,53 @@
 if (!function_exists('convert_price')) {
     function convert_price(string $price = '', $flag = false){
         return ($flag === false) ? str_replace('.','', $price) : number_format($price, 0, ',', '.');
+    function convert_price(string $price = ''){
+        return str_replace('.', '', $price);
+        }
     }
 }
+
+
+if (!function_exists('recursive_menu')) {
+    function recursive_menu($menus)
+    {
+        $html = '';
+
+        // Kiểm tra nếu menus có dữ liệu
+        if (count($menus)) {
+            $html .= "<ul class='dd-list'>"; // Mở thẻ <ul> cho menu cha
+
+            foreach ($menus as $menu) {
+                $itemId = $menu->id;
+                $itemName = $menu->languages->first()->pivot->name;
+                $itemUrl = route('menu.children', ['id' => $itemId]);
+
+                // Thêm thẻ <li> cho mỗi menu
+                $html .= "<li class='dd-item' data-id='$itemId'>";
+                $html .= "<div class='dd-handle'>";
+                $html .= "<span class='label label-info'><i class='fa fa-arrows'></i></span> $itemName";
+                $html .= "</div>";
+                $html .= "<a class='create-children-menu' href='$itemUrl'>Quản lý menu con</a>";
+                // Thêm nút "+" hoặc "-" dưới thẻ dd-item
+                if (count($menu->children)) {
+                    $html .= "<button class='expand-collapse-btn'>+</button>"; // Nút "+"
+                }
+                // Kiểm tra nếu menu có menu con
+                if (count($menu->children)) {
+                    // Thêm phần tử để chứa menu con, ban đầu ẩn đi
+                    $html .= "<div class='submenu-wrapper' style='display: none;'>";
+                    $html .= recursive_menu($menu->children);
+                    $html .= "</div>";
+                }
+                // Đóng thẻ <li>
+                $html .= "</li>";
+            }
+            $html .= "</ul>"; // Đóng thẻ <ul>
+        }
+        return $html;
+    }
+}
+
 
 if (!function_exists('convert_array')) {
     function convert_array($system = null, $keyword = '', $value = ''){
@@ -22,6 +67,7 @@ if (!function_exists('convert_array')) {
         return $temp;
     }
 }
+
 
 if (!function_exists('pre')) {
     function pre($data, $exit = false) {
@@ -48,6 +94,7 @@ if (!function_exists('getPercent')) {
     }
 }
 
+
 if (!function_exists('getPromotionPrice')) {
     function getPromotionPrice($priceMain = 0, $discountValue = 0, $discountType = '', $maxDiscountValue = 0) {
         $value = 0;
@@ -63,6 +110,7 @@ if (!function_exists('getPromotionPrice')) {
         return $priceSale;
     }
 }
+
 
 if (!function_exists('getPrice')) {
     function getPrice($product = null,){
@@ -264,13 +312,10 @@ if (!function_exists('convertArrayByKey')) {
             foreach ($fields as $field) {
                 if(is_array($object)){
                     $temp[$field][] = $value[$field];
-                }
-                else
-                {
+                }else{
                     $extract = explode('.',$field);
                     if(count($extract) == 2) {
                         $temp[$extract[0]][] =   $value->{$extract[1]}->first()->pivot->{$extract[0]};
-
                     }else {
                         $temp[$field][] = $value->{$field};
                     }
@@ -328,8 +373,8 @@ if(!function_exists('cut_string_and_code')) {
 }
 
 if (!function_exists('cutnchar')) {
-    function cutnchar($str, $n) {
-        if (strlen($str) <= $n) {
+    function cutnchar($str, $n){
+        if (strlen($str) <= $n){
             return $str; 
         }
         return substr($str, 0, $n) . '...';
@@ -345,4 +390,3 @@ if (!function_exists('sorString')) {
         return $newArray;
     }
 }
-

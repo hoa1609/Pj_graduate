@@ -221,8 +221,12 @@ Route::middleware(['admin', 'locale', 'backend_default_locale'])->group(function
         Route::get('create', [MenuController::class, 'create'])->name('menu.create');
         Route::post('store', [MenuController::class, 'store'])->name('menu.store');
         Route::get('edit/{id}', [MenuController::class, 'edit'])->name('menu.edit');
+        Route::get('{id}/editMenu}', [MenuController::class, 'editMenu'])->where(['id' => '[0-9]+'])->name('menu.editMenu');
         Route::post('update/{id}', [MenuController::class, 'update'])->name('menu.update');
-        Route::delete('destroy/{id}', [MenuController::class, 'destroy'])->name('menu.destroy');
+        Route::delete('{id}/delete', [MenuController::class, 'delete'])->where(['id' => '[0-9]+'])->name('menu.delete');
+        Route::delete('destroy/{id}', [MenuController::class, 'destroy'])->where(['id' => '[0-9]+'])->name('menu.destroy');
+        Route::get('{id}/children', [MenuController::class, 'children'])->where(['id' => '[0-9]+'])->name('menu.children');
+        Route::post('{id}/saveChildren', [MenuController::class, 'saveChildren'])->where(['id' => '[0-9]+'])->name('menu.saveChildren');
     });
     Route::group(['prefix' => 'source'], function (){
         Route::get('index', [SourceController::class, 'index'])-> name('source.index');
@@ -259,6 +263,7 @@ Route::middleware(['admin', 'locale', 'backend_default_locale'])->group(function
     Route::get('ajax/attribute/getAttribute', [AjaxAttributeController::class, 'getAttribute'])->name('ajax.attribute.getAttribute');
     Route::get('ajax/attribute/loadAttribute', [AjaxAttributeController::class, 'loadAttribute'])->name('ajax.attribute.loadAttribute');
     Route::post('ajax/menu/createCatalogue', [AjaxMenuController::class, 'createCatalogue'])->name('ajax.menu.createCatalogue');
+    Route::post('ajax/menu/drag', [AjaxMenuController::class, 'drag'])->name('ajax.menu.drag');
     Route::get('ajax/dashboard/getMenu', [AjaxDashboardController::class, 'getMenu'])->name('ajax.dashboard.getMenu');
 
 });
