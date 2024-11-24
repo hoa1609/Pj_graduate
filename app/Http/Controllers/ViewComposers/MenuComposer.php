@@ -9,30 +9,35 @@ class MenuComposer{
 
 
     public function __construct(
-        // MenuCatalogueRepository $menuCatalogueRepository,
+        MenuCatalogueRepository $menuCatalogueRepository,
         $language,
     ){
-        // $this->menuCatalogueRepository = $menuCatalogueRepository;
+        $this->menuCatalogueRepository = $menuCatalogueRepository;
         $this->language = $language;
-     }
-
+    }
 
 
     public function composer(View $view){
-
         $agrument = $this->agrument($this->language);
         $menuCatalogue = $this->menuCatalogueRepository->findByCondition(...$agrument);
-        // $menus = recursive($menuCatalogue->menus); //ham bên helper
 
-        // $view->with('menu', $menus);
+        $menus = [];
+        $htmlType = ['main-menu'];  //customer lại định dạng
+        if(count($menuCatalogue)){
+            foreach($menuCatalogue as $key => $val){
+                $type = (in_array($val->keyword, $htmlType)) ? 'html' : 'array';
+                $menus[$val->keyword] = frontend_recursive_menu(recursive($val->first()->menus), 0, 1, $type); 
+            }
+        }
+        $view->with('menu', $menus);
     }
 
     private function agrument($language){
         return [
-            'condition' => [
-                    ['keyword', '=', 'main_menu']
-                ],
-            'flag' => false,
+            // 'condition' => [
+            //         ['keyword', '=', 'main-menu']
+            // ],
+            'flag' => true,
             'relation' => [
                 'menus' => function($query) use ($language){
                     $query->orderBy('order', 'desc');

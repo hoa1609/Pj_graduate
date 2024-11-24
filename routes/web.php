@@ -223,7 +223,7 @@ Route::middleware(['admin', 'locale', 'backend_default_locale'])->group(function
         Route::get('edit/{id}', [MenuController::class, 'edit'])->name('menu.edit');
         Route::get('{id}/editMenu}', [MenuController::class, 'editMenu'])->where(['id' => '[0-9]+'])->name('menu.editMenu');
         Route::post('update/{id}', [MenuController::class, 'update'])->name('menu.update');
-        Route::delete('{id}/delete', [MenuController::class, 'delete'])->where(['id' => '[0-9]+'])->name('menu.delete');
+        Route::get('{id}/delete', [MenuController::class, 'delete'])->where(['id' => '[0-9]+'])->name('menu.delete');
         Route::delete('destroy/{id}', [MenuController::class, 'destroy'])->where(['id' => '[0-9]+'])->name('menu.destroy');
         Route::get('{id}/children', [MenuController::class, 'children'])->where(['id' => '[0-9]+'])->name('menu.children');
         Route::post('{id}/saveChildren', [MenuController::class, 'saveChildren'])->where(['id' => '[0-9]+'])->name('menu.saveChildren');

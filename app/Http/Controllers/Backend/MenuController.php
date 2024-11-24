@@ -131,6 +131,7 @@ class MenuController extends Controller
 
     public function children($id){
         $this->authorize('modules', 'menu.create');
+        $config = $this->configStore();
         $language = $this->language;
         $menu = $this->menuRepository->findById($id, ['*'], ['languages' => function ($query) use ($language) {
             $query->where('language_id', $language);
@@ -163,6 +164,7 @@ class MenuController extends Controller
 
     public function editMenu($id){
         $this->authorize('modules', 'menu.update');
+        $config = $this->configStore();
         $language = $this->language;
         $menus = $this->menuRepository->findByCondition([
             ['menu_catalogue_id', '=', $id],

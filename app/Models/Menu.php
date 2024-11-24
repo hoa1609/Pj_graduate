@@ -29,12 +29,7 @@ class Menu extends Model
     public function children(){
         return $this->hasMany(Menu::class, 'parent_id');
     }
-
-    //hòa
-    public function menu_catalogues(){
-        return $this->belongsTo(MenuCatalogue::class, 'menu_catalogue_id', 'id');
-    }
-
+   
     public function languages(){
         return $this->belongsToMany(Language::class, 'menu_language', 'menu_id', 'language_id')
             ->withPivot(
@@ -43,6 +38,11 @@ class Menu extends Model
                 'name',
                 'canonical',
             )->withTimestamps();
+    }
+
+     //hòa
+     public function menu_catalogues(){
+        return $this->belongsTo(MenuCatalogue::class, 'menu_catalogue_id', 'id');
     }
 
 }

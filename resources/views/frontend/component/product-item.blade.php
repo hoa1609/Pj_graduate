@@ -1,11 +1,12 @@
 @php
     $name = $product->languages->first()->pivot->name;
-    $canonical = write_url($product->languages->first()->pivot->canonical);
+    $canonical = write_url($product->languages->first()->pivot->canonical, true, true);
     $image = image($product->image);
     $price = getPrice($product);
     $catName = $product->product_catalogues->first()->languages->first()->pivot->name;
     $review = getReview($product);
 @endphp
+
 <div class="ec-product-inner">
     <div class="ec-pro-image-outer">
         <div class="ec-pro-image">

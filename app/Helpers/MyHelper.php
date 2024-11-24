@@ -252,7 +252,7 @@ if (!function_exists('renderSystemSelect')) {
 }
 
 if(!function_exists('write_url')){
-    function write_url($canonical = null, bool $fullDomain = true, $suffix = true){
+    function write_url($canonical = null, bool $fullDomain = true, $suffix = false){
         $canonical = ($canonical) ?? '';
         if(strpos($canonical, 'http') !== false){
             return $canonical;
@@ -275,10 +275,33 @@ if(!function_exists('seo')){
 }
 
 
-if(!function_exists('frontend_recursive_menu')){
-    function frontend_recursive_menu($data, $parentId = 0){
+if (!function_exists('frontend_recursive_menu')) {
+    function frontend_recursive_menu($data, $parentId = 0, $count = 1, $type = 'html') {
+        $html = '';
+        if (count($data) && !is_null($data) && isset($data)){
+            if($type == 'html'){
+                foreach ($data as $key => $val) {
+                    $name = $val['item']->languages->first()->pivot->name;
+                    $canonical = write_url($val['item']->languages->first()->pivot->canonical, true, true);
+    
+                    $ulClass = ($count > 1) ? 'menu-level--' . ($count) : '';
+    
+                    $html .= '<li class="dropdown">';
+                    $html .= '<a href="' . $canonical . '" title="' . $name . '">' . $name . '</a>';
+                    if (count($val['children'])) {
+                        $html .= '<ul class="sub-menu position-static ' . $ulClass . '">';
+                        $html .= frontend_recursive_menu($val['children'], $val['item']->parent_id, $count + 1, $type);
+                        $html .= '</ul>';
+                    }
+                    $html .= '</li>';
+                }
+                return $html;
+            }
+        }
+        return $data;
     }
 }
+
 
 
 
@@ -346,22 +369,21 @@ if (!function_exists('renderQuickBuy')) {
 
 
 if (!function_exists('recursive')) {
-    function recursive($categories, $parentId = 0) {
-        $result = [];
-        foreach ($categories as $category) {
-            if ($category->parent_id == $parentId) {
-                $children = recursive($categories, $category->id);
-                $item = [
-                    'item' => $category,  
-                    'children' => $children,  
-                ];
-                $result[] = $item;
+    function recursive($data, $parentId = 0) {
+        $temp = [];
+        if(!is_null($data) && count($data)){
+            foreach ($data as $key => $val) {
+                if ($val->parent_id == $parentId) {
+                    $temp[] = [
+                        'item' => $val,  
+                        'children' => recursive($data, $val->id),  
+                    ];
+                }
             }
         }
-        return $result;
+        return $temp;
     }
 }
-
 
 if(!function_exists('cut_string_and_code')) {
     function cut_string_and_code($str = null, $n = 200){
