@@ -43,7 +43,7 @@
                                 </div>
                             </div>
                         </td>
-                        @include('backend.dashboard.component.languageTd', ['model' => $post, 'modeling' => 'Post']);
+                        @include('backend.dashboard.component.languageTd', ['model' => $post, 'modeling' => 'Post'])
                         <td>
                             <div class="form-switch">
                                 <input class="form-check-input status js-switch-{{ $post-> id }}" 
