@@ -5,6 +5,7 @@
 <script src="backend/assets/libs/jsvectormap/maps/world.js"></script>
 <script src="backend/assets/js/app.js"></script>
 <script src="backend/assets/library/library.js"></script>
+
 {{-- <script src="backend/assets/library/menu.js"></script> --}}
 
 

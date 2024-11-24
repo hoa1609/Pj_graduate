@@ -15630,11 +15630,6 @@ h2, h3, h4, h5, h6 {
   color: #777;
 }
 
-.modal-backdrop {
-  background-color: rgba(0, 0, 0, 0.5);
-  opacity: 1 !important;
-}
-
 /*----  Particles  ----*/
 .particles {
   overflow: hidden;
@@ -16160,12 +16155,7 @@ h2, h3, h4, h5, h6 {
 /*-------------------------------------------------
   Breadcrumb Style CSS
 ---------------------------------------------------*/
-.ec-breadcrumb {
-  padding: 15px 0;
-  background-color: #f7f7f7;
-  border-top: 1px solid #eeeeee;
-  border-bottom: 1px solid #eeeeee;
-}
+
 .ec-breadcrumb .ec-breadcrumb-title {
   text-decoration: none;
   color: #444444;
@@ -16631,7 +16621,6 @@ h2, h3, h4, h5, h6 {
   margin-right: 22px;
 }
 .ec-main-menu ul li a {
-  height: 100%;
   font-size: 14px;
   line-height: 50px;
   font-weight: 600;
@@ -16931,20 +16920,6 @@ h2, h3, h4, h5, h6 {
   margin-top: 0;
   opacity: 1;
   visibility: visible;
-}
-.ec-main-menu > ul > li > a:before {
-  content: "";
-  position: absolute;
-  top: auto;
-  bottom: 0;
-  height: 2px;
-  width: 0;
-  margin: 0 auto;
-  background: transparent;
-  left: 0;
-  right: auto;
-  -webkit-transition: all 0.3s ease 0s;
-  transition: all 0.3s ease 0s;
 }
 .ec-main-menu > ul > li:hover > a:before {
   background: #3474d4;
@@ -17808,18 +17783,6 @@ button.btn-close.qty_close {
   position: relative;
   overflow: hidden;
   border: 1px solid #eeeeee;
-}
-.ec-product-inner .ec-pro-image .image {
-  position: relative;
-  display: block;
-  overflow: hidden;
-  pointer-events: none;
-}
-.ec-product-inner .ec-pro-image .image img {
-  z-index: 1;
-  max-width: 100%;
-  -webkit-transition: all 0.3s ease 0s;
-  transition: all 0.3s ease 0s;
 }
 .ec-product-inner .ec-pro-image .image img.hover-image {
   position: absolute;
@@ -19234,12 +19197,6 @@ div#ec_news_signup {
   display: block;
   line-height: 1.5;
   font-weight: 700;
-}
-.quickview-pro-content p {
-  font-size: 14px;
-  color: #212121;
-  margin: 0 0 12px;
-  font-weight: 600;
 }
 .quickview-pro-content p span {
   font-weight: 400;

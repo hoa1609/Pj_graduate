@@ -67,7 +67,6 @@
                 </div>
             </div>
 
-
             <div class="col-md-3 col-lg-3">
                 <div class="card">
                     <div class="card-body pt-10">
@@ -148,7 +147,7 @@
                             <div class="col-md-12 position-relative">
                                 <label class="form-label">Chọn ảnh đại diện</label>
                             </div>
-                            <span class="image img-cover image-target">
+                            <span class="image img-cover image-target" style="max-height: 100px">
                                 @php
                                     $image = old('image', $product->image ?? '');
                                     $image = $image ?: 'backend/assets/images/no-img.jpg';
@@ -187,6 +186,7 @@
                 </div>
             </div>
         </div>
+        @include('backend.dashboard.component.album')
         @include('backend.product.product.component.variant')
         <div class="row justify-content-star">
             <div class="col-md-9 col-lg-9">

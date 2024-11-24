@@ -36,7 +36,7 @@ class PostCatalogueController extends Controller{
         $this->postCatalogueService = $postCatalogueService;
         $this->postCatalogueRepository = $postCatalogueRepository;
     }
-
+ 
 
     public function index(Request $request){
         $this->authorize('modules', 'post.catalogue.index');

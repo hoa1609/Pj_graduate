@@ -50,15 +50,31 @@ class OrderService extends BaseService implements OrderServiceInterface
     public function getOrderItemImage($order) {
         foreach ($order->products as $key => $val) {
             $uuid = $val->pivot->uuid;
-            if(is_null($order->uuid)){
+            if(!is_null($uuid)){
                 $variant = $this->productVariantRepository->findByCondition([
-                    ['uuid', '=', $order->uuid]
+                    ['uuid', '=', $uuid]
                 ]);
                 $variantImage = explode(',' ,$variant->album)[0] ?? null;
                 $val->image = $variantImage;
             }
         }
         return $order;
+    }
+
+    public function update($request)
+    {
+        DB::beginTransaction();
+        try{
+            $id =$request->input('id');
+            $payload =$request->input('payload');
+            $this->orderRepository->update($id, $payload );
+            DB::commit();
+            return true;
+        }catch(\Exception $e ){
+            DB::rollBack();
+            echo $e->getMessage();die();
+            return false;
+        }
     }
 
     private function paginateSelect(){

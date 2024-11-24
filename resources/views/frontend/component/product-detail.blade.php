@@ -1,0 +1,57 @@
+@php
+    $name = $product->languages->first()->pivot->name;
+    $canonical = write_url($product->languages->first()->pivot->canonical);
+    $image = image($product->image);
+    $price = getPrice($product);
+    $catName = $product->product_catalogues->first()->languages->first()->pivot->name;
+    $review = getReview($product);
+    $description = $product->languages->first()->pivot->description;
+    $attributeCatalogue = $product->attributeCatalogue;
+    $gallery = json_decode($product->album);
+@endphp
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-5 col-sm-12 col-xs-12">
+            <!-- Swiper -->
+            <div class="qty-product-cover">
+                @foreach ($gallery as $key =>$val)
+                <div class="qty-slide">
+                    <img class="img-responsive" src="{{ $val }}" alt="">
+                </div>
+                @endforeach
+            </div>
+            <div class="qty-nav-thumb">
+                @foreach ($gallery as $key => $val)
+                <div class="qty-slide-thumb">
+                    <img class="img-thumb" src="{{ $val }}" alt="">
+                </div>
+                @endforeach
+            </div>
+        </div>
+        <div class="col-md-7 col-sm-12 col-xs-12">
+            <div class="quickview-pro-content">
+                <h5 class="ec-quick-title"><a href="product-left-sidebar.html">{{ $name }}</a></h5>
+                <div class="ec-quickview-rating">
+                    <i class="ecicon eci-star fill"></i>
+                    <i class="ecicon eci-star fill"></i>
+                    <i class="ecicon eci-star fill"></i>
+                    <i class="ecicon eci-star fill"></i>
+                    <i class="ecicon eci-star"></i>
+                </div>
+
+                <div class="ec-quickview-desc">{!! $description !!}</div>
+                {!! $price['html'] !!}
+
+                @include('frontend.product.product.component.variant')
+                <div class="ec-quickview-qty">
+                    <div class="qty-plus-minus">
+                        <input class="qty-input" type="text" name="ec_qtybtn" value="1" />
+                    </div>
+                    <div class="ec-quickview-cart ">
+                        <button class="btn btn-primary">Add To Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -40,4 +40,20 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
             ->withQueryString()
             ->withPath(env('APP_URL') . $extend['path']);
     }
+
+    public function getOrderById($id)
+    {
+        return $this->model->select([
+            'orders.*',
+            'provinces.name as province_name',
+            'districts.name as district_name',
+            'wards.name as ward_name',
+        ]
+    )
+    ->leftJoin('provinces', 'orders.province_id', '=','provinces.code')
+    ->leftJoin('districts', 'orders.district_id', '=','districts.code')
+    ->leftJoin('wards', 'orders.ward_id', '=','wards.code')
+    ->with('products')
+    ->find($id);
+    }
 }

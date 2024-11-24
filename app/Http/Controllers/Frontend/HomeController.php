@@ -31,28 +31,39 @@ class HomeController extends FrontendController{
      }
   
 
-     public function index(){
-         $config = $this->config();
+    public function index(){
+        $config = $this->config();
 
-         $widgets = $this->widgetService->getWidget([
+        $widgets = $this->widgetService->getWidget([
             ['keyword' =>'category', 'countObject' => true],
             ['keyword' =>'product'],
             ['keyword' =>'other-product', 'children' => true, 'promotion' => true, 'object' => true],
             ['keyword' =>'best-seller'],
-         ], $this->language);
+        ], $this->language);
 
 
         $slides = $this->slideService->getSlide([SlideEnum::MAIN], $this->language);
+        $system = $this->system;
+        $seo = [
+            'meta_title' => $system['seo_meta_title'],
+            'meta_keyword' => $system['seo_meta_keyword'],
+            'meta_description' => $system['seo_meta_description'],
+            'canonical' => config('app.url'),
+        ];
         return view('frontend.homepage.home.index', compact(
             'config',
             'slides',
             'widgets',
+            'system',
+            'seo',
         ));
     }
 
 
     private function config(){
-        return [];
+        return [
+            'language' => $this->language,
+        ];
     }
 
 

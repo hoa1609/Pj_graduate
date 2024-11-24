@@ -27,6 +27,10 @@ class Product extends Model
         'variant',
     ];
 
+    protected $casts = [
+        'attribute' => 'json'
+    ];
+
     protected $table = 'products';
 
     public function languages(){

@@ -6,10 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Services\Interfaces\LanguageServiceInterface as LanguageService;
 use App\Repositories\Interfaces\LanguageRepositoryInterface as LanguageRepository;
 
+// use App\Repositories\Interfaces\PostCatalogueRepositoryInterface as PostCatalogueRepository;
+
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use App\Http\Requests\LanguageRequest;
 use App\Http\Requests\UpdateLanguageRequest;
+use App\Http\Requests\TranslateRequest;
 
 class LanguageController extends Controller{
 
@@ -93,8 +97,8 @@ class LanguageController extends Controller{
 
 
     public function destroy($id){
-        if ($this->languageService->destroy($id)) {
         $this->authorize('modules', 'language.destroy');
+        if ($this->languageService->destroy($id)) {
             return redirect()->route('language.index')->with('success', 'Xóa ngôn ngữ thành công !');
         }
         return redirect()->route('language.index')->with('error', 'Xóa ngôn ngữ thất bại !');
@@ -118,6 +122,55 @@ class LanguageController extends Controller{
                 'backend/assets/css/select2.min.css',
             ],
         ];
+    }
+    
+    public function translate($id = 0, $languageId = 0, $model = '') {
+        if (!session()->has('app_locale')) {
+            session(['app_locale' => 'tv']); // mặc định khi chưa chọn language là tiếng việt
+        }
+
+        $repositoryInstance = $this->repositoryInstance($model);
+        $languageInstance = $this->repositoryInstance('Language');
+        $currentLanguage = $languageInstance->findByCondition([
+            ['canonical', '=', session('app_locale')]
+        ]);
+
+        $method = 'get'.$model.'ById';
+
+        $object = $repositoryInstance->{$method}($id, $currentLanguage->id);
+        $objectTranslate = $repositoryInstance->{$method}($id, $languageId);
+        // dd($objectTranslate);
+        $this->authorize('modules', 'language.translate');
+        $option = [
+            'id' => $id,
+            'languageId' => $languageId,
+            'model' => $model,
+        ];
+        $config['seo'] = config('app.language');
+        $template = 'backend.language.translate';
+        return view('backend.dashboard.layout', compact(
+            'template',
+            'config',
+            'object',
+            'objectTranslate',
+            'option',
+        ));
+    }
+
+    public function storeTranslate(TranslateRequest $request) {
+        $option = $request->input('option');
+        if ($this->languageService->saveTranslate($option, $request)) { // bấm lưu thông tin dịch sẽ chạy vào hàm này
+            return redirect()->back()->with('success', 'Cập nhật bản dịch thành công');
+        }
+        return redirect()->back()>with('error', 'Có vấn đề xảy ra, hãy thử lại');
+    }
+
+    private function repositoryInstance($model) {
+        $repositoryNamespace = '\App\Repositories\\' . ucfirst($model) . 'Repository';
+        if (class_exists($repositoryNamespace)) {
+            $repositoryInstance = app($repositoryNamespace);
+        }
+        return $repositoryInstance ?? null;
     }
 
 }

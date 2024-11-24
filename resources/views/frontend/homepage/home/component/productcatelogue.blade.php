@@ -11,7 +11,7 @@
                                         $name = $val->languages->first()->pivot->name;
                                         $image = $val->image;
                                         $productCount = $val->products_count;
-                                        $canonical = write_url($val->languages->first()->pivot->canonical)
+                                        $canonical = write_url($val->languages->first()->pivot->canonical);
                                     @endphp
 
                                     <div class="ec_cat_content ec_cat_content_8">

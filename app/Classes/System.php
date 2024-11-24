@@ -13,8 +13,8 @@ class System{
                 'company' => ['type' => 'text', 'label' => 'Tên công ty'],
                 'barnd' => ['type' => 'text', 'label' => 'Tên thương hiệu'],
                 'slogan' => ['type' => 'text', 'label' => 'Slogan'],
-                'logo' => ['type' => 'images', 'label' => 'Logo website', 'title' =>
-                'click vào ô phía dưới để tải logo'],
+                'favicon' => ['type' => 'images', 'label' => 'Favicon'],
+                'logo' => ['type' => 'images', 'label' => 'Logo website'],
                 'copyright' => ['type' => 'text', 'label' => 'copyright'],
                 'website' => [
                     'type' =>'select',

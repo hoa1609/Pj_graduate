@@ -4240,14 +4240,6 @@ textarea.form-control.is-invalid {
   margin-bottom: -1px;
 }
 
-.pagination {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  padding-left: 0;
-  list-style: none;
-}
-
 .page-link {
   position: relative;
   display: block;
@@ -14633,20 +14625,7 @@ li {
   opacity: 1;
   visibility: visible;
 }
-.ec-main-menu > ul > li > a:before {
-  content: "";
-  position: absolute;
-  top: auto;
-  bottom: 0;
-  height: 2px;
-  width: 0;
-  margin: 0 auto;
-  background: transparent;
-  left: 0;
-  right: auto;
-  -webkit-transition: all 0.3s ease 0s;
-  transition: all 0.3s ease 0s;
-}
+
 .ec-main-menu > ul > li:hover > a:before {
   background: #ff909d;
   width: 100%;
@@ -15461,7 +15440,7 @@ body {
 }
 
 .section-space-mt {
-  margin-top: 40px;
+  margin-top: 20px;
 }
 
 .section-space-mb {
@@ -18635,13 +18614,13 @@ section.ec-instagram-section {
   color: #222;
   letter-spacing: 0.4px;
 }
-.ec-product-inner .ec-pro-content .ec-price span.new-price {
+.ec-price span.new-price {
   color: #222;
   font-weight: 700;
   font-size: 14px;
   margin-right: 7px;
 }
-.ec-product-inner .ec-pro-content .ec-price span.old-price {
+.ec-price span.old-price {
   font-size: 14px;
   text-decoration: line-through;
   color: #777;
@@ -18972,8 +18951,7 @@ i.ecicon.eci-star.fill {
 .quickview-pro-content p {
   font-size: 14px;
   color: #212121;
-  margin: 0 0 12px;
-  font-weight: 600;
+  font-weight: 400;
 }
 .quickview-pro-content p span {
   font-weight: 400;
@@ -18990,7 +18968,7 @@ i.ecicon.eci-star.fill {
   margin-bottom: 15px;
 }
 .quickview-pro-content .ec-quickview-desc {
-  margin-bottom: 10px;
+  margin-bottom: 25px;
   line-height: 24px;
   color: #777;
 }
@@ -21858,3 +21836,28 @@ i.ecicon.eci-star.fill {
   }
 }
 /*# sourceMappingURL=demo8.css.map */
+.ec-breadcrumb {
+  padding: 15px 0;
+  background-color: #f7f7f7;
+  border-top: 1px solid #eeeeee;
+  border-bottom: 1px solid #eeeeee;
+}
+.section-space-mb {
+  margin-bottom: 50px;
+}
+.ec-breadcrumb-list li {
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 300;
+  letter-spacing: 0.02rem;
+  line-height: 1.2;
+  text-transform: capitalize;
+}
+.ec-breadcrumb-item + .ec-breadcrumb-item::before {
+  display: inline-block;
+  padding-right: 7px;
+  color: #444444;
+  content: "\f101";
+  font-family: "EcIcons";
+  font-size: 15px;
+}

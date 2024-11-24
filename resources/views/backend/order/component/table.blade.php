@@ -14,9 +14,9 @@
                 <th>Giảm giá</th>
                 <th>Phí ship</th>
                 <th>Tổng cuối</th>
-                <th>Giao hàng</th>
                 <th>Trạng thái</th>
                 <th>Thanh toán</th>
+                <th>Giao hàng</th>
                 <th>Hình thức</th>
             </tr>
             </thead>
@@ -50,20 +50,40 @@
                                  <b>38.000.000</b>
                             </td>
                             <td>
-                               {{ __('cart.delivery')[$order->delivery] }}
+                                {!! ($order->confirm != 'cancle') ? __('cart.confirm')[$order->confirm] : '<span
+                                class="cancle-badge badge bg-danger-subtle text-danger"><i class="fas fa-xmark me-1"></i>  '.__('cart.confirm')[$order->confirm].'</span>' !!}
                             </td>
-                            <td>
-                                {{ __('cart.confirm')[$order->confirm] }}
-                            </td>
-                            <td>
+                            @foreach (__('cart') as $keyItem => $item)
+                            @if ($keyItem === 'confirm') @continue @endif
+                                <td class="text-center">
+                                    @if ($order->confirm != 'cancle')
+                                        <select name="{{ $keyItem }}" class="setUpSelect2 form-control updateBadge"
+                                        data-field="{{ $keyItem }}">
+                                            @foreach ($item as $keyOption => $option)
+                                                @if ($keyOption === 'none') @continue @endif
+                                                <option {{ ($keyOption == $order->{$keyItem}) ? 'selected' : '' }}
+                                                    value="{{ $keyOption }}">{{ $option }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    @else
+                                        -
+                                    @endif
+                                    <input type="hidden" class="changeOrderStatus" value="{{ $order->{$keyItem} }}">
+                                </td>
+                            @endforeach
+                            {{-- <td>
                                 {{ __('cart.payment')[$order->payment] }}
-                            </td>
+                            </td> --}}
                             <td style="width: 100px">
                                 {{ array_column(__('payment.method'), 'title', 'name')[$order->method] ?? '-' }}
+                                <input type="hidden" class="confirm" value="{{ $order->confirm }}">
                             </td>
+
                         </tr>
                     @endforeach
                 @endif
+
             </tbody>
         </table>
     </div>

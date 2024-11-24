@@ -140,6 +140,8 @@ class AppServiceProvider extends ServiceProvider
                 $composer->composer($view);
             }
         });
+
+
         // Validator::extend('custom_date_format', function($attribute, $value, $parameters, $validator){
         //     return DateTime::createFromFormat('d/m/Y H:i', $value) !== false;
         // });

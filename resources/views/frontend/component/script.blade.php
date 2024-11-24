@@ -31,3 +31,5 @@
     @foreach ($coreScript as $item)
         <script src="{{ asset($item) }}"></script>
     @endforeach
+    <script src=""></script>
+    <script src=""></script>

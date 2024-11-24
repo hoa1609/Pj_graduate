@@ -22,6 +22,7 @@ use App\Http\Controllers\Ajax\DashboardController as AjaxDashboardController;
 use App\Http\Controllers\Ajax\AttributeController as AjaxAttributeController;
 use App\Http\Controllers\Ajax\ProductController as AjaxProductController;
 use App\Http\Controllers\Ajax\SourceController as AjaxSourceController;
+use App\Http\Controllers\Ajax\OrderController as AjaxOrderController;
 use App\Http\Controllers\Backend\SlideController;
 use App\Http\Controllers\Backend\OrderController;
 
@@ -47,14 +48,10 @@ use Illuminate\Routing\RouteGroup;
 
 
 
-
-
+/*FE ROUTER */
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
-
-
-
-
-
+Route::get('{canonical}.html', [RouterController::class, 'index'])->name('router.index');
+Route::get('{canonical}/trang-{page}.html', [RouterController::class, 'page'])->name('router.page');
 
 
 
@@ -188,6 +185,8 @@ Route::middleware(['admin', 'locale', 'backend_default_locale'])->group(function
         Route::delete('destroy/{id}', [LanguageController::class, 'destroy'])->name('language.destroy');
 
         Route::get('switch/{id}', [LanguageController::class, 'swicthBackendLanguage'])->name('language.switch');
+        Route::get('{id}/{languageId}/{model}/translate', [LanguageController::class, 'translate'])->name('language.translate');
+        Route::post('storeTranslate', [LanguageController::class, 'storeTranslate'])->name('language.storeTranslate');
     });
 
     Route::group(['prefix' => 'slide'], function (){
@@ -213,9 +212,7 @@ Route::middleware(['admin', 'locale', 'backend_default_locale'])->group(function
     Route::group(['prefix' => 'system'], function (){
         Route::get('index', [SystemController::class, 'index'])-> name('system.index');
         Route::post('store', [SystemController::class, 'store'])-> name('system.store');
-
     });
-
 
     Route::group(['prefix' => 'menu'], function () {
         Route::get('index', [MenuController::class, 'index'])->name('menu.index');
@@ -267,6 +264,9 @@ Route::middleware(['admin', 'locale', 'backend_default_locale'])->group(function
     Route::get('ajax/attribute/loadAttribute', [AjaxAttributeController::class, 'loadAttribute'])->name('ajax.attribute.loadAttribute');
     Route::post('ajax/menu/createCatalogue', [AjaxMenuController::class, 'createCatalogue'])->name('ajax.menu.createCatalogue');
     Route::get('ajax/dashboard/getMenu', [AjaxDashboardController::class, 'getMenu'])->name('ajax.dashboard.getMenu');
+
+    Route::post('ajax/order/update', [AjaxOrderController::class, 'update'])->name('ajax.order.update');
+
 });
 
 

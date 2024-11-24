@@ -39,7 +39,7 @@
                                         <div class="row">
                                         @foreach ($category->products as $product)
                                             <div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 ec-product-content">
-                                                @include('frontend.homepage.home.component.product-item')
+                                                @include('frontend.component.product-item')
                                             </div>
                                         @endforeach
                                         </div>
