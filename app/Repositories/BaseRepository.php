@@ -23,60 +23,70 @@ class BaseRepository implements BaseRepositoryInterface
         array $extend = [],
         array $orderBy = ['id', 'DESC'],
         array $join = [],
-        array $relations = [], 
+        array $relations = [],
         array $rawQuery = []
-    ){
+    ) {
         $query = $this->model->select($column);
         return $query
-                ->keyword($condition['keyword'] ?? null)
-                ->publish($condition['publish'] ?? null)
-                ->userCatalogueId($condition['user_role_id'] ?? null) 
-                ->relationCount($relations ?? null)
-                ->CustomWhere($condition['where'] ?? null)
-                ->customWhereRaw($rawQuery['whereRaw'] ?? null)
-                ->customJoin($join ?? null)
-                ->customGroupBy($extend['groupBy'] ?? null)
-                ->customOrderBy($orderBy ?? null)
-                ->paginate($perPage)
-                ->withQueryString()->withPath(env('APP_URL') . $extend['path']);
+            ->keyword($condition['keyword'] ?? null)
+            ->publish($condition['publish'] ?? null)
+            ->userCatalogueId($condition['user_role_id'] ?? null)
+            ->relationCount($relations ?? null)
+            ->CustomWhere($condition['where'] ?? null)
+            ->customWhereRaw($rawQuery['whereRaw'] ?? null)
+            ->customJoin($join ?? null)
+            ->customGroupBy($extend['groupBy'] ?? null)
+            ->customOrderBy($orderBy ?? null)
+            ->paginate($perPage)
+            ->withQueryString()->withPath(env('APP_URL') . $extend['path']);
     }
-    
 
-    public function all(array $relation = []){
+
+    public function all(array $relation = [])
+    {
         return $this->model->with($relation)->get();
     }
 
-    public function create(array $payload =[]){
+    public function create(array $payload = [])
+    {
         $model = $this->model->create($payload);
         return $model->fresh();
     }
 
-    public function delete($id){
+    public function delete($id)
+    {
         return $this->findById($id)->delete();
     }
 
-    public function forceDelete($id){
+    public function forceDelete($id)
+    {
         return $this->findById($id)->forceDelete();
     }
 
-    public function update(int $id = 0, array $payload = []){
+    public function update(int $id = 0, array $payload = [])
+    {
         $model = $this->findById($id);
-        return $model->update($payload);
+        $model->fill($payload);
+        $model->save();
+        return $model;
     }
 
-    public function createBatch(array $payload = []){
+    public function createBatch(array $payload = [])
+    {
         return $this->model->insert($payload);
     }
 
 
-    public function updateByWhereIn(string $whereInField = '', array $whereIn = [], array $payload = [] ){
+    public function updateByWhereIn(string $whereInField = '', array $whereIn = [], array $payload = [])
+    {
         return $this->model->whereIn($whereInField, $whereIn)->update($payload);
     }
 
-    public function updateByWhere($condition = [], array $payload = []){
+    public function updateByWhere($condition = [], array $payload = [])
+    {
         $query = $this->model->newQuery();
-        foreach($condition as $key => $val){
-            $query->where($val[0], $val[1] , $val[2]);
+        foreach ($condition as $key => $val) {
+            $query->where($val[0], $val[1], $val[2]);
         }
         return $query->update($payload);
     }
@@ -89,24 +99,42 @@ class BaseRepository implements BaseRepositoryInterface
         return $this->model->select($column)->with($relation)->findOrFail($modelId);
     }
 
-    public function forceDeleteByCondition(array $condition = []){
+    public function forceDeleteByCondition(array $condition = [])
+    {
         $query = $this->model->newQuery();
-        foreach($condition as $key => $val){
-            $query->where($val[0], $val[1] , $val[2]);
+        foreach ($condition as $key => $val) {
+            $query->where($val[0], $val[1], $val[2]);
         }
         return $query->forceDelete();
     }
 
-    public function findByCondition($condition = []){
+    // public function findByCondition($condition = [], $flag = false, $relation = [])
+    // {
+    //     $query = $this->model->newQuery();
+    //     foreach ($condition as $key => $val) {
+    //         $query->where($val[0], $val[1], $val[2]);
+    //     }
+    //     $query->with($relation);
+    //     return ($flag == false) ? $query->first() : $query->get();
+    // }
+    public function findByCondition($condition = [], $flag = false, $relation = [], $orderBy = ['id', 'desc'])
+    {
         $query = $this->model->newQuery();
-        foreach($condition as $key => $val){
-            $query->where($val[0], $val[1] , $val[2]);
+
+        foreach ($condition as $key => $val) {
+            $query->where($val[0], $val[1], $val[2]);
         }
-        return $query->first();
+
+        if (!empty($relation) && is_array($relation)) {
+            $query->with($relation);
+        }
+        $query->orderBy($orderBy[0], $orderBy[1]);
+
+        return ($flag == false) ? $query->first() : $query->get();
     }
 
-    public function createPivot($model, array $payload = [], string $relation = ''){
+    public function createPivot($model, array $payload = [], string $relation = '')
+    {
         return $model->{$relation}()->attach($model->id, $payload);
-      }
-
+    }
 }

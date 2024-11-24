@@ -33,3 +33,5 @@
 <script>
     var getMenuUrl = "{{ route('ajax.dashboard.getMenu') }}";
 </script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nestable2@1.6.0/jquery.nestable.min.css">

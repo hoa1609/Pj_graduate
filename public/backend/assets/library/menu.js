@@ -33,13 +33,45 @@
     };
 
     HT.menuRowHtml = (option = {}) => {
+        // Tạo input ẩn
+        let hiddenInput = $('<input>', {
+            type: 'hidden',
+            name: 'menu[id][]',
+            value: option.hiddenValue || 0
+        });
+
+        // Tạo hàng (tr)
         return $('<tr>').addClass(option.canonical || 'default-class').append(
-            $('<td>').append($('<input>', { type: 'text', name: 'menu[name][]', value: option.name || '', placeholder: 'Tên Menu', class: 'form-control' })),
-            $('<td>').append($('<input>', { type: 'text', name: 'menu[canonical][]', value: option.canonical || '', placeholder: 'Đường dẫn', class: 'form-control' })),
-            $('<td>').append($('<input>', { type: 'text', name: 'menu[order][]', placeholder: 'Vị trí', class: 'form-control' })),
-            $('<td>', { class: 'text-center' }).append($('<button>', { type: 'button', class: 'btn btn-link text-danger' }).append($('<i>', { class: 'fas fa-times' })))
+            $('<td>').append($('<input>', {
+                type: 'text',
+                name: 'menu[name][]',
+                value: option.name || '',
+                placeholder: 'Tên Menu',
+                class: 'form-control'
+            })),
+            $('<td>').append($('<input>', {
+                type: 'text',
+                name: 'menu[canonical][]',
+                value: option.canonical || '',
+                placeholder: 'Đường dẫn',
+                class: 'form-control'
+            })),
+            $('<td>').append($('<input>', {
+                type: 'text',
+                name: 'menu[order][]',
+                placeholder: 'Vị trí',
+                class: 'form-control'
+            })),
+            $('<td>', { class: 'text-center' }).append(
+                $('<button>', {
+                    type: 'button',
+                    class: 'btn btn-link text-danger'
+                }).append($('<i>', { class: 'fas fa-times' }))
+            ),
+            hiddenInput // Thêm input ẩn vào hàng
         );
     };
+
 
     HT.deleteRow = () => {
         $(document).on('click', '.btn-link.text-danger', function () {
@@ -136,6 +168,63 @@
         }
     };
 
+    HT.setupNestable = () => {
+        if ($('#nestable2').length) {
+            $('#nestable2').nestable({
+                group: 1
+            }).on('change', function (e) {
+                HT.updateNestableOutput(e);
+            });
+        }
+    };
+
+    HT.updateNestableOutput = (e) => {
+        var list = $(e.currentTarget);
+        var output = $(list.data('output'));
+        let json = window.JSON.stringify(list.nestable('serialize'));
+
+        if (json && json.length) {
+            let option = {
+                json: json,
+                menu_catalogue_id: $('#dataCatalogue').attr('data-catalogueId'),
+                '_token': _token
+            };
+
+            $.ajax({
+                url: 'ajax/menu/drag',
+                type: 'POST',
+                data: option,
+                dataType: 'json',
+                success: function (res) {
+                    console.log(res);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error('Error:', jqXHR.responseText);
+
+                }
+            });
+        }
+    };
+
+
+    HT.runUpdateNestableOutput = () => {
+        // Cập nhật lại output ngay khi có thay đổi
+        updateOutput($('#nestable2').data('output', $('#nestable2-output')));
+    };
+
+    HT.expandAndCollapse = () => {
+        $('#nestable-menu').on('click', function (e) {
+            var target = $(e.target),
+                action = target.data('action');
+            if (action === 'expand-all') {
+                $('.dd').nestable('expandAll');
+            }
+            if (action === 'collapse-all') {
+                $('.dd').nestable('collapse-all')
+            }
+        });
+    };
+
     const logAjaxError = (jqXHR) => console.error('Error:', jqXHR.statusText);
 
     $(document).ready(function () {
@@ -146,6 +235,10 @@
         HT.chooseMenu();
         // HT.getPaginationMenu();
         HT.searchMenu();
+        HT.setupNestable(); // Khởi tạo Nestable và gắn sự kiện
+        HT.updateNestableOutput(); // Cập nhật Nestable output nếu cần
+        HT.runUpdateNestableOutput();
+        HT.expandAndCollapse();
     });
 
 })(jQuery);

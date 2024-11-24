@@ -50,7 +50,6 @@
                             </div>
                             <div class="menu-list mt20">
                                 {{-- <div id="paginationMenu"></div> --}}
-                                
                             </div>
                         </div>
                     </div>
@@ -70,23 +69,45 @@
                             <th class="fw-bold">Xóa</th>
                         </tr>
                     </thead>
+                    @php
+                        $menu = old('menu', $menuList ?? null);
+                    @endphp
                     <tbody class="menu-wrapper">
-                        <tr class="text-wp">
+                        <tr class="text-wp {{ is_array($menu) && count($menu) ? 'd-none' : '' }}">
                             <td colspan="4" class="text-center text-muted hid">
-                                <p>Danh sách liên kết này chưa có bất kì đường dẫn nào.</p>
+                                <p>Danh sách liên kết này chưa có bất kỳ đường dẫn nào.</p>
                                 <p>Hãy nhấn vào <a href="#" class="text-primary">Thêm đường dẫn</a> để bắt đầu
                                     thêm.</p>
                             </td>
                         </tr>
-                        {{-- <tr>
-                            <td><input type="text" class="form-control" placeholder="Tên Menu"></td>
-                            <td><input type="text" class="form-control" placeholder="Đường dẫn"></td>
-                            <td><input type="text" class="form-control" placeholder="Vị trí"></td>
-                            <td class="text-center">
-                                <button type="button" class="btn btn-link text-danger"><i
-                                        class="fas fa-times"></i></button>
-                            </td>
-                        </tr> --}}
+
+                        @if (is_array($menu) && count($menu))
+                            @foreach ($menu['name'] as $key => $value)
+                                <tr class="default-class">
+                                    <td>
+                                        <input type="text" name="menu[name][]" value="{{ $value }}"
+                                            placeholder="Tên Menu" class="form-control">
+                                    </td>
+                                    <td>
+                                        <input type="text" name="menu[canonical][]"
+                                            value="{{ $menu['canonical'][$key] }}" placeholder="Đường dẫn"
+                                            class="form-control">
+                                    </td>
+                                    <td>
+                                        <input type="text" name="menu[order][]" value="{{ $menu['order'][$key] }}"
+                                            placeholder="Vị trí" class="form-control">
+                                        <!-- Input hidden để lưu menu[id][] -->
+                                        <input type="hidden" name="menu[id][]" value="{{ $menu['id'][$key] }}">
+                                    </td>
+                                    <td class="text-center">
+                                        <button type="button" class="btn btn-link text-danger"><i
+                                                class="fas fa-times"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @endif
+
                     </tbody>
                 </table>
             </div>
@@ -94,7 +115,3 @@
 
     </div>
 </div>
-@php
-echo '<pre>';
-    print_r(old('menu'))
-@endphp

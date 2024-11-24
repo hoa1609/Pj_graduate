@@ -23,34 +23,35 @@
 <script src="backend/plugins/nice-select/js/jquery.nice-select.min.js"></script>
 
 
-    @if(isset($config['js']) && is_array($config['js']))
-        @foreach($config['js'] as $key => $val)
-            {!! '<script src="'.$val.'"></script>' !!}
-        @endforeach
-    @endif
+@if (isset($config['js']) && is_array($config['js']))
+    @foreach ($config['js'] as $key => $val)
+        {!! '<script src="' . $val . '"></script>' !!}
+    @endforeach
+@endif
 
-    <script>
-        const formatPrice = (value) => {
-            value = value.replace(/\D/g, '');
-            if (!value) return '';
-            return value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+<script>
+    const formatPrice = (value) => {
+        value = value.replace(/\D/g, '');
+        if (!value) return '';
+        return value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    }
+    document.getElementById('priceInput').addEventListener('input', function() {
+        let value = this.value;
+        this.value = formatPrice(value);
+    });
+
+
+    document.addEventListener('scroll', function() {
+        var fixedSaveProduct = document.querySelector('.fixed-save-product');
+        if (window.scrollY > 500) {
+            fixedSaveProduct.classList.add('active');
+        } else {
+            fixedSaveProduct.classList.remove('active');
         }
-        document.getElementById('priceInput').addEventListener('input', function() {
-            let value = this.value;
-            this.value = formatPrice(value);
-        });
-
-
-        document.addEventListener('scroll', function() {
-            var fixedSaveProduct = document.querySelector('.fixed-save-product');
-            if (window.scrollY > 500) {
-                fixedSaveProduct.classList.add('active');
-            } else {
-                fixedSaveProduct.classList.remove('active');
-            }
-        });
-
-    </script>
+    });
+</script>
 
 <script src="backend/assets/library/menu.js"></script>
 
+<script src="backend/assets/library/jquery.nestable.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
