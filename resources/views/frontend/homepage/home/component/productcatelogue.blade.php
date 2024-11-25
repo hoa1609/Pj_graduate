@@ -23,7 +23,7 @@
                                                 <h3>{{ $name }}
                                                     <span title="Category Items">( {{ $productCount }} )</span>
                                                 </h3>
-                                                <a href="{{ $canonical }}" class="cat-show-all">Show All <i class="ecicon eci-angle-double-right"></i></a>
+                                                <a href="{{ $canonical }}" class="cat-show-all">Tất cả <i class="ecicon eci-angle-double-right"></i></a>
                                             </div>
                                         </div>
                                     </div>

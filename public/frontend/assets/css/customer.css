@@ -7,6 +7,9 @@
 .uk-space-between{
     justify-content: space-between;
 }
+.flex-column{
+    flex-direction: column
+}
 .fi-rr-shopping-basket{
     font-size: 18px;
 }
@@ -331,3 +334,216 @@ a[data-attributeid]:hover {
     -moz-appearance: textfield;
 }
 
+/* checkout */
+.checkout-title{
+    font-size: 22px;
+    font-weight: 600;
+}
+.text-login{
+    font-weight: 600;
+    color: #0a14d4;
+}
+.border-h-5{
+    border-radius: 50px;
+}
+.cart-method {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    gap: 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    background-color: #f4f4f483;
+}
+.cart-method label {
+    display: flex;
+    margin-left: 10px;
+    align-items: center;
+    cursor: pointer;
+    gap: 20px;
+}
+.cart-method .image img {
+    width: 24px;
+    height: auto;
+    display: block;
+}
+.cart-method .text-name {
+    font-size: 16px;
+    font-weight: 500;
+    color: #1f1f1f;
+}
+.cart-method span.image {
+    display: inline-flex;
+    align-items: center;
+}
+.cart-return *{
+    font-size: 12px;
+}
+.cart-checkout{
+    width: 100%;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 10px;
+    background-color: #1e1e1e;
+    padding: 10px 0;
+    color: #ffffff;
+    margin-top: 30px;
+    transition: .2s ease-in;
+}
+.cart-checkout:hover{
+    background-color: #565555;
+}
+.bold-h{
+    font-weight: 500;
+    color: #5e5e5e;
+}
+.border-checkout{
+    border-right: 1px solid #a1a1a1;
+}
+.checkout-content{
+    padding-right: 40px;
+}
+/*  */
+.image-cart-wrapper {
+    position: relative;
+    width: 100%;
+    padding-top: 100%;
+    overflow: hidden;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+.image-cart-wrapper img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.quantity-label {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: #000000;
+    color: #fff;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    border-radius: 50%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 100;
+}
+/*  */
+.title-product{
+    font-size: 15px;
+}
+.quantity-control .qty-checkout {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 5px 10px;
+    width: 100px;
+    height: 30px;
+    text-align: center;
+    font-size: 16px;
+}
+.text-truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.cart-item-remove{
+    font-weight: bold;
+    text-align: right;
+}
+.cart-item-price{
+    text-align: right;
+    margin-top: 10px;
+}
+.item-product{
+    border-bottom: 1px solid #a1a1a1;
+    padding-bottom: 10px;
+}
+.image-item{
+    padding-left: 0;
+}
+.panel-voucher{
+    gap: 10px;
+}
+.voucher-item {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    border: 2px dashed #373737;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 10px;
+    padding: 10px 15px;
+    max-width: 200px;
+    max-height: 150px;
+}
+.voucher-left {
+    width: 30px;
+    height: 30px;
+    background-color: #dbdbdb;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+.voucher-right {
+    flex: 1;
+}
+.voucher-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #222222;
+    margin-bottom: 5px;
+}
+.voucher-description {
+    font-size: 14px;
+    color: #333;
+}
+.voucher-form {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    margin: 20px auto;
+    background-color: #ffffff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+.voucher-form input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    color: #333;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+}
+.voucher-form input:focus {
+    background-color: #fff;
+}
+.apply-voucher {
+    background-color: #373737;
+    color: #fff;
+    padding: 8px 15px;
+    font-size: 16px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-left: 12px;
+    transition: background-color 0.3s ease;
+    display: inline-block;
+}
+
+.apply-voucher:hover {
+    background-color: #4e4e4e;
+}
+
+.apply-voucher:active {
+    background-color: #404040;
+}

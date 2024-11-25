@@ -4,12 +4,12 @@
             [
                 'name' => 'cod',
                 'image' => 'frontend/resources/core/img/COD.svg',
-                'title' => 'Thanh toán khi nhận hàng (COD)'
+                'title' =>'Thanh toán khi nhận hàng (COD)'
             ],
             [
                 'name' => 'zalo',
                 'image' => 'frontend/resources/core/img/logo-zalopay.svg',
-                'title' => 'Thanh toán qua ví điện tử ZaloPay'
+                'title' =>'Thanh toán qua ví điện tử ZaloPay'
             ],
             [
                 'name' => 'momo',

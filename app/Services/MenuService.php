@@ -58,7 +58,6 @@ class MenuService extends BaseService implements MenuServiceInterface
                         'user_id' => Auth::id(),
                     ];
 
-
                     if ($menuId == 0) {
                         $menuSave = $this->menuRepository->create($menuArray);
                     } else {
@@ -72,7 +71,6 @@ class MenuService extends BaseService implements MenuServiceInterface
                                 ['menu_catalogue_id' => $payload['menu_catalogue_id']]
                             );
                         }
-                        // dd($menuSave);
                     }
 
                     if ($menuSave->id > 0) {

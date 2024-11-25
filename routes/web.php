@@ -33,6 +33,7 @@ use App\Http\Controllers\Backend\WidgetController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\RouterController;
 use App\Http\Controllers\Frontend\CartController;
+use App\Http\Controllers\Ajax\CartController as AjaxCartController;
 use App\Http\Controllers\Ajax\MenuController as AjaxMenuController;
 use App\Http\Controllers\Ajax\ReviewController as AjaxReviewController;
 use App\Http\Controllers\Backend\SystemController;
@@ -52,12 +53,14 @@ use Illuminate\Routing\RouteGroup;
 
 /*FE ROUTER */
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
-Route::get('{canonical}.html', [RouterController::class, 'index'])->name('router.index');
+Route::get('thanh-toan'.config('apps.general.suffix'), [CartController::class, 'checkout'])->name('cart.checkout');
+Route::get('{canonical}'.config('apps.general.suffix'), [RouterController::class, 'index'])->name('router.index');
 Route::get('{canonical}/trang-{page}.html', [RouterController::class, 'page'])->name('router.page');
 
 
 /*FE AJAX */
 Route::get('ajax/product/loadVariant', [AjaxProductController::class, 'loadVariant'])->name('ajax.loadVariant');
+Route::post('ajax/cart/create', [AjaxCartController::class, 'create'])->name('ajax.cart.create');
 
 
 
@@ -227,7 +230,7 @@ Route::middleware(['admin', 'locale', 'backend_default_locale'])->group(function
         Route::get('edit/{id}', [MenuController::class, 'edit'])->name('menu.edit');
         Route::get('{id}/editMenu}', [MenuController::class, 'editMenu'])->where(['id' => '[0-9]+'])->name('menu.editMenu');
         Route::post('update/{id}', [MenuController::class, 'update'])->name('menu.update');
-        Route::delete('{id}/delete', [MenuController::class, 'delete'])->where(['id' => '[0-9]+'])->name('menu.delete');
+        Route::get('{id}/delete', [MenuController::class, 'delete'])->where(['id' => '[0-9]+'])->name('menu.delete');
         Route::delete('destroy/{id}', [MenuController::class, 'destroy'])->where(['id' => '[0-9]+'])->name('menu.destroy');
         Route::get('{id}/children', [MenuController::class, 'children'])->where(['id' => '[0-9]+'])->name('menu.children');
         Route::post('{id}/saveChildren', [MenuController::class, 'saveChildren'])->where(['id' => '[0-9]+'])->name('menu.saveChildren');

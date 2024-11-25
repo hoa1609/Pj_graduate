@@ -79,7 +79,7 @@ class BaseRepository implements BaseRepositoryInterface
         $model = $this->findById($id);
         $model->fill($payload);
         $model->save();
-        return $model->update($payload);
+        return $model;
     }
 
     public function createBatch(array $payload = [])

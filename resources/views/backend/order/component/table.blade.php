@@ -75,9 +75,11 @@
                             {{-- <td>
                                 {{ __('cart.payment')[$order->payment] }}
                             </td> --}}
-                            <td style="width: 100px">
-                                {{ array_column(__('payment.method'), 'title', 'name')[$order->method] ?? '-' }}
-                                <input type="hidden" class="confirm" value="{{ $order->confirm }}">
+                            <td >
+                                {{-- {{ array_column(__('payment.method'), 'title', 'name')[$order->method] ?? '-' }}
+                                <input type="hidden" class="confirm" value="{{ $order->confirm }}"> --}}
+
+                                <img class="custom-img" src="{{ array_column(__('payment.method'), 'image', 'name')[$order->method] ?? '-' }}" alt="">
                             </td>
 
                         </tr>

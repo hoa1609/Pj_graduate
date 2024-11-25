@@ -11,13 +11,13 @@ class MenuCatalogue extends Model
 {
     use HasFactory, SoftDeletes, QueryScopes;
 
-    protected $table = 'menu_catalogue';
-
     protected $fillable = [
         'name',
         'keyword',
         'publish',
     ];
+
+    protected $table = 'menu_catalogue';
 
 
      //hòa

@@ -15,9 +15,7 @@
                         @php
                             $isActive = (is_array($attributeQueryString) && in_array($attr->id, $attributeQueryString)) || ($keyAttr == 0 && empty($attributeQueryString));
                         @endphp
-                        <a class="choose-attribute 
-                            {{ $isActive ? 'active' : '' }}" 
-                            data-attributeid="{{ $attr->id }}" 
+                        <a class="choose-attribute {{ $isActive ? 'active' : '' }}" data-attributeid="{{ $attr->id }}" 
                             title="{{ $attr->name }}"
                             >
                             {{ $attr->name }}

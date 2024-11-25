@@ -1,6 +1,6 @@
 @php
     $name = $product->languages->first()->pivot->name;
-    $canonical = write_url($product->languages->first()->pivot->canonical);
+    $canonical = write_url($product->languages->first()->pivot->canonical, true , true);
     $image = image($product->image);
     $price = getPrice($product);
     $catName = $product->product_catalogues->first()->languages->first()->pivot->name;
@@ -42,14 +42,13 @@
 
                 <div class="ec-quickview-desc">{!! $description !!}</div>
                 {!! $price['html'] !!}
-
                 @include('frontend.product.product.component.variant')
                 <div class="ec-quickview-qty">
                     <div class="qty-plus-minus">
                         <input class="qty-input" type="text" name="ec_qtybtn" value="1" />
                     </div>
-                    <div class="ec-quickview-cart ">
-                        <button class="btn btn-primary">Add To Cart</button>
+                    <div class="ec-quickview-cart addToCart" data-id="{{ $product->id }}">
+                        <button class="btn btn-primary">Thêm vào giỏ hàng</button>
                     </div>
                 </div>
             </div>
@@ -57,7 +56,7 @@
     </div>
 </div>
 <input type="hidden" class="attributeCatalogue" value="{{ json_encode($attributeCatalogue) }}">
-<input type="hidden" class="productCanonical" value="{{ write_url($product->languages->first()->pivot->canonical) }}">
+<input type="hidden" class="productCanonical" value="{{ write_url($product->languages->first()->pivot->canonical, true , true) }}">
 
 
 {{-- Review --}}

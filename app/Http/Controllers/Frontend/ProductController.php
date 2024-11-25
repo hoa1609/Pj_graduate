@@ -58,11 +58,12 @@ class ProductController extends FrontendController{
 
 
 
-
-
     private function config(){
         return [
             'language' => $this->language,
+            'js' => [
+                'frontend/assets/library/cart.js',
+            ]
         ];
     }
 
