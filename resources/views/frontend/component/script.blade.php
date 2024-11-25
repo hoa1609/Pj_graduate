@@ -1,6 +1,7 @@
-    @php
+ @php
     $coreScript = [
         'frontend/assets/js/vendor/jquery-3.5.1.min.js',
+        'frontend/assets/toastr/toastr.min.js',
         'frontend/assets/js/vendor/popper.min.js',
         'frontend/assets/js/vendor/bootstrap.min.js',
         'frontend/assets/js/vendor/jquery-migrate-3.3.0.min.js',

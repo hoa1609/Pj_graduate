@@ -12,11 +12,10 @@
 <meta name="keyword" content="{{ $seo['meta_keyword'] }}"/>
 <meta name="description" content="{{ $seo['meta_description'] }}"/>
 <meta name="canonical" content="{{ $seo['canonical'] }}"/>
+<meta name="csrf-token" content="{{ csrf_token() }}">
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
-<link rel="icon" href="frontend/assets/images/favicon/favicon.png" sizes="32x32" />
-<link rel="stylesheet" href="frontend/assets/css/vendor/ecicons.min.css" />
+{{-- <link rel="stylesheet" href="frontend/assets/css/vendor/ecicons.min.css" /> --}}
 {{-- <link rel="stylesheet" href="frontend/assets/css/style.css" /> --}}
 
 @php
@@ -33,10 +32,9 @@
         "frontend/assets/css/plugins/bootstrap.css",
         "frontend/assets/css/demo8.css",
         "frontend/assets/css/customer.css",
-    ]
-@endphp
+        'frontend/assets/toastr/toastr.min.css',
+        ]
+        @endphp
 @foreach ($coreCss as $item)
     <link rel="stylesheet" href="{{ asset($item) }}">
 @endforeach
-
-

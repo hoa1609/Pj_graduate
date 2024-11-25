@@ -47,7 +47,7 @@
                     <div class="qty-plus-minus">
                         <input class="qty-input" type="text" name="ec_qtybtn" value="1" />
                     </div>
-                    <div class="ec-quickview-cart addToCart">
+                    <div class="ec-quickview-cart addToCart" data-id="{{ $product->id }}">
                         <button class="btn btn-primary">Thêm vào giỏ hàng</button>
                     </div>
                 </div>

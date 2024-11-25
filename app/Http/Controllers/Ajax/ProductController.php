@@ -80,8 +80,8 @@ class ProductController extends Controller
     public function loadVariant(Request $request){
         $get = $request->input();
         $attributeId = $get['attribute_id'];
-        sort($attributeId, SORT_NUMERIC);
-        $attributeId = implode(',', $attributeId);
+        
+        $attributeId = sorAttributeId($attributeId);
         
         $variant  = $this->productVariantRepository->findVariant($attributeId, $get['product_id'], $get['language_id']);
 

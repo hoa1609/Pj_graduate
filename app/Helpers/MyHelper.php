@@ -412,3 +412,14 @@ if (!function_exists('sorString')) {
         return $newArray;
     }
 }
+
+
+if (!function_exists('sorAttributeId')) {
+    function sorAttributeId(array $attributeId = []){
+        sort($attributeId, SORT_NUMERIC);
+        $attributeId = implode(',', $attributeId);
+        return $attributeId;
+    }
+}
+
+
