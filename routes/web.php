@@ -284,6 +284,7 @@ Route::middleware(['admin', 'locale', 'backend_default_locale'])->group(function
     Route::post('ajax/menu/drag', [AjaxMenuController::class, 'drag'])->name('ajax.menu.drag');
     Route::get('ajax/dashboard/getMenu', [AjaxDashboardController::class, 'getMenu'])->name('ajax.dashboard.getMenu');
     Route::post('ajax/review/create', [AjaxReviewController::class, 'create'])->name('ajax.dashboard.create');
+    Route::post('ajax/order/update', [AjaxOrderController::class, 'update'])->name('ajax.dashboard.update');
 
 });
 

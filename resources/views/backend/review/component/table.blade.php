@@ -32,7 +32,7 @@
                             overflow-wrap: break-word;
                             white-space: normal;"> {{ $review->description }}</td>
                             <td>
-                                <a href="{{ write_url($reviewableLink) }}" target="_blank"> Xem sản phẩm</a>
+                                <a href="{{ write_url($reviewableLink) }}.html" target="_blank"> Xem sản phẩm</a>
                             </td>
                             <td class="text-center">
                                 <form action="{{ route('review.destroy', $review->id) }}" method="POST" onsubmit="return confirm('Bạn có chắc chắn muốn xóa?')">
