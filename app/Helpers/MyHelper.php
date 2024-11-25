@@ -4,8 +4,53 @@ if (!function_exists('convert_price')) {
     function convert_price(mixed $price = '', $flag = false){
         if($price === null) return 0;
         return ($flag === false) ? str_replace('.','', $price) : number_format($price, 0, ',', '.');
+    function convert_price(string $price = ''){
+        return str_replace('.', '', $price);
+        }
     }
 }
+
+
+if (!function_exists('recursive_menu')) {
+    function recursive_menu($menus)
+    {
+        $html = '';
+
+        // Kiểm tra nếu menus có dữ liệu
+        if (count($menus)) {
+            $html .= "<ul class='dd-list'>"; // Mở thẻ <ul> cho menu cha
+
+            foreach ($menus as $menu) {
+                $itemId = $menu->id;
+                $itemName = $menu->languages->first()->pivot->name;
+                $itemUrl = route('menu.children', ['id' => $itemId]);
+
+                // Thêm thẻ <li> cho mỗi menu
+                $html .= "<li class='dd-item' data-id='$itemId'>";
+                $html .= "<div class='dd-handle'>";
+                $html .= "<span class='label label-info'><i class='fa fa-arrows'></i></span> $itemName";
+                $html .= "</div>";
+                $html .= "<a class='create-children-menu' href='$itemUrl'>Quản lý menu con</a>";
+                // Thêm nút "+" hoặc "-" dưới thẻ dd-item
+                if (count($menu->children)) {
+                    $html .= "<button class='expand-collapse-btn'>+</button>"; // Nút "+"
+                }
+                // Kiểm tra nếu menu có menu con
+                if (count($menu->children)) {
+                    // Thêm phần tử để chứa menu con, ban đầu ẩn đi
+                    $html .= "<div class='submenu-wrapper' style='display: none;'>";
+                    $html .= recursive_menu($menu->children);
+                    $html .= "</div>";
+                }
+                // Đóng thẻ <li>
+                $html .= "</li>";
+            }
+            $html .= "</ul>"; // Đóng thẻ <ul>
+        }
+        return $html;
+    }
+}
+
 
 if (!function_exists('convert_array')) {
     function convert_array($system = null, $keyword = '', $value = ''){
@@ -23,6 +68,7 @@ if (!function_exists('convert_array')) {
         return $temp;
     }
 }
+
 
 if (!function_exists('pre')) {
     function pre($data, $exit = false) {
@@ -45,9 +91,10 @@ if (!function_exists('image')) {
 
 if (!function_exists('getPercent')) {
     function getPercent($product = null, $discountValue = 0){
-         dd($product->price > 0) ? round($discountValue/$product->price*100) : 0;
+         return ($product->price > 0) ? round($discountValue/$product->price*100) : 0;
     }
 }
+
 
 if (!function_exists('getPromotionPrice')) {
     function getPromotionPrice($priceMain = 0, $discountValue = 0, $discountType = '', $maxDiscountValue = 0) {
@@ -64,7 +111,6 @@ if (!function_exists('getPromotionPrice')) {
         return $priceSale;
     }
 }
-
 
 
 if (!function_exists('getPrice')) {
@@ -88,7 +134,7 @@ if (!function_exists('getPrice')) {
         }
 
         $result['html'] .= '<span class="ec-price">';
-            $result['html'] .= '<span class="new-price">'.(($result['priceSale'] > 0) ? convert_price($result['priceSale'], true) : convert_price($result['price'], true)).'₫</span>';
+            $result['html'] .= '<span class="new-price text-danger">'.(($result['priceSale'] > 0) ? convert_price($result['priceSale'], true) : convert_price($result['price'], true)).'₫</span>';
             if($result['priceSale'] > 0){
                 $result['html'] .= '<span class="old-price">'.convert_price($result['price'], true).'₫</span>';
                 $result['html'] .= '</span>';
@@ -96,6 +142,43 @@ if (!function_exists('getPrice')) {
         return $result;
     }
 }
+
+
+
+if (!function_exists('getVariantPrice')) {
+    function getVariantPrice($variant, $variantPromotion) {
+        $result = [
+            'price' => $variant->price,
+            'priceSale' => 0,
+            'percent' => 0,
+            'html' => '',
+        ];
+
+        if (!is_null($variantPromotion) && $variantPromotion->isNotEmpty()) {
+            $promotion = $variantPromotion->first();
+
+            if ($promotion) {
+                $result['percent'] = ($promotion->discountType == 'percent')
+                    ? $promotion->discountValue
+                    : getPercent($variant, $promotion->discountValue);
+
+                $result['priceSale'] = getPromotionPrice(
+                    $variant->price,
+                    $promotion->discountValue,
+                    $promotion->discountType,
+                    $promotion->maxDiscountValue,
+                );
+            }
+        }
+
+        $result['html'] .= '<span class="new-price text-danger">'.(($result['priceSale'] > 0) ? convert_price($result['priceSale'], true) : convert_price($result['price'], true)).'₫</span>';
+        if ($result['priceSale'] > 0) {
+            $result['html'] .= '<span class="old-price">'.convert_price($result['price'], true).'₫</span>';
+        }
+        return $result;
+    }
+}
+
 
 
 if (!function_exists('getReview')) {
@@ -230,13 +313,10 @@ if (!function_exists('convertArrayByKey')) {
             foreach ($fields as $field) {
                 if(is_array($object)){
                     $temp[$field][] = $value[$field];
-                }
-                else
-                {
+                }else{
                     $extract = explode('.',$field);
                     if(count($extract) == 2) {
                         $temp[$extract[0]][] =   $value->{$extract[1]}->first()->pivot->{$extract[0]};
-
                     }else {
                         $temp[$field][] = $value->{$field};
                     }
@@ -299,11 +379,57 @@ if(!function_exists('cut_string_and_code')) {
         return $str;
     }
 }
+
 if (!function_exists('cutnchar')) {
-    function cutnchar($str, $n) {
-        if (strlen($str) <= $n) {
+    function cutnchar($str, $n){
+        if (strlen($str) <= $n){
             return $str;
         }
         return substr($str, 0, $n) . '...';
+    }
+}
+
+if (!function_exists('sorString')) {
+    function sorString($string = '') {
+        $extract = explode(',', $string);
+        $extract = array_map('trim', $extract);
+        sort($extract, SORT_NUMERIC);
+        $newArray = implode(',', $extract);
+        return $newArray;
+    }
+}
+
+if (!function_exists('getReviewName')) {
+    function getReviewName($string, $limit = 2) {
+        $string = trim(preg_replace('/\s+/', ' ', $string));
+
+        $words = explode(' ', $string);
+        $initialize = '';
+
+        if (count($words) === 1) {
+            $initialize = mb_strtoupper(mb_substr($words[0], 0, $limit));
+        } else {
+            $initialize = mb_strtoupper(mb_substr($words[0], 0, 1));
+            $initialize .= mb_strtoupper(mb_substr(end($words), 0, 1));
+        }
+
+        return $initialize;
+    }
+}
+
+
+if (!function_exists('generateStar')) {
+    function generateStar($rating) {
+        $rating = max(1, min( 5, $rating));
+        $ouput = '<div class="ec-t-review-rating">';
+            for($i = 1; $i <= $rating; $i++){
+                $ouput .= '<i class="ecicon eci-star fill"></i>';
+            }
+            for($i = $rating + 1; $i <= 5; $i++){
+                $ouput .= '<i class="ecicon eci-star-o"></i>';
+            }
+        $ouput .= '</div>';
+
+        return $ouput;
     }
 }

@@ -167,14 +167,19 @@ class ProductService extends BaseService implements ProductServiceInterface
         return $combines;
     }
 
+
     private function createVariantArray(array $payload = [], $product): array{
         $variant = [];
         if(isset($payload['variant']['sku']) && count($payload['variant']['sku']) ){
             foreach($payload['variant']['sku'] as $key => $val){
-                $uuid = Uuid::uuid5(Uuid::NAMESPACE_DNS, $product->id.', '.$payload['productVariant']['id'][$key]);
+
+                $vId = ($payload['productVariant']['id'][$key]) ?? '';
+                $productVariantId = sorString($vId);
+                $uuid = Uuid::uuid5(uuid::NAMESPACE_DNS, $product->id.', '.$payload['productVariant']['id'][$key]);
                 $variant[] = [
-                    'code' =>  ($payload['productVariant']['id'][$key]) ?? '',
                     'uuid' => $uuid,
+                    'code' => $productVariantId,
+
                     'sku' => $val,
                     'quantity' => ($payload['variant']['quantity'][$key]) ?? '',
                     'price' => ($payload['variant']['price'][$key]) ? convert_price($payload['variant']['price'][$key]) : '',
@@ -186,7 +191,6 @@ class ProductService extends BaseService implements ProductServiceInterface
                 ];
             }
         }
-        // dd($variant);
         return $variant;
     }
 
@@ -366,24 +370,32 @@ class ProductService extends BaseService implements ProductServiceInterface
         return $products;
     }
 
-    public function getAttribute($product, $language){
+    public function getAttribute($product, $language) {
+        if (!isset($product->attribute) || !is_array($product->attribute)) {
+            $product->attributeCatalogue = [];
+            return $product;
+        }
         $attributeCatalogueId = array_keys($product->attribute);
         $attrCatalogues = $this->attributeCatalogueRepository->getAttributeCatalogueWhereIn($attributeCatalogueId, 'attribute_catalogues.id', $language);
+
         /*------*/
         $attributeId = array_merge(...$product->attribute);
         $attrs = $this->attributeRepository->findAttributeByIdArray($attributeId, $language);
-        if(!is_null($attrCatalogues)){
-            foreach($attrCatalogues as $key => $val){
+
+        if (!is_null($attrCatalogues)) {
+            foreach ($attrCatalogues as $key => $val) {
                 $tempAttributes = [];
-                foreach($attrs as $attr){
-                    if($val->id == $attr->attribute_catalogue_id){
+                foreach ($attrs as $attr) {
+                    if ($val->id == $attr->attribute_catalogue_id) {
                         $tempAttributes[] = $attr;
                     }
                 }
                 $val->attributes = $tempAttributes;
             }
         }
+
         $product->attributeCatalogue = $attrCatalogues;
         return $product;
     }
+
 }

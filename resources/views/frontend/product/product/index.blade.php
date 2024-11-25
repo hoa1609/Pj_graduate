@@ -2,7 +2,7 @@
 @section('content')
 @include('frontend.component.breadcrumb')
     <div class="container">
-        @include('frontend.component.product-detail', ['product' => $product, 'productCatalogue' => $productCatalogue])
+        @include('frontend.product.product.component.detail', ['product' => $product, 'productCatalogue' => $productCatalogue])
     </div>
 @endsection
 

@@ -31,6 +31,7 @@ class ProductController extends FrontendController{
 
 
      public function index($id, $request){
+        $language = $this->language;
         $product =$this->productRepository->getProductById($id, $this->language);
         $product = $this->productService->combineProductsAndPromotion([$id], $product, true);
         $productCatalogue = $this->productCatalogueRepository->getProductCatalogueById($product->product_catalogue_id, $this->language);
@@ -42,7 +43,7 @@ class ProductController extends FrontendController{
         $config = $this->config();
         $system = $this->system;
         $seo = seo($product);
-    
+
         return view('frontend.product.product.index', compact(
             'config',
             'system',
@@ -50,10 +51,11 @@ class ProductController extends FrontendController{
             'productCatalogue',
             'breadcrumb',
             'product',
-            'category'
+            'category',
+            'language',
         ));
      }
-     
+
 
 
 

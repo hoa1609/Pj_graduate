@@ -10653,7 +10653,7 @@ li {
     -webkit-box-flex: 0;
         -ms-flex: 0 0 auto;
             flex: 0 0 auto;
-    width: 25%;
+    width: 20%;
   }
   .col-lg-4 {
     -webkit-box-flex: 0;
@@ -15451,9 +15451,9 @@ body {
   padding: 40px 0;
 }
 
-.space-t-50 {
+/* .space-t-50 {
   padding-top: 50px;
-}
+} */
 
 .btn-secondary {
   background-color: #222;
@@ -18300,7 +18300,7 @@ section.ec-instagram-section {
 }
 
 .ec-product-content {
-  padding: 15px;
+  padding: 10px;
 }
 
 .col-5 {
@@ -18561,7 +18561,7 @@ section.ec-instagram-section {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  padding: 15px 0 0;
+  padding: 8px 0 0;
   text-align: left;
   background-color: #fff;
 }
@@ -18574,7 +18574,7 @@ section.ec-instagram-section {
   text-transform: uppercase;
 }
 .ec-product-inner .ec-pro-content .ec-pro-rat-price {
-  padding: 0 20px;
+  padding: 0 8px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -18584,7 +18584,7 @@ section.ec-instagram-section {
           flex-direction: column;
 }
 .ec-product-inner .ec-pro-content .ec-pro-title {
-  padding: 0 20px;
+  padding: 0 8px;
   font-size: 16px;
 }
 .ec-product-inner .ec-pro-content .ec-pro-title a {
@@ -18631,7 +18631,7 @@ section.ec-instagram-section {
       align-self: center;
 }
 .ec-product-inner .ec-pro-content .ec-pro-rating {
-  margin-bottom: 10px;
+  margin-bottom: 2px;
   opacity: 0.7;
   position: relative;
 }
@@ -18662,7 +18662,7 @@ section.ec-instagram-section {
 }
 .ec-pro-variation .ec-pro-variation-inner {
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 400;
   color: #212121;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;

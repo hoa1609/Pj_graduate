@@ -19,6 +19,8 @@
         'frontend/assets/js/vendor/index.js',
         'frontend/assets/js/demo-8.js',
         'frontend/assets/function.js',
+        'frontend/assets/js/review.js',
+        'https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js'
 
         ];
     if(isset($config['js'])){

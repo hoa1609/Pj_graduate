@@ -24,9 +24,11 @@
                                         <h2 class="title-slide">{{ $name }}</h2>
                                         <h1 class="description-slide">{{ $description }}</h1>
                                         <div class="item-button">
-                                            <a href="{{ $canonical }}" class="btn btn-slide btn-primary">Mua ngay
-                                                <i class="ecicon eci-angle-double-right"></i>
-                                            </a>
+                                            @if(!is_null($canonical))
+                                                <a href="{{ $canonical }}" class="btn btn-slide btn-primary">Mua ngay
+                                                    <i class="ecicon eci-angle-double-right"></i>
+                                                </a>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>

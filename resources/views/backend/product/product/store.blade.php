@@ -147,7 +147,7 @@
                             <div class="col-md-12 position-relative">
                                 <label class="form-label">Chọn ảnh đại diện</label>
                             </div>
-                            <span class="image img-cover image-target" style="max-height: 100px">
+                            <span class="image img-cover image-target" style="max-height: 250px">
                                 @php
                                     $image = old('image', $product->image ?? '');
                                     $image = $image ?: 'backend/assets/images/no-img.jpg';

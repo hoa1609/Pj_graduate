@@ -155,6 +155,8 @@ class PostController extends Controller{
                 'backend/assets/library/finder.js',
                 'backend/plugins/ckeditor/ckeditor.js',
                 'backend/plugins/nice-select/js/jquery.nice-select.min.js',
+                'backend/plugins/jquery-ui.js',
+                'backend/assets/library/set-up-ui.js',
             ],
             'css' => [
                 'backend/assets/css/select2.min.css',

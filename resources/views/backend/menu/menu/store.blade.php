@@ -18,11 +18,11 @@
                         </ul>
                     </div>
                 @endif
-                @php
+                {{-- @php
                     $url = $config['method'] == 'create' ? route('menu.store') : route('menu.update', $menu->id);
-                @endphp
+                @endphp --}}
                 <div class="card-body pt-0">
-                    <form action="{{ $url }}" method="post" class="box menuContainer">
+                    <form action="{{ route('menu.store') }}" method="post" class="box menuContainer">
                         @csrf
                         <div class="container-xxl">
                             <div class="row justify-content-center">
@@ -34,10 +34,11 @@
                             </div>
                         </div>
                         <!-- Nút lưu lại -->
-        <div class="text-end">
-            <button type="submit" name="send" class="btn btn-primary">Lưu thông
-                tin</button>
-        </div>
+                        <input type="hidden" name="redirect" value="{{ $id ?? 0 }}">
+                        <div class="text-end">
+                            <button type="submit" name="send" value="send" class="btn btn-primary">Lưu thông
+                                tin</button>
+                        </div>
                     </form>
                 </div>
             </div>

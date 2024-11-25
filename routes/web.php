@@ -25,6 +25,7 @@ use App\Http\Controllers\Ajax\SourceController as AjaxSourceController;
 use App\Http\Controllers\Ajax\OrderController as AjaxOrderController;
 use App\Http\Controllers\Backend\SlideController;
 use App\Http\Controllers\Backend\OrderController;
+use App\Http\Controllers\Backend\ReviewController;
 
 
 use App\Http\Controllers\Backend\SourceController;
@@ -33,6 +34,7 @@ use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\RouterController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Ajax\MenuController as AjaxMenuController;
+use App\Http\Controllers\Ajax\ReviewController as AjaxReviewController;
 use App\Http\Controllers\Backend\SystemController;
 
 
@@ -52,6 +54,10 @@ use Illuminate\Routing\RouteGroup;
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
 Route::get('{canonical}.html', [RouterController::class, 'index'])->name('router.index');
 Route::get('{canonical}/trang-{page}.html', [RouterController::class, 'page'])->name('router.page');
+
+
+/*FE AJAX */
+Route::get('ajax/product/loadVariant', [AjaxProductController::class, 'loadVariant'])->name('ajax.loadVariant');
 
 
 
@@ -219,8 +225,12 @@ Route::middleware(['admin', 'locale', 'backend_default_locale'])->group(function
         Route::get('create', [MenuController::class, 'create'])->name('menu.create');
         Route::post('store', [MenuController::class, 'store'])->name('menu.store');
         Route::get('edit/{id}', [MenuController::class, 'edit'])->name('menu.edit');
+        Route::get('{id}/editMenu}', [MenuController::class, 'editMenu'])->where(['id' => '[0-9]+'])->name('menu.editMenu');
         Route::post('update/{id}', [MenuController::class, 'update'])->name('menu.update');
-        Route::delete('destroy/{id}', [MenuController::class, 'destroy'])->name('menu.destroy');
+        Route::delete('{id}/delete', [MenuController::class, 'delete'])->where(['id' => '[0-9]+'])->name('menu.delete');
+        Route::delete('destroy/{id}', [MenuController::class, 'destroy'])->where(['id' => '[0-9]+'])->name('menu.destroy');
+        Route::get('{id}/children', [MenuController::class, 'children'])->where(['id' => '[0-9]+'])->name('menu.children');
+        Route::post('{id}/saveChildren', [MenuController::class, 'saveChildren'])->where(['id' => '[0-9]+'])->name('menu.saveChildren');
     });
     Route::group(['prefix' => 'source'], function (){
         Route::get('index', [SourceController::class, 'index'])-> name('source.index');
@@ -247,6 +257,12 @@ Route::middleware(['admin', 'locale', 'backend_default_locale'])->group(function
         Route::get('detail/{id}', [OrderController::class, 'detail'])->name('order.detail');
     });
 
+    Route::group(['prefix' => 'review'], function () {
+        Route::get('index', [ReviewController::class, 'index'])->name('review.index');
+        Route::get('delete/{id}', [ReviewController::class, 'delete'])->name('review.delete');
+        Route::delete('destroy/{id}', [ReviewController::class, 'destroy'])->name('review.destroy');
+    });
+
 
     /* AJAX */
     Route::get('ajax/location/getLocation', [LocationController::class, 'getLocation'])->name('ajax.location.index');
@@ -259,13 +275,12 @@ Route::middleware(['admin', 'locale', 'backend_default_locale'])->group(function
     Route::get('ajax/dashboard/findModelObject', [AjaxDashboardController::class, 'findModelObject'])->name('ajax.dashboard.findModelObject');
     Route::get('ajax/attribute/getAttribute', [AjaxAttributeController::class, 'getAttribute'])->name('ajax.attribute.getAttribute');
     Route::get('ajax/attribute/loadAttribute', [AjaxAttributeController::class, 'loadAttribute'])->name('ajax.attribute.loadAttribute');
-
     Route::get('ajax/attribute/getAttribute', [AjaxAttributeController::class, 'getAttribute'])->name('ajax.attribute.getAttribute');
     Route::get('ajax/attribute/loadAttribute', [AjaxAttributeController::class, 'loadAttribute'])->name('ajax.attribute.loadAttribute');
     Route::post('ajax/menu/createCatalogue', [AjaxMenuController::class, 'createCatalogue'])->name('ajax.menu.createCatalogue');
+    Route::post('ajax/menu/drag', [AjaxMenuController::class, 'drag'])->name('ajax.menu.drag');
     Route::get('ajax/dashboard/getMenu', [AjaxDashboardController::class, 'getMenu'])->name('ajax.dashboard.getMenu');
-
-    Route::post('ajax/order/update', [AjaxOrderController::class, 'update'])->name('ajax.order.update');
+    Route::post('ajax/review/create', [AjaxReviewController::class, 'create'])->name('ajax.dashboard.create');
 
 });
 

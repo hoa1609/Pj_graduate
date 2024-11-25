@@ -61,4 +61,9 @@ class Product extends Model
             'model',
         )->withTimestamps();
     }
+
+    public function reviews()
+    {
+        return $this->morphMany(Review::class, 'reviewable');
+    }
 }

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Services;
+
 use App\Services\Interfaces\BaseServiceInterface;
 use App\Repositories\Interfaces\RouterRepositoryInterface as RouterRepository;
 
@@ -17,30 +18,34 @@ class BaseService  implements BaseServiceInterface
     protected $languageRepository;
     protected $routerRepository;
     protected $controllerName;
-    
+
 
     public function __construct(
         RouterRepository $routerRepository
-    ){
+    ) {
         $this->routerRepository = $routerRepository;
     }
 
 
-    public function formatAlbum($request){
-        return  ($request->input('album') && !empty($request->input('album'))) ? json_encode($request->input('album')) : '';
+    public function formatAlbum($request)
+    {
+        return ($request->input('album') && !empty($request->input('album'))) ? json_encode($request->input('album')) : '';
     }
 
-    public function formatJson($request, $inputName){
-        return  ($request->input($inputName) && !empty($request->input($inputName))) ? json_encode($request->input($inputName)) : '';
+    public function formatJson($request, $inputName)
+    {
+        return ($request->input($inputName) && !empty($request->input($inputName))) ? json_encode($request->input($inputName)) : '';
     }
 
-    public function nestedset(){
+    public function nestedset()
+    {
         $this->nestedset->Get('level ASC, order ASC');
         $this->nestedset->Recursive(0, $this->nestedset->Set());
         $this->nestedset->Action();
     }
 
-    public function formatRouterPayload($model, $request, $controllerName, $languageId){
+    public function formatRouterPayload($model, $request, $controllerName, $languageId)
+    {
         $router = [
             'canonical' => $request->input('canonical'),
             'module_id' => $model->id,
@@ -50,7 +55,8 @@ class BaseService  implements BaseServiceInterface
         return $router;
     }
 
-    public function createRouter($model, $request, $controllerName, $languageId){
+    public function createRouter($model, $request, $controllerName, $languageId)
+    {
         $router = $this->formatRouterPayload($model, $request, $controllerName, $languageId);
         $this->routerRepository->create($router);
     }
@@ -66,5 +72,36 @@ class BaseService  implements BaseServiceInterface
         return $res;
     }
 
+    public function updateStatus($post = [])
+    {
+        DB::beginTransaction();
+        try {
+            $model = lcfirst($post['model']).'Repository';
+            $payload[$post['field']] = (($post['value'] == 1) ? 2 : 1);
+            $post = $this->{$model}->update($post['modelId'], $payload);
 
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollBack();
+            echo $e->getMessage();
+            die();
+            return false;
+        }
+    }
+
+    public function updateStatusAll($post){
+        DB::beginTransaction();
+        try{
+            $model = lcfirst($post['model']).'Repository';
+            $payload[$post['field']] = $post['value'];
+            $flag = $this->{$model}->updateByWhereIn('id', $post['id'], $payload);
+            DB::commit();
+            return true;
+        }catch(\Exception $e ){
+            DB::rollBack();
+            echo $e->getMessage();die();
+            return false;
+        }
+    }
 }

@@ -128,6 +128,17 @@ return [
             ]
         ],
         [
+            'dropdown' => 'sidebarReview',
+            'title' => 'QL Bình luận',
+            'icon' => 'icofont-speech-comments ',
+            'subModule' => [
+                [
+                    'title' => 'QL Bình luận',
+                    'route' => 'review.index'
+                ],
+            ]
+        ],
+        [
             'dropdown' => 'sidebarGeneral',
             'title' => 'Cấu hình chung',
             'icon' => 'fa fa-wrench',

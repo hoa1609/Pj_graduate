@@ -57,6 +57,10 @@ class AppServiceProvider extends ServiceProvider
         'App\Services\Interfaces\ProductVariantLanguageServiceInterface' => 'App\Services\ProductVariantLanguageService',
         'App\Repositories\Interfaces\ProductVariantLanguageRepositoryInterface' => 'App\Repositories\ProductVariantLanguageRepository',
 
+        /* product variant */
+        'App\Services\Interfaces\ProductVariantServiceInterface' => 'App\Services\ProductVariantService',
+        'App\Repositories\Interfaces\ProductVariantRepositoryInterface' => 'App\Repositories\ProductVariantRepository',
+
         /* slide */
         'App\Services\Interfaces\SlideServiceInterface' => 'App\Services\SlideService',
         'App\Repositories\Interfaces\SlideRepositoryInterface' =>'App\Repositories\SlideRepository',
@@ -111,6 +115,10 @@ class AppServiceProvider extends ServiceProvider
         /* Order */
          'App\Services\Interfaces\OrderServiceInterface' => 'App\Services\OrderService',
          'App\Repositories\Interfaces\OrderRepositoryInterface' =>'App\Repositories\OrderRepository',
+
+          /* Review */
+          'App\Services\Interfaces\ReviewServiceInterface' => 'App\Services\ReviewService',
+          'App\Repositories\Interfaces\ReviewRepositoryInterface' =>'App\Repositories\ReviewRepository',
     ];
 
     public function register(): void

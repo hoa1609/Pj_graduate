@@ -597,6 +597,21 @@ input:disabled {
     margin-bottom: 10px;
 }
 
+.create-children-menu{
+    position: absolute;
+    top: 5px;
+    right: 11px;
+    z-index: 1000;
+}
+
+.dd-handle {
+    position: relative;
+    cursor: move;
+}
+
+.expand-collapse-btn {
+    z-index: 9999;
+}
 /* Quyen customize menu */
 
 /* Order */

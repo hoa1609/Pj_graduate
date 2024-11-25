@@ -11,26 +11,27 @@
 @endphp
 <div class="modal-body">
     <div class="row">
-        <div class="col-md-5 col-sm-12 col-xs-12">
-            <!-- Swiper -->
-            <div class="qty-product-cover">
-                @foreach ($gallery as $key =>$val)
-                <div class="qty-slide">
-                    <img class="img-responsive" src="{{ $val }}" alt="">
+        @if (!is_null($gallery))
+            <div class="col-md-5 col-sm-12 col-xs-12 gallery-container">
+                <div class="qty-product-cover">
+                    @foreach ($gallery as $key => $val)
+                        <div class="qty-slide">
+                            <img class="img-responsive" src="{{ $val }}" alt="">
+                        </div>
+                    @endforeach
                 </div>
-                @endforeach
-            </div>
-            <div class="qty-nav-thumb">
-                @foreach ($gallery as $key => $val)
-                <div class="qty-slide-thumb">
-                    <img class="img-thumb" src="{{ $val }}" alt="">
+                <div class="qty-nav-thumb">
+                    @foreach ($gallery as $key => $val)
+                        <div class="qty-slide-thumb">
+                            <img class="img-thumb" src="{{ $val }}" alt="">
+                        </div>
+                    @endforeach
                 </div>
-                @endforeach
             </div>
-        </div>
+        @endif
         <div class="col-md-7 col-sm-12 col-xs-12">
             <div class="quickview-pro-content">
-                <h5 class="ec-quick-title"><a href="product-left-sidebar.html">{{ $name }}</a></h5>
+                <h5 class="ec-quick-title product-main-title">{{ $name }}</h5>
                 <div class="ec-quickview-rating">
                     <i class="ecicon eci-star fill"></i>
                     <i class="ecicon eci-star fill"></i>
@@ -55,3 +56,9 @@
         </div>
     </div>
 </div>
+<input type="hidden" class="attributeCatalogue" value="{{ json_encode($attributeCatalogue) }}">
+<input type="hidden" class="productCanonical" value="{{ write_url($product->languages->first()->pivot->canonical) }}">
+
+
+{{-- Review --}}
+@include('frontend.product.product.component.review', ['model' => $product, 'reviewable' => 'App\Models\Product'])

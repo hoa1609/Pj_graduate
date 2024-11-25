@@ -142,8 +142,10 @@ class SlideController extends Controller
                 'backend/assets/js/select2_4.1.min.js',
                 'backend/plugins/ckfinder_2/ckfinder.js',
                 'backend/assets/library/finder.js',
+                'backend/assets/library/set-up-ui.js',
                 'backend/assets/library/slide.js',
                 'backend/plugins/ckeditor/ckeditor.js',
+                'backend/plugins/jquery-ui.js',
             ],
             'css' => [
                 'backend/assets/css/select2.min.css',
