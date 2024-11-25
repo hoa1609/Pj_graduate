@@ -19,7 +19,6 @@
 <link rel="icon" href="frontend/assets/images/favicon/favicon.png" sizes="32x32" />
 <link rel="stylesheet" href="frontend/assets/css/vendor/ecicons.min.css" />
 {{-- review--}}
-<link rel="stylesheet" href="frontend/assets/css/style.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 {{-- <link rel="stylesheet" href="frontend/assets/css/vendor/ecicons.min.css" /> --}}
 {{-- <link rel="stylesheet" href="frontend/assets/css/style.css" /> --}}

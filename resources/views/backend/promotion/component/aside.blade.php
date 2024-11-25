@@ -16,7 +16,10 @@
                         <label class="form-label col-sm-12 col-form-label">Ngày kết thúc</label>
                         <input class="form-control datepicker" type="datetime-local" name="endDate" id="endDate"
                             value="{{ old('endDate', $model->endDate ?? '') }}"
-                            @if (old('neverEndDate', $model->neverEndDate ?? '') == 'accept') readonly @endif>
+                            @if (old('neverEndDate', $model->neverEndDate ?? '') == 'accept')
+                                readonly
+                                onfocus="this.removeAttribute('readonly');"
+                            @endif>
                     </div>
                 </div>
                 <div class="col-md-12 position-relative pb-2 d-flex align-items-center">
@@ -141,3 +144,17 @@
         >
     @endforeach
 @endif
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+     const neverEndDateCheckbox = document.querySelector('input[name="neverEndDate"]');
+     const endDateInput = document.getElementById('endDate');
+
+     function toggleEndDateInput() {
+         endDateInput.disabled = neverEndDateCheckbox.checked;
+     }
+
+     toggleEndDateInput();
+
+     neverEndDateCheckbox.addEventListener('change', toggleEndDateInput);
+ });
+ </script>

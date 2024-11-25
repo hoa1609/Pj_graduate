@@ -21,20 +21,20 @@ class PromotionRepository extends BaseRepository implements PromotionRepositoryI
     }
 
 
-    public function update(int $id = 0, array $payload = [])
-    {
-        // Tìm đối tượng Promotion dựa trên ID
-        $promotion = $this->findById($id);
+    // public function update(int $id = 0, array $payload = [])
+    // {
+    //     // Tìm đối tượng Promotion dựa trên ID
+    //     $promotion = $this->findById($id);
 
-        if ($promotion) {
-            // Thực hiện cập nhật dữ liệu
-            $promotion->update($payload);
-            // Trả về đối tượng Promotion sau khi cập nhật
-            return $promotion;
-        }
+    //     if ($promotion) {
+    //         // Thực hiện cập nhật dữ liệu
+    //         $promotion->update($payload);
+    //         // Trả về đối tượng Promotion sau khi cập nhật
+    //         return $promotion;
+    //     }
 
-        return false; // Trả về false nếu không tìm thấy promotion
-    }
+    //     return false; // Trả về false nếu không tìm thấy promotion
+    // }
 
 
 
@@ -55,7 +55,7 @@ class PromotionRepository extends BaseRepository implements PromotionRepositoryI
                     IF(promotions.maxdiscountValue != 0,
                         LEAST(
                             CASE
-                            WHEN discountType = 'cash' THEN discountValue 
+                            WHEN discountType = 'cash' THEN discountValue
                             WHEN discountType = 'percent' THEN products.price * discountValue / 100
                             ELSE 0
                             END,
@@ -78,7 +78,7 @@ class PromotionRepository extends BaseRepository implements PromotionRepositoryI
         ->where(function ($query) {
             $query->whereDate('promotions.endDate', '>', now())
                 ->orWhereNull('promotions.endDate')
-                ->orWhere('promotions.neverEndDate', 'accept'); 
+                ->orWhere('promotions.neverEndDate', 'accept');
         })
         ->groupBy(
             'products.id',
@@ -105,7 +105,7 @@ class PromotionRepository extends BaseRepository implements PromotionRepositoryI
                     IF(promotions.maxdiscountValue != 0,
                         LEAST(
                             CASE
-                            WHEN discountType = 'cash' THEN discountValue 
+                            WHEN discountType = 'cash' THEN discountValue
                             WHEN discountType = 'percent' THEN pv.price * discountValue / 100
                             ELSE 0
                             END,
@@ -127,12 +127,12 @@ class PromotionRepository extends BaseRepository implements PromotionRepositoryI
         ->where(function ($query) {
             $query->whereDate('promotions.endDate', '>', now())
                 ->orWhereNull('promotions.endDate')
-                ->orWhere('promotions.neverEndDate', 'accept'); 
+                ->orWhere('promotions.neverEndDate', 'accept');
         })
         ->groupBy(
-            'promotions.id', 
-            'promotions.discountValue', 
-            'promotions.discountType', 
+            'promotions.id',
+            'promotions.discountValue',
+            'promotions.discountType',
             'promotions.maxDiscountValue'
         )
         ->get();

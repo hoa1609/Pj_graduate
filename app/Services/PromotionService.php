@@ -75,15 +75,16 @@ class PromotionService  extends BaseService implements PromotionServiceInterface
         if(is_null($payload['discountType'])){
             $payload['discountType'] = '' ;
         }
-        if (isset($payload['neverEndDate']) && $payload['neverEndDate'] === 'accept') {
-            $payload['endDate'] = null;
-        } elseif (!empty($payload['endDate'])) {
-            try {
-                $payload['endDate'] = Carbon::createFromFormat('d/m/Y H:i', $payload['endDate']);
-            } catch (\Exception $e) {
-                // Log::error("Lỗi: " . $payload['endDate'] . " | Error: " . $e->getMessage());
+        $payload['neverEndDate'] = $request->has('neverEndDate') ? 'accept' : null;
 
-                $payload['endDate'] = Carbon::parse($payload['endDate']);
+        if ($payload['neverEndDate'] === 'accept') {
+            $payload['endDate'] = null;
+        } elseif (!empty($request->input('endDate'))) {
+            try {
+                $payload['endDate'] = Carbon::parse($request->input('endDate'));
+            } catch (\Exception $e) {
+                // Log::error("Lỗi parse endDate: " . $e->getMessage());
+                $payload['endDate'] = null;
             }
         }
         $payload['code'] = (empty($payload['code'])) ? time() : $payload['code'];

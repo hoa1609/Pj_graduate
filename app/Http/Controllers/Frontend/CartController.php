@@ -38,7 +38,7 @@ class CartController extends FrontendController{
             'seo',
             'system',
             'provinces',
-            
+
         ));
     }
 

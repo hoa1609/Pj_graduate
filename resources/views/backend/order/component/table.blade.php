@@ -79,7 +79,8 @@
                                 {{-- {{ array_column(__('payment.method'), 'title', 'name')[$order->method] ?? '-' }}
                                 <input type="hidden" class="confirm" value="{{ $order->confirm }}"> --}}
 
-                                <img class="custom-img" src="{{ array_column(__('payment.method'), 'image', 'name')[$order->method] ?? '-' }}" alt="">
+                                <img class="custom-img" src="{{ array_column(__('payment.method'), 'image', 'name')[$order->method] ?? '-' }}"
+                                        alt="{{ array_column(__('payment.method'), 'title', 'name')[$order->method] ?? '-' }}">
                             </td>
 
                         </tr>
