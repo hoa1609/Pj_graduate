@@ -12,6 +12,7 @@
                 },
                 'target' : _this.attr('data-target')
             }
+            console.log(1232)
 
             HT.sendDataTogetLocation(option)
             
