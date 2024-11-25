@@ -48,7 +48,8 @@ use Illuminate\Routing\RouteGroup;
 
 /*FE ROUTER */
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
-Route::get('{canonical}.html', [RouterController::class, 'index'])->name('router.index');
+Route::get('thanh-toan'.config('apps.general.suffix'), [CartController::class, 'checkout'])->name('cart.checkout');
+Route::get('{canonical}'.config('apps.general.suffix'), [RouterController::class, 'index'])->name('router.index');
 Route::get('{canonical}/trang-{page}.html', [RouterController::class, 'page'])->name('router.page');
 
 

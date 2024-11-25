@@ -182,12 +182,12 @@
 	};
 
 	HT.setupVariantUrl = (res, attribute_id) => {
+		console.log(res)
 		let queryString = '?attribute_id=' + attribute_id.join(',')
 		let productCanonical = $('.productCanonical').val()
 		productCanonical = productCanonical + queryString
 		let stateObject = { attribute_id: attribute_id };
 		history.pushState(stateObject, "Page Title", productCanonical);
-
 		console.log(productCanonical)
 	}
 
