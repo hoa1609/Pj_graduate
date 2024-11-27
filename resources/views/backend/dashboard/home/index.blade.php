@@ -1,165 +1,8 @@
 <div class="container-xxl">
-    <div class="row justify-content-center">
-        <div class="col-md-6 col-lg-4">
-            <div class="card">
-                <div class="card-body">
-                    <div class="row d-flex justify-content-center border-dashed-bottom pb-3">
-                        <div class="col-9">
-                            <p class="text-dark mb-0 fw-semibold fs-14">Sessions</p>
-                            <h3 class="mt-2 mb-0 fw-bold">24k</h3>
-                        </div>
-                        <!--end col-->
-                        <div class="col-3 align-self-center">
-                            <div class="d-flex justify-content-center align-items-center thumb-xl bg-light rounded-circle mx-auto">
-                                <i class="iconoir-hexagon-dice h1 align-self-center mb-0 text-secondary"></i>
-                            </div>
-                        </div>
-                        <!--end col-->
-                    </div>
-                    <!--end row-->
-                    <p class="mb-0 text-truncate text-muted mt-3"><span class="text-success">8.5%</span>
-                        New Sessions Today</p>
-                </div>
-                <!--end card-body-->
-            </div>
-            <!--end card-->
-        </div>
-        <!--end col-->
-        <div class="col-md-6 col-lg-4">
-            <div class="card">
-                <div class="card-body">
-                    <div class="row d-flex justify-content-center border-dashed-bottom pb-3">
-                        <div class="col-9">
-                            <p class="text-dark mb-0 fw-semibold fs-14">Avg.Sessions</p>
-                            <h3 class="mt-2 mb-0 fw-bold">00:18</h3>
-                        </div>
-                        <!--end col-->
-                        <div class="col-3 align-self-center">
-                            <div class="d-flex justify-content-center align-items-center thumb-xl bg-light rounded-circle mx-auto">
-                                <i class="iconoir-clock h1 align-self-center mb-0 text-secondary"></i>
-                            </div>
-                        </div>
-                        <!--end col-->
-                    </div>
-                    <!--end row-->
-                    <p class="mb-0 text-truncate text-muted mt-3"><span class="text-success">1.5%</span>
-                        Weekly Avg.Sessions</p>
-                </div>
-                <!--end card-body-->
-            </div>
-            <!--end card-->
-        </div>
-        <!--end col-->
-        <div class="col-md-6 col-lg-4">
-            <div class="card">
-                <div class="card-body">
-                    <div class="row d-flex justify-content-center border-dashed-bottom pb-3">
-                        <div class="col-9">
-                            <p class="text-dark mb-0 fw-semibold fs-14">Bounce
-                                Rate</p>
-                            <h3 class="mt-2 mb-0 fw-bold">36.45%</h3>
-                        </div>
-                        <!--end col-->
-                        <div class="col-3 align-self-center">
-                            <div class="d-flex justify-content-center align-items-center thumb-xl bg-light rounded-circle mx-auto">
-                                <i class="iconoir-percentage-circle h1 align-self-center mb-0 text-secondary"></i>
-                            </div>
-                        </div>
-                        <!--end col-->
-                    </div>
-                    <!--end row-->
-                    <p class="mb-0 text-truncate text-muted mt-3"><span class="text-danger">8%</span>
-                    Up Bounce Rate Weekly</p>
-                </div>
-                <!--end card-body-->
-            </div>
-            <!--end card-->
-        </div>
-        <!--end col-->
-    </div>
-    
-    <div class="row justify-content-center">
-        <div class="col-md-6 col-lg-8">
-            <div class="card">
-                <div class="card-header">
-                    <div class="row align-items-center">
-                        <div class="col">
-                            <h4 class="card-title">Audience Overview</h4>
-                        </div>
-                        <!--end col-->
-                        <div class="col-auto">
-                            <div class="dropdown">
-                                <a href="#" class="btn bt btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="icofont-calendar fs-5 me-1"></i>
-                                    This Year<i class="las la-angle-down ms-1"></i>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-end">
-                                    <a class="dropdown-item" href="#">Today</a>
-                                    <a class="dropdown-item" href="#">Last Week</a>
-                                    <a class="dropdown-item" href="#">Last Month</a>
-                                    <a class="dropdown-item" href="#">This Year</a>
-                                </div>
-                            </div>
-                        </div>
-                        <!--end col-->
-                    </div>
-                    <!--end row-->
-                </div>
-                <!--end card-header-->
-                <div class="card-body pt-0">
-                    <div id="audience_overview" class="apex-charts"></div>
-                </div>
-                <!--end card-body-->
-            </div>
-            <!--end card-->
-        </div>
-        <!--end col-->
-        <div class="col-md-6 col-lg-4">
-            <div class="card">
-                <div class="card-body">
-                    <div class="row align-items-center">
-                        <div class="col">
-                            <p class="text-dark mb-0 fw-semibold fs-14">New Visitors</p>
-                            <h2 class="mt-0 mb-0 fw-bold">1,282</h2>
-                        </div>
-                        <!--end col-->
-                        <div class="col-auto align-self-center">
-                            <div class="img-group d-flex">
-                                <a class="user-avatar position-relative d-inline-block" href="#">
-                                    <img src="backend/assets/images/users/avatar-1.jpg" alt="avatar" class="thumb-md shadow-sm rounded-circle">
-                                </a>
-                                <a class="user-avatar position-relative d-inline-block ms-n2" href="#">
-                                    <img src="backend/assets/images/users/avatar-2.jpg" alt="avatar" class="thumb-md shadow-sm rounded-circle">
-                                </a>
-                                <a class="user-avatar position-relative d-inline-block ms-n2" href="#">
-                                    <img src="backend/assets/images/users/avatar-4.jpg" alt="avatar" class="thumb-md shadow-sm rounded-circle">
-                                </a>
-                                <a class="user-avatar position-relative d-inline-block ms-n2" href="#">
-                                    <img src="backend/assets/images/users/avatar-3.jpg" alt="avatar" class="thumb-md shadow-sm rounded-circle">
-                                </a>
-                                <a href class="user-avatar position-relative d-inline-block ms-1">
-                                    <span class="thumb-md shadow-sm justify-content-center d-flex align-items-center bg-info-subtle rounded-circle fw-semibold fs-6">+6</span>
-                                </a>
-                            </div>
-                            <small class="text-muted">Logined
-                                Visitors</small>
-                        </div>
-                        <!--end col-->
-                    </div>
-                    <!--end row-->
-                    <div id="visitors_report" class="apex-charts mb-2"></div>
-                    <button type="button" class="btn btn-primary w-100 btn-lg fs-14">More
-                        Detail <i class="fa-solid fa-arrow-right-long"></i>
-                    </button>
-                </div>
-                <!--end card-body-->
-            </div>
-            <!--end card-->
-        </div>
-        <!--end col-->
-    </div>
+    @include('backend.dashboard.component.statistic')
+    @include('backend.dashboard.component.chart')
 
-    <div class="row">
+    {{-- <div class="row">
         <div class="col-lg-6">
             <div class="card card-h-100">
                 <div class="card-header">
@@ -186,14 +29,16 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td><img src="backend/assets/images/logos/chrome.png" alt height="24" class="me-2">Chrome</td>
+                                    <td><img src="backend/assets/images/logos/chrome.png" alt height="24"
+                                            class="me-2">Chrome</td>
                                     <td>10853<small class="text-muted">(52%)</small></td>
                                     <td> 52.80%</td>
                                     <td>566<small class="text-muted">(92%)</small></td>
                                 </tr>
                                 <!--end tr-->
                                 <tr>
-                                    <td><img src="backend/assets/images/logos/micro-edge.png" alt height="24" class="me-2">Microsoft
+                                    <td><img src="backend/assets/images/logos/micro-edge.png" alt height="24"
+                                            class="me-2">Microsoft
                                         Edge</td>
                                     <td>2545<small class="text-muted">(47%)</small></td>
                                     <td> 47.54%</td>
@@ -201,21 +46,24 @@
                                 </tr>
                                 <!--end tr-->
                                 <tr>
-                                    <td><img src="backend/assets/images/logos/in-explorer.png" alt height="24" class="me-2">Internet-Explorer</td>
+                                    <td><img src="backend/assets/images/logos/in-explorer.png" alt height="24"
+                                            class="me-2">Internet-Explorer</td>
                                     <td>1836<small class="text-muted">(38%)</small></td>
                                     <td> 41.12%</td>
                                     <td>455<small class="text-muted">(74%)</small></td>
                                 </tr>
                                 <!--end tr-->
                                 <tr>
-                                    <td><img src="backend/assets/images/logos/opera.png" alt height="24" class="me-2">Opera</td>
+                                    <td><img src="backend/assets/images/logos/opera.png" alt height="24"
+                                            class="me-2">Opera</td>
                                     <td>1958<small class="text-muted">(31%)</small></td>
                                     <td> 36.82%</td>
                                     <td>361<small class="text-muted">(61%)</small></td>
                                 </tr>
                                 <!--end tr-->
                                 <tr>
-                                    <td><img src="backend/assets/images/logos/chrome.png" alt height="24" class="me-2">Chrome</td>
+                                    <td><img src="backend/assets/images/logos/chrome.png" alt height="24"
+                                            class="me-2">Chrome</td>
                                     <td>10853<small class="text-muted">(52%)</small></td>
                                     <td> 52.80%</td>
                                     <td>566<small class="text-muted">(92%)</small></td>
@@ -298,7 +146,8 @@
                         <!--end table-->
                     </div>
                     <!--end /div-->
-                    <p class="m-0 fs-12 fst-italic ps-2 text-muted">Last data updated - 13min ago <a href="#!" class="link-danger ms-1 "><i class="align-middle iconoir-refresh"></i></a></p>
+                    <p class="m-0 fs-12 fst-italic ps-2 text-muted">Last data updated - 13min ago <a href="#!"
+                            class="link-danger ms-1 "><i class="align-middle iconoir-refresh"></i></a></p>
                 </div>
                 <!--end card-body-->
             </div>
@@ -317,7 +166,8 @@
                         <!--end col-->
                         <div class="col-auto">
                             <div class="dropdown">
-                                <a href="#" class="btn bt btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <a href="#" class="btn bt btn-light dropdown-toggle" data-bs-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false">
                                     <i class="icofont-search-user fs-5 me-1"></i>
                                     Direct<i class="las la-angle-down ms-1"></i>
                                 </a>
@@ -365,7 +215,8 @@
                         <!--end col-->
                         <div class="col-auto">
                             <div class="dropdown">
-                                <a href="#" class="btn bt btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <a href="#" class="btn bt btn-light dropdown-toggle" data-bs-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false">
                                     <i class="icofont-calendar fs-5 me-1"></i>
                                     Today<i class="las la-angle-down ms-1"></i>
                                 </a>
@@ -390,7 +241,8 @@
                         <!--end col-->
                         <div class="col-lg-4 align-self-center">
                             <div class="d-flex align-items-center my-3">
-                                <img src="backend/assets/images/flags/us_flag.jpg" class="thumb-sm align-self-center rounded-circle" alt="...">
+                                <img src="backend/assets/images/flags/us_flag.jpg"
+                                    class="thumb-sm align-self-center rounded-circle" alt="...">
                                 <div class="flex-grow-1 ms-2">
                                     <h5 class="mb-1">35,365</h5>
                                     <p class="text-muted mb-0">USA
@@ -399,11 +251,12 @@
                                             <i class="mdi mdi-arrow-up"></i></span>
                                     </p>
                                 </div>
-                                
+
                             </div>
-                            
+
                             <div class="d-flex align-items-center my-3">
-                                <img src="backend/assets/images/flags/germany_flag.jpg" class="thumb-sm align-self-center rounded-circle" alt="...">
+                                <img src="backend/assets/images/flags/germany_flag.jpg"
+                                    class="thumb-sm align-self-center rounded-circle" alt="...">
                                 <div class="flex-grow-1 ms-2">
                                     <h5 class="mb-1">24,865</h5>
                                     <p class="text-muted mb-0">Germany
@@ -412,11 +265,12 @@
                                             <i class="mdi mdi-arrow-up"></i></span>
                                     </p>
                                 </div>
-                                
+
                             </div>
-                            
+
                             <div class="d-flex align-items-center my-3">
-                                <img src="backend/assets/images/flags/spain_flag.jpg" class="thumb-sm align-self-center rounded-circle" alt="...">
+                                <img src="backend/assets/images/flags/spain_flag.jpg"
+                                    class="thumb-sm align-self-center rounded-circle" alt="...">
                                 <div class="flex-grow-1 ms-2">
                                     <h5 class="mb-1">18,369</h5>
                                     <p class="text-muted mb-0">Spain
@@ -425,11 +279,12 @@
                                             <i class="mdi mdi-arrow-up"></i></span>
                                     </p>
                                 </div>
-                                
+
                             </div>
-                            
+
                             <div class="d-flex align-items-center my-3">
-                                <img src="backend/assets/images/flags/baha_flag.jpg" class="thumb-sm align-self-center rounded-circle" alt="...">
+                                <img src="backend/assets/images/flags/baha_flag.jpg"
+                                    class="thumb-sm align-self-center rounded-circle" alt="...">
                                 <div class="flex-grow-1 ms-2">
                                     <h5 class="mb-1">11,325</h5>
                                     <p class="text-muted mb-0">Bahamas
@@ -438,9 +293,9 @@
                                             <i class="mdi mdi-arrow-up"></i></span>
                                     </p>
                                 </div>
-                                
+
                             </div>
-                            
+
                         </div>
                         <!--end col-->
                     </div>
@@ -456,10 +311,11 @@
 </div>
 <div class="offcanvas offcanvas-end" tabindex="-1" id="Appearance" aria-labelledby="AppearanceLabel">
     <div class="offcanvas-header border-bottom justify-content-between">
-    <h5 class="m-0 font-14" id="AppearanceLabel">Appearance</h5>
-    <button type="button" class="btn-close text-reset p-0 m-0 align-self-center" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        <h5 class="m-0 font-14" id="AppearanceLabel">Appearance</h5>
+        <button type="button" class="btn-close text-reset p-0 m-0 align-self-center" data-bs-dismiss="offcanvas"
+            aria-label="Close"></button>
     </div>
-    <div class="offcanvas-body">  
+    <div class="offcanvas-body">
         <h6>Account Settings</h6>
         <div class="p-2 text-start mt-3">
             <div class="form-check form-switch mb-2">
@@ -489,6 +345,6 @@
                 <input class="form-check-input" type="checkbox" id="settings-switch6">
                 <label class="form-check-label" for="settings-switch6">Notifications Popup</label>
             </div><!--end form-switch-->
-        </div><!--end /div-->               
+        </div><!--end /div-->
     </div><!--end offcanvas-body-->
-</div>
+</div> --}}

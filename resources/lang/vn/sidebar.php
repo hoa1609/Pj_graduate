@@ -2,7 +2,13 @@
 
 return [
     'module' => [
-
+        [
+            'dropdown' => 'Dashboard',
+            'title' => 'Dashboard',
+            'icon' => 'fa fa-database',
+            'route' => 'dashboard.index',
+            'class' => 'special',
+        ],
         [
             'dropdown' => 'sidebarProduct',
             'title' => 'QL Mặt hàng',

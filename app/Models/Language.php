@@ -110,7 +110,7 @@ class Language extends Model
         )->withTimestamps();
     }
 
-    // 
+    //
 
     public function systems(){
         return $this->hasMany(System::class, 'language_id', 'id');

@@ -107,6 +107,10 @@ class AppServiceProvider extends ServiceProvider
         // widget
         'App\Services\Interfaces\WidgetServiceInterface' => 'App\Services\WidgetService',
         'App\Repositories\Interfaces\WidgetRepositoryInterface' =>'App\Repositories\WidgetRepository',
+
+        /* order */
+        'App\Services\Interfaces\OrderServiceInterface' => 'App\Services\OrderService',
+        'App\Repositories\Interfaces\OrderRepositoryInterface' => 'App\Repositories\OrderRepository',
     ];
 
     public function register(): void
@@ -134,7 +138,7 @@ class AppServiceProvider extends ServiceProvider
             foreach($composerClass as $key => $val){
                 $composer = app()->make($val, ['language' => $language->id]);
                 $composer->composer($view);
-            }   
+            }
         });
 
 

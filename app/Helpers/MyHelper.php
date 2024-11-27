@@ -1,21 +1,91 @@
 <?php
+if (!function_exists('convertRevenueChartData')) {
+    function convertRevenueChartData($chartData)
+    {
+        $newArray = [];
+        if (!is_null($chartData) && count($chartData)) {
+            foreach ($chartData as $key => $value) {
+                $newArray['data'][] = $value->monthly_revenue;
+                $newArray['label'][] = 'Tháng' . $value->month;
+            }
+        }
+        return  $newArray;
+    }
+}
 
-if (!function_exists('convert_price')) {
-    function convert_price(string $price = '', $flag = false){
-        return ($flag === false) ? str_replace('.','', $price) : number_format($price, 0, ',', '.');
+
+if (!function_exists('safeDivision')) {
+    function safeDivision($numerator, $denominator)
+    {
+        return ($denominator == 0) ? 1 : $denominator;
+    }
+}
+
+if (!function_exists('growth')) {
+    function growth($currentValue, $previousValue)
+    {
+        $division = safeDivision($previousValue, $previousValue);
+
+        $grow = (($currentValue - $previousValue) / $division) * 100;
+
+        return number_format($grow, 1);
+    }
+}
+
+if (!function_exists('cancelRate')) {
+    function cancelRate($totalOrders, $cancelledOrders)
+    {
+        $division = safeDivision($totalOrders, $totalOrders);
+
+        $rate = ($cancelledOrders / $division) * 100;
+
+        return number_format($rate, 1);
+    }
+}
+
+if (!function_exists('growHtml')) {
+    function growHtml($grow)
+    {
+        $icon = $grow > 0 ? 'fa-level-up text-success' : 'fa-level-down text-danger';
+        return '<span class="fa ' . $icon . '">' . $grow . '%</span>';
+    }
+}
+
+if (!function_exists('revenueRate')) {
+    function revenueRate($currentRevenue, $previousRevenue)
+    {
+        $division = safeDivision($previousRevenue, $previousRevenue);
+
+        $rate = ($currentRevenue / $division) * 100;
+
+        return number_format($rate, 1);
+    }
+}
+
+if (! function_exists('convert_price')) {
+    function convert_price($amount, $formatted = false)
+    {
+        $price = number_format($amount, 0, ',', '.');
+
+        if ($formatted) {
+            return '₫ ' . $price;
+        }
+
+        return $price;
     }
 }
 
 if (!function_exists('convert_array')) {
-    function convert_array($system = null, $keyword = '', $value = ''){
+    function convert_array($system = null, $keyword = '', $value = '')
+    {
         $temp = [];
-        if(is_array(($system))){
-            foreach($system as $key => $val){
+        if (is_array(($system))) {
+            foreach ($system as $key => $val) {
                 $system[$val[$keyword]] = $val[$value];
             }
         }
-        if(is_object($system)){
-            foreach($system as $key => $val){
+        if (is_object($system)) {
+            foreach ($system as $key => $val) {
                 $temp[$val->{$keyword}] = $val->{$value};
             }
         }
@@ -24,39 +94,43 @@ if (!function_exists('convert_array')) {
 }
 
 if (!function_exists('pre')) {
-    function pre($data, $exit = false) {
+    function pre($data, $exit = false)
+    {
         echo '<pre>';
         print_r($data);
         echo '</pre>';
         if ($exit) {
-            exit; 
+            exit;
         }
     }
 }
 
 
 if (!function_exists('image')) {
-    function image(string $image = ''){
+    function image(string $image = '')
+    {
         return $image;
     }
 }
 
 
 if (!function_exists('getPercent')) {
-    function getPercent($product = null, $discountValue = 0){
-         return ($product->price > 0) ? round($discountValue/$product->price*100) : 0;
+    function getPercent($product = null, $discountValue = 0)
+    {
+        return ($product->price > 0) ? round($discountValue / $product->price * 100) : 0;
     }
 }
 
 if (!function_exists('getPromotionPrice')) {
-    function getPromotionPrice($priceMain = 0, $discountValue = 0, $discountType = '', $maxDiscountValue = 0) {
+    function getPromotionPrice($priceMain = 0, $discountValue = 0, $discountType = '', $maxDiscountValue = 0)
+    {
         $value = 0;
         if ($discountType == 'percent') {
             $value = ($priceMain * $discountValue / 100);
         } else {
             $value = $discountValue;
         }
-        
+
         $finalDiscount = ($maxDiscountValue > 0) ? min($value, $maxDiscountValue) : $value;
         $priceSale = $priceMain - $finalDiscount;
 
@@ -65,19 +139,20 @@ if (!function_exists('getPromotionPrice')) {
 }
 
 if (!function_exists('getPrice')) {
-    function getPrice($product = null,){
+    function getPrice($product = null,)
+    {
         $result = [
-            'price' => $product->price, 
-            'priceSale' => 0, 
-            'percent' => 0, 
+            'price' => $product->price,
+            'priceSale' => 0,
+            'percent' => 0,
             'html' => '',
         ];
-        if(isset($product->promotions) && isset($product->promotions['discountType'])){
-            $result['percent'] = ($product->promotions['discountType'] == 'percent') ? $product->promotions['discountValue'] : getPercent($product, $product->promotions['discountValue']); 
-            if($product->promotions['discountValue'] > 0){
+        if (isset($product->promotions) && isset($product->promotions['discountType'])) {
+            $result['percent'] = ($product->promotions['discountType'] == 'percent') ? $product->promotions['discountValue'] : getPercent($product, $product->promotions['discountValue']);
+            if ($product->promotions['discountValue'] > 0) {
                 $result['priceSale'] = getPromotionPrice(
-                    $product->price, 
-                    $product->promotions['discountValue'], 
+                    $product->price,
+                    $product->promotions['discountValue'],
                     $product->promotions['discountType'],
                     $product->promotions['maxDiscountValue'],
                 );
@@ -85,11 +160,11 @@ if (!function_exists('getPrice')) {
         }
 
         $result['html'] .= '<span class="ec-price">';
-            $result['html'] .= '<span class="new-price text-danger">'.(($result['priceSale'] > 0) ? convert_price($result['priceSale'], true) : convert_price($result['price'], true)).'₫</span>';
-            if($result['priceSale'] > 0){
-                $result['html'] .= '<span class="old-price">'.convert_price($result['price'], true).'₫</span>';
-                $result['html'] .= '</span>';
-            }
+        $result['html'] .= '<span class="new-price text-danger">' . (($result['priceSale'] > 0) ? convert_price($result['priceSale'], true) : convert_price($result['price'], true)) . '₫</span>';
+        if ($result['priceSale'] > 0) {
+            $result['html'] .= '<span class="old-price">' . convert_price($result['price'], true) . '₫</span>';
+            $result['html'] .= '</span>';
+        }
         return $result;
     }
 }
@@ -97,34 +172,35 @@ if (!function_exists('getPrice')) {
 
 
 if (!function_exists('getVariantPrice')) {
-    function getVariantPrice($variant, $variantPromotion) {
+    function getVariantPrice($variant, $variantPromotion)
+    {
         $result = [
-            'price' => $variant->price, 
-            'priceSale' => 0, 
-            'percent' => 0, 
+            'price' => $variant->price,
+            'priceSale' => 0,
+            'percent' => 0,
             'html' => '',
         ];
 
-        if (!is_null($variantPromotion) && $variantPromotion->isNotEmpty()) { 
+        if (!is_null($variantPromotion) && $variantPromotion->isNotEmpty()) {
             $promotion = $variantPromotion->first();
 
             if ($promotion) {
-                $result['percent'] = ($promotion->discountType == 'percent') 
-                    ? $promotion->discountValue 
+                $result['percent'] = ($promotion->discountType == 'percent')
+                    ? $promotion->discountValue
                     : getPercent($variant, $promotion->discountValue);
 
                 $result['priceSale'] = getPromotionPrice(
-                    $variant->price, 
-                    $promotion->discountValue, 
+                    $variant->price,
+                    $promotion->discountValue,
                     $promotion->discountType,
                     $promotion->maxDiscountValue,
                 );
             }
         }
-        
-        $result['html'] .= '<span class="new-price text-danger">'.(($result['priceSale'] > 0) ? convert_price($result['priceSale'], true) : convert_price($result['price'], true)).'₫</span>';
+
+        $result['html'] .= '<span class="new-price text-danger">' . (($result['priceSale'] > 0) ? convert_price($result['priceSale'], true) : convert_price($result['price'], true)) . '₫</span>';
         if ($result['priceSale'] > 0) {
-            $result['html'] .= '<span class="old-price">'.convert_price($result['price'], true).'₫</span>';
+            $result['html'] .= '<span class="old-price">' . convert_price($result['price'], true) . '₫</span>';
         }
         return $result;
     }
@@ -133,7 +209,8 @@ if (!function_exists('getVariantPrice')) {
 
 
 if (!function_exists('getReview')) {
-    function getReview(string $product = ''){
+    function getReview(string $product = '')
+    {
         return [
             'star' => rand(1, 5),
             'count' => rand(0, 100),
@@ -153,48 +230,53 @@ if (!function_exists('loadClass')) {
     }
 }
 
-if(!function_exists('renderSystemInput')){
-    function renderSystemInput(string $name = '', $systems = null){
+if (!function_exists('renderSystemInput')) {
+    function renderSystemInput(string $name = '', $systems = null)
+    {
         return '<input
-            type="text" 
-            name="config['.$name.']" 
-            value="'.old($name, ($systems[$name] ?? '')).'"
-            class="form-control" 
-            placeholder="nhập nội dung..." 
+            type="text"
+            name="config[' . $name . ']"
+            value="' . old($name, ($systems[$name] ?? '')) . '"
+            class="form-control"
+            placeholder="nhập nội dung..."
         >';
     }
 }
 
-if(!function_exists('renderSystemImages')){
-    function renderSystemImages(string $name = '', $systems = null){
+if (!function_exists('renderSystemImages')) {
+    function renderSystemImages(string $name = '', $systems = null)
+    {
         return '<input
-            type="text" 
-            name="config['.$name.']"  
-            value="'.old($name, ($systems[$name] ?? '')).'"
-            class="form-control upload-image" 
-            placeholder="nhập nội dung..." 
+            type="text"
+            name="config[' . $name . ']"
+            value="' . old($name, ($systems[$name] ?? '')) . '"
+            class="form-control upload-image"
+            placeholder="nhập nội dung..."
         >';
     }
 }
 
-if(!function_exists('renderSystemTextarea')){
-    function renderSystemTextarea(string $name = '', $systems = null){
-        return '<textarea name="config['.$name.']" class="form-control">'.old($name, ($systems[$name] ?? '')).'</textarea>';
+if (!function_exists('renderSystemTextarea')) {
+    function renderSystemTextarea(string $name = '', $systems = null)
+    {
+        return '<textarea name="config[' . $name . ']" class="form-control">' . old($name, ($systems[$name] ?? '')) . '</textarea>';
     }
 }
 
-if(!function_exists('renderSystemLink')){
-    function renderSystemLink(array $item = [], $systems = null){
-        return (isset($item['link'])) ? '<a href="'.$item['link']['href'].'">'.$item['link']['text'].'</a>' : '';
+if (!function_exists('renderSystemLink')) {
+    function renderSystemLink(array $item = [], $systems = null)
+    {
+        return (isset($item['link'])) ? '<a href="' . $item['link']['href'] . '">' . $item['link']['text'] . '</a>' : '';
     }
 }
 
 if (!function_exists('renderSystemSelect')) {
-    function renderSystemSelect(array $item, string $name = '', $systems = null): string {
+    function renderSystemSelect(array $item, string $name = '', $systems = null): string
+    {
         if (!isset($item['option']) || !is_array($item['option'])) {
-            return '<select class="form-control" name="config['.$name.']" ></select>';
+            return '<select class="form-control" name="config[' . $name . ']" ></select>';
         }
-        $result['html'] = '<select class="form-control form-select" name="config['.$name.']" >';
+        $result['html'] = '<select class="form-control form-select" name="config[' . $name . ']" >';
         foreach ($item['option'] as $key => $val) {
             $result['html'] .= '<option value="' . ((isset($systems[$name]) && $key == ($systems[$name] ?? '')) ? 'selected' : '') . '">' . ($val) . '</option>';
         }
@@ -203,20 +285,22 @@ if (!function_exists('renderSystemSelect')) {
     }
 }
 
-if(!function_exists('write_url')){
-    function write_url($canonical = null, bool $fullDomain = true, $suffix = true){
+if (!function_exists('write_url')) {
+    function write_url($canonical = null, bool $fullDomain = true, $suffix = true)
+    {
         $canonical = ($canonical) ?? '';
-        if(strpos($canonical, 'http') !== false){
+        if (strpos($canonical, 'http') !== false) {
             return $canonical;
         }
-        $fullUrl = (($fullDomain === true) ? config('app.url') : '').$canonical.(($suffix == true) ? config('apps.general.suffix') : '');
+        $fullUrl = (($fullDomain === true) ? config('app.url') : '') . $canonical . (($suffix == true) ? config('apps.general.suffix') : '');
         return $fullUrl;
     }
 }
 
-if(!function_exists('seo')){
-    function seo($model = null, $page = 1){
-        $canonical = ($page >1) ? write_url($model->canonical, true, false).'/trang-'.$page.config('apps.general.suffix') : write_url($model->canonical, true, true);
+if (!function_exists('seo')) {
+    function seo($model = null, $page = 1)
+    {
+        $canonical = ($page > 1) ? write_url($model->canonical, true, false) . '/trang-' . $page . config('apps.general.suffix') : write_url($model->canonical, true, true);
         return [
             'meta_title' => ($model->meta_title) ?? $model->name,
             'meta_keyword' => ($model->meta_keyword) ?? '',
@@ -227,32 +311,33 @@ if(!function_exists('seo')){
 }
 
 
-if(!function_exists('frontend_recursive_menu')){
-    function frontend_recursive_menu($data, $parentId = 0){
-    }
+if (!function_exists('frontend_recursive_menu')) {
+    function frontend_recursive_menu($data, $parentId = 0) {}
 }
 
 
 
-if(!function_exists('covertDatetime')) {
-    function coverDatetime(string $data = '', string $format = 'd/m/Y H:i' ){
+if (!function_exists('covertDatetime')) {
+    function coverDatetime(string $data = '', string $format = 'd/m/Y H:i')
+    {
         $carbonDate = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $data);
         return $carbonDate->format($format);
     }
 }
 
-if(!function_exists('renderDiscountInformation')) {
-    function renderDiscountInformation($promotion = []){
-        if($promotion->method === 'product_and_quantity'){
+if (!function_exists('renderDiscountInformation')) {
+    function renderDiscountInformation($promotion = [])
+    {
+        if ($promotion->method === 'product_and_quantity') {
             $discountValue = $promotion->discountInformation['info']['discountValue'];
             $discountType = ($promotion->discountInformation['info']['discountType'] == 'percent') ? '%' : 'đ';
             return '
                 <div class="badge bg-primary text-small">
-                     '.$discountValue. $discountType.'
+                     ' . $discountValue . $discountType . '
                 </div>
                 ';
         }
-        return '<div><a href="'.route('promotion.edit', $promotion->id).'">Xem chi tiết</a></div>';
+        return '<div><a href="' . route('promotion.edit', $promotion->id) . '">Xem chi tiết</a></div>';
     }
 }
 
@@ -262,16 +347,13 @@ if (!function_exists('convertArrayByKey')) {
         $temp = [];
         foreach ($object as $key => $value) {
             foreach ($fields as $field) {
-                if(is_array($object)){
+                if (is_array($object)) {
                     $temp[$field][] = $value[$field];
-                }
-                else
-                {
-                    $extract = explode('.',$field);
-                    if(count($extract) == 2) {
+                } else {
+                    $extract = explode('.', $field);
+                    if (count($extract) == 2) {
                         $temp[$extract[0]][] =   $value->{$extract[1]}->first()->pivot->{$extract[0]};
-
-                    }else {
+                    } else {
                         $temp[$field][] = $value->{$field};
                     }
                 }
@@ -282,33 +364,35 @@ if (!function_exists('convertArrayByKey')) {
 }
 
 if (!function_exists('renderQuickBuy')) {
-    function renderQuickBuy($product, string $canonical = '', string $name = ''){
+    function renderQuickBuy($product, string $canonical = '', string $name = '')
+    {
 
         $class = 'btn-addCart';
         $openModal = '';
-        if(isset($product->product_variants) && count(($product->product_variants))){
+        if (isset($product->product_variants) && count(($product->product_variants))) {
             $class = '';
             $canonical = '#popup';
             $openModal = 'data-uk-modal';
         }
 
-        $html = '<a href="'.$canonical.'" '.$openModal.' class="btn-addCart" data-link-action="quickview" title="'.$name.'" data-bs-toggle="modal" data-bs-target="#ec_quickview_modal">
+        $html = '<a href="' . $canonical . '" ' . $openModal . ' class="btn-addCart" data-link-action="quickview" title="' . $name . '" data-bs-toggle="modal" data-bs-target="#ec_quickview_modal">
             <i class="fi-rr-shopping-basket"></i>
         </a>';
         return $html;
     }
-} 
+}
 
 
 if (!function_exists('recursive')) {
-    function recursive($categories, $parentId = 0) {
+    function recursive($categories, $parentId = 0)
+    {
         $result = [];
         foreach ($categories as $category) {
             if ($category->parent_id == $parentId) {
                 $children = recursive($categories, $category->id);
                 $item = [
-                    'item' => $category,  
-                    'children' => $children,  
+                    'item' => $category,
+                    'children' => $children,
                 ];
                 $result[] = $item;
             }
@@ -318,8 +402,9 @@ if (!function_exists('recursive')) {
 }
 
 
-if(!function_exists('cut_string_and_code')) {
-    function cut_string_and_code($str = null, $n = 200){
+if (!function_exists('cut_string_and_code')) {
+    function cut_string_and_code($str = null, $n = 200)
+    {
         $str = html_entity_decode(($str));
         $str = strip_tags($str);
         $str = cutnchar($str, $n);
@@ -328,16 +413,18 @@ if(!function_exists('cut_string_and_code')) {
 }
 
 if (!function_exists('cutnchar')) {
-    function cutnchar($str, $n) {
+    function cutnchar($str, $n)
+    {
         if (strlen($str) <= $n) {
-            return $str; 
+            return $str;
         }
         return substr($str, 0, $n) . '...';
     }
 }
 
 if (!function_exists('sorString')) {
-    function sorString($string = '') {
+    function sorString($string = '')
+    {
         $extract = explode(',', $string);
         $extract = array_map('trim', $extract);
         sort($extract, SORT_NUMERIC);
@@ -345,4 +432,3 @@ if (!function_exists('sorString')) {
         return $newArray;
     }
 }
-

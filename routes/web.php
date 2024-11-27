@@ -15,6 +15,7 @@ use App\Http\Controllers\Backend\PermissionController;
 use App\Http\Controllers\Backend\ProductCatalogueController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\MenuController;
+use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\Backend\AttributeController;
 use App\Http\Controllers\Backend\AttributeCatalogueController;
 use App\Http\Controllers\Backend\PromotionController;
@@ -31,6 +32,7 @@ use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\RouterController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Ajax\MenuController as AjaxMenuController;
+use App\Http\Controllers\Ajax\OrderController as AjaxOrderController;
 use App\Http\Controllers\Backend\SystemController;
 
 
@@ -244,6 +246,11 @@ Route::middleware(['admin', 'locale', 'backend_default_locale'])->group(function
         Route::delete('destroy/{id}', [PromotionController::class, 'destroy'])->name('promotion.destroy');
     });
 
+    Route::group(['prefix' => 'order'], function () {
+        Route::get('index', [OrderController::class, 'index'])->name('order.index');
+        Route::get('detail/{id}', [OrderController::class, 'detail'])->name('order.detail');
+    });
+
 
     /* AJAX */
     Route::get('ajax/location/getLocation', [LocationController::class, 'getLocation'])->name('ajax.location.index');
@@ -260,7 +267,7 @@ Route::middleware(['admin', 'locale', 'backend_default_locale'])->group(function
     Route::get('ajax/attribute/loadAttribute', [AjaxAttributeController::class, 'loadAttribute'])->name('ajax.attribute.loadAttribute');
     Route::post('ajax/menu/createCatalogue', [AjaxMenuController::class, 'createCatalogue'])->name('ajax.menu.createCatalogue');
     Route::get('ajax/dashboard/getMenu', [AjaxDashboardController::class, 'getMenu'])->name('ajax.dashboard.getMenu');
-
+    Route::get('ajax/order/chart', [AjaxOrderController::class, 'chart'])->name('ajax.dashboard.chart');
 });
 
 
