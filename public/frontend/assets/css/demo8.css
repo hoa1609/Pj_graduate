@@ -14335,6 +14335,24 @@ li {
   position: relative;
   font-family: "Poppins, sans-serif";
 }
+.ec-main-menu > ul > li > a:before {
+  content: "";
+  position: absolute;
+  top: auto;
+  bottom: 0;
+  height: 2px;
+  width: 0;
+  margin: 0 auto;
+  background: transparent;
+  left: 0;
+  right: auto;
+  -webkit-transition: all 0.3s ease 0s;
+  transition: all 0.3s ease 0s;
+}
+*::before {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
 .ec-main-menu ul li .main-label-note-new {
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
@@ -14470,29 +14488,24 @@ li {
   overflow: hidden;
   border-radius: 30px;
 }
-.ec-main-menu ul li.active > a {
-  color: #ff909d !important;
-}
 .ec-main-menu ul li.dropdown {
   position: relative;
 }
 .ec-main-menu ul li.dropdown ul.sub-menu {
-  -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
   min-width: 215px;
   margin-top: 15px;
   padding: 15px 0;
   position: absolute;
   text-align: left;
-  opacity: 0;
   visibility: hidden;
-  left: auto !important;
   background: #ffffff;
-  -webkit-box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.1);
-          box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.1);
   display: block;
   z-index: 9;
-  border-radius: 30px;
+  border-radius: 20px;
+  border: 1px solid #eeeeee;
+  padding: 10px;
+  box-shadow: 5px 10px 18px #d6d6d6;
 }
 .ec-main-menu ul li.dropdown ul.sub-menu .bg {
   width: 100%;
@@ -14514,20 +14527,15 @@ li {
 .ec-main-menu ul li.dropdown ul li a {
   display: block;
   line-height: 20px;
-  padding: 8px 20px;
-  font-weight: 400;
-  font-size: 14px;
-  color: #777;
+  padding: 8px 10px;
+  font-weight: 500;
+  font-size: 17px;
+  color: #484e53;
   text-transform: capitalize;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  align-items: center;
 }
 .ec-main-menu ul li.dropdown ul li .label-note-new {
   -webkit-transition: all 0.3s ease-in-out;
@@ -14600,10 +14608,6 @@ li {
 }
 
 .ec-main-menu > ul > li:hover > a:before {
-  background: #ff909d;
-  width: 100%;
-}
-.ec-main-menu > ul > li.active > a:before {
   background: #ff909d;
   width: 100%;
 }

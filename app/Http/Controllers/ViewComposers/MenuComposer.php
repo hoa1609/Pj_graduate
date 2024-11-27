@@ -20,13 +20,12 @@ class MenuComposer{
     public function composer(View $view){
         $agrument = $this->agrument($this->language);
         $menuCatalogue = $this->menuCatalogueRepository->findByCondition(...$agrument);
-
         $menus = [];
         $htmlType = ['main-menu'];  //customer lại định dạng
-        if(count($menuCatalogue)){
+        if(!is_null($menuCatalogue)){
             foreach($menuCatalogue as $key => $val){
                 $type = (in_array($val->keyword, $htmlType)) ? 'html' : 'array';
-                $menus[$val->keyword] = frontend_recursive_menu(recursive($val->first()->menus), 0, 1, $type); 
+                $menus[$val->keyword] = frontend_recursive_menu(recursive($val->menus), 0, 2, $type); 
             }
         }
         $view->with('menu', $menus);

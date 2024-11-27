@@ -131,13 +131,10 @@
                                 <div class="header-icon"><i class="fi-rr-heart"></i></div>
                                 <span class="ec-header-count">4</span>
                             </a>
-                            <!-- Header wishlist End -->
-                            <!-- Header Cart Start -->
                             <a href="#ec-side-cart" class="ec-header-btn ec-side-toggle">
                                 <div class="header-icon"><i class="fi-rr-shopping-basket"></i></div>
                                 <span class="ec-header-count ec-cart-count cart-count-lable" id="cartTotalItem">1</span>
                             </a>
-                            <!-- Header Cart End -->
                         </div>
                     </div>
                     
@@ -145,21 +142,15 @@
             </div>
         </div>
     </div>
-    <!-- Ec Header Button End -->
-    <!-- Header responsive Bottom  Start -->
     <div class="ec-header-bottom d-lg-none">
         <div class="container position-relative">
             <div class="row">
-
-                <!-- Ec Header Logo Start -->
                 <div class="col">
                     <div class="header-logo">
                         <a href="{{ route('home.index') }}">
                             <img src="{{ $system['homepage_logo'] }}" alt="Site Logo" style="width: 50px" />
                     </div>
                 </div>
-                <!-- Ec Header Logo End -->
-                <!-- Ec Header Search Start -->
                 <div class="col">
                     <div class="header-search">
                         <form class="ec-btn-group-form" action="#">
@@ -168,7 +159,6 @@
                         </form>
                     </div>
                 </div>
-                <!-- Ec Header Search End -->
             </div>
         </div>
     </div>
@@ -176,7 +166,7 @@
     @include('frontend.component.nav-menu')
 
     <!-- menu mobile -->
-    <div id="ec-mobile-menu" class="ec-side-cart ec-mobile-menu">
+    {{-- <div id="ec-mobile-menu" class="ec-side-cart ec-mobile-menu">
         <div class="ec-menu-title">
             <span class="menu_title">My Menu</span>
             <button class="ec-close">×</button>
@@ -409,5 +399,5 @@
                 <!-- Social End -->
             </div>
         </div>
-    </div>
+    </div> --}}
 </header>

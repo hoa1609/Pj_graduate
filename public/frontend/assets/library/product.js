@@ -52,7 +52,7 @@
 					let album = res.variant.album.split(','); 
 					HT.setVariantPrice(res)
 					// HT.setupVariantGallery(album);
-					// HT.setupVariantUrl(res, attribute_id);
+					HT.setupVariantUrl(res, attribute_id);
 				},
 				error: function () {
 				}
@@ -60,16 +60,16 @@
 		}
 	};
 
-	// HT.setupVariantUrl = (res, attribute_id) => {
-	// 	let queryString = '?attribute_id=' + attribute_id.join(',')
-	// 	let productCanonical = $('.productCanonical').val()
-	// 	productCanonical = productCanonical + queryString
-	// 	let stateObject = { attribute_id: attribute_id };
-	// 	history.pushState(stateObject, "Page Title", productCanonical);
-	// }
+	HT.setupVariantUrl = (res, attribute_id) => {
+		let queryString = '?attribute_id=' + attribute_id.join(',')
+		let productCanonical = $('.productCanonical').val()
+		productCanonical = productCanonical + queryString
+		let stateObject = { attribute_id: attribute_id };
+		history.pushState(stateObject, "Page Title", productCanonical);
+	}
 
 	HT.setVariantPrice = (res) =>{
-		$('.quickview-pro-content .ec-price').html(res.variantPrice.html)
+		$('.quickview-pro-content .item-price-detail').html(res.variantPrice.html)
 	}
 
 	// để test lai sao

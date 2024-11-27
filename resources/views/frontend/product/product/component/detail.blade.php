@@ -39,9 +39,12 @@
                     <i class="ecicon eci-star fill"></i>
                     <i class="ecicon eci-star"></i>
                 </div>
-
-                <div class="ec-quickview-desc">{!! $description !!}</div>
-                {!! $price['html'] !!}
+                <div class="ec-quickview-desc">
+                    {!! $description !!}
+                </div>
+                <div class="item-price-detail">
+                    {!! $price['html'] !!}
+                </div>
                 @include('frontend.product.product.component.variant')
                 <div class="ec-quickview-qty">
                     <div class="qty-plus-minus">

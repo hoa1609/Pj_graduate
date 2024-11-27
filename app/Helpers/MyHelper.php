@@ -134,8 +134,8 @@ if (!function_exists('getPrice')) {
             $result['html'] .= '<span class="new-price text-danger">'.(($result['priceSale'] > 0) ? convert_price($result['priceSale'], true) : convert_price($result['price'], true)).'₫</span>';
             if($result['priceSale'] > 0){
                 $result['html'] .= '<span class="old-price">'.convert_price($result['price'], true).'₫</span>';
-                $result['html'] .= '</span>';
             }
+        $result['html'] .= '</span>';
         return $result;
     }
 }
@@ -167,10 +167,12 @@ if (!function_exists('getVariantPrice')) {
             }
         }
 
-        $result['html'] .= '<span class="new-price text-danger">'.(($result['priceSale'] > 0) ? convert_price($result['priceSale'], true) : convert_price($result['price'], true)).'₫</span>';
+        $result['html'] .= '<span class="ec-price">';
+        $result['html'] .= '<span class="new-price text-danger fs-18">'.(($result['priceSale'] > 0) ? convert_price($result['priceSale'], true) : convert_price($result['price'], true)).'₫</span>';
         if ($result['priceSale'] > 0) {
             $result['html'] .= '<span class="old-price">'.convert_price($result['price'], true).'₫</span>';
         }
+        $result['html'] .= '</span>';
         return $result;
     }
 }
@@ -282,14 +284,16 @@ if (!function_exists('frontend_recursive_menu')) {
                     $canonical = write_url($val['item']->languages->first()->pivot->canonical, true, true);
 
                     $ulClass = ($count > 1) ? 'menu-level--' . ($count) : '';
+                    // dd($count);
 
                     $html .= '<li class="dropdown">';
-                    $html .= '<a href="' . $canonical . '" title="' . $name . '">' . $name . '</a>';
-                    if (count($val['children'])) {
-                        $html .= '<ul class="sub-menu position-static ' . $ulClass . '">';
-                        $html .= frontend_recursive_menu($val['children'], $val['item']->parent_id, $count + 1, $type);
-                        $html .= '</ul>';
-                    }
+                        $html .= '<a href="' . $canonical . '" title="' . $name . '">' . $name . '</a>';
+                        if (count($val['children'])) {
+                            $html .= '<ul class="sub-menu ' . $ulClass . '">';
+                                // $html .= '<li><a href="about-us.html">About Us</a></li>';
+                                $html .= frontend_recursive_menu($val['children'], $val['item']->parent_id, $count + 1, $type);
+                            $html .= '</ul>';
+                        }
                     $html .= '</li>';
                 }
                 return $html;

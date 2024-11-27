@@ -1,4 +1,4 @@
-<div id="ec-main-menu-desk" class="d-none d-lg-block sticky-nav">
+<div id="ec-main-menu-desk" class="d-none d-lg-block sticky-nav bg-nav-h">
     <div class="container position-relative">
         <div class="row">
             <div class="col-md-12 align-self-center">

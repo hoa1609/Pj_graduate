@@ -163,6 +163,7 @@ class ProductController extends Controller{
                 'backend/assets/library/variant.js',
                 'backend/assets/library/formatprice-scroll/formatPrice.js',
                 'backend/assets/library/formatprice-scroll/productScroll.js',
+                'backend/assets/library/renameCanonical.js',
                 'backend/assets/library/seo.js',
                 'backend/assets/library/finder.js',
                 'backend/plugins/ckeditor/ckeditor.js',

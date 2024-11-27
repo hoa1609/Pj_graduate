@@ -984,6 +984,12 @@ table, th, td {
 .bg-yellow{
     background-color: #f6f67f;
 }
+.fs-18{
+    font-size: 18px !important;
+}
+.bg-nav-h{
+    background-color: #f8fafc;
+}
 /*  */
 
 
@@ -1087,4 +1093,5 @@ table, th, td {
       transform: translateX(-350px);
     }
   }
+  /* end */
 
