@@ -39,19 +39,20 @@
                                 <div><b>A:</b> {{$order->address}}</div>
                             </td>
                             <td>
-                                {{-- <b>{{ convert_price($order->promotion['discount'], true) }}</b> --}}
-                                 <b>1.000.000</b>
+                                <b>{{ convert_price($order->promotion['discount'], true) }}</b>
                             </td>
                             <td>
                                 <b>{{ convert_price($order->shipping, true) }}</b>
                             </td>
                             <td>
-                                {{-- <b>{{ convert_price($order->cart['cartTotal'], true) }}</b> --}}
-                                 <b>38.000.000</b>
+                                <b>{{ convert_price($order->cart['cartTotal'], true) }}</b>
                             </td>
                             <td>
-                                {!! ($order->confirm != 'cancle') ? __('cart.confirm')[$order->confirm] : '<span
-                                class="cancle-badge badge bg-danger-subtle text-danger"><i class="fas fa-xmark me-1"></i>  '.__('cart.confirm')[$order->confirm].'</span>' !!}
+                                {!! ($order->confirm == 'confirm')
+                                    ? '<span class="badge bg-success-subtle text-success"><i class="fas fa-check me-1"></i> '.__('cart.confirm')[$order->confirm].'</span>'
+                                    : (($order->confirm == 'cancle')
+                                        ? '<span class="cancle-badge badge bg-danger-subtle text-danger"><i class="fas fa-xmark me-1"></i>  '.__('cart.confirm')[$order->confirm].'</span>'
+                                        : __('cart.confirm')[$order->confirm]) !!}
                             </td>
                             @foreach (__('cart') as $keyItem => $item)
                             @if ($keyItem === 'confirm') @continue @endif
@@ -72,9 +73,6 @@
                                     <input type="hidden" class="changeOrderStatus" value="{{ $order->{$keyItem} }}">
                                 </td>
                             @endforeach
-                            {{-- <td>
-                                {{ __('cart.payment')[$order->payment] }}
-                            </td> --}}
                             <td >
                                 <img class="custom-img" src="{{ array_column(__('payment.method'), 'image', 'name')[$order->method] ?? '-' }}"
                                         alt="{{ array_column(__('payment.method'), 'title', 'name')[$order->method] ?? '-' }}">

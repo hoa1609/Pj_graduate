@@ -25,7 +25,7 @@
         .invoice-tr-center{
             border-top-left-radius: 10px;
         }
-        .invoice-table th, 
+        .invoice-table th,
         .invoice-table td {
             border: 1px solid #ddd;
             padding: 10px;
@@ -144,7 +144,7 @@
             margin-bottom: 20px;
         }
         .col {
-           
+
             flex: 1 0 0%;
         }
     </style>
@@ -229,26 +229,26 @@
                                 </table>
                             </div>
                             <div class="info-receiver mt-5">
-                                <div class="text-bold">Tên người nhận: 
+                                <div class="text-bold">Tên người nhận:
                                     <span class="text-normal">{{ $data['order']->fullname }}</span>
                                 </div>
-                                <div class="text-bold">Email: 
+                                <div class="text-bold">Email:
                                     <span class="text-normal">{{ $data['order']->email }}</span>
                                 </div>
-                                <div class="text-bold">Địa chỉ: 
+                                <div class="text-bold">Địa chỉ:
                                     <span class="text-normal">{{ $data['order']->address }}</span>
                                 </div>
-                                <div class="text-bold">Số điện thoại: 
+                                <div class="text-bold">Số điện thoại:
                                     <span class="text-normal">{{ $data['order']->phone }}</span>
                                 </div>
-                                <div class="text-bold">Hình thức thanh toán: 
+                                <div class="text-bold">Hình thức thanh toán:
                                     <span class="text-normal">{{ array_column(__('payment.method'), 'title', 'name')[$data['order']->method] }}</span>
                                 </div>
                                 <div class="text-bold">Khác: </div>
                             </div>
                             <p class="invoice-footer">Cảm ơn bạn đã mua sắm tại cửa hàng của chúng tôi!</p>
                         </div>
-                        
+
                     </div>
                 </div>
             </div>

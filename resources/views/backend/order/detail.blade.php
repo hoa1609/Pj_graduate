@@ -24,7 +24,7 @@
                             </p>
                         </div>
                         <div class="col-auto">
-                            <span class="badge bg-secondary-subtle text-secondary fs-12">
+                            <span class="badge {{ $order->delivery == 'success' ? 'rounded-pill bg-primary' : 'bg-secondary-subtle text-secondary' }} fs-12">
                                 <i class="fas fa-clock me-1"></i> {{ __('cart.delivery')[$order->delivery] }}
                             </span>
                         </div>
@@ -60,7 +60,7 @@
                                             <p class="d-inline-block align-middle mb-0">
                                                 <span
                                                     class="d-block align-middle mb-0 product-name text-body">{{ $name }}</span>
-                                                <span class="text-muted font-13">Chất liệu</span>
+                                                {{-- <span class="text-muted font-13">Chất liệu</span> --}}
                                             </p>
                                         </td>
                                         <td class="text-end">{{ $price }} đ</td>
@@ -176,7 +176,7 @@
                             <h4 class="card-title">Tóm tắt đơn hàng</h4>
                         </div>
                         <div class="col-auto">
-                            <span class="badge rounded text-warning bg-warning-subtle fs-12 p-1">
+                            <span class="badge rounded {{ $order->payment == 'paid' ? 'badge bg-success-subtle text-success' : 'text-warning bg-warning-subtle' }} fs-12 p-1">
                                 {{ __('cart.payment')[$order->payment] }}
                             </span>
                         </div>
@@ -187,13 +187,13 @@
                         <div class="d-flex justify-content-between">
                             <p class="text-body fw-semibold">Tổng tiền :</p>
                             <p class="text-body-emphasis fw-semibold">
-                                {{-- {{ convert_price($order->cart['cartTotal'], true) }} đ --}}
+                                {{ convert_price($order->cart['cartTotal'], true) }} đ
                             </p>
                         </div>
                         <div class="d-flex justify-content-between">
                             <p class="text-body fw-semibold">Giảm giá :</p>
                             <p class="text-danger fw-semibold">
-                                {{-- {{ convert_price($order->promotion['discount'], true) }} đ --}}
+                                {{ convert_price($order->promotion['discount'], true) }} đ
                             </p>
                         </div>
                         <div class="d-flex justify-content-between">
@@ -205,7 +205,7 @@
                     <div class="d-flex justify-content-between">
                         <h4 class="mb-0">Tổng :</h4>
                         <h4 class="mb-0">
-                            {{-- {{ convert_price($order->cart['cartTotal'] - $order->promotion['discount'] , true) }} đ --}}
+                            {{ convert_price($order->cart['cartTotal'] - $order->promotion['discount'] , true) }} đ
                         </h4>
                     </div>
                 </div>

@@ -1,6 +1,6 @@
 @if(count($carts) && !is_null($carts))
                             <div class="cart-product">
-                                
+
                                 @foreach ($carts as $keyCart => $cart)
                                     <div class="row item-product mt-2">
                                         <div class="col-md-3 image-item">
@@ -17,8 +17,8 @@
                                                 <div class="quantity-control">
                                                     <button type="button" class="btn-qty minus">-</button>
                                                     <input type="hidden" class="rowId" value="{{ $cart->rowId }}">
-                                                    <input type="number" 
-                                                        value="{{ $cart->qty }}" 
+                                                    <input type="number"
+                                                        value="{{ $cart->qty }}"
                                                         class="qty-checkout">
                                                     <button type="button" class="btn-qty plus">+</button>
                                                 </div>

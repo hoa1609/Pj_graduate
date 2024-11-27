@@ -65,7 +65,6 @@ class CartService implements CartServiceInterface
                 ];
             }else{
                 $product = $this->productService->combineProductsAndPromotion([$product->id], $product, true);
-                dd($product);
                 $price = getPrice($product);
                 $data['price'] = ($price['priceSale'] > 0) ? $price['priceSale'] : $price['price'];
             }
@@ -233,7 +232,7 @@ class CartService implements CartServiceInterface
             ];
         }catch(\Exception $e ){
             DB::rollBack();
-            // echo $e->getMessage();die();
+            echo $e->getMessage();die();
             return [
                 'order' => null,
                 'flag' => false
