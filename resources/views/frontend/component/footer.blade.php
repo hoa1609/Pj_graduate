@@ -171,7 +171,7 @@
                     <div class="footer-bottom-right">
                         <div class="footer-bottom-payment d-flex justify-content-center">
                             <div class="payment-link">
-                                <img src="assets/images/icons/payment.png" alt="">
+                                {{-- <img src="assets/images/icons/payment.png" alt=""> --}}
                             </div>
 
                         </div>
