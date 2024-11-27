@@ -97,8 +97,11 @@ class AppServiceProvider extends ServiceProvider
        'App\Services\Interfaces\SourceServiceInterface' => 'App\Services\SourceService',
        'App\Repositories\Interfaces\SourceRepositoryInterface' =>'App\Repositories\SourceRepository',
 
-         /* Promotion-Source */
-         'App\Services\Interfaces\CartServiceInterface' => 'App\Services\CartService',
+         /* cart */
+        'App\Services\Interfaces\CartServiceInterface' => 'App\Services\CartService',
+
+         /* order */
+        'App\Repositories\Interfaces\OrderRepositoryInterface' =>'App\Repositories\OrderRepository',
 
         /* Customer */
         'App\Services\Interfaces\CustomerServiceInterface' => 'App\Services\CustomerService',

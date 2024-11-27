@@ -1,10 +1,18 @@
 <?php
 
 if (!function_exists('convert_price')) {
-    function convert_price(string $price = '', $flag = false){
+    function convert_price(mixed  $price = '', $flag = false){
+        if($price === null) return 0;
         return ($flag === false) ? str_replace('.','', $price) : number_format($price, 0, ',', '.');
-    function convert_price(string $price = ''){
-        return str_replace('.', '', $price);
+    }
+}
+
+
+if (!function_exists('convertDateTime')) {
+    function convertDateTime($dateTime, $format = 'd/m/Y H:i') {
+        if(!is_null($dateTime)){
+            $date = new DateTime($dateTime);
+            return $date->format($format);
         }
     }
 }
@@ -153,9 +161,8 @@ if (!function_exists('getVariantPrice')) {
             'html' => '',
         ];
 
-        if (!is_null($variantPromotion) && $variantPromotion->isNotEmpty()) { 
+        if (!is_null($variantPromotion) && !empty($variantPromotion)) { 
             $promotion = $variantPromotion->first();
-
             if ($promotion) {
                 $result['percent'] = ($promotion->discountType == 'percent') 
                     ? $promotion->discountValue 

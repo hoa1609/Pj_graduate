@@ -73,6 +73,9 @@ class PromotionService  extends BaseService implements PromotionServiceInterface
         $payload['discountValue'] = convert_price($request->input(PromotionEnum::PRODUCT_AND_QUANTITY.'.discountValue'));
         $payload['discountType'] = $request->input(PromotionEnum::PRODUCT_AND_QUANTITY.'.discountType');
 
+        if(is_null($payload['discountType'])){
+            $payload['discountType'] = '';
+        }
         if (isset($payload['neverEndDate']) && $payload['neverEndDate'] === 'accept') {
             $payload['endDate'] = null;
         } elseif (!empty($payload['endDate'])) {

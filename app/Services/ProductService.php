@@ -269,6 +269,10 @@ class ProductService extends BaseService implements ProductServiceInterface
         DB::beginTransaction();
         try{
             $productCatalogue = $this->productRepository->delete($id);
+            $this->routerRepository->forceDeleteByCondition([
+                ['module_id', '=', $id],
+                ['controllers', '=', 'App\Http\Controllers\Frontend\ProductController'],
+            ]);
             DB::commit();
             return true;
         }catch(\Exception $e ){

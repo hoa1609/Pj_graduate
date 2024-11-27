@@ -1,8 +1,14 @@
 .uk-flex{
     display: flex;
 }
+.uk-hidden{
+    display: none;
+}
 .uk-align-center{
     align-items: center;
+}
+.uk-content-center{
+    justify-content: center;
 }
 .uk-space-between{
     justify-content: space-between;
@@ -178,8 +184,8 @@ a[data-attributeid]:hover {
     font-weight: 600;
 }
 .text-login{
-    font-weight: 600;
-    color: #0a14d4;
+    font-weight: 500;
+    color: #0810b0;
 }
 .border-h-5{
     border-radius: 50px !important;
@@ -244,8 +250,8 @@ a[data-attributeid]:hover {
 /*  */
 .image-cart-wrapper {
     position: relative;
-    width: 100%; 
-    padding-top: 100%; 
+    width: 80%; 
+    padding-top: 90%; 
     overflow: hidden; 
     border: 1px solid #ddd; 
     border-radius: 8px; 
@@ -280,7 +286,7 @@ a[data-attributeid]:hover {
     font-size: 15px;
 }
 .quantity-control .qty-checkout {
-    border: 1px solid #ccc; 
+    border: 1px solid #484848; 
     border-radius: 10px; 
     padding: 5px 10px; 
     width: 100px;
@@ -315,7 +321,7 @@ a[data-attributeid]:hover {
     display: flex;
     align-items: center;
     background-color: #fff;
-    border: 2px dashed #373737; 
+    border: 1px dashed #373737; 
     border-radius: 15px; 
     overflow: hidden;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
@@ -377,11 +383,9 @@ a[data-attributeid]:hover {
     transition: background-color 0.3s ease;
     display: inline-block;
 }
-
 .apply-voucher:hover {
     background-color: #4e4e4e; 
 }
-
 .apply-voucher:active {
     background-color: #404040; 
 }
@@ -390,3 +394,161 @@ a[data-attributeid]:hover {
     height: 38px !important;
     border-radius: 50px;
 }
+.cart-price-old{
+    text-decoration: line-through;
+    font-size: 12px;
+    text-align: end;
+}
+.cart-price-sale{
+    color: #d70000;
+    font-size: 16px;
+    font-weight: 500;
+    text-align: end;
+}
+.sumary-value{
+    font-size: 18px;
+    color: #d70000;
+    font-weight: 700;
+}
+.qty-checkout::-webkit-inner-spin-button, 
+.qty-checkout::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+.qty-checkout:hover::-webkit-inner-spin-button, 
+.qty-checkout:hover::-webkit-outer-spin-button {
+    display: none;
+}
+.qty-checkout {
+    -moz-appearance: textfield; 
+}
+.quantity-control{
+    position: relative;
+}
+.btn-qty{
+    transform: translate(0, 10%);
+    position: absolute;
+}
+.minus{
+    left: 10px;
+}
+.plus{
+    left: 70px;
+}
+.voucher-price{
+    color: #087c14;
+    font-weight: 500;
+}
+/*  */
+.invoice-container {
+max-width: 800px;
+margin: 0 auto;
+background: #ffffff;
+padding: 20px;
+border-radius: 8px;
+border: 1.5px solid #1e1e1e !important;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.invoice-header p {
+margin: 5px 0;
+color: #555;
+}
+.invoice-table {
+width: 100%;
+border-collapse: collapse;
+color: #313131;
+font-size: 15px;
+}
+.invoice-tr-center{
+    border-top-left-radius: 10px;
+}
+.invoice-table th, 
+.invoice-table td {
+border: 1px solid #ddd;
+padding: 10px;
+text-align: left;
+}
+.invoice-table th {
+background-color: #f4f4f4;
+color: #373737;
+}
+.invoice-footer {
+text-align: center;
+margin-top: 20px;
+font-style: italic;
+font-size: 13px;
+color: #222222;
+}
+.title-invoice{
+    font-size: 20px !important;
+    color: #1e1e1e;
+    text-align: center;
+}
+.invoice-tr-center th{
+    text-align: center;
+}
+.header-inv{
+    font-size: 18px;
+    color: #222222;
+    text-align: center;
+    text-transform: uppercase;
+}
+.prive-other-pr{
+    border: 1.5px solid #60a5fa;
+    padding: 10px 30px;
+    border-radius: 30px;
+    background-color: #3b82f6;
+}
+.text-iv-pro{
+    color: #f1f1f1;
+    font-size: 15px;
+    font-weight: 400;
+}
+.text-iv-pro:hover{
+    color: #f7f7f7;
+}
+.prive-other-pr:hover{
+    background-color: #1d4ed8;
+    transition: .2s ease;
+}
+.code-product, .time-product{
+    font-weight: 500;
+    margin: 5px;
+}
+table, th, td {
+    border: 0 !important;
+}
+.footer-iv{
+    border: 1px dashed #a1a1a1;
+    border-radius: 20px !important;
+}
+.price-iv{
+    font-weight: 500;
+}
+.footer-iv td{
+    padding: 3px 10px !important;
+}
+.iv-total{
+    font-size: 18px;
+    font-weight: 600;
+}
+.total-iv{
+    font-size: 16px;
+    font-weight: 600;
+    color: #c91c08c7 !important;
+}
+.bg-danger-bur{
+    background-color: #ff51001a;
+}
+.info-receiver{
+    padding: 20px;
+    border: 1px solid #313131;
+    border-radius: 20px;
+}
+.text-bold{
+    font-weight: bold;
+}
+.text-normal{
+    font-weight: normal;
+}
+/*  */

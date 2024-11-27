@@ -16,5 +16,15 @@
                 'image' => 'frontend/resources/core/img/momo-icon.webp',
                 'title' =>'Thanh toán qua ví điện tử MOmo'
             ],
+            [
+                'name' => 'shopee',
+                'image' => 'frontend/resources/core/img/shoppe_pay.webp',
+                'title' =>'Thanh toán qua ví điện tử Shopee'
+            ],
+            [
+                'name' => 'vnpay',
+                'image' => 'frontend/resources/core/img/vnpay.webp',
+                'title' =>'Thanh toán qua ví điện tử vnPay'
+            ],
         ]
     ];

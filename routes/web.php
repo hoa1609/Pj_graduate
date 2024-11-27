@@ -52,11 +52,16 @@ Route::get('/', [HomeController::class, 'index'])->name('home.index');
 Route::get('thanh-toan'.config('apps.general.suffix'), [CartController::class, 'checkout'])->name('cart.checkout');
 Route::get('{canonical}'.config('apps.general.suffix'), [RouterController::class, 'index'])->name('router.index');
 Route::get('{canonical}/trang-{page}.html', [RouterController::class, 'page'])->name('router.page');
+Route::post('cart/store', [CartController::class, 'store'])->name('cart.store');
+Route::get('cart/{code}/success'.config('apps.general.suffix'), [CartController::class, 'success'])->name('cart.success');
+
 
 
 /*FE AJAX */
 Route::get('ajax/product/loadVariant', [AjaxProductController::class, 'loadVariant'])->name('ajax.loadVariant');
 Route::post('ajax/cart/create', [AjaxCartController::class, 'create'])->name('ajax.cart.create');
+Route::post('ajax/cart/update', [AjaxCartController::class, 'update'])->name('ajax.cart.update');
+Route::post('ajax/cart/delete', [AjaxCartController::class, 'delete'])->name('ajax.cart.delete');
 Route::get('ajax/location/getLocation', [LocationController::class, 'getLocation'])->name('ajax.location.index');
 
 
