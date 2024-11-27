@@ -133,6 +133,20 @@
         .uk-space-between{
             justify-content: space-between;
         }
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 0;
+            margin-right: -15px;
+            margin-left: -15px;
+        }
+        .mb-4 {
+            margin-bottom: 20px;
+        }
+        .col {
+           
+            flex: 1 0 0%;
+        }
     </style>
 </head>
     <body>
@@ -192,7 +206,7 @@
                                     </tbody>
                                     <tfoot class="footer-iv">
                                         <tr>
-                                            <td colspan="4" class="price-iv text-end">Mã giảm giá</td>
+                                            <td colspan="4" class="price-iv">Mã giảm giá</td>
                                             <td class="text-end">{{ $data['cartPromotion']['selectedPromotion']->code }}</td>
                                         </tr>
                                         <tr>

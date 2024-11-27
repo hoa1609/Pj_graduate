@@ -218,12 +218,13 @@ class CartService implements CartServiceInterface
         try{
             $payload = $this->request($request);
             $order = $this->orderRepository->create($payload);
+            // dd($order);
             if($order->id > 0){
                 $this->createOrderProduct($payload, $order, $request);
                 $this->paymentOnline($payload['method']);
 
-                $this->mail($order, $system);
-                // Cart::instance('shopping')->destroy();
+                // $this->mail($order, $system);
+                Cart::instance('shopping')->destroy();
             }
             DB::commit();
             return [
@@ -256,8 +257,6 @@ class CartService implements CartServiceInterface
             'cartCaculate' => $cartCaculate,
             'cartPromotion' => $cartPromotion,
         ];
-
-
         Mail::to($to)->cc($cc)->send(new OrderMail($data));
     }
 
@@ -305,7 +304,6 @@ class CartService implements CartServiceInterface
 
 
     private function request($request){
-       
         $cartCaculate = $this->reCaculateCart();
         $cartPromotion = $this->cartPromotion($cartCaculate['cartTotal']);
 
@@ -313,10 +311,10 @@ class CartService implements CartServiceInterface
         $payload['code'] = time();
         $payload['cart'] = $cartCaculate;
         $payload['promotion']['discount'] = $cartPromotion['discount'];
-        $payload['promotion']['name'] = $cartPromotion['selectedPromotion']->name;
-        $payload['promotion']['code'] = $cartPromotion['selectedPromotion']->code;
-        $payload['promotion']['startDate'] = $cartPromotion['selectedPromotion']->startDate;
-        $payload['promotion']['endDate'] = $cartPromotion['selectedPromotion']->endDate;
+        $payload['promotion']['name'] = $cartPromotion['selectedPromotion']->name ?? '';
+        $payload['promotion']['code'] = $cartPromotion['selectedPromotion']->code ?? '';
+        $payload['promotion']['startDate'] = $cartPromotion['selectedPromotion']->startDate ?? '';
+        $payload['promotion']['endDate'] = $cartPromotion['selectedPromotion']->endDate ?? '';
         $payload['confirm'] = 'pending';
         $payload['delivery'] = 'pending';
         $payload['payment'] = 'unpaid';
