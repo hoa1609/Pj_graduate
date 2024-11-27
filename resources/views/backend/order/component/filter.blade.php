@@ -32,7 +32,7 @@
                             @php
                                 ${$key} = request($key) ?: old($key);
                             @endphp
-                            <select name="{{ $key }}" class="form-control input-sm perpage filter mr10">
+                            <select name="{{ $key }}" class="form-control form-select mr5 setupSelect2" style="min-width: 190px">
                                 @foreach ($val as $index => $item)
                                     <option {{ ( ${$key} == $index)  ? 'selected' : '' }} value="{{ $index }}">{{ $item }}</option>
                                 @endforeach
