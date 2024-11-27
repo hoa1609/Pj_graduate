@@ -32,28 +32,30 @@ class Order extends Model
         'shipping',
     ];
 
-    protected $carts = [
+
+    protected $casts = [
         'cart' => 'json',
-        'promtion' => 'json',
+        'promotion' => 'json',
     ];
 
+    protected $table = 'orders';
+
+
     public function products(){
-        return $this->belongsToMany(Product::class, 'order_product' , 'order_id', 'product_id')
+        return $this->belongsToMany(Product::class, 'order_product', 'order_id', 'product_id')
         ->withPivot(
             'uuid',
             'name',
             'qty',
             'price',
             'priceOriginal',
-            'promotion',
-            'option'
+            'option',
         )->withTimestamps();
     }
 
-    public function order_payments() {
-        return $this->hasMany(OrderPayment::class, 'order_id', 'id');
+    public function order_payments(){
+        return $this->hasMany(OrderPayment:: class, 'order_id', 'id');
     }
-
 
 
 }

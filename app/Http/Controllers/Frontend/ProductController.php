@@ -62,6 +62,7 @@ class ProductController extends FrontendController{
         return [
             'language' => $this->language,
             'js' => [
+                'frontend/assets/library/product.js',
                 'frontend/assets/library/cart.js',
             ]
         ];

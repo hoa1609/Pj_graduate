@@ -151,9 +151,8 @@ if (!function_exists('getVariantPrice')) {
             'html' => '',
         ];
 
-        if (!is_null($variantPromotion) && $variantPromotion->isNotEmpty()) {
+        if (!is_null($variantPromotion) && !empty($variantPromotion)) {
             $promotion = $variantPromotion->first();
-
             if ($promotion) {
                 $result['percent'] = ($promotion->discountType == 'percent')
                     ? $promotion->discountValue

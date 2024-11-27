@@ -135,7 +135,7 @@
                             <!-- Header Cart Start -->
                             <a href="#ec-side-cart" class="ec-header-btn ec-side-toggle">
                                 <div class="header-icon"><i class="fi-rr-shopping-basket"></i></div>
-                                <span class="ec-header-count ec-cart-count cart-count-lable">3</span>
+                                <span class="ec-header-count ec-cart-count cart-count-lable" id="cartTotalItem">1</span>
                             </a>
                             <!-- Header Cart End -->
                         </div>

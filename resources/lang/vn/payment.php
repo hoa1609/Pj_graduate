@@ -17,15 +17,14 @@
                 'title' => 'Thanh toán qua Ví Momo'
             ],
             [
-                'name' => 'shoppe',
+                'name' => 'shopee',
                 'image' => 'frontend/resources/core/img/shoppe_pay.webp',
-                'title' => 'Thanh toán qua Shoppe Pay'
+                'title' =>'Thanh toán qua ví điện tử Shopee'
             ],
             [
                 'name' => 'vnpay',
                 'image' => 'frontend/resources/core/img/vnpay.webp',
-                'title' => 'Thanh toán qua ví điện tử VNPAY'
+                'title' =>'Thanh toán qua ví điện tử vnPay'
             ],
-        ],
-
+        ]
     ];
