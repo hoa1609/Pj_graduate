@@ -425,6 +425,20 @@ if (!function_exists('sorAttributeId')) {
     }
 }
 
+if (!function_exists('vnpayConfig')) {
+    function vnpayConfig(){
+        return [
+            'vnp_Url' => 'https://sandbox.vnpayment.vn/paymentv2/vpcpay.html',
+            'vnp_Returnurl' => write_url('return/vnpay.html'),
+            'vnp_TmnCode' => 'J1X8XURQ',
+            'vnp_HashSecret' => 'D1JWMZ1KY0I9RZP86O3R82SCY9P82F46',
+            'vnp_apiUrl' => 'http://sandbox.vnpayment.vn/merchant_webapi/merchant.html',
+            'apiUrl' => 'http://sandbox.vnpayment.vn/merchant_webapi/api/transaction',
+        ];
+    }
+}
+
+
 if (!function_exists('getReviewName')) {
     function getReviewName($string, $limit = 2) {
         $string = trim(preg_replace('/\s+/', ' ', $string));
