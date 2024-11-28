@@ -24,7 +24,7 @@ class StoreCartRequest extends FormRequest
         return [
             'fullname' => 'required',
             'phone' => 'required',
-            'email' => 'required|unique:customers|email',
+            'email' => 'required|email',
             'address' => 'required',
             
         ];
@@ -37,7 +37,6 @@ class StoreCartRequest extends FormRequest
             'phone.required' => 'Vui lòng số điện của bạn.',
             'email.required' => 'Bạn chưa nhập email.',
             'email.email' => 'Nhập email chưa đúng. Ví dụ: abc@gmail',
-            'email.unique' => 'Email đã tồn tại! Hãy nhập lại email',
 
             'address.required' => 'Vui lòng nhập địa chỉ cụ thể của bạn.',
             
