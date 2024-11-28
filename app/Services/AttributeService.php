@@ -193,11 +193,11 @@ class AttributeService extends BaseService implements AttributeServiceInterface
 
     private function paginateSelect(){
         return [
-            'attributes.id', 
+            'attributes.id',
             'attributes.publish',
             'attributes.image',
             'attributes.order',
-            'tb2.name', 
+            'tb2.name',
             'tb2.canonical',
         ];
     }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\FrontendController;
 use App\Repositories\Interfaces\SlideRepositoryInterface as SlideRepository;
 use App\Repositories\Interfaces\ProductRepositoryInterface as ProductRepository;
+use App\Services\Interfaces\WidgetServiceInterface as WidgetService;
 
 use Illuminate\Http\Request;
 
@@ -14,14 +15,16 @@ class HomeController extends FrontendController{
     protected $language;
     protected $slideRepository;
     protected $productRepository;
+    protected $widgetService;
 
     public function __construct(
         SlideRepository $slideRepository,
-        ProductRepository $productRepository
+        ProductRepository $productRepository,
+        WidgetService $widgetService,
     ){
         $this->slideRepository = $slideRepository;
         $this->productRepository = $productRepository;
-
+        $this->widgetService = $widgetService;
 
         parent::__construct();
      }
@@ -29,20 +32,15 @@ class HomeController extends FrontendController{
 
 
      public function index(){
-        $config = $this->config();
+         $config = $this->config();
 
+         $widget = [
+            'category' => $this->widgetService->findWidgetByKeyword('category', $this->language, ['children' => true]),
+            // 'blog' => $this->widgetService->findWidgetByKeyword('blog', $this->language),
+         ];
 
         $slides = $this->slideRepository->findByCondition(...$this->slideAgrument());
         $products = $this->productRepository->all(['languages', 'product_variants']);
-        foreach ($products as $product) {
-            foreach ($product->languages as $language) {
-                $pivotName = $language->pivot['name'];
-               
-            }
-        }
-
-
-        
         return view('frontend.homepage.home.index', compact(
             'config',
             'slides',

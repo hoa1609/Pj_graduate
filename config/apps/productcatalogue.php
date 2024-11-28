@@ -1,4 +1,4 @@
-<?php 
+<?php
 	return [
 		'index' => [
 			'title' => 'Quản lý danh mục sản phẩm',

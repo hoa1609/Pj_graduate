@@ -3,13 +3,7 @@
 	var HT = {};
     var _token = $('meta[name="csrf-token"]').attr('content');
 
-    HT.switchery = () => {
-        $('.js-switch').each(function(){
-            // let _this = $(this)
-            var switchery = new Switchery(this, { color: '#1AB394', size: 'small'});
-        })
-    }
-
+   
     HT.select2 = () => {
         if($('.setupSelect2').length){
             $('.setupSelect2').select2();

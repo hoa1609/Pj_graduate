@@ -17823,7 +17823,6 @@ section.ec-instagram-section {
   background-repeat: no-repeat;
   background-size: cover;
 }
-
 .ec-main-slider * {
   direction: ltr;
 }
@@ -17833,7 +17832,6 @@ section.ec-instagram-section {
 .ec-main-slider .swiper-container-horizontal > .swiper-pagination-bullets {
   bottom: 25px;
 }
-
 
 .ec-slide-content .ec-slide-title {
   font-size: 55px;

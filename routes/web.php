@@ -5,6 +5,8 @@ use App\Http\Controllers\Backend\AuthController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Backend\UserRoleController;
+use App\Http\Controllers\Backend\CustomerController;
+use App\Http\Controllers\Backend\CustomerCatalogueController;
 use App\Http\Controllers\Backend\PostCatalogueController;
 use App\Http\Controllers\Backend\LanguageController;
 use App\Http\Controllers\Ajax\LocationController;
@@ -12,40 +14,38 @@ use App\Http\Controllers\Backend\PostController;
 use App\Http\Controllers\Backend\PermissionController;
 use App\Http\Controllers\Backend\ProductCatalogueController;
 use App\Http\Controllers\Backend\ProductController;
+use App\Http\Controllers\Backend\MenuController;
 use App\Http\Controllers\Backend\AttributeController;
 use App\Http\Controllers\Backend\AttributeCatalogueController;
+use App\Http\Controllers\Backend\PromotionController;
 use App\Http\Controllers\Ajax\DashboardController as AjaxDashboardController;
 use App\Http\Controllers\Ajax\AttributeController as AjaxAttributeController;
+use App\Http\Controllers\Ajax\ProductController as AjaxProductController;
+use App\Http\Controllers\Ajax\SourceController as AjaxSourceController;
 use App\Http\Controllers\Backend\SlideController;
 
 
+use App\Http\Controllers\Backend\SourceController;
+use App\Http\Controllers\Backend\WidgetController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\RouterController;
 use App\Http\Controllers\Frontend\CartController;
+use App\Http\Controllers\Ajax\MenuController as AjaxMenuController;
+use App\Http\Controllers\Backend\SystemController;
+
+
+
 
 use Illuminate\Routing\RouteGroup;
 
 
 
-
-/*FRONT END ROUTER */
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
-Route::get('{canonical}'.config('apps.general.suffix'), [RouterController::class, 'index'])->name('router.index');
-
-Route::get('thanh-toan', [CartController::class, 'checkout'])->name('cart.checkout');
-
-
-
-
-
-
-
-
 
 
 
 /*BACK END ROUTER */
-Route::middleware(['admin', 'locale'])->group(function () {
+Route::middleware(['admin', 'locale', 'backend_default_locale'])->group(function () {
     Route::get('dashboard/index', [DashboardController::class, 'index'])->name('dashboard.index');
 
     Route::group(['prefix' => 'user'], function () {
@@ -56,7 +56,6 @@ Route::middleware(['admin', 'locale'])->group(function () {
         Route::get('delete/{id}', [UserController::class, 'delete'])->name('user.delete');
         Route::post('update/{id}', [UserController::class, 'update'])->name('user.update');
         Route::delete('destroy/{id}', [UserController::class, 'destroy'])->name('user.destroy');
-
     });
 
     Route::group(['prefix' => 'user/role'], function () {
@@ -69,6 +68,27 @@ Route::middleware(['admin', 'locale'])->group(function () {
         Route::delete('destroy/{id}', [UserRoleController::class, 'destroy'])->name('user.role.destroy');
         Route::get('permission', [UserRoleController::class, 'permission'])->name('user.role.permission');
         Route::post('updatePermission', [UserRoleController::class, 'updatePermission'])->name('user.role.updatePermission');
+    });
+
+    Route::group(['prefix' => 'customer'], function () {
+        Route::get('index', [CustomerController::class, 'index'])->name('customer.index');
+        Route::get('create', [CustomerController::class, 'create'])->name('customer.create');
+        Route::post('store', [CustomerController::class, 'store'])->name('customer.store');
+        Route::get('edit/{id}', [CustomerController::class, 'edit'])->name('customer.edit');
+        Route::get('delete/{id}', [CustomerController::class, 'delete'])->name('customer.delete');
+        Route::post('update/{id}', [CustomerController::class, 'update'])->name('customer.update');
+        Route::delete('destroy/{id}', [CustomerController::class, 'destroy'])->name('customer.destroy');
+
+    });
+
+    Route::group(['prefix' => 'customer/catalogue'], function () {
+        Route::get('index', [CustomerCatalogueController::class, 'index'])->name('customer.catalogue.index');
+        Route::get('create', [CustomerCatalogueController::class, 'create'])->name('customer.catalogue.create');
+        Route::post('store', [CustomerCatalogueController::class, 'store'])->name('customer.catalogue.store');
+        Route::get('edit/{id}', [CustomerCatalogueController::class, 'edit'])->name('customer.catalogue.edit');
+        Route::post('update/{id}', [CustomerCatalogueController::class, 'update'])->name('customer.catalogue.update');
+        Route::get('delete/{id}', [CustomerCatalogueController::class, 'delete'])->name('customer.catalogue.delete');
+        Route::delete('destroy/{id}', [CustomerCatalogueController::class, 'destroy'])->name('customer.catalogue.destroy');
     });
 
     Route::group(['prefix' => 'permission'], function () {
@@ -167,14 +187,68 @@ Route::middleware(['admin', 'locale'])->group(function () {
         Route::delete('destroy/{id}', [SlideController::class, 'destroy'])-> name('slide.destroy');
     });
 
+    Route::group(['prefix' => 'widget'], function (){
+        Route::get('index', [WidgetController::class, 'index'])-> name('widget.index');
+        Route::get('create', [WidgetController::class, 'create'])-> name('widget.create');
+        Route::post('store', [WidgetController::class, 'store'])-> name('widget.store');
+        Route::get('edit/{id}', [WidgetController::class, 'edit'])-> name('widget.edit');
+        Route::post('update/{id}', [WidgetController::class, 'update'])-> name('widget.update');
+        Route::get('delete/{id}', [WidgetController::class, 'delete'])-> name('widget.delete');
+        Route::delete('destroy/{id}', [WidgetController::class, 'destroy'])-> name('widget.destroy');
+    });
+
+    Route::group(['prefix' => 'system'], function (){
+        Route::get('index', [SystemController::class, 'index'])-> name('system.index');
+        Route::post('store', [SystemController::class, 'store'])-> name('system.store');
+        
+    });
+
+
+    Route::group(['prefix' => 'menu'], function () {
+        Route::get('index', [MenuController::class, 'index'])->name('menu.index');
+        Route::get('create', [MenuController::class, 'create'])->name('menu.create');
+        Route::post('store', [MenuController::class, 'store'])->name('menu.store');
+        Route::get('edit/{id}', [MenuController::class, 'edit'])->name('menu.edit');
+        Route::post('update/{id}', [MenuController::class, 'update'])->name('menu.update');
+        Route::delete('destroy/{id}', [MenuController::class, 'destroy'])->name('menu.destroy');
+    });
+    Route::group(['prefix' => 'source'], function (){
+        Route::get('index', [SourceController::class, 'index'])-> name('source.index');
+        Route::get('create', [SourceController::class, 'create'])-> name('source.create');
+        Route::post('store', [SourceController::class, 'store'])-> name('source.store');
+        Route::get('edit/{id}', [SourceController::class, 'edit'])-> name('source.edit');
+        Route::post('update/{id}', [SourceController::class, 'update'])-> name('source.update');
+        Route::get('delete/{id}', [SourceController::class, 'delete'])-> name('source.delete');
+        Route::delete('destroy/{id}', [SourceController::class, 'destroy'])-> name('source.destroy');
+    });
+
+    Route::group(['prefix' => 'promotion'], function () {
+        Route::get('index', [PromotionController::class, 'index'])->name('promotion.index');
+        Route::get('create', [PromotionController::class, 'create'])->name('promotion.create');
+        Route::post('store', [PromotionController::class, 'store'])->name('promotion.store');
+        Route::get('edit/{id}', [PromotionController::class, 'edit'])->name('promotion.edit');
+        Route::post('update/{id}', [PromotionController::class, 'update'])->name('promotion.update');
+        Route::get('delete/{id}', [PromotionController::class, 'delete'])->name('promotion.delete');
+        Route::delete('destroy/{id}', [PromotionController::class, 'destroy'])->name('promotion.destroy');
+    });
+
 
     /* AJAX */
     Route::get('ajax/location/getLocation', [LocationController::class, 'getLocation'])->name('ajax.location.index');
     Route::post('ajax/dashboard/changeStatus', [AjaxDashboardController::class, 'changeStatus'])->name('ajax.dashboard.changeStatus');
     Route::post('ajax/dashboard/changeStatusAll', [AjaxDashboardController::class, 'changeStatusAll'])->name('ajax.dashboard.changeStatusAll');
+    Route::get('ajax/dashboard/findPromotionObject', [AjaxDashboardController::class, 'findPromotionObject'])->name('ajax.dashboard.findPromotionObject');
+    Route::get('ajax/dashboard/getPromotionConditionValue', [AjaxDashboardController::class, 'getPromotionConditionValue'])->name('ajax.dashboard.getPromotionConditionValue');
+    Route::get('ajax/product/loadProductPromotion', [AjaxProductController::class, 'loadProductPromotion'])->name('ajax.loadProductPromotion');
+    Route::get('ajax/source/getAllSource', [AjaxSourceController::class, 'getAllSource'])->name('ajax.getAllSource');
+    Route::get('ajax/dashboard/findModelObject', [AjaxDashboardController::class, 'findModelObject'])->name('ajax.dashboard.findModelObject');
     Route::get('ajax/attribute/getAttribute', [AjaxAttributeController::class, 'getAttribute'])->name('ajax.attribute.getAttribute');
     Route::get('ajax/attribute/loadAttribute', [AjaxAttributeController::class, 'loadAttribute'])->name('ajax.attribute.loadAttribute');
 
+    Route::get('ajax/attribute/getAttribute', [AjaxAttributeController::class, 'getAttribute'])->name('ajax.attribute.getAttribute');
+    Route::get('ajax/attribute/loadAttribute', [AjaxAttributeController::class, 'loadAttribute'])->name('ajax.attribute.loadAttribute');
+    Route::post('ajax/menu/createCatalogue', [AjaxMenuController::class, 'createCatalogue'])->name('ajax.menu.createCatalogue');
+    Route::get('ajax/dashboard/getMenu', [AjaxDashboardController::class, 'getMenu'])->name('ajax.dashboard.getMenu');
 });
 
 
@@ -184,4 +258,4 @@ Route::post('login', [AuthController::class, 'login'])->name('auth.login');
 Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
 
-    
+

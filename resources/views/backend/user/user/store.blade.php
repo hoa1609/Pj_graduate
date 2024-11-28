@@ -4,10 +4,10 @@
             <div class="card">
                 <div class="card-header">
                     <div class="row align-items-center">
-                        <div class="col">                      
-                            <h4 class="card-title">{{ $config['seo']['title'] }}</h4>                      
+                        <div class="col">
+                            <h4 class="card-title">{{ $config['seo']['title'] }}</h4>
                         </div>
-                    </div>                                    
+                    </div>
                 </div>
                 @include('backend.dashboard.component.errors')
                 @php
@@ -19,10 +19,10 @@
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="mb-3 row">
-                                    <label class="col-sm-2 col-form-label">Tên</label>
+                                    <label class="col-sm-2 col-form-label">Tên<span class="text-danger fs-10"> (*)</span></label>
                                     <div class="col-sm-9">
-                                        <input class="form-control" 
-                                        name="name" 
+                                        <input class="form-control"
+                                        name="name"
                                         type="text"
                                          placeholder="nhập tên..."
                                          value="{{ old('name', ($user-> name) ?? '' ) }}"
@@ -30,22 +30,22 @@
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
-                                    <label class="col-sm-2 col-form-label">Email</label>
+                                    <label class="col-sm-2 col-form-label">Email<span class="text-danger fs-10"> (*)</span></label>
                                     <div class="col-sm-9">
-                                        <input class="form-control" 
+                                        <input class="form-control"
                                         name="email"
-                                        type="text" 
+                                        type="text"
                                         placeholder="nhập email..."
                                         value="{{ old('email', ($user-> email) ?? '' ) }}"
                                         >
                                     </div>
-                                </div> 
+                                </div>
                                 <div class="mb-3 row">
-                                    <label class="col-sm-2 col-form-label">Điện thoại</label>
+                                    <label class="col-sm-2 col-form-label">Điện thoại<span class="text-danger fs-10"> (*)</span></label>
                                     <div class="col-sm-9">
-                                        <input class="form-control" 
+                                        <input class="form-control"
                                         name="phone"
-                                        type="tel" 
+                                        type="tel"
                                         placeholder="nhập số điện thoại"
                                         value="{{ old('phone' , ($user-> phone) ?? '' ) }}"
                                         >
@@ -54,9 +54,9 @@
                                 <div class="mb-3 row">
                                     <label class="col-sm-2 col-form-label">Sinh nhật</label>
                                     <div class="col-sm-9">
-                                        <input class="form-control" 
+                                        <input class="form-control"
                                         name="birthday"
-                                        type="date" 
+                                        type="date"
                                         value="{{ old('birthday', (isset($user-> birthday)) ? date('Y-m-d', strtotime($user-> birthday)) : '') }}"
                                         >
                                     </div>
@@ -64,8 +64,8 @@
                                 <div class="mb-3 row">
                                     <label class="col-sm-2 col-form-label">Ảnh</label>
                                     <div class="col-sm-9">
-                                        <input class="form-control upload-image" 
-                                        name="image" 
+                                        <input class="form-control upload-image"
+                                        name="image"
                                         type="text"
                                          placeholder="nhập ..."
                                          value="{{ old('image', ($user-> image) ?? '' ) }}"
@@ -73,24 +73,24 @@
                                          >
                                     </div>
                                 </div>
-                                
+
                                 @if($config['method'] == 'create' )
                                     <div class="mb-3 row">
-                                        <label class="col-sm-2 col-form-label">Mật khẩu</label>
+                                        <label class="col-sm-2 col-form-label">Mật khẩu<span class="text-danger fs-10"> (*)</span></label>
                                         <div class="col-sm-9">
-                                            <input class="form-control" 
+                                            <input class="form-control"
                                             name="password"
-                                            type="password" 
+                                            type="password"
                                             placeholder="nhập mật khẩu"
                                             >
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
-                                        <label class="col-sm-2 col-form-label">Nhập lại mật khẩu</label>
+                                        <label class="col-sm-2 col-form-label">Nhập lại mật khẩu<span class="text-danger fs-10"> (*)</span></label>
                                         <div class="col-sm-9">
-                                            <input class="form-control"  
+                                            <input class="form-control"
                                             name="re_password"
-                                            type="password" 
+                                            type="password"
                                             placeholder="nhập lại mật khẩu"
                                             >
                                         </div>
@@ -98,13 +98,13 @@
                                 @endif
                             </div>
 
-                            <div class="col-lg-6">  
+                            <div class="col-lg-6">
                                 <div class="row pb-4">
                                     <div class="col-md-12">
-                                        <label class="form-label">Nhóm thành viên</label>
+                                        <label class="form-label">Nhóm thành viên<span class="text-danger fs-10"> (*)</span></label>
                                         <select name="user_role_id" class="form-select" >
                                             @foreach(config('apps.general.roleUser') as $key => $item)
-                                                <option {{$key == old('user_role_id', (isset($user->user_role_id)) ? $user->user_role_id : '') ? 'selected' : '' 
+                                                <option {{$key == old('user_role_id', (isset($user->user_role_id)) ? $user->user_role_id : '') ? 'selected' : ''
                                                     }}  value="{{ $key }}">{{ $item }}
                                                 </option>
                                             @endforeach
@@ -145,7 +145,7 @@
                                             value="{{ old('address', ($user-> address) ?? '' ) }}"
                                             >
                                     </div>
-                                </div>  
+                                </div>
                                 <div class="row pb-4">
                                     <div class="col-md-12">
                                         <label class="form-label">Ghi chú</label>
@@ -157,14 +157,14 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="text-end"> 
+                            <div class="text-end">
                                 <button type="submit" name="send" class="btn btn-primary">Lưu thông tin</button>
                             </div>
                         </div>
-                    </form>               
+                    </form>
                 </div>
             </div>
-        </div>                                                       
+        </div>
     </div>
 </div>
 

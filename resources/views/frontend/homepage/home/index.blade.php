@@ -1,13 +1,13 @@
 @extends('frontend.homepage.layout')
 @section('content')
       @include('frontend.homepage.home.component.slide')
+      @include('frontend.homepage.home.component.productcatelogue')
+      @include('frontend.homepage.home.component.otherproduct')
+      @include('frontend.homepage.home.component.dealofday')
+
       <section class="section ec-product-tab section-space-p">
           <div class="container">
-
             <div class="col-lg-12 col-md-12">
-                @include('frontend.homepage.home.component.otherproduct')
-                @include('frontend.homepage.home.component.dealofday')
-
                 <div class="row space-t-50">
                     <div class="col-md-12">
                         <div class="section-title">

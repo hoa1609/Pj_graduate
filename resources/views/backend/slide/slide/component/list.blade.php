@@ -15,7 +15,7 @@
         $i = 1;
     @endphp
     <div class="card-body pt-0">
-        <div id="sortable" class="row slide-list sortui ui-sortable">
+        <div id="sortable" class="row slide-list sortui ui-sortable-slide">
             <div class="text-danger slide-notification" {{ (is_array($slides) && count($slides) > 0) ? 'hidden' : '' }}>Chưa có hình ảnh nào được chọn...</div>
             @if (is_array($slides) && count($slides))
                 @foreach ($slides['image'] as $key => $val)
@@ -95,7 +95,3 @@
 
         </div>
     </div><!--end card-body-->
-
-
-
-

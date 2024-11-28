@@ -34,11 +34,11 @@
                         <td>
                             <div class="uk-flex flex-direction-column">
                                 <div class="fsz-5 text-overflow">{{ $post->name }}</div>
-                                <div class="uk-flex">
+                                <div class="uk-flex uk-baseline pt-1">
                                     <div class="category">
-                                        <span class="color-note">Nhóm hiển thị: </span>
+                                        <span class="note-tag">Tag: </span>
                                     </div>
-                                    <div class="text-danger">
+                                    <div class="note-tag">
                                         @foreach ($post-> post_catalogues as $val)
                                             @foreach ($val-> post_catalogue_language as $cat)
                                                 <a href="{{ route('post.index', ['post_catalogue_id' => $val-> id]) }}">{{ $cat-> name }} |</a>

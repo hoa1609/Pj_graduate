@@ -38,9 +38,7 @@ class PostController extends Controller{
 
     public function index(Request $request){$this->authorize('modules', 'post.index');
 
-        $config = [
-            'model' => 'Post',
-        ];
+        $config = $this->configIndex();
         $perPage = $request->integer('perpage');
         $posts = $this->postService->paginate($request, $this->language);
         $dropdown = $this->nestedset->Dropdown();
@@ -57,6 +55,8 @@ class PostController extends Controller{
 
     public function create(){
         $this->authorize('modules', 'post.create');
+
+        $config = $this->configStore();
         $config['method'] = 'create';
         $config['seo'] = config('apps.post.create');
         $dropdown = $this->nestedset->Dropdown();
@@ -80,6 +80,8 @@ class PostController extends Controller{
     public function edit($id){
         $this->authorize('modules', 'post.edit');
         $post = $this->postRepository->getPostById($id, $this->language);
+
+        $config = $this->configStore();
         $config['method'] = 'edit';
         $config['seo'] = config('apps.post.edit');
         $album = json_decode($post->album);
@@ -130,5 +132,34 @@ class PostController extends Controller{
             'language_id' =>  $this->language,
         ]);
     } 
+
+
+    private function configIndex(){
+        return [
+            'js' => [
+                'backend/assets/js/select2_4.1.min.js',
+            ],
+            'css' => [
+                'backend/assets/css/select2.min.css',
+            ],
+            'model' => 'Post'
+        ];
+    }
+
+    private function configStore(){
+        return [
+            'js' => [
+                'backend/assets/js/select2_4.1.min.js',
+                'backend/plugins/ckfinder_2/ckfinder.js',
+                'backend/assets/library/seo.js',
+                'backend/assets/library/finder.js',
+                'backend/plugins/ckeditor/ckeditor.js',
+                'backend/plugins/nice-select/js/jquery.nice-select.min.js',
+            ],
+            'css' => [
+                'backend/assets/css/select2.min.css',
+            ],
+        ];
+    }
 
 }

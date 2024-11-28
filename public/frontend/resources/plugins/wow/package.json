@@ -47,5 +47,8 @@
   },
   "scripts": {
     "test": "grunt travis"
+  },
+  "dependencies": {
+    "wow.js": "file:"
   }
 }

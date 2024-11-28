@@ -31,6 +31,7 @@ class LanguageController extends Controller{
     public function index(Request $request){
         $this->authorize('modules', 'language.index');
 
+        $config = $this->configIndex();
         $languages = $this->languageService->paginate($request);
         $config['seo'] = config('apps.language.index');
         $template = 'backend.language.index';
@@ -159,6 +160,17 @@ class LanguageController extends Controller{
             $repositoryInstance = app($repositoryNamespace);
         }
         return $repositoryInstance ?? null;
+    }
+    
+    private function configIndex(){
+        return [
+            'js' => [
+                'backend/assets/js/select2_4.1.min.js',
+            ],
+            'css' => [
+                'backend/assets/css/select2.min.css',
+            ],
+        ];
     }
 
 }

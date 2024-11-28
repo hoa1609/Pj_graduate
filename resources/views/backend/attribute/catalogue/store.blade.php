@@ -126,7 +126,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="text-end">
+                <div class="text-end fixed-save-product">
                     <button type="submit" name="send" class="btn btn-primary">Lưu thông tin</button>
                 </div>
             </div>

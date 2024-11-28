@@ -30,10 +30,10 @@ class UserController extends Controller{
 
     public function index(Request $request){
         $this->authorize('modules', 'user.index');
-
         $perPage = $request->integer('perPage', 10);
         $users = $this->userService->paginate($request, $perPage);
         
+        $config = $this->configIndex();
         $config['seo'] = config('apps.user.index');
         $template = 'backend.user.user.index';
         return view('backend.dashboard.layout', compact(
@@ -46,11 +46,10 @@ class UserController extends Controller{
 
     public function create(){
         $this->authorize('modules', 'user.create');
-
         $provinces = $this->provinceRepository->all();
+        $config = $this->configStore();
         $config['method'] = 'create';
         $config['seo'] = config('apps.user.create');
-
         $template = 'backend.user.user.store';
         return view('backend.dashboard.layout', compact(
             'config',
@@ -70,12 +69,11 @@ class UserController extends Controller{
 
     public function edit($id){
         $this->authorize('modules', 'user.edit');
-
         $user = $this->userRepository->findById($id);
         $provinces = $this->provinceRepository->all();
+        $config = $this->configStore();
         $config['method'] = 'edit';
         $config['seo'] = config('apps.user.edit');
-
         $template = 'backend.user.user.store';
         return view('backend.dashboard.layout', compact(
             'config',
@@ -111,5 +109,31 @@ class UserController extends Controller{
             return redirect()->route('user.index')->with('success', 'Xóa thành viên thành công !');
         }
         return redirect()->route('user.index')->with('error', 'Xóa thành viên thất bại !');
+    }
+
+    private function configIndex(){
+        return [
+            'js' => [
+                'backend/assets/js/select2_4.1.min.js',
+            ],
+            'css' => [
+                'backend/assets/css/select2.min.css',
+            ],
+            'model' => 'User'
+        ];
+    }
+
+    private function configStore(){
+        return [
+            'js' => [
+                'backend/assets/js/select2_4.1.min.js',
+                'backend/assets/library/location.js',
+                'backend/plugins/ckfinder_2/ckfinder.js',
+                'backend/assets/library/finder.js',
+            ],
+            'css' => [
+                'backend/assets/css/select2.min.css',
+            ],
+        ];
     }
 }

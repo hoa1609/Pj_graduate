@@ -109,4 +109,12 @@ class Language extends Model
             'name',
         )->withTimestamps();
     }
+
+    // 
+
+    public function systems(){
+        return $this->hasMany(System::class, 'language_id', 'id');
+    }
+
+
 }
