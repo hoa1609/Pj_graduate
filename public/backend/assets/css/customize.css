@@ -69,7 +69,6 @@ table strong {
 .btn {
     margin-bottom: 0 !important;
     font-size: 13px;
-    border-radius: 0;
     height: 32px;
 }
 .filter-wrapper .form-control {
@@ -647,5 +646,10 @@ div.cancle-edit,
     -webkit-transition: var(--bs-progress-bar-transition);
     transition: var(--bs-progress-bar-transition)
 }
+/* #barChart {
+    width: 70% !important; 
+    height: auto;        
+    margin: 0 auto;       
+} */
 
 /* end Order */

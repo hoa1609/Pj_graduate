@@ -15,6 +15,7 @@ use App\Http\Controllers\Backend\PermissionController;
 use App\Http\Controllers\Backend\ProductCatalogueController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\MenuController;
+use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\Backend\AttributeController;
 use App\Http\Controllers\Backend\AttributeCatalogueController;
 use App\Http\Controllers\Backend\PromotionController;
@@ -22,9 +23,7 @@ use App\Http\Controllers\Ajax\DashboardController as AjaxDashboardController;
 use App\Http\Controllers\Ajax\AttributeController as AjaxAttributeController;
 use App\Http\Controllers\Ajax\ProductController as AjaxProductController;
 use App\Http\Controllers\Ajax\SourceController as AjaxSourceController;
-use App\Http\Controllers\Ajax\OrderController as AjaxOrderController;
 use App\Http\Controllers\Backend\SlideController;
-use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\Backend\ReviewController;
 
 
@@ -36,6 +35,7 @@ use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Ajax\CartController as AjaxCartController;
 use App\Http\Controllers\Ajax\MenuController as AjaxMenuController;
 use App\Http\Controllers\Ajax\ReviewController as AjaxReviewController;
+use App\Http\Controllers\Ajax\OrderController as AjaxOrderController;
 use App\Http\Controllers\Backend\SystemController;
 
 
@@ -291,6 +291,7 @@ Route::middleware(['admin', 'locale', 'backend_default_locale'])->group(function
     Route::post('ajax/review/create', [AjaxReviewController::class, 'create'])->name('ajax.dashboard.create');
     Route::post('ajax/order/update', [AjaxOrderController::class, 'update'])->name('ajax.dashboard.update');
 
+    Route::get('ajax/order/chart', [AjaxOrderController::class, 'chart'])->name('ajax.dashboard.chart');
 });
 
 

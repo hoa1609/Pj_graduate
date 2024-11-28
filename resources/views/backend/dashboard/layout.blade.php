@@ -12,13 +12,13 @@
 
     <div class="page-wrapper">
         <div class="page-content">
-            
+
             @include($template)
             @include('backend.dashboard.component.footer')
 
         </div>
     </div>
-    
+
     @include('backend.dashboard.component.script')
 
 </body>

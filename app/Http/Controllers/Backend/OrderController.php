@@ -28,9 +28,7 @@ class OrderController extends Controller{
 
     public function index(Request $request){
         $this->authorize('modules', 'order.index');
-
-        $perPage = $request->integer('perPage', 10);
-        $orders = $this->orderService->paginate($request, $perPage, 1);
+        $orders = $this->orderService->paginate($request);
 
         // $config['seo'] = __('messages.menu');
         $config = $this->configIndex();

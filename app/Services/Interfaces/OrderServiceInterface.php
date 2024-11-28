@@ -9,4 +9,5 @@ namespace App\Services\Interfaces;
 interface OrderServiceInterface
 {
     public function paginate($request);
+    public function orderStatistic();
 }

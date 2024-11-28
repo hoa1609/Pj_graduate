@@ -18,11 +18,8 @@ class OrderController extends Controller {
         $this->orderRepository = $orderRepository;
     }
 
-    public function update(Request $request)
-    {
-
+    public function update(Request $request){
         if($this->orderService->update($request)) {
-
             $order = $this->orderRepository->getOrderById($request->input('id'));
             return response()->json([
                 'error' => 10,
@@ -30,14 +27,15 @@ class OrderController extends Controller {
                 'order' => $order
             ]);
         }
-
         return response()->json([
             'error' => 11,
             'messages' => 'Cập nhật dữ liệu thất bại'
         ]);
-
     }
 
-    
+    public function chart(Request $request){
+        $chart = $this->orderService->ajaxOrderChart($request);
+        return response()->json($chart);
+    }
 
 }
