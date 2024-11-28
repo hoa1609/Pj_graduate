@@ -10,14 +10,17 @@ use App\Repositories\Interfaces\OrderRepositoryInterface as OrderRepository;
 use App\Services\CartService;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
+use App\Classes\Vnpay;
 
-class CartController extends FrontendController{
+class CartController extends FrontendController
+{
 
     protected $system;
     protected $provinceRepository;
     protected $promotionRepository;
     protected $orderRepository;
     protected $cartService;
+    protected $vnpay;
 
 
     public function __construct(
@@ -25,15 +28,18 @@ class CartController extends FrontendController{
         PromotionRepository $promotionRepository,
         OrderRepository $orderRepository,
         CartService $cartService,
-    ){
+        Vnpay $vnpay,
+    ) {
         $this->provinceRepository = $provinceRepository;
         $this->promotionRepository = $promotionRepository;
         $this->orderRepository = $orderRepository;
         $this->cartService = $cartService;
+        $this->vnpay = $vnpay;
         parent::__construct();
     }
 
-    public function checkout(){
+    public function checkout()
+    {
         $provinces = $this->provinceRepository->all();
         $carts = Cart::instance('shopping')->content();
         $carts = $this->cartService->remakeCart($carts);
@@ -61,16 +67,22 @@ class CartController extends FrontendController{
         ));
     }
 
-    public function store(StoreCartRequest $request){
+    public function store(StoreCartRequest $request)
+    {
         $system = $this->system;
         $order = $this->cartService->order($request, $system);
-        if($order['flag']){
+        if ($order['flag']) {
+            $response = $this->vnpay->payment($order['order']);
+            if ($response['code'] == 00) {
+                return redirect()->away($response['url']);
+            }
             return redirect()->route('cart.success', ['code' => $order['order']->code])->with('success', 'Đặt hàng thành công!');
         }
         return redirect()->route('cart.checkout')->with('error', 'Đặt hàng không thành công!');
     }
 
-    public function success($code){
+    public function success($code)
+    {
         $order = $this->orderRepository->findByCondition([
             ['code', '=', $code]
         ], false, ['products']);
@@ -94,13 +106,15 @@ class CartController extends FrontendController{
 
 
 
-    private function cartConfig(){
+    private function cartConfig()
+    {
         return [
             'cartTotal' => Cart::instance('shopping')->total(),
         ];
     }
 
-    private function config(){
+    private function config()
+    {
         return [
             'language' => $this->language,
             'js' => [
@@ -109,6 +123,4 @@ class CartController extends FrontendController{
             ]
         ];
     }
-
-
 }

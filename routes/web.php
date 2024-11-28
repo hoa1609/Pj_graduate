@@ -32,6 +32,7 @@ use App\Http\Controllers\Backend\WidgetController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\RouterController;
 use App\Http\Controllers\Frontend\CartController;
+use App\Http\Controllers\Frontend\VnpayController;
 use App\Http\Controllers\Ajax\CartController as AjaxCartController;
 use App\Http\Controllers\Ajax\MenuController as AjaxMenuController;
 use App\Http\Controllers\Ajax\ReviewController as AjaxReviewController;
@@ -58,6 +59,10 @@ Route::get('{canonical}'.config('apps.general.suffix'), [RouterController::class
 Route::get('{canonical}/trang-{page}.html', [RouterController::class, 'page'])->name('router.page');
 Route::post('cart/store', [CartController::class, 'store'])->name('cart.store');
 Route::get('cart/{code}/success'.config('apps.general.suffix'), [CartController::class, 'success'])->name('cart.success');
+
+/*VNPAY */
+Route::get('return/vnpay'.config('apps.general.suffix'), [VnpayController::class, 'vnpay_return'])->name('vnpay.vnpay_return');
+Route::get('return/vnpay_ipn'.config('apps.general.suffix'), [VnpayController::class, 'vnpay_ipn'])->name('vnpay.vnpay_ipn');
 
 
 

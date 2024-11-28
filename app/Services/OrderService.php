@@ -74,6 +74,20 @@ class OrderService extends BaseService implements OrderServiceInterface
         }
     }
 
+    public function updateVnpay($payload, $order)
+    {
+        DB::beginTransaction();
+        try{
+            $this->orderRepository->update($order->id, $payload );
+            DB::commit();
+            return true;
+        }catch(\Exception $e ){
+            DB::rollBack();
+            echo $e->getMessage();die();
+            return false;
+        }
+    }
+
 
     private function paginateSelect(){
        return [

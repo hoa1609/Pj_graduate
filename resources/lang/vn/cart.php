@@ -10,6 +10,7 @@
             'none' => 'Tình trạng thanh toán',
             'unpaid' => 'Chưa thanh toán',
             'paid' => 'Đã thanh toán',
+            'failed' => 'Không thành công',
         ],
         'delivery' => [
             'none' => 'Tình trạng giao hàng',
