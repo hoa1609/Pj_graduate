@@ -217,7 +217,6 @@ class CartService implements CartServiceInterface
         try{
             $payload = $this->request($request);
             $order = $this->orderRepository->create($payload);
-            // dd($order);
             if($order->id > 0){
                 $this->createOrderProduct($payload, $order, $request);
                 // $this->paymentOnline($payload['method']);
