@@ -222,7 +222,7 @@ class CartService implements CartServiceInterface
                 // $this->paymentOnline($payload['method']);
 
                 // $this->mail($order, $system);
-                Cart::instance('shopping')->destroy();
+                // Cart::instance('shopping')->destroy();
             }
             DB::commit();
             return [
@@ -231,7 +231,6 @@ class CartService implements CartServiceInterface
             ];
         }catch(\Exception $e ){
             DB::rollBack();
-            // echo $e->getMessage();die();
             return [
                 'order' => null,
                 'flag' => false
@@ -257,26 +256,6 @@ class CartService implements CartServiceInterface
         ];
         Mail::to($to)->cc($cc)->send(new OrderMail($data));
     }
-
-    // private function paymentOnline($method = ''){
-    //     switch ($method){
-    //         case 'zalo':
-    //             $this->zaloPay();
-    //             break;
-    //         case 'momo':
-    //             $this->momoPay();
-    //             break;
-    //         case 'shopee':
-    //             $this->shopeePay();
-    //             break;
-    //         case 'vnpay':
-    //             $this->vnPay();
-    //             break;
-    //         case 'paypal':
-    //             $this->paypal();
-    //             break;
-    //     }
-    // }
 
 
     private function createOrderProduct($payload, $order, $request){

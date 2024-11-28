@@ -568,3 +568,26 @@ if (!function_exists('generateStar')) {
         return $ouput;
     }
 }
+
+
+if (!function_exists('execPostRequest')) {
+    function execPostRequest($url, $data, $headers = []) {
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array_merge([
+            'Content-Type: application/json',
+        ], $headers));
+    
+        $result = curl_exec($ch);
+        if (curl_errno($ch)) {
+            return curl_error($ch); // Ghi log lỗi
+        }
+        curl_close($ch);
+    
+        return $result;
+    }
+    
+
+}

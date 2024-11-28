@@ -9,8 +9,8 @@ use App\Repositories\Interfaces\PromotionRepositoryInterface as PromotionReposit
 use App\Repositories\Interfaces\OrderRepositoryInterface as OrderRepository;
 use App\Services\CartService;
 use Gloudemans\Shoppingcart\Facades\Cart;
-use Illuminate\Http\Request;
 use App\Classes\Vnpay;
+use App\Classes\Momo;
 
 class CartController extends FrontendController
 {
@@ -21,6 +21,7 @@ class CartController extends FrontendController
     protected $orderRepository;
     protected $cartService;
     protected $vnpay;
+    protected $momo;
 
 
     public function __construct(
@@ -29,12 +30,14 @@ class CartController extends FrontendController
         OrderRepository $orderRepository,
         CartService $cartService,
         Vnpay $vnpay,
+        Momo $momo,
     ) {
         $this->provinceRepository = $provinceRepository;
         $this->promotionRepository = $promotionRepository;
         $this->orderRepository = $orderRepository;
         $this->cartService = $cartService;
         $this->vnpay = $vnpay;
+        $this->momo = $momo;
         parent::__construct();
     }
 
@@ -67,13 +70,12 @@ class CartController extends FrontendController
         ));
     }
 
-    public function store(StoreCartRequest $request)
-    {
+    public function store(StoreCartRequest $request){
         $system = $this->system;
         $order = $this->cartService->order($request, $system);
         if ($order['flag']) {
-            $response = $this->vnpay->payment($order['order']);
-            if ($response['code'] == 00) {
+            $response = $this->paymentMethod($order);
+            if ($response['errorCode'] == 0) {
                 return redirect()->away($response['url']);
             }
             return redirect()->route('cart.success', ['code' => $order['order']->code])->with('success', 'Đặt hàng thành công!');
@@ -101,6 +103,21 @@ class CartController extends FrontendController
             'system',
             'order',
         ));
+    }
+     
+
+    public function paymentMethod($order = null){
+        switch ($order['order']->method) {
+            case 'vnpay':
+                $response = $this->vnpay->payment($order['order']);
+                break;
+            case 'momo':
+                $response = $this->momo->payment($order['order']);
+                break;
+        default:
+            
+        }
+        return $response;
     }
 
 
