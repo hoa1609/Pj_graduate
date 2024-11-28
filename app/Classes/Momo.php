@@ -18,8 +18,8 @@ class Momo
         $orderInfo = "Thanh toán qua MoMo";
         $amount = (string)($order->cart['cartTotal'] - $order->promotion['discount']);
 
-        $returnUrl = "https://4amstyle.com/return/momo";
-        $notifyurl = "https://4amstyle.com/return/ipn";
+        $returnUrl = "http://4amstyle.com/return/momo";
+        $notifyurl = "http://4amstyle.com/return/momo_ipn";
         // Lưu ý: link notifyUrl không phải là dạng localhost
         $bankCode = "";
         $orderid = $order->code;
@@ -70,6 +70,7 @@ class Momo
 
             $result = execPostRequest($endpoint, json_encode($data));
             $jsonResult = json_decode($result, true); 
+            // dd($jsonResult);
             $jsonResult['url'] = $jsonResult['payUrl'];
             return $jsonResult;
         }

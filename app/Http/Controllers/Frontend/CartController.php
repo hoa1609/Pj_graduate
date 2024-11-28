@@ -75,7 +75,7 @@ class CartController extends FrontendController
         $order = $this->cartService->order($request, $system);
         if ($order['flag']) {
             $response = $this->paymentMethod($order);
-            if ($response['code'] == 0) {
+            if ($response['errorCode'] == 0) {
                 return redirect()->away($response['url']);
             }
             return redirect()->route('cart.success', ['code' => $order['order']->code])->with('success', 'Đặt hàng thành công!');
