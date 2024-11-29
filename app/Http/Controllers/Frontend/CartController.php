@@ -41,8 +41,8 @@ class CartController extends FrontendController
         parent::__construct();
     }
 
-    public function checkout()
-    {
+    public function checkout(){
+
         $provinces = $this->provinceRepository->all();
         $carts = Cart::instance('shopping')->content();
         $carts = $this->cartService->remakeCart($carts);

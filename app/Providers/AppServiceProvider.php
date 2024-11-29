@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Http\Controllers\ViewComposers\CartComposer;
 use App\Http\Controllers\ViewComposers\LanguagueComposer;
 use Dotenv\Validator;
 use Illuminate\Support\ServiceProvider;
@@ -149,6 +150,7 @@ class AppServiceProvider extends ServiceProvider
                 SystemComposer::class,
                 MenuComposer::class,
                 LanguagueComposer::class,
+                CartComposer::class,
             ];
             foreach($composerClass as $key => $val){
                 $composer = app()->make($val, ['language' => $language->id]);
