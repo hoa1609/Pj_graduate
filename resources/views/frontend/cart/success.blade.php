@@ -112,7 +112,7 @@
                                     </tr>
                                     <tr>
                                         <td colspan="4" class="price-iv">Tổng giá trị</td>
-                                        <td class="text-end">{{ convert_price($order->promotion['discount'] + $order->cart['cartTotal'], true) }}₫</td>
+                                        <td class="text-end">{{ convert_price($order->cart['cartTotal'], true) }}₫</td>
                                     </tr>
                                     <tr>
                                         <td colspan="4" class="price-iv">Khuyến mãi</td>
@@ -124,7 +124,7 @@
                                     </tr>
                                     <tr>
                                         <td colspan="4" class="iv-total">Tổng thanh toán</td>
-                                        <td class="text-end total-iv">{{ convert_price($order->cart['cartTotal'], true) }}₫</td>
+                                        <td class="text-end total-iv">{{ convert_price($order->cart['cartTotal'] - $order->promotion['discount'], true) }}₫</td>
                                     </tr>
                                 </tfoot>
                             </table>
