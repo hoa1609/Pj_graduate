@@ -21,7 +21,8 @@
         'frontend/assets/js/demo-8.js',
         'frontend/assets/function.js',
         'frontend/assets/js/review.js',
-        'https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js'
+        'https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js',
+        'https://code.jquery.com/ui/1.14.1/jquery-ui.js'
 
         ];
     if(isset($config['js'])){
@@ -36,3 +37,18 @@
     @endforeach
     <script src=""></script>
     <script src=""></script>
+    <script>
+        var availableTags = [];
+        $.ajax({
+            method: "GET",
+            url: "/product-list",
+            success: function(res) {
+                startAutoComplete(res)
+            },
+        })
+        function startAutoComplete(availableTags){
+            $( "#search_product" ).autocomplete({
+                source: availableTags
+            });
+        }
+    </script>

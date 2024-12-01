@@ -38,10 +38,7 @@ use App\Http\Controllers\Ajax\MenuController as AjaxMenuController;
 use App\Http\Controllers\Ajax\ReviewController as AjaxReviewController;
 use App\Http\Controllers\Ajax\OrderController as AjaxOrderController;
 use App\Http\Controllers\Backend\SystemController;
-
-
-
-
+use App\Http\Controllers\Frontend\MomoController;
 use Illuminate\Routing\RouteGroup;
 
 
@@ -59,10 +56,14 @@ Route::get('{canonical}'.config('apps.general.suffix'), [RouterController::class
 Route::get('{canonical}/trang-{page}.html', [RouterController::class, 'page'])->name('router.page');
 Route::post('cart/store', [CartController::class, 'store'])->name('cart.store');
 Route::get('cart/{code}/success'.config('apps.general.suffix'), [CartController::class, 'success'])->name('cart.success');
+Route::get('product-list', [HomeController::class, 'productlistAjax']);
+Route::post('searchProduct', [HomeController::class, 'searchProduct']);
 
 /*VNPAY */
 Route::get('return/vnpay'.config('apps.general.suffix'), [VnpayController::class, 'vnpay_return'])->name('vnpay.vnpay_return');
 Route::get('return/vnpay_ipn'.config('apps.general.suffix'), [VnpayController::class, 'vnpay_ipn'])->name('vnpay.vnpay_ipn');
+Route::get('return/momo'.config('apps.general.suffix'), [MomoController::class, 'momo_return'])->name('vnpay.vnpay_return');
+// Route::get('return/vnpay_ipn'.config('apps.general.suffix'), [VnpayController::class, 'vnpay_ipn'])->name('vnpay.vnpay_ipn');
 
 
 

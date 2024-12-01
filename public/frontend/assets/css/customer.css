@@ -1095,3 +1095,15 @@ table, th, td {
   }
   /* end */
 
+
+  /* search product */
+  .ui-widget.ui-widget-content {
+    border-radius: 15px !important;
+    border: 1px solid #eeeeee !important;
+  }
+
+  .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active, a.ui-button:active, .ui-button:active, .ui-button.ui-state-active:hover {
+    background-color: #ff909d;
+    border: 1px solid #ff909d;
+    border-radius: 5px ;
+  }

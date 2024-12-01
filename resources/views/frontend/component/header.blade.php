@@ -50,7 +50,7 @@
     </div>
                 <!-- Header Top Language Currency -->
                 <!-- Header Top responsive Action -->
-                <div class="col d-lg-none ">
+                {{-- <div class="col d-lg-none ">
                     <div class="ec-header-bottons">
                         <!-- Header User Start -->
                         <div class="ec-header-user dropdown">
@@ -71,7 +71,7 @@
                         <!-- Header Cart Start -->
                         <a href="#ec-side-cart" class="ec-header-btn ec-side-toggle">
                             <div class="header-icon"><i class="fi-rr-shopping-basket"></i></div>
-                            <span class="ec-header-count ec-cart-count cart-count-lable">3</span>
+                            <span class="ec-header-count ec-cart-count cart-count-lable">32323232323232</span>
                         </a>
                         <!-- Header Cart End -->
                         <!-- Header menu Start -->
@@ -80,7 +80,7 @@
                         </a>
                         <!-- Header menu End -->
                     </div>
-                </div>
+                </div> --}}
                 <!-- Header Top responsive Action -->
             </div>
         </div>
@@ -104,8 +104,9 @@
                     <!-- Ec Header Search Start -->
                     <div class="align-self-center">
                         <div class="header-search">
-                            <form class="ec-btn-group-form" action="#">
-                                <input class="form-control" placeholder="Tìm kiếm sản phẩm..." type="text">
+                            <form class="ec-btn-group-form" action="{{ url('searchProduct') }}" method="POST">
+                                @csrf
+                                <input class="form-control" placeholder="Tìm kiếm sản phẩm..." type="text" id="search_product" name="product_name">
                                 <button class="submit" type="submit"><i class="fi-rr-search"></i></button>
                             </form>
                         </div>
@@ -133,11 +134,14 @@
                             </a>
                             <a href="#ec-side-cart" class="ec-header-btn ec-side-toggle">
                                 <div class="header-icon"><i class="fi-rr-shopping-basket"></i></div>
-                                <span class="ec-header-count ec-cart-count cart-count-lable" id="cartTotalItem">1</span>
+                                @php
+                                    $count = Cart::count();
+                                @endphp
+                                <span class="ec-header-count ec-cart-count cart-count-lable" id="cartTotalItem">{{ $count }} </span>
                             </a>
                         </div>
                     </div>
-                    
+
                 </div>
             </div>
         </div>
@@ -162,7 +166,7 @@
             </div>
         </div>
     </div>
-    
+
     @include('frontend.component.nav-menu')
 
     <!-- menu mobile -->
