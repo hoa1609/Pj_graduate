@@ -1,3 +1,13 @@
+.err-message {
+    font-style: italic;
+    color: rgb(221, 57, 54);
+    font-size: 12px;
+}
+input:focus {
+    border-width: 2px !important; 
+    border-color: #363636 !important; 
+    outline: none; 
+}
 .uk-flex{
     display: flex;
 }
@@ -989,6 +999,12 @@ table, th, td {
 }
 .bg-nav-h{
     background-color: #f8fafc;
+}
+.slide-category{
+    width: 100px;
+}
+.image-category-slide{
+    border-radius: 20px;
 }
 /*  */
 

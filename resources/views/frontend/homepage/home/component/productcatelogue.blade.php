@@ -1,4 +1,4 @@
-<section class="section ec-product-tab section-space-p">
+<section class="section ec-product-tab">
     <div class="container">
         <div class="col-lg-12 col-md-12">
             <section class="section ec-category-section section-space-p">
@@ -11,13 +11,13 @@
                                         $name = $val->languages->first()->pivot->name;
                                         $image = $val->image;
                                         $productCount = $val->products_count;
-                                        $canonical = write_url($val->languages->first()->pivot->canonical);
+                                        $canonical = write_url($val->languages->first()->pivot->canonical, true, true);
                                     @endphp
 
                                     <div class="ec_cat_content ec_cat_content_8">
                                         <div class="ec_cat_inner ec_cat_inner-8">
-                                            <div class="ec-category-image">
-                                                <img src="{{ $image }}" class="svg_img" alt="drink" />
+                                            <div class="slide-category">
+                                                <img src="{{ $image }}" class="image-category-slide" alt="drink" />
                                             </div>
                                             <div class="ec-category-desc">
                                                 <h3>{{ $name }}

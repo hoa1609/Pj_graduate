@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\AuthController;
 use App\Http\Controllers\Backend\DashboardController;
@@ -37,13 +38,10 @@ use App\Http\Controllers\Ajax\CartController as AjaxCartController;
 use App\Http\Controllers\Ajax\MenuController as AjaxMenuController;
 use App\Http\Controllers\Ajax\ReviewController as AjaxReviewController;
 use App\Http\Controllers\Ajax\OrderController as AjaxOrderController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Backend\SystemController;
 use App\Http\Controllers\Frontend\MomoController;
 use Illuminate\Routing\RouteGroup;
-
-
-
-
 
 
 
@@ -71,6 +69,38 @@ Route::post('ajax/cart/create', [AjaxCartController::class, 'create'])->name('aj
 Route::post('ajax/cart/update', [AjaxCartController::class, 'update'])->name('ajax.cart.update');
 Route::post('ajax/cart/delete', [AjaxCartController::class, 'delete'])->name('ajax.cart.delete');
 Route::get('ajax/location/getLocation', [LocationController::class, 'getLocation'])->name('ajax.location.index');
+
+
+
+
+
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth:customer', 'verified'])->name('dashboard');
+
+Route::middleware('auth:customer')->group(function () {
+    Route::get('profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+Route::middleware('guest:customer')->group(function () {
+    Route::post('client/login', [AuthenticatedSessionController::class, 'store'])
+        ->name('client.login'); 
+});
+
+Route::post('client/logout', [AuthenticatedSessionController::class, 'destroy'])
+    ->middleware('auth:customer')
+    ->name('client.logout');
+
+
+
+
+    
+require __DIR__.'/auth.php';
+
+
 
 
 
@@ -299,7 +329,7 @@ Route::middleware(['admin', 'locale', 'backend_default_locale'])->group(function
 });
 
 
-/*   */
+// /*   */
 Route::get('admin', [AuthController::class, 'index'])->name('auth.admin')->middleware('login');
 Route::post('login', [AuthController::class, 'login'])->name('auth.login');
 Route::get('logout', [AuthController::class, 'logout'])->name('logout');

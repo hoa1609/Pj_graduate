@@ -18,19 +18,19 @@ class CartComposer
 
     public function composer(View $view)
     {
-        $cartsComposer = Cart::instance('shopping')->content();
-        $cartsComposer = $this->cartService->remakeCart($cartsComposer);
+        $carts = Cart::instance('shopping')->content();
+        $carts = $this->cartService->remakeCart($carts);
         $cartConfig = $this->cartConfig();
         $cartCaculate = $this->cartService->reCaculateCart();
         $cartPromotion = $this->cartService->cartPromotion($cartCaculate['cartTotal']);
 
         // dd($cartPromotion);
         $view->with(compact(
-            'cartsComposer',
-             'cartConfig',
-             'cartCaculate',
-             'cartPromotion',
-            ));
+            'carts',
+            'cartConfig',
+            'cartPromotion',
+            'cartCaculate',
+        ));
     }
 
 

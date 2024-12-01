@@ -1,4 +1,6 @@
-
+@php
+    $bannerSeller = App\Enums\SlideEnum::SELLER;
+@endphp
 <section class="section ec-product-tab section-space-p">
     <div class="container">
         <div class="col-lg-12 col-md-12">
@@ -16,7 +18,16 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="" style="width: 420px">
-                                        <img src="https://media.fmplus.com.vn/uploads/tags/1af2b0f3-0f37-4a72-8bd1-fb0b4e078927.png" alt="">
+                                        @foreach ($slides[$bannerSeller]['item'] as $val)
+                                            @php
+                                                $image = $val['image'];
+                                                $canonical = ($val['canonical']);
+                                            @endphp
+
+                                            <a href="{{ $canonical }}">
+                                                <img src="{{ $image }}" alt="slide">
+                                            </a>
+                                        @endforeach
                                     </div>
                                 </div>
                                 <div class="col-md-8">

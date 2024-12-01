@@ -3,15 +3,6 @@
     @php
         $total = 0;
     @endphp
-    @if ($errors->any())
-        <div class="alert alert-danger bg-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
 
     <section class="ec-page-content section-space-p">
         <form action="{{ route('cart.store') }}" method="POST">

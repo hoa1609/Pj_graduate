@@ -207,7 +207,9 @@
                                     <tfoot class="footer-iv">
                                         <tr>
                                             <td colspan="4" class="price-iv">Mã giảm giá</td>
-                                            <td class="text-end">{{ $data['cartPromotion']['selectedPromotion']->code }}</td>
+                                            <td class="text-end">
+                                                {{ isset($data['cartPromotion']['selectedPromotion']) ? $data['cartPromotion']['selectedPromotion']->code : ' ' }}
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td colspan="4" class="price-iv">Tổng giá trị</td>

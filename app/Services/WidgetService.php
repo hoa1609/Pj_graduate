@@ -202,13 +202,14 @@ class WidgetService implements WidgetServiceInterface
                     }
                 }else{
                     $productId = $object->pluck('id')->toArray();
-                    $object = $this->{$service}->combineProductsAndPromotion($productId, $object);
+                    if(isset($params[$key]['promotion']) && $params[$key]['promotion'] == true){
+                        $object = $this->{$service}->combineProductsAndPromotion($productId, $object);
+                    }
                     $widget->object = $object;
                 }
                 $temp[$widget->keyword] = $widgets[$key];
             }
         }
-        // dd($temp);
         return $temp;
     }
 

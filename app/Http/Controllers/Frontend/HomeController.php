@@ -39,10 +39,11 @@ class HomeController extends FrontendController{
             ['keyword' =>'product'],
             ['keyword' =>'other-product', 'children' => true, 'promotion' => true, 'object' => true],
             ['keyword' =>'best-seller'],
+            ['keyword' =>'blog', 'object' => true],
         ], $this->language);
 
-
-        $slides = $this->slideService->getSlide([SlideEnum::MAIN], $this->language);
+    
+        $slides = $this->slideService->getSlide([SlideEnum::MAIN, SlideEnum::SELLER], $this->language);
         $system = $this->system;
         $seo = [
             'meta_title' => $system['seo_meta_title'],

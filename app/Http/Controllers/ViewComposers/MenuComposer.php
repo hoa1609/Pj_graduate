@@ -35,6 +35,7 @@ class MenuComposer{
         return [
             // 'condition' => [
             //         ['keyword', '=', 'main-menu']
+            // config('apps.general.defaultPublish')
             // ],
             'flag' => true,
             'relation' => [

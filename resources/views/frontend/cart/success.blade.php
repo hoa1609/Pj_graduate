@@ -85,7 +85,6 @@
                                     @php
                                         $carts = $order->products;
                                         $pro = $order->promotion;
-                                        // dd($pro);
                                     @endphp
                                     @foreach ($carts as $key => $val)
                                     @php
@@ -106,10 +105,9 @@
                                     <tr> <td colspan="4"></td> </tr>
                                 </tbody>
                                 <tfoot class="footer-iv">
-                                    <tr>
-                                        <td colspan="4" class="price-iv">Mã giảm giá</td>
-                                        <td class="text-end">{{ $order->promotion['code'] }}</td>
-                                    </tr>
+                                    <td class="text-end">
+                                        {{ isset($data['cartPromotion']['selectedPromotion']) ? $data['cartPromotion']['selectedPromotion']->code : ' ' }}
+                                    </td>
                                     <tr>
                                         <td colspan="4" class="price-iv">Tổng giá trị</td>
                                         <td class="text-end">{{ convert_price($order->cart['cartTotal'], true) }}₫</td>
@@ -145,7 +143,9 @@
                             <div class="text-bold">Hình thức thanh toán:
                                 <span class="text-normal">{{ array_column(__('payment.method'), 'title', 'name')[$order->method] }}</span>
                             </div>
-                            @include($template ?? '')
+                            @if(isset($template) && !is_null($template))
+                                @include($template ?? '')
+                            @endif
                             <div class="text-bold">Khác: </div>
                         </div>
                         <p class="invoice-footer">Cảm ơn bạn đã mua sắm tại cửa hàng của chúng tôi!</p>

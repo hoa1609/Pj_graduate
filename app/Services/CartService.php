@@ -219,7 +219,6 @@ class CartService implements CartServiceInterface
             $order = $this->orderRepository->create($payload);
             if($order->id > 0){
                 $this->createOrderProduct($payload, $order, $request);
-                // $this->paymentOnline($payload['method']);
 
                 $this->mail($order, $system);
                 // Cart::instance('shopping')->destroy();
@@ -247,12 +246,12 @@ class CartService implements CartServiceInterface
         $carts = $this->remakeCart($carts);
         $cartCaculate = $this->cartAndPromotion();
         $cartPromotion = $this->cartPromotion($cartCaculate['cartTotal']);
-
+        
         $data = [
             'order' => $order,
             'cart' => $carts,
-            'cartCaculate' => $cartCaculate,
-            'cartPromotion' => $cartPromotion,
+            'cartCaculate' => $cartCaculate ?? [],
+            'cartPromotion' => $cartPromotion ?? [],
         ];
         Mail::to($to)->cc($cc)->send(new OrderMail($data));
     }

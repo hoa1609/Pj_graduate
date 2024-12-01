@@ -73,8 +73,9 @@ class CartController extends FrontendController
     public function store(StoreCartRequest $request){
         $system = $this->system;
         $order = $this->cartService->order($request, $system);
+        // dd($order);
         if ($order['flag']) {
-            $response = $this->paymentMethod($order);
+            $response = $this->paymentMethod($request ,$order);
             if ($response['errorCode'] == 0) {
                 return redirect()->away($response['url']);
             }
@@ -106,7 +107,8 @@ class CartController extends FrontendController
     }
      
 
-    public function paymentMethod($order = null){
+    public function paymentMethod($request ,$order = null){
+        $system = $this->system;
         switch ($order['order']->method) {
             case 'vnpay':
                 $response = $this->vnpay->payment($order['order']);
@@ -114,6 +116,14 @@ class CartController extends FrontendController
             case 'momo':
                 $response = $this->momo->payment($order['order']);
                 break;
+            case 'cod':
+                $response = [
+                    'errorCode' => 0, 
+                    'message' => 'Đặt hàng thành công!',
+                    'url' => route('cart.success', ['code' => $order['order']->code]),
+                ];
+                break;
+
         default:
             
         }

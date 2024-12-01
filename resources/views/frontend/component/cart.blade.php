@@ -6,27 +6,47 @@
                 <button class="ec-close">×</button>
             </div>
             
-            <ul class="eccart-pro-items">
-                @foreach ($cartsComposer as $key => $val)
-
-                @php
-                    $count = Cart::count();
-                @endphp
-
-                <li>
-                    <a href="product-left-sidebar.html" class="sidecart_pro_img">
-                        <img src="{{ $val->image }}" alt="product"></a>
-                    <div class="ec-pro-content">
-                        <a href="product-left-sidebar.html" class="cart_pro_title">{{ $val->name }}</a>
-                        <span class="cart-price"><span>{{ convert_price($val->price, true)}} &ensp;</span> x {{ $val->qty }}</span>
-                        {{-- <div class="qty-plus-minus">
-                            <input class="qty-input" type="text" name="ec_qtybtn" value="{{ $val->qty }}" />
-                        </div> --}}
-                        <a href="#" class="remove">×</a>
+            @if(count($carts) && !is_null($carts))
+    <div class="cart-product">
+        @foreach ($carts as $keyCart => $cart)
+            <div class="row item-product mt-2">
+                <div class="col-md-3 image-item">
+                    <div class="image-cart-wrapper">
+                        <img src="{{ $cart->image }}">
+                        <span class="quantity-label">
+                            <label class="cart-item-number">{{ $cart->qty }}</label>
+                        </span>
                     </div>
-                </li>
-                @endforeach
-            </ul>
+                </div>
+                <div class="col-md-6">
+                    <div class="product-quantity">
+                        <h5 class="title-product text-truncate">{{ $cart->name }}</h5>
+                        <div class="quantity-control">
+                            <button type="button" class="btn-qty minus">-</button>
+                            <input type="hidden" class="rowId" value="{{ $cart->rowId }}">
+                            <input type="number"
+                                value="{{ $cart->qty }}"
+                                class="qty-checkout">
+                            <button type="button" class="btn-qty plus">+</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 uk-flex flex-column">
+                    <div class="cart-item-remove" data-row-id="{{ $cart->rowId }}">
+                        <span>X</span>
+                    </div>
+                    <div class="price-item mt-5">
+                        {{-- @if($cart->price != $cart->priceOriginal)
+                            <div class="cart-price-old">{{ convert_price($cart->priceOriginal, true) }}₫</div>
+                        @endif --}}
+                        <div class="cart-price-sale">{{ convert_price($cart->price * $cart->qty, true) }}₫</div>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+    </div>
+@endif
+
 
 
         </div>
