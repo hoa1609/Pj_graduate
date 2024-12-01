@@ -54,6 +54,8 @@ Route::get('{canonical}'.config('apps.general.suffix'), [RouterController::class
 Route::get('{canonical}/trang-{page}.html', [RouterController::class, 'page'])->name('router.page');
 Route::post('cart/store', [CartController::class, 'store'])->name('cart.store');
 Route::get('cart/{code}/success'.config('apps.general.suffix'), [CartController::class, 'success'])->name('cart.success');
+Route::get('product-list', [HomeController::class, 'productlistAjax']);
+Route::post('searchProduct', [HomeController::class, 'searchProduct']);
 
 /*VNPAY */
 Route::get('return/vnpay'.config('apps.general.suffix'), [VnpayController::class, 'vnpay_return'])->name('vnpay.vnpay_return');

@@ -92,8 +92,9 @@
                     </div>
                     <div class="align-self-center">
                         <div class="header-search">
-                            <form class="ec-btn-group-form" action="#">
-                                <input class="form-control" placeholder="Tìm kiếm sản phẩm..." type="text">
+                            <form class="ec-btn-group-form" action="{{ url('searchProduct') }}" method="POST">
+                                @csrf
+                                <input class="form-control" placeholder="Tìm kiếm sản phẩm..." type="text" id="search_product" name="product_name">
                                 <button class="submit" type="submit"><i class="fi-rr-search"></i></button>
                             </form>
                         </div>
@@ -129,7 +130,7 @@
                             </a>
                         </div>
                     </div>
-                    
+
                 </div>
             </div>
         </div>
@@ -154,7 +155,7 @@
             </div>
         </div>
     </div>
-    
+
     @include('frontend.component.nav-menu')
 
     <!-- menu mobile -->

@@ -221,7 +221,7 @@ class CartService implements CartServiceInterface
                 $this->createOrderProduct($payload, $order, $request);
 
                 $this->mail($order, $system);
-                // Cart::instance('shopping')->destroy();
+                Cart::instance('shopping')->destroy();
             }
             DB::commit();
             return [

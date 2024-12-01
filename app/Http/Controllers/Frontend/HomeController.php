@@ -9,7 +9,7 @@ use App\Services\Interfaces\SlideServiceInterface as SlideService;
 
 use Illuminate\Http\Request;
 use App\Enums\SlideEnum;
-
+use App\Models\Product;
 
 class HomeController extends FrontendController{
 
@@ -29,7 +29,7 @@ class HomeController extends FrontendController{
 
         parent::__construct();
      }
-  
+
 
     public function index(){
         $config = $this->config();
@@ -60,6 +60,38 @@ class HomeController extends FrontendController{
         ));
     }
 
+    public function productlistAjax()
+    {
+        $products = Product::join('product_language', 'products.id', '=', 'product_language.product_id')
+        ->select('product_language.name')
+        ->where('products.publish', '2')
+        ->get();
+        $data = [];
+
+        foreach ($products as $item) {
+            $data[] = $item['name'];
+        }
+        return $data;
+    }
+
+    public function searchProduct(Request $request)
+    {
+        $searchProduct = $request->product_name;
+
+        if ($searchProduct != "") {
+            $product = Product::join('product_language', 'products.id', '=', 'product_language.product_id')
+                ->where("product_language.name", "LIKE", "%$searchProduct%")
+                ->first();
+
+            if($product) {
+                return redirect($product->canonical . config('apps.general.suffix'));
+            } else {
+                return redirect()->back()->with("status", "Không tìm thấy sản phẩm nào!");
+            }
+        } else {
+            return redirect()->back();
+        }
+    }
 
     private function config(){
         return [
@@ -69,4 +101,4 @@ class HomeController extends FrontendController{
 
 
 }
-// ['keyword' => 'category','children' => true, 'promotion' => true,'object' => true, 'countObject' => true], 
+// ['keyword' => 'category','children' => true, 'promotion' => true,'object' => true, 'countObject' => true],
