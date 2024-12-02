@@ -92,7 +92,7 @@
                                             </div>
                                         </div>                           
                                     </form>
-                                    <div class="text-center  mb-2">
+                                    {{-- <div class="text-center  mb-2">
                                         <p class="text-muted">Bạn chưa có tài khoản ?  <a href="auth-register.html" class="text-primary ms-2">Đăng ký</a></p>
                                         <h6 class="px-3 d-inline-block">Hoặc đăng nhập với</h6>
                                     </div>
@@ -106,7 +106,7 @@
                                         <a href="#" class="d-flex justify-content-center align-items-center thumb-md bg-danger-subtle text-danger rounded-circle">
                                             <i class="fab fa-google align-self-center"></i>
                                         </a>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
                     </div>
