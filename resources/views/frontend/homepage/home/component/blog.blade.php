@@ -20,7 +20,7 @@
                         <div class="ec-blog-block">
                             <div class="ec-blog-inner">
                                 <div class="ec-blog-image">
-                                    <a href="blog-detail-left-sidebar.html">
+                                    <a href="{{ $cateBlog }}">
                                         <img class="blog-image" src="{{ $blogImage }}" alt="Blog" />
                                     </a>
                                 </div>
