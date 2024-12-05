@@ -10,18 +10,22 @@
                     <span></span>
                 </label>
                 @if (!is_null($val->attributes))
-                <div class="ec-pro-variation-content attribute-value">
-                    @foreach ($val->attributes as $keyAttr => $attr)
-                        @php
-                            $isActive = (is_array($attributeQueryString) && in_array($attr->id, $attributeQueryString)) || ($keyAttr == 0 && !empty($attributeQueryString));
-                        @endphp
-                        <a class="choose-attribute {{ $isActive ? 'active' : '' }}" data-attributeid="{{ $attr->id }}" 
-                            title="{{ $attr->name }}"
-                            >
-                            {{ $attr->name }}
-                        </a>
-                    @endforeach
-                </div>
+                    <div class="ec-pro-variation-content attribute-value">
+                        @foreach ($val->attributes as $keyAttr => $attr)
+                            @php
+                                $isActive = (is_array($attributeQueryString) && in_array($attr->id, $attributeQueryString)) || ($keyAttr == 0 && !empty($attributeQueryString));
+                            @endphp
+                            <a class="choose-attribute {{ $isActive ? 'active' : '' }}" data-attributeid="{{ $attr->id }}" 
+                                title="{{ $attr->name }}"
+                                >
+                                @if($attr->image != null)
+                                    <img src="{{ $attr->image }}" alt="{{ $attr->name }}" class="attribute-image-round">
+                                @else
+                                    {{ $attr->name }}
+                                @endif
+                            </a>
+                        @endforeach
+                    </div>
                 @endif
             </div>
         </div>

@@ -111,7 +111,7 @@ $url = ($config['method'] == 'create') ? route('widget.store') : route('widget.u
                             <div class="col-12 mt-3 mb-2">
                                 <div class="d-flex search-model-box ">
                                     <i class="fa fa-search"></i>
-                                    <input class="form-control search-model" id="search-model" type="text" placeholder="Search" aria-label="Search">
+                                    <input class="form-control search-model mb-0" id="search-model" type="text" placeholder="Search" aria-label="Search">
 
                                     <div class="col-12 ajax-search-result shadow ">
                                         <div class="search-model-result">

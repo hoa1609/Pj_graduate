@@ -1006,6 +1006,11 @@ table, th, td {
 .image-category-slide{
     border-radius: 20px;
 }
+.attribute-image-round{
+    width: 20px;
+    height: 20px;
+    /* border-radius: 50%; */
+}
 /*  */
 
 

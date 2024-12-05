@@ -140,7 +140,7 @@ class AttributeCatalogueController extends Controller{
             'css' => [
                 'backend/assets/css/select2.min.css',
             ],
-            'model' => 'Product'
+            'model' => 'AttributeCatalogue'
         ];
     }
 
