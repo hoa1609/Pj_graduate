@@ -1,27 +1,29 @@
 (function($) {
 	"use strict";
 	var HT = {}; 
-	var timer;
+
 
 	HT.selectVariantProduct = () => {
-		if ($('.choose-attribute').length) {
-			$(document).on('click', '.choose-attribute', function (e) {
+		if ($('.item--color, .item--other').length) { 
+			$(document).on('click', '.item--color, .item--other', function (e) { 
 				e.preventDefault();
 				let _this = $(this);
 				let attribute_id = _this.attr('data-attributeid');
-				let attribute_name = _this.text();
-				_this.addClass('active').siblings().removeClass('active');
-				_this.closest('.variant-item').find('span').html(attribute_name);
-				_this.addClass('active')
-				HT.handleAttribute()
+				let attribute_name = _this.attr('title');
+				_this.addClass('active').siblings().removeClass('active'); 
+				_this.closest('.variant-item').find('span').html(attribute_name); 
+				HT.handleAttribute(); 
 			});
 		}
 	};
 
+	
+	
+
 	HT.handleAttribute = () => {
 		let attribute_id = []
 		let flag = true
-		$('.attribute-value .choose-attribute').each(function(){
+		$('.attribute-value .item--color, .attribute-value .item--other').each(function(){
 			let _this = $(this)
 			if(_this.hasClass('active')){
 				attribute_id.push(_this.attr('data-attributeid'))
@@ -29,7 +31,7 @@
 		})
 
 		$('.attribute').each(function(){
-			if($(this).find('.choose-attribute.active').length === 0){
+			if($(this).find('.item--color.active, .item--color.active').length === 0){
 				flag = false
 				return false;
 			}
@@ -99,8 +101,6 @@
 			HT.selectVariantProduct()
 		}
 	}
-
-
 
 
 	$(document).ready(function(){

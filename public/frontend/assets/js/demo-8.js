@@ -221,6 +221,10 @@ function ecCheckCookie()
         });
     }
 
+
+    $('.zoom-image-hover').zoom();
+
+
     /*--------------------- Select option Toggle --------------------- */
     jQuery(".select-option").click(function(){
         var $select =$(this).closest('.ec-product-inner').find('.ec-pro-option');
@@ -382,11 +386,12 @@ function ecCheckCookie()
     });
 
     $('.qty-nav-thumb').slick({
-        slidesToShow: 4,
+        vertical: true,  
+        slidesToShow: 5,
         slidesToScroll: 1,
         asNavFor: '.qty-product-cover',
         dots: false,
-        arrows: true,
+        arrows: false,
         focusOnSelect: true,
         responsive: [
         {
@@ -420,16 +425,6 @@ function ecCheckCookie()
     });
 
     /*--------------------- Special inner product Slider  ------------------------------ */
-    $('.ec-spe-products').slick({
-        rows: 1,
-        dots: false,
-        arrows: true,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-    });
-
     $('.ec-spe-pro-cover').slick({
         slidesToShow: 1,
         slidesToScroll: 1,
@@ -1224,5 +1219,5 @@ function ecCheckCookie()
     /*--------------------- Copyright years JS -------------------------------- */
     var date = new Date().getFullYear();
 
-    document.getElementById("copyright_year").innerHTML = date;
+    // document.getElementById("copyright_year").innerHTML = date;
 })(jQuery);

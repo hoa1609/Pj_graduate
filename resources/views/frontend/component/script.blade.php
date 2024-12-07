@@ -20,10 +20,9 @@
         'frontend/assets/js/vendor/index.js',
         'frontend/assets/js/demo-8.js',
         'frontend/assets/function.js',
-        'frontend/assets/js/review.js',
-        'https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js',
-        'https://code.jquery.com/ui/1.14.1/jquery-ui.js'
-
+        'frontend/assets/js/quickview.js',
+        'https://code.jquery.com/ui/1.14.1/jquery-ui.js',
+        'https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js',
         ];
     if(isset($config['js'])){
         foreach ($config['js'] as $key => $value) {
@@ -35,8 +34,7 @@
     @foreach ($coreScript as $item)
         <script src="{{ asset($item) }}"></script>
     @endforeach
-    <script src=""></script>
-    <script src=""></script>
+    
     <script>
         var availableTags = [];
         $.ajax({

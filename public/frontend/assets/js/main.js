@@ -553,34 +553,6 @@ function ecCheckCookie() {
         }
     });
 
-    /*----------------------------- Quick view Slider ------------------------------ */
-    $('.qty-product-cover').slick({
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        arrows: false,
-        fade: false,
-        asNavFor: '.qty-nav-thumb',
-    });
-
-    $('.qty-nav-thumb').slick({
-        slidesToShow: 4,
-        slidesToScroll: 1,
-        asNavFor: '.qty-product-cover',
-        dots: false,
-        arrows: true,
-        focusOnSelect: true,
-        responsive: [
-            {
-                breakpoint: 479,
-                settings: {
-                    slidesToScroll: 1,
-                    slidesToShow: 2,
-                }
-            }
-        ]
-    });
-
-    /*----------------------------- Product Image Zoom --------------------------------*/
     $('.zoom-image-hover').zoom();
 
     /*----------------------------- Qty Plus Minus Button  ------------------------------ */

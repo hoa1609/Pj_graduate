@@ -20,7 +20,7 @@
 
 @if(isset($config['css']) && is_array($config['css']))
     @foreach($config['css'] as $key => $val)
-        {!! '<link rel="stylesheet" href="'.$val.'"></script>' !!}
+        {!! '<link rel="stylesheet" href="'.$val.'">' !!}
     @endforeach
 @endif
 

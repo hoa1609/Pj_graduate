@@ -12,6 +12,7 @@ use App\Http\Requests\UpdateProductRequest;
 use Illuminate\Http\Request;
 use App\Classes\Nestedsetbie;
 use App\Models\Language;
+use App\Models\Product;
 
 class ProductController extends Controller{
 
@@ -167,6 +168,8 @@ class ProductController extends Controller{
                 'backend/assets/library/seo.js',
                 'backend/assets/library/finder.js',
                 'backend/plugins/ckeditor/ckeditor.js',
+                'backend/plugins/jquery-ui.js',
+                'backend/assets/library/set-up-ui.js',
                 'backend/plugins/nice-select/js/jquery.nice-select.min.js',
             ],
             'css' => [

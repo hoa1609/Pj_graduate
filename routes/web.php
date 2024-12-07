@@ -41,6 +41,7 @@ use App\Http\Controllers\Ajax\OrderController as AjaxOrderController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Backend\SystemController;
 use App\Http\Controllers\Frontend\MomoController;
+use App\Http\Controllers\Frontend\ProductController as FrontendProductController;
 use Illuminate\Routing\RouteGroup;
 
 
@@ -54,15 +55,18 @@ Route::get('{canonical}'.config('apps.general.suffix'), [RouterController::class
 Route::get('{canonical}/trang-{page}.html', [RouterController::class, 'page'])->name('router.page');
 Route::post('cart/store', [CartController::class, 'store'])->name('cart.store');
 Route::get('cart/{code}/success'.config('apps.general.suffix'), [CartController::class, 'success'])->name('cart.success');
-Route::get('product-list', [HomeController::class, 'productlistAjax']);
+Route::get('product-list', [HomeController::class, 'productlistAjax']);//danh sach khi search
 Route::post('searchProduct', [HomeController::class, 'searchProduct']);
+Route::get('ajax/product/quickview/{id}', [FrontendProductController::class, 'getProduct'])->name('product.get');
+
+Route::get('gioi-thieu'.config('apps.general.suffix'), [HomeController::class, 'intro'])->name('intro.index');
+
 
 /*VNPAY */
 Route::get('return/vnpay'.config('apps.general.suffix'), [VnpayController::class, 'vnpay_return'])->name('vnpay.vnpay_return');
 Route::get('return/vnpay_ipn'.config('apps.general.suffix'), [VnpayController::class, 'vnpay_ipn'])->name('vnpay.vnpay_ipn');
 Route::get('return/momo'.config('apps.general.suffix'), [MomoController::class, 'momo_return'])->name('vnpay.vnpay_return');
 // Route::get('return/vnpay_ipn'.config('apps.general.suffix'), [VnpayController::class, 'vnpay_ipn'])->name('vnpay.vnpay_ipn');
-
 
 
 /*FE AJAX */

@@ -24,7 +24,6 @@ class CartComposer
         $cartCaculate = $this->cartService->reCaculateCart();
         $cartPromotion = $this->cartService->cartPromotion($cartCaculate['cartTotal']);
 
-        // dd($cartPromotion);
         $view->with(compact(
             'carts',
             'cartConfig',

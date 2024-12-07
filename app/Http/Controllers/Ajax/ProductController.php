@@ -82,7 +82,6 @@ class ProductController extends Controller
         $attributeId = $get['attribute_id'];
         
         $attributeId = sorAttributeId($attributeId);
-        
         $variant  = $this->productVariantRepository->findVariant($attributeId, $get['product_id'], $get['language_id']);
 
         $variantPromotion = $this->promotionRepository->findPromotionByVariantUuid($variant->uuid);

@@ -6,10 +6,6 @@ use App\Http\Controllers\FrontendController;
 use App\Repositories\Interfaces\ProductCatalogueRepositoryInterface as ProductCatalogueRepository;
 use App\Services\Interfaces\ProductServiceInterface as ProductService;
 
-
-use Illuminate\Http\Request;
-
-
 class ProductCatalogueController extends FrontendController{
 
     protected $language;
@@ -28,8 +24,7 @@ class ProductCatalogueController extends FrontendController{
      }
 
 
-     public function index($id, $request, $page = 1)
-     {
+     public function index($id, $request, $page = 1){
          $productCatalogue = $this->productCatalogueRepository->getProductCatalogueById($id, $this->language);
          $breadcrumb = $this->productCatalogueRepository->breadcrumb($productCatalogue, $this->language);
      
@@ -42,7 +37,6 @@ class ProductCatalogueController extends FrontendController{
          );
      
          $productId = $products->pluck('id')->toArray();
-     
          if (count($productId) && !is_null($productId)) {
              $products = $this->productService->combineProductsAndPromotion($productId, $products);
          }
@@ -62,14 +56,10 @@ class ProductCatalogueController extends FrontendController{
      }
      
 
-
-
-
     private function config(){
         return [
             'language' => $this->language,
         ];
     }
-
 
 }

@@ -61,10 +61,21 @@
     }
 
 
-
     $(document).ready(function() {
         HT.chooseReviewStar()
         HT.review()
     });
 
 })(jQuery);
+
+
+
+//copy sku
+document.getElementById('copy-sku').addEventListener('click', function() {
+    const skuText = document.getElementById('sku-text').innerText;
+    navigator.clipboard.writeText(skuText).then(function() {
+        toastr.success('Đã sao chép');
+    }).catch(function(error) {
+        toastr.error('Có lỗi xảy ra, vui lòng thử lại');
+    });
+});

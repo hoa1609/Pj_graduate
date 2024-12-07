@@ -249,7 +249,7 @@ if (!function_exists('getVariantPrice')) {
         }
 
         $result['html'] .= '<span class="ec-price">';
-        $result['html'] .= '<span class="new-price text-danger fs-18">'.(($result['priceSale'] > 0) ? convert_price($result['priceSale'], true) : convert_price($result['price'], true)).'₫</span>';
+        $result['html'] .= '<span class="new-price text-danger">'.(($result['priceSale'] > 0) ? convert_price($result['priceSale'], true) : convert_price($result['price'], true)).'₫</span>';
         if ($result['priceSale'] > 0) {
             $result['html'] .= '<span class="old-price">' . convert_price($result['price'], true) . '₫</span>';
         }
@@ -394,7 +394,7 @@ if (!function_exists('frontend_recursive_menu')) {
 
 
 
-if(!function_exists('covertDatetime')) {
+if(!function_exists('coverDatetime')) {
     function coverDatetime(string $data = '', string $format = 'd/m/Y H:i' ){
         $carbonDate = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $data);
         return $carbonDate->format($format);
@@ -447,9 +447,7 @@ if (!function_exists('convertDateTime')) {
 }
 
 if (!function_exists('renderQuickBuy')) {
-    function renderQuickBuy($product, string $canonical = '', string $name = '')
-    {
-
+    function renderQuickBuy($product, string $canonical = '', string $name = ''){
         $class = 'btn-addCart';
         $openModal = '';
         if (isset($product->product_variants) && count(($product->product_variants))) {
@@ -467,7 +465,7 @@ if (!function_exists('renderQuickBuy')) {
 
 
 if (!function_exists('recursive')) {
-    function recursive($data, $parentId = 0) {
+    function recursive($data, $parentId = 0){
         $temp = [];
         if(!is_null($data) && count($data)){
             foreach ($data as $key => $val) {

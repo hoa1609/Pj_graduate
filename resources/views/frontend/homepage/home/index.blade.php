@@ -8,5 +8,5 @@
 
     @include('frontend.homepage.home.component.information')
     @include('frontend.homepage.home.component.blog')
-    @include('frontend.component.popup')
+    @include('frontend.component.quickview')
 @endsection

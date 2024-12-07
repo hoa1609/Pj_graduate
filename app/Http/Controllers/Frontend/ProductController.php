@@ -27,10 +27,10 @@ class ProductController extends FrontendController{
         $this->productRepository = $productRepository;
         $this->productService = $productService;
         parent::__construct();
-     }
+    }
 
 
-     public function index($id, $request){
+    public function index($id, $request){
         $language = $this->language;
         $product =$this->productRepository->getProductById($id, $this->language);
         $product = $this->productService->combineProductsAndPromotion([$id], $product, true);
@@ -54,8 +54,7 @@ class ProductController extends FrontendController{
             'category',
             'language',
         ));
-     }
-
+    }
 
 
     private function config(){
@@ -64,9 +63,25 @@ class ProductController extends FrontendController{
             'js' => [
                 'frontend/assets/library/product.js',
                 'frontend/assets/library/cart.js',
+                'frontend/assets/js/review.js',
             ]
         ];
     }
+
+
+    public function getProduct($id){
+        $product = $this->productRepository->getProductById($id, $this->language);
+        $album = json_decode($product->album, true);
+        $product = $this->productService->combineProductsAndPromotion([$id], $product, true);
+        $product = $this->productService->getAttribute($product, $this->language);
+
+        return response()->json([
+            'product' => $product,
+            'album' => $album,
+            'attributeCatalogue' => $product->attributeCatalogue,
+        ]);
+    }
+    
 
 
 }
