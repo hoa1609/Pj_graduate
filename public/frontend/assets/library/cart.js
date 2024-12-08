@@ -15,7 +15,7 @@
                 quantity = 1
             }
             let attribute_id = []
-            $('.attribute-value .choose-attribute').each(function(){
+            $('.attribute-value .item--color, .attribute-value .item--other').each(function(){
                 let _this = $(this)
                 if(_this.hasClass('active')){
                     attribute_id.push(_this.attr('data-attributeid'))
@@ -50,7 +50,7 @@
     HT.changeQuantity = () => {
         $(document).on('click', '.btn-qty', function() {
             let _this = $(this);
-            let qtyElement = _this.siblings('.qty-checkout'); // Sửa class ở đây cho khớp
+            let qtyElement = _this.siblings('.qty-checkout');
             let qty = parseInt(qtyElement.val()) || 0;
             let newQty = (_this.hasClass('minus') ? qty - 1 : qty + 1);
             if (newQty < 1) newQty = 1;

@@ -11,15 +11,17 @@
                 success: function (response) {
                     if (response.product){
 
-                        let product = response.product;
-                        let album = response.album; 
+                        let product = response.product
+                        let album = response.album
 
-                        $('#product-popup .product-name').text(product.name);
-                        $('#product-popup #sku-text').text(product.code);
-                        $('#product-popup .new-price').text(addCommas(product.promotions.price - product.promotions.discount) + '₫');
-
-                        $('#product-popup .product-name').text(product.name);
-
+                        $('#product-popup .product-name').text(product.name)
+                        $('#product-popup #sku-text').text(product.code)
+                        $('#product-popup .product-name').text(product.name)
+                        if(product.promotions != null){
+                            $('#product-popup .new-price').text(addCommas(product.promotions.price - product.promotions.discount) + '₫');
+                       }else{
+                           $('#product-popup .new-price').text(addCommas(product.price) + '₫');
+                       }
 
                         $('#product-popup .product-description').text(product.description || '');
                         $('#product-popup .ec-quickview-cart.addToCart').attr('data-id', product.id);
@@ -68,7 +70,6 @@
                 let attributeItems = '';
                 attributeGroup.attributes.forEach(attribute => {
                     if (attribute.image) {
-                        // Nếu có hình ảnh
                         attributeItems += `
                             <a class="item--color" 
                                 data-attributeid="${attribute.id}" 
@@ -77,7 +78,6 @@
                             </a>
                         `;
                     } else {
-                        // Nếu không có hình ảnh
                         attributeItems += `
                             <div class="item--other" 
                                     data-attributeid="${attribute.id}" 

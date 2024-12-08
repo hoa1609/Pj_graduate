@@ -5,13 +5,16 @@
                 <span class="cart_title">Giỏ hàng</span>
                 <button class="ec-close">×</button>
             </div>
-            @if(count($carts) && !is_null($carts))
+            @if(count($cartsC) && !is_null($cartsC))
                 <div class="cart-product">
-                    @foreach ($carts as $keyCart => $cart)
+                    @foreach ($cartsC as $keyCart => $cart)
+                    @php
+                        $image = $cart->image ?? null;
+                    @endphp
                         <div class="row item-product mt-2">
                             <div class="col-md-3 image-item">
                                 <div class="image-cart-wrapper">
-                                    <img src="{{ $cart->image->image }}">
+                                    <img src="{{ $image }}">
                                     <span class="quantity-label">
                                         <label class="cart-item-number">{{ $cart->qty }}</label>
                                     </span>

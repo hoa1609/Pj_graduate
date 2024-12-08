@@ -18,14 +18,15 @@ class CartComposer
 
     public function composer(View $view)
     {
-        $carts = Cart::instance('shopping')->content();
-        $carts = $this->cartService->remakeCart($carts);
+        $cartsC = Cart::instance('shopping')->content();
+        
+        $cartsC = $this->cartService->remakeCart($cartsC);
         $cartConfig = $this->cartConfig();
         $cartCaculate = $this->cartService->reCaculateCart();
         $cartPromotion = $this->cartService->cartPromotion($cartCaculate['cartTotal']);
-
+        
         $view->with(compact(
-            'carts',
+            'cartsC',
             'cartConfig',
             'cartPromotion',
             'cartCaculate',
@@ -33,8 +34,7 @@ class CartComposer
     }
 
 
-    private function cartConfig()
-    {
+    private function cartConfig(){
         return [
             'cartTotal' => Cart::instance('shopping')->total(),
         ];

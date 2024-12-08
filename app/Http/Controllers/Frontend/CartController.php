@@ -42,7 +42,6 @@ class CartController extends FrontendController
     }
 
     public function checkout(){
-
         $provinces = $this->provinceRepository->all();
         $carts = Cart::instance('shopping')->content();
         $carts = $this->cartService->remakeCart($carts);
@@ -73,7 +72,7 @@ class CartController extends FrontendController
     public function store(StoreCartRequest $request){
         $system = $this->system;
         $order = $this->cartService->order($request, $system);
-        // dd($order);
+        dd($order);
         if ($order['flag']) {
             $response = $this->paymentMethod($request ,$order);
             if ($response['errorCode'] == 0) {
@@ -84,8 +83,7 @@ class CartController extends FrontendController
         return redirect()->route('cart.checkout')->with('error', 'Đặt hàng không thành công!');
     }
 
-    public function success($code)
-    {
+    public function success($code){
         $order = $this->orderRepository->findByCondition([
             ['code', '=', $code]
         ], false, ['products']);
@@ -123,7 +121,6 @@ class CartController extends FrontendController
                     'url' => route('cart.success', ['code' => $order['order']->code]),
                 ];
                 break;
-
         default:
             
         }
@@ -131,17 +128,13 @@ class CartController extends FrontendController
     }
 
 
-
-
-    private function cartConfig()
-    {
+    private function cartConfig(){
         return [
             'cartTotal' => Cart::instance('shopping')->total(),
         ];
     }
 
-    private function config()
-    {
+    private function config(){
         return [
             'language' => $this->language,
             'js' => [

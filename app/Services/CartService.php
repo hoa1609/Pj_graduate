@@ -39,7 +39,6 @@ class CartService implements CartServiceInterface
     public function create($request, $language = 1){
         try {
             $payload = $request->input();
-            // dd($payload);
             $product = $this->productRepository->findById($payload['id'], ['*'], [
                 'languages' => function ($query) use ($language){
                     $query->where('language_id',$language);
@@ -50,6 +49,7 @@ class CartService implements CartServiceInterface
                 'name' => $product->languages->first()->pivot->name,
                 'qty' => $payload['quantity'],
             ];
+
             if(isset($payload['attribute_id']) && count($payload['attribute_id'])){
                 $attributeId = sorAttributeId($payload['attribute_id']);
                 $variant  = $this->productVariantRepository->findVariant($attributeId, $product->id, $language);
@@ -69,7 +69,6 @@ class CartService implements CartServiceInterface
                 $data['price'] = ($price['priceSale'] > 0) ? $price['priceSale'] : $price['price'];
             }
             Cart::instance('shopping')->add($data);
-
             return true;
         } catch (\Exception $e) {
             echo $e->getMessage();die();
@@ -130,7 +129,6 @@ class CartService implements CartServiceInterface
     }
 
     public function remakeCart($carts){
-        $oldCart = $carts;
         $cartId = $carts->pluck('id')->all();
         $temp = [];
         $objects = [];
@@ -164,7 +162,8 @@ class CartService implements CartServiceInterface
                     $cart->setImage($variantImage)->setPriceOriginal($variantItem->price);
                 } elseif (isset($objects['products'][$objectId])) {
                     $productItem = $objects['products'][$objectId];
-                    $cart->setImage($productItem)->setPriceOriginal($productItem->price);
+                    $variantImage = $productItem->image;
+                    $cart->setImage($variantImage)->setPriceOriginal($productItem->price);
                 }
             }
         }
@@ -176,7 +175,6 @@ class CartService implements CartServiceInterface
         $maxDiscount = 0;
         $selectedPromotion = null;
         $promotions = $this->promotionRepository->getPromotionByCartTotal();
-
         if (!is_null($promotions)) {
             foreach ($promotions as $promotion) {
                 $discount = $promotion->discountInformation['info'];
@@ -221,7 +219,7 @@ class CartService implements CartServiceInterface
                 $this->createOrderProduct($payload, $order, $request);
 
                 $this->mail($order, $system);
-                Cart::instance('shopping')->destroy();
+                // Cart::instance('shopping')->destroy();
             }
             DB::commit();
             return [
@@ -232,7 +230,8 @@ class CartService implements CartServiceInterface
             DB::rollBack();
             return [
                 'order' => null,
-                'flag' => false
+                'flag' => false,
+                'error' => $e->getMessage(),
             ];
         }
     }
