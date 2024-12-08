@@ -170,7 +170,7 @@
                             <div class="item-header-invoice mb-3">
                                 <h4 class="header-inv">Thông tin hóa đơn</h4>
                             </div>
-                            {{-- <div class="inf-pro">
+                            <div class="inf-pro">
                                 <div class="code-item uk-flex uk-space-between">
                                     <div class="code-product">Mã #{{ $data['order']->code }}</div>
                                     <div class="time-product">{{ convertDateTime($data['order']->created_at) }}</div>
@@ -247,7 +247,7 @@
                                     <span class="text-normal">{{ array_column(__('payment.method'), 'title', 'name')[$data['order']->method] }}</span>
                                 </div>
                                 <div class="text-bold">Khác: </div>
-                            </div> --}}
+                            </div>
                             <p class="invoice-footer">Cảm ơn bạn đã mua sắm tại cửa hàng của chúng tôi!</p>
                         </div>
 

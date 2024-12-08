@@ -59,7 +59,7 @@ Route::get('product-list', [HomeController::class, 'productlistAjax']);//danh sa
 Route::post('searchProduct', [HomeController::class, 'searchProduct']);
 Route::get('ajax/product/quickview/{id}', [FrontendProductController::class, 'getProduct'])->name('product.get');
 
-Route::get('gioi-thieu'.config('apps.general.suffix'), [HomeController::class, 'intro'])->name('intro.index');
+Route::get('gioi-thieu', [HomeController::class, 'intro'])->name('intro.index');
 
 
 /*VNPAY */
