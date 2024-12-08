@@ -53,13 +53,6 @@
                     </div>
                 </div>
             </div>
-            <div class="row mb-4">
-                <div class="col uk-flex uk-content-center">
-                    <span class="prive-other-pr">
-                        <a href="" class="text-iv-pro">Xem sản phẩm khác tại đây!</a>
-                    </span>
-                </div>
-            </div>
             <div class="row uk-flex uk-content-center">
                 <div class="col-md-6">
                     <div class="invoice-container mt-4">
@@ -150,7 +143,13 @@
                         </div>
                         <p class="invoice-footer">Cảm ơn bạn đã mua sắm tại cửa hàng của chúng tôi!</p>
                     </div>
-
+                </div>
+            </div>
+            <div class="row mb-4 mt-2">
+                <div class="col uk-flex uk-content-center">
+                    <span class="prive-other-pr">
+                        <a href="" class="text-iv-pro">Xem sản phẩm khác tại đây!</a>
+                    </span>
                 </div>
             </div>
         </div>

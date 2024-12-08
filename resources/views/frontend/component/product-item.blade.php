@@ -3,7 +3,7 @@
     $canonical = write_url($product->languages->first()->pivot->canonical, true, true);
     $gallery = json_decode($product->album);
     $image = image($product->image);
-    $hoverimage = $gallery[0] ?? null;
+    $hoverimage = $gallery[0] ?? $image;
     $price = getPrice($product);
     $catName = $product->product_catalogues->first()->languages->first()->pivot->name;
     $review = getReview($product);
@@ -18,10 +18,14 @@
             @if($price['percent'] > 0)
                 <span class="percentage">-{{ $price['percent'] }}%</span>
             @endif
+            <div class="ec-pro-actions">
+                <div class="ec-btn-group add-to-cart addCart" data-id="{{ $product->id }}">
+                    {!! renderQuickBuy($product, $name, $canonical) !!}
+                </div>
+            </div>
         </div>
     </div>
     <div class="ec-pro-content">
-        <h5 class="ec-pro-title"><a class="text-truncate" href="{{ $canonical }}">{{ $name }}</a></h5>
         <div class="ec-pro-rat-price">
             <span class="ec-pro-rating uk-flex uk-align-center">
                 <div class="star">
@@ -35,10 +39,8 @@
                 <div class="price-product">
                     {!! $price['html'] !!}
                 </div>
-                <div class="addCart" data-id="{{ $product->id }}">
-                    {!! renderQuickBuy($product, $name, $canonical) !!}
-                </div>
             </div>
         </div>
+        <h5 class="ec-pro-title"><a class="text-truncate" href="{{ $canonical }}">{{ $name }}</a></h5>
     </div>
 </div>

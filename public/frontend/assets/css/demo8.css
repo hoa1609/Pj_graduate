@@ -12,7 +12,7 @@ body {
   line-height: 1.625;
   position: relative;
   visibility: visible;
-  color: #444444;
+  color: #1c1c1c;
   letter-spacing: 0.4px;
   min-height: 100%;
 }
@@ -13854,7 +13854,7 @@ li {
 
 .ec-header-bottom {
   background-color: transparent;
-  padding: 10px 0;
+  padding: 5px 0;
   border-bottom: 1px solid #eeeeee;
 }
 
@@ -15519,37 +15519,27 @@ div#ec_news_signup {
           animation-name: fadeInDown;
 }
 .swiper-slide-active .slider-animation > *:nth-child(1) {
-  -webkit-animation-delay: 0.5s;
-          animation-delay: 0.5s;
+  animation-delay: 0.5s;
 }
 .swiper-slide-active .slider-animation > *:nth-child(2) {
-  -webkit-animation-delay: 1s;
-          animation-delay: 1s;
+  animation-delay: 1s;
 }
 .swiper-slide-active .slider-animation > *:nth-child(3) {
-  -webkit-animation-delay: 1.5s;
-          animation-delay: 1.5s;
+  animation-delay: 1.5s;
 }
 .swiper-slide-active .slider-animation > *:nth-child(4) {
-  -webkit-animation-delay: 2s;
-          animation-delay: 2s;
+  animation-delay: 2s;
 }
 .swiper-slide-active .slider-animation > *:nth-child(5) {
-  -webkit-animation-delay: 2.5s;
-          animation-delay: 2.5s;
+  animation-delay: 2.5s;
 }
 .swiper-slide-active .slider-animation > *:nth-child(6) {
-  -webkit-animation-delay: 3s;
-          animation-delay: 3s;
+  animation-delay: 3s;
 }
 
 .section-title {
-  margin-bottom: 15px;
-  margin-top: -3px;
   padding: 0;
   position: relative;
-  border-bottom: 1px solid #eeeeee;
-  padding-bottom: 15px;
 }
 .section-title .ec-title {
   font-size: 20px;
@@ -17956,10 +17946,6 @@ section.ec-instagram-section {
 }
 
 /* Product area */
-.ec-pro-tab {
-  margin-top: -50px;
-}
-
 .ec-pro-tab-nav {
   margin: 0 auto;
 }
@@ -17991,11 +17977,9 @@ section.ec-instagram-section {
 .ec-pro-tab-nav .nav-item .nav-link.active {
   color: #ff909d;
 }
-
 .ec-product-content {
-  padding: 10px;
+  padding: 4px;
 }
-
 .col-5 {
   width: 20%;
   -webkit-box-flex: 0;
@@ -18004,12 +17988,14 @@ section.ec-instagram-section {
 }
 
 .ec-product-inner {
-  -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
-  border: 1px solid #eeeeee;
   cursor: pointer;
   overflow: hidden;
-  border-radius: 2px;
+  border-radius: 2px; 
+  object-fit: cover;
+  position: relative;
+  height: 100%;
+  width: 100%;
 }
 .ec-product-inner .ec-pro-image {
   position: relative;
@@ -18020,7 +18006,6 @@ section.ec-instagram-section {
 }
 .ec-product-inner .ec-pro-image .image {
   position: relative;
-  display: block;
   overflow: hidden;
 }
 .ec-product-inner .ec-pro-image .image img {
@@ -18029,15 +18014,20 @@ section.ec-instagram-section {
   object-fit: cover;
   z-index: 1;
   max-width: 100%;
-  -webkit-transition: all 0.3s ease 0s;
   transition: all 0.3s ease 0s;
 }
 .ec-product-inner .ec-pro-image .image img.hover-image {
-  position: absolute;
+  position: relative;
   z-index: 2;
-  top: 0;
+  top: -100%;
   left: 0;
   opacity: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+  max-width: 100%;
+  transition: all 0.3s ease 0s;
 }
 .ec-product-inner .ec-pro-image .image .label {
   width: 11px;
@@ -18142,8 +18132,8 @@ section.ec-instagram-section {
 }
 .ec-product-inner .ec-pro-image .percentage {
   position: absolute;
-  top: 15px;
-  left: 15px;
+  top: 5px;
+  left: 5px;
   font-size: 13px;
   font-weight: 500;
   padding: 0 7px;
@@ -18154,25 +18144,17 @@ section.ec-instagram-section {
   border-radius: 2px;
 }
 .ec-product-inner .ec-pro-image .ec-pro-actions {
-  -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
   position: absolute;
   z-index: 9;
-  top: 10px;
+  top: 300px;
   left: auto;
   right: -10px;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-      -ms-flex-direction: column;
           flex-direction: column;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
           align-items: center;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
           justify-content: space-between;
   margin: 0 auto;
   opacity: 0;
@@ -18217,7 +18199,7 @@ section.ec-instagram-section {
   margin-top: 5px;
 }
 .ec-product-inner .ec-pro-image .ec-pro-actions .ec-btn-group i {
-  color: #777;
+  color: #1f1f1f;
   font-size: 16px;
   line-height: 0;
 }
@@ -18226,6 +18208,7 @@ section.ec-instagram-section {
   transition: all 0.3s ease 0s;
   z-index: 11;
   position: relative;
+  height: 350px;
 }
 .ec-product-inner:hover {
   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.05);
@@ -18245,18 +18228,8 @@ section.ec-instagram-section {
   opacity: 1;
 }
 .ec-product-inner .ec-pro-content {
-  position: relative;
-  z-index: 10;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
   padding: 8px 0 0;
   text-align: left;
-  background-color: #fff;
 }
 .ec-product-inner .ec-pro-content .ec-pro-stitle {
   padding: 0 20px;
@@ -18282,7 +18255,7 @@ section.ec-instagram-section {
 }
 .ec-product-inner .ec-pro-content .ec-pro-title a {
   text-decoration: none;
-  color: #777;
+  color: #1b1b1b;
   display: block;
   font-size: 16px;
   line-height: 20px;
@@ -18318,8 +18291,6 @@ section.ec-instagram-section {
 }
 .ec-product-inner .ec-pro-content .ec-pro-rating {
   margin-bottom: 2px;
-  opacity: 0.7;
-  position: relative;
 }
 .ec-product-inner .ec-pro-content .ec-pro-rating .qty {
   position: absolute;
@@ -19175,7 +19146,7 @@ i.ecicon.eci-star {
   margin-bottom: 15px;
 }
 .ec-blog-inner .ec-blog-image img {
-  border-radius: 30px;
+  border-radius: 10px;
 }
 .ec-blog-inner .ec-blog-cat a {
   margin-bottom: 5px;
@@ -19186,7 +19157,7 @@ i.ecicon.eci-star {
   margin: 0 0 5px;
 }
 .ec-blog-inner .ec-blog-title a {
-  color: #222;
+  color: #1b1b1b;
   font-size: 16px;
   margin: 0 auto;
   text-decoration: none;
@@ -19197,7 +19168,7 @@ i.ecicon.eci-star {
   text-transform: capitalize;
 }
 .ec-blog-inner .ec-blog-title a:hover {
-  color: #ff909d;
+  color: #8e8e8e;
 }
 .ec-blog-inner .ec-blog-date {
   font-size: 14px;

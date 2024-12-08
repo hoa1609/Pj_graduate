@@ -23,7 +23,6 @@
                                                 $image = $val['image'];
                                                 $canonical = ($val['canonical']);
                                             @endphp
-
                                             <a href="{{ $canonical }}">
                                                 <img src="{{ $image }}" alt="slide">
                                             </a>
@@ -35,12 +34,12 @@
                                         <div class="title-header pl-0">
                                             <h3>"Chất lượng vương tầm"</h3>
                                         </div>
-                                        <div class="description pl-0 pb-3">
+                                        <div class="description pl-0">
                                             <p>
                                                 "Sản phẩm bán chạy nhờ thiết kế tinh tế, chất lượng vượt trội, giá cả hợp lý, đáp ứng mọi nhu cầu. Lựa chọn hoàn hảo cho mọi khách hàng, mang đến sự hài lòng và trải nghiệm tuyệt vời mỗi ngày!"
                                             </p>
                                         </div>
-                                        <div class="title-seeding pl-0 pb-3">
+                                        <div class="title-seeding pl-0 pb-1">
                                             <a href="">
                                                 Xem thêm <i class="fa-solid fa-arrow-right"></i>  
                                             </a>

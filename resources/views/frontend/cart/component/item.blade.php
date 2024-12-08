@@ -12,7 +12,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="product-quantity">
-                        <h5 class="title-product text-truncate">{{ $cart->name }}</h5>
+                        <h5 class="title-product text-truncate-2">{{ $cart->name }}</h5>
                         <div class="quantity-control">
                             <button type="button" class="btn-qty minus">-</button>
                             <input type="hidden" class="rowId" value="{{ $cart->rowId }}">

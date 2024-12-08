@@ -2,7 +2,7 @@
     @foreach ($widgets['other-product']->object as $category)
         @php
             $catName = $category->languages->first()->pivot->name;
-            $catCanonical = write_url($category->languages->first()->pivot->canonical);
+            $catCanonical = write_url($category->languages->first()->pivot->canonical, true, true);
             $childrens = ($category->childrens) ?? null ;
         @endphp
         <section class="section ec-product-tab section-space-p">
@@ -11,22 +11,22 @@
                    <!------danh muc san pham cho danh muc san phẩm khác ------->
                     @if(!is_null($childrens) && isset($childrens))
                         <div class="row space-t-50">
-                            <div class="col-md-12">
+                            <div class="uk-flex uk-space-between">
                                 <div class="section-title">
                                     <h2 class="ec-title">{{ $catName }}</h2>
                                 </div>
-                            </div>
-                            <div class="col-md-12 ec-pro-tab">
-                                <ul class="ec-pro-tab-nav nav justify-content-end">
-                                    <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="{{ $catCanonical }}">Tất cả</a></li>
-                                    @foreach ($childrens as $children)
-                                        @php
-                                            $chilName = $children->languages->first()->pivot->name;
-                                            $chilCanonical = write_url($children->languages->first()->pivot->canonical);
-                                        @endphp
-                                        <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="{{ $chilCanonical }}">{{ $chilName }}</a></li>
-                                    @endforeach
-                                </ul>
+                                <div class="ec-pro-tab">
+                                    <ul class="ec-pro-tab-nav nav justify-content-end">
+                                        <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="{{ $catCanonical }}">Tất cả</a></li>
+                                        @foreach ($childrens as $children)
+                                            @php
+                                                $chilName = $children->languages->first()->pivot->name;
+                                                $chilCanonical = write_url($children->languages->first()->pivot->canonical, true, true);
+                                            @endphp
+                                            <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="{{ $chilCanonical }}">{{ $chilName }}</a></li>
+                                        @endforeach
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     @endif

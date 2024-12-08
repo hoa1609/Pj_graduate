@@ -35,7 +35,7 @@
                     <div class="row">
                         @foreach ($products as $product)
                             <div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 mb-6 pro-gl-content">
-                                @include('frontend.component.product-item', ['product' => $product])
+                                @include('frontend.component.product-item')
                             </div>
                         @endforeach
                     </div>
@@ -45,7 +45,6 @@
                 </div>
             </div>
         @endif
-
     </div>
 </section>
 

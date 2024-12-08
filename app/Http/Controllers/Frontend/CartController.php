@@ -72,7 +72,6 @@ class CartController extends FrontendController
     public function store(StoreCartRequest $request){
         $system = $this->system;
         $order = $this->cartService->order($request, $system);
-        dd($order);
         if ($order['flag']) {
             $response = $this->paymentMethod($request ,$order);
             if ($response['errorCode'] == 0) {
@@ -122,7 +121,6 @@ class CartController extends FrontendController
                 ];
                 break;
         default:
-            
         }
         return $response;
     }
