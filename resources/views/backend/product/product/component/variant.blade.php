@@ -7,17 +7,29 @@
                     <span class="text-small">*Sản phẩm có nhiều phiên bản với các thuộc tính khác nhau mà người dùng có thể lựa chọn, như <strong class="text-danger">màu sắc</strong> hoặc <strong class="text-danger">kích thước</strong>....</span>
                 </div>
                 <div class="uk-flex uk-flex-middle">
-                    <input 
-                        type="checkbox" 
-                        name="accept" 
-                        class="form-check-input checkBoxItem mr10 turnOnVariant" 
+                    <input
+                        type="checkbox"
+                        name="accept"
+                        class="form-check-input checkBoxItem mr10 turnOnVariant"
                         value="1"
-                        {{ old('accept') == 1 ?'checked' : '' }}
+                        {{ (
+                            old('accept') == 1
+                            ||
+                                (
+                                    isset($product)
+                                    &&
+                                    count($product->product_variants) > 0
+                                )
+                            ) ? 'checked' : ''
+                        }}
                     >
                     <label>Thêm thuộc tính sản phẩm</label>
                 </div>
             </div>
-            <div class="card-body variant-wrapper pb-5 {{ old('accept') == 1 ?'' : 'hidden' }}">
+        @php
+            $variantCatalogue = old('attributeCatalogue', (isset($product->attributeCatalogue) ? json_decode($product->attributeCatalogue, TRUE) : [] ));
+        @endphp
+            <div class="card-body variant-wrapper pb-5 {{ (isset($variantCatalogue)) ? 'hidden' : '' }}">
                 <div class="row mb-1">
                     <div class="col-lg-3 position-relative">
                         <div class="attribute-title">Chọn thuộc tính</div>
@@ -27,9 +39,9 @@
                     </div>
                 </div>
                 <div class="variant-body container">
-                    @if (old('attributeCatalogue'))
-                        @foreach (old('attributeCatalogue') as $keyAttr => $valAttr)
-                            <div class="row pb-2 variant-item"> 
+                    @if($variantCatalogue && count($variantCatalogue))
+                        @foreach ($variantCatalogue as $keyAttr => $valAttr)
+                            <div class="row pb-2 variant-item">
                                 <div class="col-lg-3 p-0">
                                     <div class="attribute-catalogue">
                                         <select name="attributeCatalogue[]" id="" class="select-option choose-attribute niceSelect">
@@ -71,9 +83,9 @@
                         <thead></thead>
                         <tbody></tbody>
                         {{-- nội dung table --}}
-                    </table>                    
+                    </table>
                 </div>
-            </div>            
+            </div>
         </div>
     </div>
 </div>
@@ -87,6 +99,7 @@
         ];
     })->values());
 
-    var attribute = '{{ base64_encode(json_encode(old('attribute'))) }}'
-    var variant = '{{ base64_encode(json_encode(old('variant'))) }}'
+    var attribute = '{{ base64_encode(json_encode(old('attribute', (isset($product->attribute) ? $product->attribute : [] )))) }}'
+    var variant = '{{ base64_encode(json_encode(old('variant', (isset($product->variant) ? json_decode($product->variant, TRUE) : [] )))) }}'
+
 </script>

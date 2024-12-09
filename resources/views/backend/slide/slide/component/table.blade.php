@@ -29,9 +29,13 @@
 
                         <td>
                             <div class="form-check form-switch">
-                                <input class="form-check-input status" data-field="publish" data-model="Slide"
-                                    value="{{ $slide->publish }}" type="checkbox" id="flexSwitchCheckDefault"
-                                    {{ $slide->publish == 2 ? 'checked' : '' }} data-modeId="{{ $slide->id }}">
+                                <input class="form-check-input status js-switch-{{ $slide-> id }}"
+                                    data-field="publish" data-model="Slide"
+                                    value="{{ $slide->publish }}"
+                                    type="checkbox" id="flexSwitchCheckDefault"
+                                    data-modeId="{{ $slide->id }}"
+                                    {{ $slide->publish == 2 ? 'checked' : '' }}
+                                    >
                             </div>
                         </td>
                         <td class="text-end">
@@ -47,6 +51,5 @@
     </div>
     <div class="d-flex justify-content-end">
         {{ $slides->links('pagination::bootstrap-4') }}
-
     </div>
 </div>

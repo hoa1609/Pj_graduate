@@ -109,4 +109,19 @@ class Language extends Model
             'name',
         )->withTimestamps();
     }
+
+    //
+
+    public function systems(){
+        return $this->hasMany(System::class, 'language_id', 'id');
+    }
+
+
+    public function menus(){
+        return $this->belongsToMany(Menu::class, 'post_catalogue_language' , 'language_id', 'menu_id')
+        ->withPivot(
+            'name',
+            'canonical',
+        )->withTimestamps();
+    }
 }

@@ -79,7 +79,7 @@ class AttributeService extends BaseService implements AttributeServiceInterface
             if($attribute->id > 0){
                 $this->updateLanguageForAttribute($attribute, $request, $languageId);
                 $this->updateCatalogueForAttribute($attribute, $request);
-                $this->createRouter($attribute, $request, $this->controllerName);
+                $this->createRouter($attribute, $request, $this->controllerName, $languageId);
             }
             DB::commit();
             return true;
@@ -138,7 +138,7 @@ class AttributeService extends BaseService implements AttributeServiceInterface
             if( $this->uploadAttribute($attribute, $request)){
                 $this->updateLanguageForAttribute($attribute, $request, $languageId);
                 $this->updateCatalogueForAttribute($attribute, $request);
-                $this->updateRouter($attribute, $request, $this->controllerName);
+                $this->updateRouter($attribute, $request, $this->controllerName, $languageId);
             }
             DB::commit();
             return true;
@@ -193,11 +193,11 @@ class AttributeService extends BaseService implements AttributeServiceInterface
 
     private function paginateSelect(){
         return [
-            'attributes.id', 
+            'attributes.id',
             'attributes.publish',
             'attributes.image',
             'attributes.order',
-            'tb2.name', 
+            'tb2.name',
             'tb2.canonical',
         ];
     }

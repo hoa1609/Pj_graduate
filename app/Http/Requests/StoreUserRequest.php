@@ -6,7 +6,6 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class StoreUserRequest extends FormRequest
 {
-
     public function authorize(): bool {
         return true;
     }
@@ -16,10 +15,10 @@ class StoreUserRequest extends FormRequest
             'name' => 'required|string|max:50',
             'email' => 'required|unique:users|email',
             'phone' => 'required|digits_between:0,40',
-            'birthday' => 'required',
+            'user_role_id' => 'required|integer|min:1',
             'password' => 'required|string',
             're_password' => 'required|same:password',
-            'address' => 'required|max:191',
+            'address' => 'max:191',
             'description' => 'max:191',
         ];
     }
@@ -35,11 +34,10 @@ class StoreUserRequest extends FormRequest
             'email.unique' => 'Email đã tồn tại! Hãy nhập lại email',
             'phone.required' => 'Bạn chưa nhập số điện thoại',
             'phone.digits' => 'Vui lòng nhập bằng số điện thoại có độ dài < 40',
-            'birthday.required' => 'Bạn chưa nhập sinh nhật',
+            'user_role_id.min' => 'Vui lòng chọn tư cách hợp lệ.',
             'password.required' => 'Bạn chưa nhập mật khẩu.',
             're_password.required' => 'Bạn chưa nhập lại mật khẩu.',
             're_password.same' => 'Nhập lại mật khẩu không khớp.',
-            'address.required' => 'Bạn chưa nhập rõ địa chỉ.',
             'address.max' => 'Độ dài phần địa chỉ đã quá 191 kí tự',
             'description.max' => 'Độ dài phần ghi chú đã quá 191 kí tự',
         ];

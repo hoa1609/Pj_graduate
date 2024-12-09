@@ -23,11 +23,11 @@
                         <td>
                             <div class="uk-flex flex-direction-column">
                                 <div class="fsz-5">{{ $attribute->name }}</div>
-                                <div class="uk-flex">
+                                <div class="uk-flex uk-baseline">
                                     <div class="category">
-                                        <span class="color-note">Nhóm hiển thị: </span>
+                                        <span class="note-tag mr5">Tag:</span>
                                     </div>
-                                    <div class="text-danger">
+                                    <div class="note-tag">
                                         @foreach ($attribute-> attribute_catalogues as $val)
                                             @foreach ($val-> attribute_catalogue_language as $cat)
                                                 <a href="{{ route('attribute.index', ['attribute_catalogue_id' => $val-> id]) }}">{{ $cat-> name }} |</a>

@@ -46,7 +46,7 @@
             </div>
             @php
                 $publish = request('publish') ? : old('publish');
-                $product_catalogueId = request('product_catalogue_id') ? : old('product_catalogue_id');
+                $attribute_catalogueId = request('attribute_catalogue_id') ? : old('attribute_catalogue_id');
             @endphp
             
             <div class="action">
@@ -56,9 +56,9 @@
                             <option {{ ($publish == $key)  ? 'selected' : '' }} value="{{ $key }}">{{ $val }}</option>
                         @endforeach
                     </select>
-                    <select name="product_catalogue_id" class="form-control form-select setupSelect2 mr5">
+                    <select name="attribute_catalogue_id" class="form-control form-select setupSelect2 mr5">
                         @foreach ($dropdown as $key => $val)
-                            <option {{ ($product_catalogueId == $key)  ? 'selected' : '' }} value="{{ $key }}">{{ $val }}</option>
+                            <option {{ ($attribute_catalogueId == $key)  ? 'selected' : '' }} value="{{ $key }}">{{ $val }}</option>
                         @endforeach
                     </select>
                     <div class="uk-flex uk-flex-middle uk-flex-nowrap input-group mr5">

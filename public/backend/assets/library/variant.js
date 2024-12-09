@@ -1,11 +1,10 @@
 (function($) {
 	"use strict";
-	var HT = {}; 
+	var HT = {};
 
     HT.niceSelect = () => {
         $('.niceSelect').niceSelect();
     }
-
 
     HT.setupProductVariant = () => {
         if ($('.turnOnVariant').length) {
@@ -14,7 +13,7 @@
                 let price = $('input[name=price]').val();
                 let code = $('input[name=code]').val();
 
-                if (price == '' && code == '') {
+                if (price == '' || code == '') {
                     displayNotification('Bạn phải nhập mục giá tiền và code sản phẩm để sử dụng chức năng này!', 'error');
                     return false;
                 }
@@ -40,14 +39,14 @@
     }
 
 
-       
+
     HT.addVariant = () => {
         if ($('.add-variant').length) {
             $(document).on('click', '.add-variant', function () {
-                let html = HT.renderVariantItem(attributeCatalogue); 
-                $('.variant-body').append(html); 
-                $('.variantTable thead').html(''); 
-                $('.variantTable tbody').html(''); 
+                let html = HT.renderVariantItem(attributeCatalogue);
+                $('.variant-body').append(html);
+                $('.variantTable thead').html('');
+                $('.variantTable tbody').html('');
                 HT.destroyNiceSelect();
                 HT.niceSelect();
                 HT.checkMaxAttributeGroup(attributeCatalogue);
@@ -63,12 +62,12 @@
             options += `<option value="${attributeCatalogue[i].id}">${attributeCatalogue[i].name}</option>`;
         }
         return `
-            <div class="row pb-2 variant-item"> 
+            <div class="row pb-2 variant-item">
                 <div class="col-lg-3 p-0">
                     <div class="attribute-catalogue">
                         <select name="attributeCatalogue[]" id="" class="select-option choose-attribute niceSelect">
                             <option value="">-- Chọn thuộc tính --</option>
-                            ${options} 
+                            ${options}
                         </select>
                     </div>
                 </div>
@@ -140,8 +139,8 @@
             HT.createVariant()
         })
     }
-    
-    
+
+
     HT.destroyNiceSelect = () => {
         if($('.niceSelect').length){
             $('.niceSelect').niceSelect('destroy')
@@ -177,7 +176,7 @@
                     }
                 },
                 cache: true
-              
+
               }
         });
     }
@@ -261,14 +260,14 @@
     }
 
 
-    
+
     HT.createVariantRow = (attributeItem, variantItem) =>{
         let attributeString = Object.values(attributeItem).join(', ')
         let attributeId = Object.values(variantItem).join(', ')
         let classModified = attributeId.replace(/, /g,'-')
 
         let $row = $('<tr>').addClass('variant-row tr-variant-' +classModified)
-        let $td 
+        let $td
 
         $td = $('<td>').append(
             $('<img>').attr('src', '/userfiles/image/product/no-image.jpg').attr('width', '50px').addClass('imageSrc')
@@ -391,7 +390,7 @@
     }
 
 
-    
+
 
     HT.browseVariantServerAlbum = () => {
         var type = 'Images';
@@ -423,7 +422,7 @@
 
         finder.popup();
     };
-    
+
 
 
 
@@ -496,7 +495,7 @@
         let variantAlbumItem = HT.variantAlbumList(variantAlbum)
         let html = ''
         html += '<tr class="updateVariantTr">'
-        html += '<td colspan="6">'
+        html += '<td colspan="12">'
         html += '<div class="updateVariant">'
         html += '<div class="uk-flex uk-flex-middle uk-flex-space-between mb-2">'
         html += '<div class="card-title fs-16">Cập nhật thông tin phiên bản</div>'
@@ -662,38 +661,43 @@
 
     HT.productVariant = () => {
         variant = JSON.parse(atob(variant))
+        const findIndexVariantBySku = (sku) => variant.sku.findIndex((item)=> item === sku)
         $('.variant-row').each(function (index, value) {
             let _this = $(this)
-            let inputHiddenFields = [
-                { name: 'variant[quantity][]', class: 'variant_quantity', value: variant.quantity[index] },
-                { name: 'variant[sku][]', class: 'variant_sku', value: variant.sku[index] },
-                { name: 'variant[price][]', class: 'variant_price', value: variant.price[index] },
-                { name: 'variant[barcode][]', class: 'variant_barcode', value: variant.barcode[index] },
-                { name: 'variant[file_name][]', class: 'variant_filename', value: variant.file_name[index] },
-                { name: 'variant[file_url][]', class: 'variant_fileurl', value: variant.file_url[index] },
-                { name: 'variant[album][]', class: 'variant_album', value: variant.album[index] },
-            ]
-            for(let i = 0; i < inputHiddenFields.length; i++){
-                _this.find('.' + inputHiddenFields[i].class).val((inputHiddenFields[i].value) ? inputHiddenFields[i].value : 0 )
+            let variantKey = _this.attr('class').match(/tr-variant-(\d+-\d+)/)[1];
+            let dataIndex = variant.sku.findIndex(sku => sku.includes(variantKey));
+            
+            if(dataIndex !== -1){
+                let inputHiddenFields = [
+                    { name: 'variant[quantity][]', class: 'variant_quantity', value: variant.quantity[dataIndex] },
+                    { name: 'variant[sku][]', class: 'variant_sku', value: variant.sku[dataIndex] },
+                    { name: 'variant[price][]', class: 'variant_price', value: variant.price[dataIndex] },
+                    { name: 'variant[barcode][]', class: 'variant_barcode', value: variant.barcode[dataIndex] },
+                    { name: 'variant[file_name][]', class: 'variant_filename', value: variant.file_name[dataIndex] },
+                    { name: 'variant[file_url][]', class: 'variant_fileurl', value: variant.file_url[dataIndex] },
+                    { name: 'variant[album][]', class: 'variant_album', value: variant.album[dataIndex] },
+                ]
+                for(let i = 0; i < inputHiddenFields.length; i++){
+                    _this.find('.' + inputHiddenFields[i].class).val((inputHiddenFields[i].value) ? inputHiddenFields[i].value : '' )
+                }
+
+                let album = variant.album[dataIndex]
+                let variantImage = (album) ? album.split(',')[0] : '/userfiles/image/product/no-image.jpg'
+
+                _this.find('.td-quantity').html(variant.quantity[dataIndex])
+                _this.find('.td-price').html(variant.price[dataIndex])
+                _this.find('.td-sku').html(variant.sku[dataIndex])
+                _this.find('.imageSrc').attr('src', variantImage)
             }
-
-            let album = variant.album[index]
-            let variantImage = (album) ? album.split(',')[0] : '/userfiles/image/product/no-image.jpg'
-
-            _this.find('.td-quantity').html(variant.quantity[index])
-            _this.find('.td-price').html(variant.price[index])
-            _this.find('.td-sku').html(variant.sku[index])
-            _this.find('.imageSrc').attr('src', variantImage)
         })
     }
-
 
 
     $(document).on('input', 'input[name="variant_price"], input[name="variant_quantity"]', function() {
         let formattedValue = HT.addCommas($(this).val());
         $(this).val(formattedValue);
     });
-    
+
 
     $(document).ready(function () {
         HT.addVariant()

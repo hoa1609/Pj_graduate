@@ -33,7 +33,6 @@ class ProductCatalogueController extends Controller {
             return $next($request);
         });
 
-
         $this->productCatalogueService = $productCatalogueService;
         $this->productCatalogueRepository = $productCatalogueRepository;
     }
@@ -49,9 +48,11 @@ class ProductCatalogueController extends Controller {
     
     public function index(Request $request){
         $this->authorize('modules', 'product.catalogue.index');
-        $config['seo'] = config('apps.productcatalogue.index');
         $perPage = $request->integer('perpage');
         $productCatalogues = $this->productCatalogueService->paginate($request, $this->language);
+
+        $config = $this->configIndex();
+        $config['seo'] = config('apps.productcatalogue.index');
         $template = 'backend.product.catalogue.index';
         return view('backend.dashboard.layout', compact(
             'config',
@@ -63,10 +64,10 @@ class ProductCatalogueController extends Controller {
 
     public function create(){
         $this->authorize('modules', 'product.catalogue.create');
+        $config = $this->configStore();
         $config['method'] = 'create';
-        $config['seo'] = config('apps.productcatalogue.create');
         $dropdown = $this->nestedset->Dropdown();
-
+        $config['seo'] = config('apps.productcatalogue.create');
         $template = 'backend.product.catalogue.store';
         return view('backend.dashboard.layout', compact(
             'config',
@@ -87,11 +88,12 @@ class ProductCatalogueController extends Controller {
     public function edit($id){
         $this->authorize('modules', 'product.catalogue.edit');
         $productCatalogue = $this->productCatalogueRepository->getProductCatalogueById($id, $this->language);
-        $config['method'] = 'edit';
-        $config['seo'] = config('apps.productcatalogue.edit');
         $album = json_decode($productCatalogue->album);
         $dropdown = $this->nestedset->Dropdown();
-
+        
+        $config = $this->configStore();
+        $config['seo'] = config('apps.productcatalogue.edit');
+        $config['method'] = 'edit';
         $template = 'backend.product.catalogue.store';
         return view('backend.dashboard.layout', compact(
             'config',
@@ -131,5 +133,32 @@ class ProductCatalogueController extends Controller {
         return redirect()->route('product.catalogue.index')->with('error', 'Xóa danh mục thất bại!');
     }
 
+    private function configIndex(){
+        return [
+            'js' => [
+                'backend/assets/js/select2_4.1.min.js',
+            ],
+            'css' => [
+                'backend/assets/css/select2.min.css',
+            ],
+        ];
+    }
+
+    private function configStore(){
+        return [
+            'js' => [
+                'backend/assets/js/select2_4.1.min.js',
+                'backend/plugins/ckfinder_2/ckfinder.js',
+                'backend/assets/library/formatprice-scroll/catalogueScroll.js',
+                'backend/assets/library/finder.js',
+                'backend/assets/library/seo.js',
+                'backend/plugins/ckeditor/ckeditor.js',
+                'backend/assets/library/renameCanonical.js',
+            ],
+            'css' => [
+                'backend/assets/css/select2.min.css',
+            ],
+        ];
+    }
 
 }

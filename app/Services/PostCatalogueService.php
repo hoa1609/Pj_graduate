@@ -26,12 +26,19 @@ class PostCatalogueService extends BaseService implements PostCatalogueServiceIn
         PostCatalogueRepository $postCatalogueRepository,
         RouterRepository $routerRepository,
     ){
+        $this->language = session('app_locale');
         $this->postCatalogueRepository = $postCatalogueRepository;
         $this->routerRepository = $routerRepository;
+        // $this->nestedset = new Nestedsetbie([
+        //     'table' => 'post_catalogue_id',
+        //     'foreignkey' => 'post_catalogue_id',
+        //     'language_id' => $this->language,
+        // ]);
     }
 
 
     public function paginate ($request, $languageId){
+
         $condition = [
             'keyword' => $request->input('keyword'),
             'publish' => $request->integer('publish'),
@@ -59,7 +66,7 @@ class PostCatalogueService extends BaseService implements PostCatalogueServiceIn
             $postCatalogue = $this->createCatalogue($request);
             if($postCatalogue->id >0){
                 $this->updateLanguageForCatalogue($postCatalogue, $request, $languageId);
-                $this->createRouter($postCatalogue, $request, $this->controllerName);
+                $this->createRouter($postCatalogue, $request, $this->controllerName, $languageId);
                 $this->nestedset = new Nestedsetbie([
                     'table' => 'post_catalogues',
                     'foreignkey' => 'post_catalogue_id',
@@ -115,7 +122,7 @@ class PostCatalogueService extends BaseService implements PostCatalogueServiceIn
             $flag = $this->updateCatalogue($postCatalogue, $request);
             if($flag == TRUE){
                 $this->updateLanguageForCatalogue($postCatalogue, $request, $languageId);
-                $this->updateRouter($postCatalogue, $request, $this->controllerName);
+                $this->updateRouter($postCatalogue, $request, $this->controllerName, $languageId);
                 $this->nestedset = new Nestedsetbie([
                     'table' => 'post_catalogues',
                     'foreignkey' => 'post_catalogue_id',

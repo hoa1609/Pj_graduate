@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 use App\Repositories\Interfaces\LanguageRepositoryInterface  as LanguageRepository;
+use Illuminate\Support\Facades\Auth;
 
 class LanguageComposerServiceProvider extends ServiceProvider
 {
@@ -25,7 +26,12 @@ class LanguageComposerServiceProvider extends ServiceProvider
         View::composer('backend.dashboard.layout', function ($view) {
             $langugeRepository = $this->app->make(LanguageRepository::class);
             $languages = $langugeRepository->all();
-            $view->with('languages', $languages);
+            $info = Auth::guard('web')->user()->getInfor();
+            $view->with(compact('languages', 'info'));
         });
+    }
+
+    private function getInfor(){
+        return $this->with('userRole')->find($this->id);
     }
 }

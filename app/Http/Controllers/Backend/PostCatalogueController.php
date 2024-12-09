@@ -36,10 +36,12 @@ class PostCatalogueController extends Controller{
         $this->postCatalogueService = $postCatalogueService;
         $this->postCatalogueRepository = $postCatalogueRepository;
     }
-
+ 
 
     public function index(Request $request){
         $this->authorize('modules', 'post.catalogue.index');
+
+        $config = $this->configIndex();
         $config['seo'] = config('apps.postcatalogue.index');
         $perPage = $request->integer('perpage');
         $postCatalogues = $this->postCatalogueService->paginate($request, $this->language);
@@ -54,6 +56,8 @@ class PostCatalogueController extends Controller{
 
     public function create(){
         $this->authorize('modules', 'post.catalogue.create');
+
+        $config = $this->configStore();
         $config['method'] = 'create';
         $config['seo'] = config('apps.postcatalogue.create');
         $dropdown = $this->nestedset->Dropdown();
@@ -77,6 +81,8 @@ class PostCatalogueController extends Controller{
     public function edit($id){
         $this->authorize('modules', 'post.catalogue.edit');
         $postCatalogue = $this->postCatalogueRepository->getPostCatalogueById($id, $this->language);
+
+        $config = $this->configStore();
         $config['method'] = 'edit';
         $config['seo'] = config('apps.postcatalogue.edit');
         $album = json_decode($postCatalogue->album);
@@ -128,5 +134,32 @@ class PostCatalogueController extends Controller{
         ]);
     } 
 
+    private function configIndex(){
+        return [
+            'js' => [
+                'backend/assets/js/select2_4.1.min.js',
+            ],
+            'css' => [
+                'backend/assets/css/select2.min.css',
+            ],
+        ];
+    }
+
+    private function configStore(){
+        return [
+            'js' => [
+                'backend/assets/js/select2_4.1.min.js',
+                'backend/plugins/ckfinder_2/ckfinder.js',
+                'backend/assets/library/seo.js',
+                'backend/assets/library/finder.js',
+                'backend/plugins/ckeditor/ckeditor.js',
+                'backend/assets/library/renameCanonical.js',
+                'backend/plugins/nice-select/js/jquery.nice-select.min.js',
+            ],
+            'css' => [
+                'backend/assets/css/select2.min.css',
+            ],
+        ];
+    }
 
 }

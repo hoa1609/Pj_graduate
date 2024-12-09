@@ -14,10 +14,10 @@
                             <div class="form-check mb-2">
                                 <ul class="list-unstyled mb-0">
                                     <li class>
-                                        <a href="#" class="changeStatusAll" data-value="2" data-field="publish" data-model="User" >Active toàn bộ</a>
+                                        <a href="#" class="changeStatusAll" data-value="2" data-field="publish" data-model="{{ $config['model'] }}" >Active toàn bộ</a>
                                     </li>
                                     <li class="mt-2">
-                                        <a href="#" class="changeStatusAll" data-value="1" data-field="publish" data-model="User" >Unactive toàn bộ</a>
+                                        <a href="#" class="changeStatusAll" data-value="1" data-field="publish" data-model="{{ $config['model'] }}" >Unactive toàn bộ</a>
                                     </li>
                                 </ul>
                             </div>

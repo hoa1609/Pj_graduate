@@ -1,3 +1,34 @@
+<div class="card-header">
+    <div class="row align-items-center">
+        <div class="col">
+            <h4 class="card-title">Bảng danh sách </h4>
+        </div>
+        <div class="col-auto">
+            <form class="row g-2">
+                <div class="col-auto">
+                    <a class="btn bg-primary-subtle text-primary dropdown-toggle d-flex align-items-center arrow-none" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false" data-bs-auto-close="outside">
+                        <i class="iconoir-filter-alt me-1"></i> Cài đặt chung
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-start">
+                        <div class="text-dark p-2">
+                            <div class="form-check mb-2">
+                                <ul class="list-unstyled mb-0">
+                                    <li class>
+                                        <a href="#" class="changeStatusAll" data-value="2" data-field="publish" data-model="{{ $config['model'] }}" >Active toàn bộ</a>
+                                    </li>
+                                    <li class="mt-2">
+                                        <a href="#" class="changeStatusAll" data-value="1" data-field="publish" data-model="{{ $config['model'] }}" >Unactive toàn bộ</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <form action="{{ route('slide.index') }}">
     <div class="filter-wrapper">
         <div class="uk-flex uk-flex-middle uk-flex-space-between">
@@ -18,12 +49,6 @@
                     @php
                         $publish = request('publish') ?: old('publish');
                     @endphp
-                    {{-- <select name="publish" class="form-control setupSelect2 ml10">
-                        @foreach(config('apps.general.publish') as $key => $val)
-                        <option {{ ($publish == $key)  ? 'selected' : '' }} value="{{ $key }}">{{ $val }}</option>
-                        @endforeach
-                    </select> --}}
-
                     <div class="uk-search uk-flex uk-flex-middle mr10">
                         <div class="input-group">
                             <input

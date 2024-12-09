@@ -5,7 +5,8 @@
 </head>
     <body>
         @include('frontend.component.header')
-
+        @include('frontend.component.cart')
+        
         @yield('content')
 
         @include('frontend.component.footer')

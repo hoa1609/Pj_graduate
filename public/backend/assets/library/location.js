@@ -12,7 +12,6 @@
                 },
                 'target' : _this.attr('data-target')
             }
-
             HT.sendDataTogetLocation(option)
             
         })

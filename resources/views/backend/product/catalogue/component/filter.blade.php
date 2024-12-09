@@ -1,9 +1,9 @@
 <div class="card-header">
     <div class="row align-items-center">
-        <div class="col">                      
-            <h4 class="card-title">{{ $config['seo']['title'] }}</h4>                      
+        <div class="col">
+            <h4 class="card-title">{{ $config['seo']['title'] }}</h4>    
         </div>
-        <div class="col-auto"> 
+        <div class="col-auto">
             <form class="row g-2">
                 <div class="col-auto">
                     <a class="btn bg-primary-subtle text-primary dropdown-toggle d-flex align-items-center arrow-none" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false" data-bs-auto-close="outside">
@@ -24,9 +24,9 @@
                         </div>
                     </div>
                 </div>
-            </form>    
+            </form>
         </div>
-    </div>                                     
+    </div>
 </div>
 
 <form action="{{ route('product.catalogue.index') }}">
@@ -56,10 +56,10 @@
                         @endforeach
                     </select>
                     <div class="uk-flex uk-flex-middle uk-flex-nowrap input-group mr5">
-                        <input type="text" 
-                        name="keyword" 
-                        value="{{ request('keyword') ?: old('keyword') }}" 
-                        placeholder="Nhập Từ khóa bạn muốn tìm kiếm..." 
+                        <input type="text"
+                        name="keyword"
+                        value="{{ request('keyword') ?: old('keyword') }}"
+                        placeholder="Nhập Từ khóa bạn muốn tìm kiếm..."
                         class="form-control"
                         >
                         <button type="submit" name="search" value="search" class="btn btn-primary btn-find">Tìm Kiếm</button>

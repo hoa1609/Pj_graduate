@@ -40,6 +40,7 @@ class AttributeCatalogueController extends Controller{
 
     public function index(Request $request){
         $this->authorize('modules', 'attribute.catalogue.index');
+        $config = $this->configIndex();
         $config['seo'] = config('apps.attributecatalogue.index');
         $perPage = $request->integer('perpage');
         $attributeCatalogues = $this->attributeCatalogueService->paginate($request, $this->language);
@@ -54,6 +55,8 @@ class AttributeCatalogueController extends Controller{
 
     public function create(){
         $this->authorize('modules', 'attribute.catalogue.create');
+
+        $config = $this->configStore();
         $config['method'] = 'create';
         $config['seo'] = config('apps.attributecatalogue.create');
         $dropdown = $this->nestedset->Dropdown();
@@ -77,6 +80,8 @@ class AttributeCatalogueController extends Controller{
     public function edit($id){
         $this->authorize('modules', 'attribute.catalogue.edit');
         $attributeCatalogue = $this->attributeCatalogueRepository->getAttributeCatalogueById($id, $this->language);
+
+        $config = $this->configStore();
         $config['method'] = 'edit';
         $config['seo'] = config('apps.attributecatalogue.edit');
         $album = json_decode($attributeCatalogue->album);
@@ -125,5 +130,34 @@ class AttributeCatalogueController extends Controller{
             'foreignkey' => 'attribute_catalogue_id',
             'language_id' =>  $this->language,
         ]);
+    }
+
+    private function configIndex(){
+        return [
+            'js' => [
+                'backend/assets/js/select2_4.1.min.js',
+            ],
+            'css' => [
+                'backend/assets/css/select2.min.css',
+            ],
+            'model' => 'AttributeCatalogue'
+        ];
+    }
+
+    private function configStore(){
+        return [
+            'js' => [
+                'backend/assets/js/select2_4.1.min.js',
+                'backend/plugins/ckfinder_2/ckfinder.js',
+                'backend/assets/library/formatprice-scroll/catalogueScroll.js',
+                'backend/assets/library/finder.js',
+                'backend/assets/library/seo.js',
+                'backend/assets/library/renameCanonical.js',
+                'backend/plugins/ckeditor/ckeditor.js',
+            ],
+            'css' => [
+                'backend/assets/css/select2.min.css',
+            ],
+        ];
     }
 }

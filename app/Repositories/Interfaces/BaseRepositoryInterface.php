@@ -15,14 +15,15 @@ interface BaseRepositoryInterface
         array $extend = [],
         array $orderBy = [],
         array $join = [],
-        array $relations = [], 
+        array $relations = [],
     );
 
     public function updateByWhereIn(
         string $whereInField = '',
-        array $whereIn = [], 
-        array $payload = [] 
+        array $whereIn = [],
+        array $payload = []
         );
     public function createPivot($model, array $payload = [], string $relation = '');
     public function createBatch(array $payload = []);
+    public function findByCondition($condition = [], $relation = [], $flag = false);
 }

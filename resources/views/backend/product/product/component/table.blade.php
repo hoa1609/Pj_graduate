@@ -8,7 +8,7 @@
                 </th>
                 <th>Hình ảnh</th>
                 <th>Bài viết</th>
-                <th>Vị trí</th>
+                {{-- <th>Vị trí</th> --}}
                 <th>Tình trạng</th>
                 <th class="text-end">Thao tác</th>
             </tr>
@@ -23,11 +23,11 @@
                         <td>
                             <div class="uk-flex flex-direction-column">
                                 <div class="fsz-5">{{ $product->name }}</div>
-                                <div class="uk-flex">
+                                <div class="uk-flex uk-baseline pt-1">
                                     <div class="category">
-                                        <span class="color-note">Nhóm hiển thị: </span>
+                                        <span class="note-tag mr5">Tag: </span>
                                     </div>
-                                    <div class="text-danger">
+                                    <div class="note-tag">
                                         @foreach ($product-> product_catalogues as $val)
                                             @foreach ($val-> product_catalogue_language as $cat)
                                                 <a href="{{ route('product.index', ['product_catalogue_id' => $val-> id]) }}">{{ $cat-> name }} |</a>
@@ -37,9 +37,9 @@
                                 </div>
                             </div>
                         </td>
-                        <td>
+                        {{-- <td>
                             <input type="text" name="form-control" data-id="{{ $product->id }}" data-model="{{ $config['model'] }}" value="{{ $product-> order }}">
-                        </td>
+                        </td> --}}
                         <td>
                             <div class="form-switch">
                                 <input class="form-check-input status js-switch-{{ $product-> id }}" 

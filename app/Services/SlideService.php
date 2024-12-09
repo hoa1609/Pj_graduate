@@ -36,8 +36,9 @@ class SlideService  extends BaseService implements SlideServiceInterface
         ];
      }
 
-    public function paginate($request, $perPage = [])
-    {
+    public function paginate($request, $languageId){
+
+        $perPage = $request->integer('perpage', 10);
         $condition['keyword'] = $request->input('keyword');
         $slides = $this->slideRepository->pagination(
             $this->paginateSelect(),
@@ -49,8 +50,8 @@ class SlideService  extends BaseService implements SlideServiceInterface
         return $slides;
     }
 
-    public function create($request, $languageId)
-    {
+
+    public function create($request, $languageId){
         DB::beginTransaction();
         try{
             $payload = $request->only(['_token', 'name', 'keyword', 'setting', 'short_code']);
@@ -61,14 +62,12 @@ class SlideService  extends BaseService implements SlideServiceInterface
               return true;
             }catch(\Exception $e ){
                 DB::rollBack();
-                // Log::error($e->getMessage());
                 echo $e->getMessage(); die();
                 return false;
             }
     }
 
-    public function update($id, $request, $languageId)
-    {
+    public function update($id, $request, $languageId){
         DB::beginTransaction();
         try{
             $slide = $this->slideRepository->findById($id);
@@ -76,20 +75,17 @@ class SlideService  extends BaseService implements SlideServiceInterface
             unset($slideItem[$languageId]);
             $payload = $request->only(['_token', 'name', 'keyword', 'setting', 'short_code']);
             $payload['item'] = $this->handleSlideItem($request, $languageId) + $slideItem;
-            // dd($payload);
             $slide = $this->slideRepository->update($id, $payload);
              DB::commit();
               return true;
             }catch(\Exception $e ){
                 DB::rollBack();
-                // Log::error($e->getMessage());
                 echo $e->getMessage(); die();
                 return false;
             }
     }
 
-    public function destroy($id)
-    {
+    public function destroy($id){
         DB::beginTransaction();
         try{
             $slide = $this->slideRepository->delete($id);
@@ -97,18 +93,17 @@ class SlideService  extends BaseService implements SlideServiceInterface
               return true;
             }catch(\Exception $e ){
                 DB::rollBack();
-                // Log::error($e->getMessage());
                 echo $e->getMessage(); die();
                 return false;
             }
     }
 
-    public function updateStatus($post = [])
+    public function updateStatus($slide = [])
     {
         DB::beginTransaction();
         try {
-            $payload = [$post['field'] =>(($post['value'] == 1) ? 2 : 1)];
-            $slide = $this->slideRepository->update($post['modelId'], $payload);
+            $payload = [$slide['field'] =>(($slide['value'] == 1) ? 2 : 1)];
+            $slide = $this->slideRepository->update($slide['modelId'], $payload);
 
             DB::commit();
             return true;
@@ -119,6 +114,21 @@ class SlideService  extends BaseService implements SlideServiceInterface
             return false;
         }
     }
+
+    public function updateStatusAll($slide){
+        DB::beginTransaction();
+        try{
+            $payload[$slide['field']] = $slide['value'];
+            $flag = $this->slideRepository->updateByWhereIn('id', $slide['id'], $payload);
+            DB::commit();
+            return true;
+        }catch(\Exception $e ){
+            DB::rollBack();
+            echo $e->getMessage();die();
+            return false;
+        }
+    }
+
 
     private function handleSlideItem($request, $languageId)
     {
@@ -141,13 +151,39 @@ class SlideService  extends BaseService implements SlideServiceInterface
     {
         $temp = [];
         $fields = ['image', 'description', 'window', 'canonical', 'name', 'alt'];
-        // dd($slide);
         foreach ($slide as $key => $val) {
             foreach($fields as $field) {
                 $temp[$field][] = $val[$field];
             }
         }
         return $temp;
+    }
+
+
+    // ------ OUTPUT SLIDE FE
+    public function getSlide($array = [], $language = 1){
+        $slides = $this->slideRepository->findByCondition(...$this->getSlideAgrument($array));
+        $temp = [];
+        foreach($slides as $key => $val){
+            $temp[$val->keyword]['item'] = $val->item[$language];
+            $temp[$val->keyword]['setting'] = $val->setting;
+        }
+        return $temp;
+    }
+
+    private function getSlideAgrument($array){
+        return [
+            'condition' => [
+                config('apps.general.defaultPublish'),
+            ],
+            'flag' => true,
+            'relation' => [],
+            'orderBy' => ['id', 'desc'],
+            'param' => [
+                'whereIn' => $array,
+                'whereInField' => 'keyword'
+            ]
+        ];
     }
 
 }

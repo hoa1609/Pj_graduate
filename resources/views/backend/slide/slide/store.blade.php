@@ -1,4 +1,3 @@
-@include('backend.dashboard.component.nav', ['title' => $config['seo']['create']['title']])
 @php
     $url = $config['method'] == 'create' ? route('slide.store') : route('slide.update', $slide->id);
 @endphp
@@ -9,9 +8,9 @@
             @include('backend.dashboard.component.formError')
             <div class="col-lg-9">
                 @include('backend.slide.slide.component.list')
-            </div><!--end card-->
+            </div>
 
-            </div> <!--end col-->
+            </div>
             <div class="col-lg-3">
                 @include('backend.slide.slide.component.aside')
             </div>

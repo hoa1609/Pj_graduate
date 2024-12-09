@@ -151,39 +151,39 @@ function ecCheckCookie()
     });
 
     /*----------------------------- Siderbar Product Slider -------------------------------- */ 
-    $(document).ready(function(){
-        $('.ec-sidebar-slider .ec-sb-pro-sl').slick({
-            rows: 4,
-            dots: false,
-            arrows: true,
-            infinite: true,
-            speed: 500,
-            slidesToShow: 1,
-            slidesToScroll: 1,
-            autoplay: true,
-            autoplaySpeed: 8000,
-            responsive: [
-            {
-                breakpoint: 992,
-                settings: {
-                    rows: 4,
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                    dots: false
-                }
-            },
-            {
-                breakpoint: 479,
-                settings: {
-                    rows: 4,
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                    dots: false
-                }
-            }
-            ]
-        });
-    });
+    // $(document).ready(function(){
+    //     $('.ec-sidebar-slider .ec-sb-pro-sl').slick({
+    //         rows: 4,
+    //         dots: false,
+    //         arrows: true,
+    //         infinite: true,
+    //         speed: 500,
+    //         slidesToShow: 1,
+    //         slidesToScroll: 1,
+    //         autoplay: true,
+    //         autoplaySpeed: 8000,
+    //         responsive: [
+    //         {
+    //             breakpoint: 992,
+    //             settings: {
+    //                 rows: 4,
+    //                 slidesToShow: 1,
+    //                 slidesToScroll: 1,
+    //                 dots: false
+    //             }
+    //         },
+    //         {
+    //             breakpoint: 479,
+    //             settings: {
+    //                 rows: 4,
+    //                 slidesToShow: 1,
+    //                 slidesToScroll: 1,
+    //                 dots: false
+    //             }
+    //         }
+    //         ]
+    //     });
+    // });
 
     /*----------------------------- Slider Price -------------------------------- */
     const slider = document.getElementById('ec-sliderPrice');
@@ -466,7 +466,7 @@ function ecCheckCookie()
 
     /*--------------------- Category Slider -------------------------------- */   
     /*--------------------- Blog Owl Slider -------------------------------- */ 
-    $('.ec-blog-slider, #ec-cat-slider').owlCarousel({
+    $('#ec-cat-slider').owlCarousel({
         margin:30,
         loop: true,
         dots:false,
@@ -500,6 +500,37 @@ function ecCheckCookie()
                 items: 4,
                 nav:false
             }
+        }
+    }); 
+
+
+
+    $('.ec-blog-slider').owlCarousel({
+        margin:30,
+        loop: true,
+        dots:false,
+        nav:false,
+        smartSpeed: 1000,
+        autoplay:true,
+        items:3,
+        responsiveClass: true,
+        responsive: {
+            0: {
+                items: 1,
+                nav:false
+            },
+            576: {
+                items: 2,
+                nav:false
+            },
+            768: {
+                items: 3,
+                nav:false
+            },
+            992: {
+                items: 4,
+                nav:false
+            },
         }
     }); 
 
@@ -839,49 +870,6 @@ function ecCheckCookie()
         slidesToScroll: 1
     });
 
-    /*--------------------- Blog Owl Slider -------------------------------- */ 
-    $('.ec-blog-slider, #ec-cat-slider').owlCarousel({
-    margin:30,
-    loop: true,
-    dots:false,
-    nav:true,
-    smartSpeed: 1000,
-    autoplay:false,
-    items:3,
-    responsiveClass: true,
-    responsive: {
-		0: {
-			items: 1,
-			dots:true,
-			nav:false
-		},
-		576: {
-			items: 2,
-			dots:true,
-			nav:false
-		},
-		768: {
-			items: 2,
-			dots:true,
-			nav:false
-		},
-		992: {
-			items: 3,
-			dots:true,
-			nav:false
-		},
-		1200: {
-			items:4,
-			dots:true,
-			nav:false
-		},
-		1367: {
-			items: 4,
-			dots:true,
-			nav:false
-		}
-	}
-});
      /*----------------------------- Sidebar js | Toggle Icon OnClick Open sidebar  -----------------------------------*/
 
 	$(".ec-sidebar-toggle").on("click", function () {

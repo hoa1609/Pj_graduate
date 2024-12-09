@@ -2,8 +2,16 @@
 
 namespace App\Providers;
 
+use App\Http\Controllers\ViewComposers\CartComposer;
+use App\Http\Controllers\ViewComposers\LanguagueComposer;
+use Dotenv\Validator;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
+use App\Http\Controllers\ViewComposers\SystemComposer;
+use App\Http\Controllers\ViewComposers\MenuComposer;
+use App\Models\Language;
+use Carbon\Carbon;
+use DateTime;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -51,9 +59,21 @@ class AppServiceProvider extends ServiceProvider
         'App\Services\Interfaces\ProductVariantLanguageServiceInterface' => 'App\Services\ProductVariantLanguageService',
         'App\Repositories\Interfaces\ProductVariantLanguageRepositoryInterface' => 'App\Repositories\ProductVariantLanguageRepository',
 
+        /* product variant */
+        'App\Services\Interfaces\ProductVariantServiceInterface' => 'App\Services\ProductVariantService',
+        'App\Repositories\Interfaces\ProductVariantRepositoryInterface' => 'App\Repositories\ProductVariantRepository',
+
         /* slide */
         'App\Services\Interfaces\SlideServiceInterface' => 'App\Services\SlideService',
         'App\Repositories\Interfaces\SlideRepositoryInterface' =>'App\Repositories\SlideRepository',
+
+        /* ProductVariantAttribute */
+        'App\Services\Interfaces\ProductVariantAttributeServiceInterface' => 'App\Services\ProductVariantAttributeService',
+        'App\Repositories\Interfaces\ProductVariantAttributeRepositoryInterface' =>'App\Repositories\ProductVariantAttributeRepository',
+
+        /* ProductVariant */
+        'App\Services\Interfaces\ProductVariantServiceInterface' => 'App\Services\ProductVariantService',
+        'App\Repositories\Interfaces\ProductVariantRepositoryInterface' =>'App\Repositories\ProductVariantRepository',
 
         /* router */
         'App\Services\Interfaces\RouterServiceInterface' => 'App\Services\RouterService',
@@ -63,9 +83,50 @@ class AppServiceProvider extends ServiceProvider
         'App\Repositories\Interfaces\ProvinceRepositoryInterface' => 'App\Repositories\ProvinceRepository',
         'App\Repositories\Interfaces\DistrictRepositoryInterface' => 'App\Repositories\DistrictRepository',
 
+        /* menu */
+        'App\Services\Interfaces\MenuServiceInterface' => 'App\Services\MenuService',
+        'App\Repositories\Interfaces\MenuRepositoryInterface' => 'App\Repositories\MenuRepository',
 
-        
-        
+        /* system */
+        'App\Services\Interfaces\SystemServiceInterface' => 'App\Services\SystemService',
+        'App\Repositories\Interfaces\SystemRepositoryInterface' => 'App\Repositories\SystemRepository',
+
+        /* menu catalogue*/
+        'App\Services\Interfaces\MenuCatalogueServiceInterface' => 'App\Services\MenuCatalogueService',
+        'App\Repositories\Interfaces\MenuCatalogueRepositoryInterface' => 'App\Repositories\MenuCatalogueRepository',
+        /* Promotion */
+       'App\Services\Interfaces\PromotionServiceInterface' => 'App\Services\PromotionService',
+        'App\Repositories\Interfaces\PromotionRepositoryInterface' =>'App\Repositories\PromotionRepository',
+
+        /* Promotion-Source */
+       'App\Services\Interfaces\SourceServiceInterface' => 'App\Services\SourceService',
+       'App\Repositories\Interfaces\SourceRepositoryInterface' =>'App\Repositories\SourceRepository',
+
+         /* cart */
+        'App\Services\Interfaces\CartServiceInterface' => 'App\Services\CartService',
+
+         /* order */
+        'App\Repositories\Interfaces\OrderRepositoryInterface' =>'App\Repositories\OrderRepository',
+
+        /* Customer */
+        'App\Services\Interfaces\CustomerServiceInterface' => 'App\Services\CustomerService',
+        'App\Repositories\Interfaces\CustomerRepositoryInterface' => 'App\Repositories\CustomerRepository',
+
+        /* Customer_catalogue */
+        'App\Services\Interfaces\CustomerCatalogueServiceInterface' => 'App\Services\CustomerCatalogueService',
+        'App\Repositories\Interfaces\CustomerCatalogueRepositoryInterface' => 'App\Repositories\CustomerCatalogueRepository',
+
+        // widget
+        'App\Services\Interfaces\WidgetServiceInterface' => 'App\Services\WidgetService',
+        'App\Repositories\Interfaces\WidgetRepositoryInterface' =>'App\Repositories\WidgetRepository',
+
+        /* Order */
+         'App\Services\Interfaces\OrderServiceInterface' => 'App\Services\OrderService',
+         'App\Repositories\Interfaces\OrderRepositoryInterface' =>'App\Repositories\OrderRepository',
+
+          /* Review */
+          'App\Services\Interfaces\ReviewServiceInterface' => 'App\Services\ReviewService',
+          'App\Repositories\Interfaces\ReviewRepositoryInterface' =>'App\Repositories\ReviewRepository',
     ];
 
     public function register(): void
@@ -80,6 +141,34 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+
+        $locale = app()->getLocale();
+        $language = Language::where('canonical', $locale)->first();
+
+        view()->composer('frontend.homepage.layout', function($view) use ($language){
+            $composerClass = [
+                SystemComposer::class,
+                MenuComposer::class,
+                LanguagueComposer::class,
+                CartComposer::class,
+            ];
+            foreach($composerClass as $key => $val){
+                $composer = app()->make($val, ['language' => $language->id]);
+                $composer->composer($view);
+            }
+        });
+
+        // Validator::extend('custom_date_format', function($attribute, $value, $parameters, $validator){
+        //     return DateTime::createFromFormat('d/m/Y H:i', $value) !== false;
+        // });
+
+        // Validator::extend('custom_after', function($attribute, $value, $parameters, $validator){
+        //     $starDate = Carbon::createFromFormat('d/m/Y H:i',$validator->getData()[$parameters[0]]) ;
+        //     $endDate = Carbon::createFromFormat('d/m/Y H:i', $value);
+
+        //     return $endDate->greaterThan($starDate) !== false;
+        // });
+
         Schema::defaultStringLength(191);
     }
 }

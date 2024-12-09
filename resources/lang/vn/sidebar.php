@@ -2,10 +2,16 @@
 
 return [
     'module' => [
-
+        [
+            'dropdown' => 'Dashboard',
+            'title' => 'Thống kê',
+            'icon' => 'fa fa-database',
+            'route' => 'dashboard.index',
+            'class' => 'special',
+        ],
         [
             'dropdown' => 'sidebarProduct',
-            'title' => 'QL Mặt hàng',
+            'title' => 'Mặt hàng',
             'icon' => 'fa fa-cube',
             'subModule' => [
                 [
@@ -39,8 +45,35 @@ return [
             ],
         ],
         [
+            'dropdown' => 'sidebarOrder',
+            'title' => 'Đơn hàng',
+            'icon' => 'fa fa-shopping-bag menu-icon',
+            'subModule' => [
+                [
+                    'dropdown' => 'sidebarOrders',
+                    'title' => 'Đơn hàng',
+                    'route' => 'order.index',
+                ],
+            ],
+        ],
+        [
+            'dropdown' => 'sidebarCustomer',
+            'title' => 'Khách hàng',
+            'icon' => 'las la-users',
+            'subModule' => [
+                [
+                    'title' => 'Nhóm khách hàng',
+                    'route' => 'customer.catalogue.index'
+                ],
+                [
+                    'title' => 'Khách hàng',
+                    'route' => 'customer.index'
+                ],
+            ]
+        ],
+        [
             'dropdown' => 'sidebarslide',
-            'title' => 'QL slide',
+            'title' => 'Slide',
             'icon' => 'lar la-image',
             'subModule' => [
                 [
@@ -51,7 +84,7 @@ return [
         ],
         [
             'dropdown' => 'sidebarPost',
-            'title' => 'QL Bài viết',
+            'title' => 'Bài viết',
             'icon' => 'fa fa-file',
             'subModule' => [
                 [
@@ -66,11 +99,11 @@ return [
         ],
         [
             'dropdown' => 'sidebarUser',
-            'title' => 'QL Thành Viên',
-            'icon' => 'fa fa-user',
+            'title' => 'Thành Viên',
+            'icon' => 'fa fa-user menu-icon',
             'subModule' => [
                 [
-                    'title' => 'QL Nhóm',
+                    'title' => 'Nhóm',
                     'route' => 'user.role.index'
                 ],
                 [
@@ -85,13 +118,60 @@ return [
             ]
         ],
         [
+            'dropdown' => 'sidebarMaketing',
+            'title' => 'Maketing',
+            'icon' => 'icofont-money',
+            'subModule' => [
+                [
+                    'title' => 'Khuyến mãi',
+                    'route' => 'promotion.index'
+                ],
+                [
+                    'title' => 'Nguồn Khách',
+                    'route' => 'source.index'
+                ],
+
+            ]
+        ],
+        [
+            'dropdown' => 'sidebarReview',
+            'title' => 'Bình luận',
+            'icon' => 'icofont-speech-comments ',
+            'subModule' => [
+                [
+                    'title' => 'Bình luận',
+                    'route' => 'review.index'
+                ],
+            ]
+        ],
+        [
+            'dropdown' => 'menu',
+            'title' => 'Menu',
+            'icon' => 'fa fa-bars',
+            'subModule' => [
+                [
+                    'title' => 'Cài đặt menu',
+                    'route' => 'menu.index'
+                ],
+
+            ]
+        ],
+        [
             'dropdown' => 'sidebarGeneral',
-            'title' => 'Cấu hình chung',
-            'icon' => 'fa fa-wrench',
+            'title' => 'Cài đặt chung',
+            'icon' => 'las la-cog',
             'subModule' => [
                 [
                     'title' => 'Ngôn ngữ',
                     'route' => 'language.index'
+                ],
+                [
+                    'title' => 'Widget',
+                    'route' => 'widget.index'
+                ],
+                [
+                    'title' => 'Cấu hình hệ thống',
+                    'route' => 'system.index'
                 ],
 
             ]
