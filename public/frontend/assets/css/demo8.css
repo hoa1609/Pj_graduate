@@ -14956,7 +14956,6 @@ body.ec-open:before {
   display: inline-block;
   position: relative;
   word-break: break-all;
-  opacity: 0.8;
   letter-spacing: 0;
   font-weight: 300;
   font-size: 16px;
@@ -14972,7 +14971,6 @@ body.ec-open:before {
 }
 .ec-footer .footer-top .ec-footer-contact .ec-footer-widget .ec-footer-links li p {
   font-weight: 300;
-  opacity: 0.8;
   color: #000000;
   font-size: 14px;
 }
@@ -14991,8 +14989,7 @@ body.ec-open:before {
 .ec-footer .footer-top .ec-footer-contact .ec-footer-widget .ec-footer-links .ec-footer-link span i {
   font-size: 18px;
   line-height: 15px;
-  opacity: 0.4;
-  color: #000000;
+  color: #313131;
 }
 .ec-footer .footer-top .ec-footer-social {
   margin-bottom: 0;
@@ -15162,7 +15159,7 @@ div#ec_news_signup {
 }
 
 .section-space-footer-p {
-  padding: 40px 0;
+  padding-top: 40px;
 }
 
 /* .space-t-50 {
@@ -17549,7 +17546,6 @@ section.ec-instagram-section {
 .ec-slide-content .btn:hover {
   background-color: #222;
 }
-
 .main-slider-dot .swiper-pagination-bullet {
   width: 10px;
   height: 10px;
@@ -17558,17 +17554,15 @@ section.ec-instagram-section {
   opacity: 1;
   border: none;
   margin: 0 2.5px !important;
-  -webkit-box-shadow: none;
-          box-shadow: none;
-  -webkit-transition: all 0.3s ease 0s;
+  box-shadow: none;
   transition: all 0.3s ease 0s;
   background-color: #202020;
 }
 .main-slider-dot .swiper-pagination-bullet:hover {
-  background-color: #ff909d;
+  background-color: #ebebeb;
 }
 .main-slider-dot .swiper-pagination-bullet.swiper-pagination-bullet-active {
-  background-color: #ff909d;
+  background-color: #ebebeb;
   width: 40px;
 }
 
@@ -18208,7 +18202,7 @@ section.ec-instagram-section {
   transition: all 0.3s ease 0s;
   z-index: 11;
   position: relative;
-  height: 350px;
+  height: 360px;
 }
 .ec-product-inner:hover {
   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.05);
@@ -19162,7 +19156,7 @@ i.ecicon.eci-star {
   margin: 0 auto;
   text-decoration: none;
   display: block;
-  font-weight: 600;
+  font-weight: 500;
   line-height: 1.5;
   letter-spacing: 0;
   text-transform: capitalize;

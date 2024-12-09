@@ -41,6 +41,7 @@ use App\Http\Controllers\Ajax\OrderController as AjaxOrderController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Backend\SystemController;
 use App\Http\Controllers\Frontend\MomoController;
+use App\Http\Controllers\Frontend\OtherController;
 use App\Http\Controllers\Frontend\ProductController as FrontendProductController;
 use Illuminate\Routing\RouteGroup;
 
@@ -59,13 +60,13 @@ Route::get('product-list', [HomeController::class, 'productlistAjax']);//danh sa
 Route::post('searchProduct', [HomeController::class, 'searchProduct']);
 Route::get('ajax/product/quickview/{id}', [FrontendProductController::class, 'getProduct'])->name('product.get');
 
-Route::get('gioi-thieu', [HomeController::class, 'intro'])->name('intro.index');
+Route::get('gioi-thieu', [OtherController::class, 'intro'])->name('intro.index');
 
 
 /*VNPAY */
 Route::get('return/vnpay'.config('apps.general.suffix'), [VnpayController::class, 'vnpay_return'])->name('vnpay.vnpay_return');
 Route::get('return/vnpay_ipn'.config('apps.general.suffix'), [VnpayController::class, 'vnpay_ipn'])->name('vnpay.vnpay_ipn');
-Route::get('return/momo'.config('apps.general.suffix'), [MomoController::class, 'momo_return'])->name('vnpay.vnpay_return');
+Route::get('return/momo'.config('apps.general.suffix'), [MomoController::class, 'momo_return'])->name('momo.momo_return');
 // Route::get('return/vnpay_ipn'.config('apps.general.suffix'), [VnpayController::class, 'vnpay_ipn'])->name('vnpay.vnpay_ipn');
 
 
@@ -338,7 +339,7 @@ Route::middleware(['admin', 'locale', 'backend_default_locale'])->group(function
 // /*   */
 Route::get('admin', [AuthController::class, 'index'])->name('auth.admin')->middleware('login');
 Route::post('login', [AuthController::class, 'login'])->name('auth.login');
-Route::get('logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('logout', [AuthController::class, 'logout'])->name('admin.logout');
 
 
 

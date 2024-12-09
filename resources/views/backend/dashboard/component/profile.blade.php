@@ -25,6 +25,6 @@
         <a class="dropdown-item" href="#"><i class="las la-cog fs-18 me-1 align-text-bottom"></i>Cài đặt khác</a>
         <a class="dropdown-item" href="#"><i class="las la-question-circle fs-18 me-1 align-text-bottom"></i>Hỗ trợ</a>                       
         <div class="dropdown-divider mb-0"></div>
-        <a class="dropdown-item text-danger" href="{{ route('logout') }}"><i class="las la-power-off fs-18 me-1 align-text-bottom"></i> Đăng xuất</a>
+        <a class="dropdown-item text-danger" href="{{ route('admin.logout') }}"><i class="las la-power-off fs-18 me-1 align-text-bottom"></i> Đăng xuất</a>
     </div>
 </li>

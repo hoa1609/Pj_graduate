@@ -20,16 +20,15 @@
         'frontend/assets/js/vendor/index.js',
         'frontend/assets/js/demo-8.js',
         'frontend/assets/function.js',
-        'frontend/assets/js/quickview.js',
         'https://code.jquery.com/ui/1.14.1/jquery-ui.js',
         'https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js',
-        ];
+    ];
     if(isset($config['js'])){
         foreach ($config['js'] as $key => $value) {
             array_push($coreScript, $value);
         }
     }
-    @endphp
+@endphp
 
     @foreach ($coreScript as $item)
         <script src="{{ asset($item) }}"></script>

@@ -8,7 +8,7 @@
         <section class="section ec-product-tab section-space-p">
             <div class="container">
                 <div class="col-lg-12 col-md-12">
-                   <!------danh muc san pham cho danh muc san phẩm khác ------->
+                   <!------danh muc san pham------->
                     @if(!is_null($childrens) && isset($childrens))
                         <div class="row space-t-50">
                             <div class="uk-flex uk-space-between">
@@ -37,11 +37,11 @@
                                 <div class="tab-content">
                                     <div class="tab-pane fade show active" id="all">
                                         <div class="row">
-                                        @foreach ($category->products as $product)
-                                            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 ec-product-content">
-                                                @include('frontend.component.product-item')
-                                            </div>
-                                        @endforeach
+                                            @foreach ($category->products as $product)
+                                                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 ec-product-content">
+                                                    @include('frontend.component.product-item')
+                                                </div>
+                                            @endforeach
                                         </div>
                                     </div>
                                 </div>

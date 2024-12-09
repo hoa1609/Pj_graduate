@@ -13,18 +13,10 @@
                                         $productCount = $val->products_count;
                                         $canonical = write_url($val->languages->first()->pivot->canonical, true, true);
                                     @endphp
-
-                                    <div class="ec_cat_content ec_cat_content_8">
-                                        <div class="ec_cat_inner ec_cat_inner-8">
-                                            <div class="slide-category">
-                                                <img src="{{ $image }}" class="image-category-slide" alt="drink" />
-                                            </div>
-                                            <div class="ec-category-desc">
-                                                <h3>{{ $name }}
-                                                    <span title="Category Items">( {{ $productCount }} )</span>
-                                                </h3>
-                                                <a href="{{ $canonical }}" class="cat-show-all">Tất cả <i class="ecicon eci-angle-double-right"></i></a>
-                                            </div>
+                                    <div class="image-category">
+                                        <img src="{{ $image }}" class="image-category-slide" alt="drink">
+                                        <div class="name text-center">
+                                            {{ $name }}
                                         </div>
                                     </div>
                                 @endforeach

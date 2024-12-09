@@ -1170,7 +1170,15 @@ table, th, td {
     border: 1px solid #ff909d;
     border-radius: 5px ;
 }
-/* slide */
-.owl-item {
-    margin: 4px !important; 
+/*  */
+.image-category{
+    width: 160px !important;
+}
+.owl-item{
+    display: flex;
+    justify-content: center;
+}
+.ec-cat-slider .image-category{
+    border: 1px solid #d8d7d7;
+    box-shadow: 5px 5px 5px rgba(0,0,0,.05);
 }

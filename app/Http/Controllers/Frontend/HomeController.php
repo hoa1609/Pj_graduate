@@ -57,19 +57,6 @@ class HomeController extends FrontendController{
         ));
     }
 
-    
-    public function intro(){
-        $system = $this->system;
-        $seo = [
-            'meta_title' => $system['seo_meta_title'],
-            'meta_keyword' => $system['seo_meta_keyword'],
-            'meta_description' => $system['seo_meta_description'],
-            'canonical' => config('app.url'),
-        ];
-        return view('frontend.intro.index', compact(
-            'seo',
-        ));
-    }
 
     public function productlistAjax(){
         $products = Product::join('product_language', 'products.id', '=', 'product_language.product_id')
@@ -105,6 +92,7 @@ class HomeController extends FrontendController{
             'language' => $this->language,
             'js' => [
                 'frontend/assets/library/cart.js',
+                'frontend/assets/js/quickview.js',
             ]
         ];
     }

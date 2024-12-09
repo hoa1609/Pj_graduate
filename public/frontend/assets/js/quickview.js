@@ -9,43 +9,8 @@
                 url: 'ajax/product/quickview/' + productId, 
                 method: 'GET',
                 success: function (response) {
-                    if (response.product){
-
-                        let product = response.product
-                        let album = response.album
-
-                        $('#product-popup .product-name').text(product.name)
-                        $('#product-popup #sku-text').text(product.code)
-                        $('#product-popup .product-name').text(product.name)
-                        if(product.promotions != null){
-                            $('#product-popup .new-price').text(addCommas(product.promotions.price - product.promotions.discount) + '₫');
-                       }else{
-                           $('#product-popup .new-price').text(addCommas(product.price) + '₫');
-                       }
-
-                        $('#product-popup .product-description').text(product.description || '');
-                        $('#product-popup .ec-quickview-cart.addToCart').attr('data-id', product.id);
-
-                        let albumThumb = ''; 
-                        let albumCover= ''; 
-                        album.forEach(image => {
-                            albumThumb += `
-                                <div class="qty-slide-thumb">
-                                    <img class="img-thumb" src="${image}" alt="">
-                                </div>
-                            `;
-                        });
-                        albumCover += `
-                            <div class="qty-slide">
-                                <img class="img-responsive" src="${album[0]}" alt="">
-                            </div>
-                        `;
-                        $('#product-popup .qty-nav-thumb').html(albumThumb);
-                        $('#product-popup .qty-product-cover').html(albumCover);
-                        
-                        $('#product-popup').fadeIn(0);
-                    } 
-
+                    
+                    HT.valueProduct(response)
                     HT.getAttributerVariant(response)
 
                 },
@@ -53,11 +18,49 @@
                     console.log('Lỗi: ' + textStatus + ' ' + errorThrown);
                 }
             });
-
         });
         $(document).on('click', '.close-popup', function () {
             $('#product-popup').fadeOut(0);
         });
+    };
+
+
+    HT.valueProduct = (response) => {
+        if (response.product){
+            let product = response.product
+            let album = response.album
+
+            $('#product-popup .product-name').text(product.name)
+            $('#product-popup #sku-text').text(product.code)
+            $('#product-popup .product-name').text(product.name)
+            if(product.promotions != null){
+                $('#product-popup .new-price').text(addCommas(product.promotions.price - product.promotions.discount) + '₫');
+            }else{
+                $('#product-popup .new-price').text(addCommas(product.price) + '₫');
+            }
+
+            $('#product-popup .product-description').text(product.description || '');
+            $('#product-popup .ec-quickview-cart.addToCart').attr('data-id', product.id);
+
+            let albumThumb = ''; 
+            let albumCover= ''; 
+            album.forEach(image => {
+                albumThumb += `
+                    <div class="qty-slide-thumb">
+                        <img class="img-thumb" src="${image}" alt="">
+                    </div>
+                `;
+            });
+            albumCover += `
+                <div class="qty-slide">
+                    <img class="img-responsive" src="${album[0]}" alt="">
+                </div>
+            `;
+            $('#product-popup .qty-nav-thumb').html(albumThumb);
+            $('#product-popup .qty-product-cover').html(albumCover);
+            
+            $('#product-popup').fadeIn(0);
+        } 
     };
 
 

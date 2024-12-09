@@ -41,4 +41,5 @@
             </div>
         </div>
     </section>
+    @include('frontend.intro.component.information')
 @endsection

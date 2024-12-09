@@ -462,50 +462,55 @@ function ecCheckCookie()
     /*--------------------- Category Slider -------------------------------- */   
     /*--------------------- Blog Owl Slider -------------------------------- */ 
     $('#ec-cat-slider').owlCarousel({
-        margin:30,
+        margin:10,
+        with:100,
         loop: true,
         dots:false,
         nav:false,
         smartSpeed: 1000,
         autoplay:true,
-        items:3,
+        items:7,
         responsiveClass: true,
         responsive: {
             0: {
                 items: 1,
                 nav:false
             },
+            192: {
+                items: 2,
+                nav:false
+            },
             576: {
-                items: 2,
-                nav:false
-            },
-            768: {
-                items: 2,
-                nav:false
-            },
-            992: {
                 items: 3,
                 nav:false
             },
-            1200: {
-                items:4,
-                nav:false
-            },
-            1367: {
+            768: {
                 items: 4,
                 nav:false
-            }
+            },
+            992: {
+                items: 5,
+                nav:false
+            },
+            1200: {
+                items:6,
+                nav:false
+            },
+            1300: {
+                items:7,
+                nav:false
+            },
         }
     }); 
 
 
 
     $('.ec-blog-slider').owlCarousel({
-        margin:30,
+        margin:6,
         loop: true,
         dots:false,
-        nav:false,
-        smartSpeed: 1000,
+        nav:true,
+        smartSpeed: 2000,
         autoplay:true,
         items:3,
         responsiveClass: true,

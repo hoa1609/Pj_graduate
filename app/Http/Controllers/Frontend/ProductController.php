@@ -61,10 +61,10 @@ class ProductController extends FrontendController{
         return [
             'language' => $this->language,
             'js' => [
-                'frontend/assets/library/product.js',
                 'frontend/assets/library/cart.js',
+                'frontend/assets/library/product.js',
                 'frontend/assets/js/review.js',
-            ]
+                ]
         ];
     }
 
@@ -81,7 +81,5 @@ class ProductController extends FrontendController{
             'attributeCatalogue' => $product->attributeCatalogue,
         ]);
     }
-    
-
 
 }

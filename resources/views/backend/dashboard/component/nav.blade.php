@@ -215,7 +215,6 @@
                         </a>
                     </div>
                 </li>
-
                 @include('backend.dashboard.component.profile')
             </ul>
         </nav>

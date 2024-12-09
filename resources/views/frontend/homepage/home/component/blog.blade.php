@@ -28,7 +28,7 @@
                                 <div class="ec-blog-content">
                                     <div class="ec-blog-cat"><a href="{{ $cateCanonical }}">{{ $cateBlog }}</a></div>
                                     <h5 class="ec-blog-title"><a href="{{ $blogCanonical }}">{{ $blogName }}</a></h5>
-                                    <div class="ec-blog-date">{{ convertDateTime($blogDate) }}</div>
+                                    {{-- <div class="ec-blog-date">{{ convertDateTime($blogDate) }}</div> --}}
                                 </div>
                             </div>
                         </div>
