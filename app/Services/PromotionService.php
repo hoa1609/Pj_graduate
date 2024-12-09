@@ -87,7 +87,7 @@ class PromotionService  extends BaseService implements PromotionServiceInterface
                 $payload['endDate'] = null;
             }
         }
-        $payload['code'] = (empty($payload['code'])) ? time() : $payload['code'];
+        $payload['code'] = (empty($payload['code'])) ? now()->format('YmdHis') : $payload['code'];
         switch ($payload['method']) {
             case PromotionEnum::ORDER_AMOUNT_RANGE:
                 $payload[PromotionEnum::DISCOUNT] = $this->orderByRange($request);
