@@ -19,7 +19,7 @@
                 <span class="percentage">-{{ $price['percent'] }}%</span>
             @endif
             <div class="ec-pro-actions">
-                <div class="ec-btn-group add-to-cart addCart" data-id="{{ $product->id }}">
+                <div class="ec-btn-group addCart" data-id="{{ $product->id }}">
                     {!! renderQuickBuy($product, $name, $canonical) !!}
                 </div>
             </div>

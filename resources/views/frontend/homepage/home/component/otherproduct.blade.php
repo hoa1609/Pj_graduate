@@ -11,7 +11,7 @@
                    <!------danh muc san pham------->
                     @if(!is_null($childrens) && isset($childrens))
                         <div class="row space-t-50">
-                            <div class="uk-flex uk-space-between">
+                            <div class="uk-flex uk-space-between px-2">
                                 <div class="section-title">
                                     <h2 class="ec-title">{{ $catName }}</h2>
                                 </div>

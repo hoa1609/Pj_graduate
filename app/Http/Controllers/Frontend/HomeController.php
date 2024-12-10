@@ -36,7 +36,7 @@ class HomeController extends FrontendController{
             ['keyword' =>'category','children' => true,'object' => true, 'countObject' => true],
             ['keyword' =>'product'],
             ['keyword' =>'other-product', 'children' => true, 'promotion' => true, 'object' => true],
-            ['keyword' =>'best-seller'],
+            ['keyword' =>'best-seller', 'promotion' => true],
             ['keyword' =>'blog', 'object' => true],
         ], $this->language);
     

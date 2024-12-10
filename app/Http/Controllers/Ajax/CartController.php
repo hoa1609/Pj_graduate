@@ -26,7 +26,10 @@ class CartController extends FrontendController
     public function create(Request $request){
         $flag = $this->cartService->create($request, $this->language);
         $cart = Cart::instance('shopping')->content();
+        $cartView = view('frontend.cart.partials.cart_list', compact('cart'))->render(); /*--*/
+
         return response()->json([
+            'html' => $cartView,
             'cart' => $cart,
             'messages' => 'Thêm sản phẩm thành công!',
             'code' => ($flag) ? 10 : 11,

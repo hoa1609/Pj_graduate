@@ -20,7 +20,7 @@
                             <div class="ec-quickview-rating uk-flex uk-align-center">
                                 <div class="sku info me-3">
                                     <span id="sku-text"></span>
-                                    <i class="fa-regular fa-copy" id="copy-sku"></i>
+                                    <ion-icon name="copy-outline" class="fs-20" id="copy-sku"></ion-icon>
                                 </div>
                                 <div class="item-star">
                                     <i class="ecicon eci-star fill"></i>
@@ -43,7 +43,7 @@
                                 <div class="qty-plus-minus">
                                     <input class="qty-input" type="text" name="ec_qtybtn" value="1">
                                 </div>
-                                <div class="ec-quickview-cart addToCart" data-id="">
+                                <div class="ec-quickview-cart add-to-cart addToCart" data-id="">
                                     <button class="btn btn-danger">Thêm vào giỏ hàng</button>
                                 </div>
                             </div>

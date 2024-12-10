@@ -12,6 +12,5 @@
 
         @include('frontend.component.footer')
         @include('frontend.component.script')
-
     </body>
 </html>

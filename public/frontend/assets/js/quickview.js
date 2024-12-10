@@ -71,10 +71,10 @@
 
             attributeCatalogue.forEach(attributeGroup => {
                 let attributeItems = '';
-                attributeGroup.attributes.forEach(attribute => {
+                attributeGroup.attributes.forEach((attribute, index) => {
                     if (attribute.image) {
                         attributeItems += `
-                            <a class="item--color" 
+                            <a class="item--color ${index === 0 ? 'active' : ''}" 
                                 data-attributeid="${attribute.id}" 
                                 title="${attribute.name}">
                                 <img src="${attribute.image}" alt="${attribute.name}" class="attribute-image-round">
@@ -82,14 +82,15 @@
                         `;
                     } else {
                         attributeItems += `
-                            <div class="item--other" 
-                                    data-attributeid="${attribute.id}" 
-                                    title="${attribute.name}">
+                            <div class="item--other ${index === 0 ? 'active' : ''}" 
+                                data-attributeid="${attribute.id}" 
+                                title="${attribute.name}">
                                 ${attribute.name}
                             </div>
                         `;
                     }
                 });
+                
                 template += `
                     <div class="ec-pro-variation">
                         <div class="ec-pro-variation-inner variant-item">

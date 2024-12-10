@@ -403,4 +403,21 @@ class ProductService extends BaseService implements ProductServiceInterface
         return $product;
     }
 
+
+    public function relationProductByCatalogeId($productCatalogue, $language, $id){
+        $productCatalogueId = $productCatalogue->id;
+        
+        return $this->productRepository->findByCondition(
+            [
+                ['product_catalogue_id', '=', $productCatalogueId], 
+                config('apps.general.defaultPublish')
+            ], 
+            true, 
+            ['languages']
+        )
+        ->where('id', '!=', $id) 
+        ->take(5);
+    }
+
+
 }

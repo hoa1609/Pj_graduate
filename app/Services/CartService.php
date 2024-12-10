@@ -61,12 +61,16 @@ class CartService implements CartServiceInterface
                 $data['name'] = $product->languages->first()->pivot->name.' '.$variant->languages()->first()->pivot->name;
                 $data['price'] = ($variantPrice['priceSale'] > 0) ? $variantPrice['priceSale'] : $variantPrice['price'];
                 $data['options'] = [
-                    'attribute' =>$payload['attribute_id'],
+                    'attribute' => $payload['attribute_id'],
+                    'image' => $product->image,
                 ];
             }else{
                 $product = $this->productService->combineProductsAndPromotion([$product->id], $product, true);
                 $price = getPrice($product);
                 $data['price'] = ($price['priceSale'] > 0) ? $price['priceSale'] : $price['price'];
+                $data['options'] = [
+                    'image' => $product->image,
+                ];
             }
             Cart::instance('shopping')->add($data);
             return true;

@@ -29,6 +29,9 @@ input:focus {
 .fi-rr-shopping-basket{
     font-size: 18px;
 }
+.fs-20{
+    font-size: 20px;
+}
 .swiper-slide {
     display: flex;
     flex-direction: column;
@@ -777,6 +780,7 @@ i.ecicon.eci-star-o {
 .item-product{
     border-bottom: 1px solid #a1a1a1;
     padding-bottom: 10px;
+    margin: 10px 0;
 }
 .image-item{
     padding-left: 0;
@@ -1025,7 +1029,7 @@ table, th, td {
     font-size: 18px !important;
 }
 .bg-nav-h{
-    background-color: #f8fafc;
+    background-color: #ffff;
 }
 .slide-category{
     width: 100px;
@@ -1181,4 +1185,20 @@ table, th, td {
 .ec-cat-slider .image-category{
     border: 1px solid #d8d7d7;
     box-shadow: 5px 5px 5px rgba(0,0,0,.05);
+}
+.ec-cat-slider .image-category:hover{
+    border: 1px solid #ff0000;
+    box-shadow: 5px 5px 5px rgba(0,0,0,.05);
+}
+.cursor{
+    cursor: pointer;
+}
+.btn-close:hover{
+    padding: 10px;
+    color: #ff0000;
+    border: 1px solid #ff0000;
+    border-radius: 50%;
+}
+.cloes-remove:hover{
+    color: #ff0000;
 }

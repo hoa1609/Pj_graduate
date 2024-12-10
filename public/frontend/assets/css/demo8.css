@@ -4621,12 +4621,7 @@ textarea.form-control.is-invalid {
   text-decoration: none;
   opacity: 0.75;
 }
-.btn-close:focus {
-  outline: none;
-  -webkit-box-shadow: 0 0 0 4px rgba(255, 112, 4, 0.25);
-          box-shadow: 0 0 0 4px rgba(255, 112, 4, 0.25);
-  opacity: 1;
-}
+
 .btn-close:disabled {
   pointer-events: none;
   opacity: 0.25;
@@ -14455,21 +14450,19 @@ body.ec-open:before {
   font-size: 14px;
   font-weight: 400;
   position: fixed;
-  z-index: 1000;
+  z-index: 10000;
   top: 0;
   right: 0;
   left: auto;
   display: block;
   width: 350px;
   height: 100%;
-  padding: 15px 20px 20px 20px;
-  -webkit-transition: all 0.5s ease 0s;
+  border-left: 1px solid #d1d1d1;
+  padding: 10px;
   transition: all 0.5s ease 0s;
-  -webkit-transform: translateX(100%);
-          transform: translateX(100%);
+  transform: translateX(100%);
   background-color: #ffffff;
-  -webkit-box-shadow: none;
-          box-shadow: none;
+  box-shadow: none;
   overflow: auto;
   opacity: 0;
 }
@@ -14482,28 +14475,18 @@ body.ec-open:before {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  flex-direction: column;
   height: 100%;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  justify-content: space-between;
 }
 .ec-side-cart .ec-cart-inner .ec-cart-title {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
           justify-content: space-between;
   width: 100%;
   padding: 0 0 10px 0;
   border-bottom: 2px solid #eeeeee;
-  margin-bottom: 20px;
 }
 .ec-side-cart .ec-cart-inner .ec-cart-title .cart_title {
   font-size: 17px;
@@ -14518,12 +14501,14 @@ body.ec-open:before {
   line-height: 1;
   color: #222;
 }
+.ec-side-cart .ec-cart-inner .ec-cart-title .ec-close:hover{
+  color: #ff0000;
+}
+
 .ec-side-cart .ec-cart-inner .ec-cart-bottom .cart_btn {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
           justify-content: space-between;
   margin-bottom: 20px;
 }
@@ -14535,7 +14520,6 @@ body.ec-open:before {
   font-weight: 600;
   font-size: 14px;
   border: none;
-  -webkit-box-shadow: none;
           box-shadow: none;
   padding: 8px 15px;
   line-height: 22px;
@@ -14545,14 +14529,10 @@ body.ec-open:before {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  flex-wrap: wrap;
+  justify-content: space-between;
   padding-top: 0;
   padding-bottom: 8px;
-  border-top: 1px solid #eeeeee;
   margin: 20px 0 0 0px;
 }
 .ec-side-cart .ec-cart-inner .ec-cart-bottom .cart-sub-total table {
@@ -14892,7 +14872,7 @@ body.ec-open:before {
   background: #ffff;
 }
 .ec-footer .footer-top {
-  border-top: 1px solid #d8d8d8;
+  background-color: rgb(250, 250, 250);
 }
 .ec-footer .footer-top .col-sm-12 {
   width: 20%;
@@ -16605,18 +16585,20 @@ ul.slick-dots {
   transition: all 0.3s ease;
   z-index: 16;
 }
-.ec-tools-sidebar ::-webkit-scrollbar {
-  width: 5px;
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 10px;
 }
-.ec-tools-sidebar ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+  border-radius: 6px; 
 }
-.ec-tools-sidebar ::-webkit-scrollbar-thumb {
-  background: #888;
+::-webkit-scrollbar-thumb {
+  background: #9d9d9d; 
+  border-radius: 6px; 
 }
-.ec-tools-sidebar ::-webkit-scrollbar-thumb:hover {
-  background: #555;
-}
+
 .ec-tools-sidebar .ec-tools-detail {
   height: calc(100vh - 60px);
   overflow-y: auto;
@@ -17969,7 +17951,7 @@ section.ec-instagram-section {
   color: #ff909d;
 }
 .ec-pro-tab-nav .nav-item .nav-link.active {
-  color: #ff909d;
+  color: #313131;
 }
 .ec-product-content {
   padding: 4px;
@@ -18368,6 +18350,7 @@ button.btn-close.qty_close {
   right: 10px;
   top: 10px;
   z-index: 9999;
+  padding: 10px;
 }
 
 .svg_img.pro_svg {

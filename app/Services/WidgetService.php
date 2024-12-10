@@ -236,7 +236,6 @@ class WidgetService implements WidgetServiceInterface
             if(isset($param['countObject'])){
                 $withCount[] = $model;
             }
-            
         }else{
             $model = lcfirst($widget->model).'_catalogues';
             $relation[$model] = function($query) use ($language){

@@ -512,6 +512,7 @@ function ecCheckCookie()
         nav:true,
         smartSpeed: 2000,
         autoplay:true,
+        autoplayHoverPause: true,
         items:3,
         responsiveClass: true,
         responsive: {

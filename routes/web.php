@@ -340,6 +340,3 @@ Route::middleware(['admin', 'locale', 'backend_default_locale'])->group(function
 Route::get('admin', [AuthController::class, 'index'])->name('auth.admin')->middleware('login');
 Route::post('login', [AuthController::class, 'login'])->name('auth.login');
 Route::get('logout', [AuthController::class, 'logout'])->name('admin.logout');
-
-
-

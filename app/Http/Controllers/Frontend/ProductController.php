@@ -36,14 +36,15 @@ class ProductController extends FrontendController{
         $product = $this->productService->combineProductsAndPromotion([$id], $product, true);
         $productCatalogue = $this->productCatalogueRepository->getProductCatalogueById($product->product_catalogue_id, $this->language);
         $breadcrumb = $this->productCatalogueRepository->breadcrumb($productCatalogue, $this->language);
-        /*---------------*/
+        /*-------*/
         $product = $this->productService->getAttribute($product, $this->language);
-        $category = recursive($this->productCatalogueRepository->all(['languages']));
+        $category = recursive($this->productCatalogueRepository->all(['languages']));   /*để làm sau*/
+        /*------*/
+        $productRelation = $this->productService->relationProductByCatalogeId($productCatalogue, $language, $id);
 
         $config = $this->config();
         $system = $this->system;
         $seo = seo($product);
-
         return view('frontend.product.product.index', compact(
             'config',
             'system',
@@ -51,6 +52,7 @@ class ProductController extends FrontendController{
             'productCatalogue',
             'breadcrumb',
             'product',
+            'productRelation',
             'category',
             'language',
         ));
@@ -64,7 +66,8 @@ class ProductController extends FrontendController{
                 'frontend/assets/library/cart.js',
                 'frontend/assets/library/product.js',
                 'frontend/assets/js/review.js',
-                ]
+                'frontend/assets/js/quickview.js',
+            ]
         ];
     }
 

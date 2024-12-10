@@ -37,9 +37,9 @@
             <div class="quickview-pro-content pb-1">
                 <h5 class="ec-quick-title product-main-title">{{ $name }}</h5>
                 <div class="ec-quickview-rating uk-flex uk-align-center">
-                    <div class="sku info me-3">
-                        <span id="sku-text">{{ $sku }}</span>
-                        <i class="fa-regular fa-copy" id="copy-sku"></i>
+                    <div class="sku info me-3 cursor">
+                        <span id="sku-text-dt">{{ $sku }}</span>
+                        <ion-icon name="copy-outline" class="fs-20" id="copy-sku-dt"></ion-icon>
                     </div>
                     <div class="item-star">
                         <i class="ecicon eci-star fill"></i>
@@ -69,7 +69,7 @@
 <input type="hidden" class="attributeCatalogue" value="{{ json_encode($attributeCatalogue) }}">
 <input type="hidden" class="productCanonical" value="{{ write_url($product->languages->first()->pivot->canonical, true , true) }}">
 
-<div class="ec-single-pro-tab mb-5">
+<div class="ec-single-pro-tab mb-1">
     <div class="ec-single-pro-tab-wrapper">
         <div class="ec-single-pro-tab-nav">
             <ul class="nav nav-tabs uk-flex" role="tablist">
@@ -84,7 +84,11 @@
         <div class="tab-content ec-single-pro-tab-content">
             <div id="ec-spt-nav-details" class="tab-pane fade show active">
                 <div class="ec-single-pro-tab-desc">
-                   {!! $content !!}
+                  @if($content != null && empty($content) )
+                    {!! $content !!}
+                  @else
+                      <h3>Chưa có chi tiết sản phẩm</h3>
+                  @endif
                 </div>
             </div>
             <div id="ec-spt-nav-review" class="tab-pane fade">
@@ -93,3 +97,4 @@
         </div>
     </div>
 </div>
+@include('frontend.product.product.component.relation')

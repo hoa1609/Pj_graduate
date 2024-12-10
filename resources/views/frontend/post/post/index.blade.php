@@ -1,6 +1,6 @@
 @extends('frontend.homepage.layout')
 @section('content')
-@include('frontend.component.breadcrumb')
+    @include('frontend.component.breadcrumb')
     <div class="container">
         <div class="row">
             <div class="ec-blogs-rightside col-lg-8 col-md-12">

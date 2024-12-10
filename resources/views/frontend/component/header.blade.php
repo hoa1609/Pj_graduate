@@ -1,4 +1,4 @@
-<header class="ec-header">
+<header class="ec-header ">
     <div class="header-top">
         <div class="container">
             <div class="row align-items-center">

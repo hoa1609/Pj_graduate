@@ -25,12 +25,9 @@
                 </div>
                 <div class="col-md-3 uk-flex flex-column">
                     <div class="cart-item-remove" data-row-id="{{ $cart->rowId }}">
-                        <span>X</span>
+                        <span class="cursor cloes-remove">X</span>
                     </div>
                     <div class="price-item mt-5">
-                        {{-- @if($cart->price != $cart->priceOriginal)
-                            <div class="cart-price-old">{{ convert_price($cart->priceOriginal, true) }}₫</div>
-                        @endif --}}
                         <div class="cart-price-sale">{{ convert_price($cart->price * $cart->qty, true) }}₫</div>
                     </div>
                 </div>

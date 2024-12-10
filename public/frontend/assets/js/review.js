@@ -70,17 +70,12 @@
 
 //copy sku
 
-
-
-
-document.addEventListener('DOMContentLoaded', function () {
-    document.getElementById('copy-sku').addEventListener('click', function() {
-        console.log(22323)
-        const skuText = document.getElementById('sku-text').innerText;
-        navigator.clipboard.writeText(skuText).then(function() {
-            toastr.success('Đã sao chép');
-        }).catch(function(error) {
-            toastr.error('Có lỗi xảy ra, vui lòng thử lại');
-        });
+document.getElementById('copy-sku-dt').addEventListener('click', function() {
+    console.log(22323)
+    const skuText = document.getElementById('sku-text-dt').innerText;
+    navigator.clipboard.writeText(skuText).then(function() {
+        toastr.success('Đã sao chép');
+    }).catch(function(error) {
+        toastr.error('Có lỗi xảy ra, vui lòng thử lại');
     });
 });

@@ -1,9 +1,7 @@
 (function($) {
 	"use strict";
 	var HT = {}; 
-	var timer;
     var _token = $('meta[name="csrf-token"]').attr('content');
-
 
 
     HT.addCart = () => {
@@ -37,6 +35,7 @@
                 success: function (res) {
                     toastr.clear() //clear khi chon nhanh
                     if(res.code === 10){
+                        $('#cart-list').html(res.html);
                         toastr.success(res.messages, 'Thông báo từ hệ thống!')
                     }else{
                         toastr.error('Hãy thử lại!')
@@ -144,7 +143,7 @@
                         HT.changeMinyCartQuantity(res)
                         HT.changeCartTotal(res)
                         HT.removeCartItemRow(_this)
-                        toastr.success(res.messages, 'Thông báo từ hệ thống!')
+                        // toastr.success(res.messages, 'Thông báo từ hệ thống!')
                     }else{
                         toastr.error('Hãy thử lại!')
                     }
