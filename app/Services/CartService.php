@@ -246,7 +246,7 @@ class CartService implements CartServiceInterface
         $carts = $this->remakeCart($carts);
         $cartCaculate = $this->cartAndPromotion();
         $cartPromotion = $this->cartPromotion($cartCaculate['cartTotal']);
-        
+
         $data = [
             'order' => $order,
             'cart' => $carts,

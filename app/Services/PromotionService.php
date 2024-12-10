@@ -39,7 +39,6 @@ class PromotionService  extends BaseService implements PromotionServiceInterface
              'neverEndDate',
              'startDate',
              'endDate',
-             'order',
              'publish',
         ];
      }

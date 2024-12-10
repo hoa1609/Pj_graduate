@@ -1,6 +1,6 @@
 (function($) {
 	"use strict";
-	var HT = {}; 
+	var HT = {};
 	var timer;
     var _token = $('meta[name="csrf-token"]').attr('content');
 
@@ -81,7 +81,7 @@
             HT.handleUpdateCart(_this, option)
         })
     }
-    
+
 
     HT.handleUpdateCart = (_this, option) => {
         $.ajax({
@@ -105,7 +105,7 @@
             },
         });
     }
-    
+
 
     HT.changeCartItemSubTotal = (item, res) => {
         item.parents('.item-product').find('.cart-price-sale').html(addCommas(res.response.cartItemSubTotal)+'₫')
@@ -119,7 +119,7 @@
         $('.voucher-price').html('-' + addCommas(res.response.discount) + '₫')
     }
 
-    
+
     HT.changeMinyCartQuantity = (res) => {
         $('#cartTotalItem').html(res.response.cartTotalItems)
     }

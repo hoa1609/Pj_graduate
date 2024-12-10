@@ -190,9 +190,9 @@ class WidgetService implements WidgetServiceInterface
                         if($objectValue->rgt - $objectValue->lft > 1){
                             $objectValue->{$replace} = $classRepo->findObjectByCatelogueIds($ids, $model, $language);
                         }
-                        if( 
-                        isset($params[$key]['promotion']) 
-                            && 
+                        if(
+                        isset($params[$key]['promotion'])
+                            &&
                             $params[$key]['promotion'] == true
                         ){
                             $productId = $objectValue->{$replace}->pluck('id')->toArray();
@@ -236,7 +236,7 @@ class WidgetService implements WidgetServiceInterface
             if(isset($param['countObject'])){
                 $withCount[] = $model;
             }
-            
+
         }else{
             $model = lcfirst($widget->model).'_catalogues';
             $relation[$model] = function($query) use ($language){
