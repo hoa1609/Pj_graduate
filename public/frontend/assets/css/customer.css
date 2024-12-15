@@ -4,9 +4,9 @@
     font-size: 12px;
 }
 input:focus {
-    border-width: 2px !important; 
-    border-color: #363636 !important; 
-    outline: none; 
+    border-width: 2px !important;
+    border-color: #363636 !important;
+    outline: none;
 }
 .uk-flex{
     display: flex !important;
@@ -1201,4 +1201,9 @@ table, th, td {
 }
 .cloes-remove:hover{
     color: #ff0000;
+}
+
+.btn.disabled {
+    opacity: 0.5;
+    pointer-events: none;
 }

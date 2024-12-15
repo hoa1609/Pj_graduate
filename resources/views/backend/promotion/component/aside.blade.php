@@ -32,7 +32,7 @@
             </div>
         </div>
     </div>
-    <div class="card">
+    {{-- <div class="card">
         <div class="card-body pt-10">
             <div class="row">
                 <div class="content-source">
@@ -114,7 +114,7 @@
                     </div>
                 @endif
 
-                {{-- @if ($applyStatus)
+                @if ($applyStatus)
                     <div class="apply-wrapper">
                         <select name="applyValue[]" id="" class="multipleSelect2 conditionItem" multiple>
                             @foreach (__('module.applyStatus') as $key => $val)
@@ -123,19 +123,19 @@
                         </select>
                         <div class="wrapper-condition"></div>
                     </div>
-                @endif --}}
+                @endif
             </div>
         </div>
-    </div>
+    </div> --}}
     <div class="text-end sticky-find mb-2">
         <button type="submit" name="send" class="btn btn-primary">Lưu thông tin</button>
     </div>
 </div>
 <input type="hidden" class="input-product-and-quantity" value="{{ json_encode(__('module.item')) }}">
 <input type="hidden" class="applyStatusList" value="{{ json_encode(__('module.applyStatus')) }}">
-<input type="hidden" name="" class="conditionItemSelected" value="{{ json_encode($applyValue) }}">
+{{-- <input type="hidden" name="" class="conditionItemSelected" value="{{ json_encode($applyValue) }}"> --}}
 
-@if(count($applyValue))
+{{-- @if(count($applyValue))
     @foreach ($applyValue as $key => $val)
         <input
             type="hidden"
@@ -143,7 +143,7 @@
             value="{{ json_encode(old($val, ($model->discountInformation['apply']['condition'][$val]) ?? null)) }}"
         >
     @endforeach
-@endif
+@endif --}}
 <script>
     document.addEventListener('DOMContentLoaded', function() {
      const neverEndDateCheckbox = document.querySelector('input[name="neverEndDate"]');

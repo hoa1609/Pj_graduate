@@ -94,7 +94,7 @@ Route::middleware('auth:customer')->group(function () {
 
 Route::middleware('guest:customer')->group(function () {
     Route::post('client/login', [AuthenticatedSessionController::class, 'store'])
-        ->name('client.login'); 
+        ->name('client.login');
 });
 
 Route::post('client/logout', [AuthenticatedSessionController::class, 'destroy'])
@@ -104,7 +104,7 @@ Route::post('client/logout', [AuthenticatedSessionController::class, 'destroy'])
 
 
 
-    
+
 require __DIR__.'/auth.php';
 
 
