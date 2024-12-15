@@ -7,7 +7,6 @@ class MenuComposer{
 
     protected $language;
 
-
     public function __construct(
         MenuCatalogueRepository $menuCatalogueRepository,
         $language,
@@ -33,10 +32,9 @@ class MenuComposer{
 
     private function agrument($language){
         return [
-            // 'condition' => [
-            //         ['keyword', '=', 'main-menu']
-            // config('apps.general.defaultPublish')
-            // ],
+            'condition' => [
+                config('apps.general.defaultPublish')
+            ],
             'flag' => true,
             'relation' => [
                 'menus' => function($query) use ($language){
@@ -50,4 +48,5 @@ class MenuComposer{
             ]
         ];
     }
+
 }

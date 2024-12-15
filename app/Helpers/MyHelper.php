@@ -28,23 +28,17 @@ if (!function_exists('safeDivision')) {
 }
 
 if (!function_exists('growth')) {
-    function growth($currentValue, $previousValue)
-    {
+    function growth($currentValue, $previousValue){
         $division = safeDivision($previousValue, $previousValue);
-
         $grow = (($currentValue - $previousValue) / $division) * 100;
-
         return number_format($grow, 1);
     }
 }
 
 if (!function_exists('cancelRate')) {
-    function cancelRate($totalOrders, $cancelledOrders)
-    {
+    function cancelRate($totalOrders, $cancelledOrders){
         $division = safeDivision($totalOrders, $totalOrders);
-
         $rate = ($cancelledOrders / $division) * 100;
-
         return number_format($rate, 1);
     }
 }
@@ -58,65 +52,46 @@ if (!function_exists('growHtml')) {
 
 
 if (!function_exists('revenueRate')) {
-    function revenueRate($currentRevenue, $previousRevenue)
-    {
+    function revenueRate($currentRevenue, $previousRevenue){
         $division = safeDivision($previousRevenue, $previousRevenue);
-
         $rate = ($currentRevenue / $division) * 100;
-
         return number_format($rate, 1);
     }
 }
 
 if (! function_exists('convert_price')) {
-    function convert_price($amount, $formatted = false)
-    {
+    function convert_price($amount, $formatted = false){
         $price = number_format($amount, 0, ',', '.');
-
         if ($formatted) {
             return '₫ ' . $price;
         }
-
         return $price;
     }
 }
 
 
 if (!function_exists('recursive_menu')) {
-    function recursive_menu($menus)
-    {
+    function recursive_menu($data){
         $html = '';
-
-        // Kiểm tra nếu menus có dữ liệu
-        if (count($menus)) {
-            $html .= "<ul class='dd-list'>"; // Mở thẻ <ul> cho menu cha
-
-            foreach ($menus as $menu) {
-                $itemId = $menu->id;
-                $itemName = $menu->languages->first()->pivot->name;
+        if (count($data)) {
+            foreach ($data as $key => $val) {
+                $itemId = $val['item']->id;
+                $itemName = $val['item']->languages->first()->pivot->name;
                 $itemUrl = route('menu.children', ['id' => $itemId]);
 
-                // Thêm thẻ <li> cho mỗi menu
                 $html .= "<li class='dd-item' data-id='$itemId'>";
-                $html .= "<div class='dd-handle'>";
-                $html .= "<span class='label label-info'><i class='fa fa-arrows'></i></span> $itemName";
-                $html .= "</div>";
-                $html .= "<a class='create-children-menu' href='$itemUrl'>Quản lý menu con</a>";
-                // Thêm nút "+" hoặc "-" dưới thẻ dd-item
-                if (count($menu->children)) {
-                    $html .= "<button class='expand-collapse-btn'>+</button>"; // Nút "+"
-                }
-                // Kiểm tra nếu menu có menu con
-                if (count($menu->children)) {
-                    // Thêm phần tử để chứa menu con, ban đầu ẩn đi
-                    $html .= "<div class='submenu-wrapper' style='display: none;'>";
-                    $html .= recursive_menu($menu->children);
+                    $html .= "<div class='dd-handle'>";
+                        $html .= "<span class='label label-info'><i class='fa fa-arrows'></i></span> $itemName";
                     $html .= "</div>";
-                }
-                // Đóng thẻ <li>
+                    $html .= "<a class='create-children-menu' href='$itemUrl'>Quản lý menu con</a>";
+                    
+                    if (count($val['children'])) {
+                        $html .= "<ol class='dd-list'>";
+                            $html .= recursive_menu($val['children']);
+                        $html .= "</ol>";
+                    }
                 $html .= "</li>";
             }
-            $html .= "</ul>"; // Đóng thẻ <ul>
         }
         return $html;
     }
@@ -163,17 +138,8 @@ if (!function_exists('image')) {
 }
 
 
-if (!function_exists('getPercent')) {
-    function getPercent($product = null, $discountValue = 0)
-    {
-        return ($product->price > 0) ? round($discountValue / $product->price * 100) : 0;
-    }
-}
-
-
 if (!function_exists('getPromotionPrice')) {
-    function getPromotionPrice($priceMain = 0, $discountValue = 0, $discountType = '', $maxDiscountValue = 0)
-    {
+    function getPromotionPrice($priceMain = 0, $discountValue = 0, $discountType = '', $maxDiscountValue = 0){
         $value = 0;
         if ($discountType == 'percent') {
             $value = ($priceMain * $discountValue / 100);
@@ -189,15 +155,22 @@ if (!function_exists('getPromotionPrice')) {
 }
 
 
+if (!function_exists('getPercent')) {
+    function getPercent($product = null, $discountValue = 0){
+        return ($product->price > 0) ? round($discountValue / $product->price * 100) : 0;
+    }
+}
+
+
 if (!function_exists('getPrice')) {
-    function getPrice($product = null,)
-    {
+    function getPrice($product = null){
         $result = [
             'price' => $product->price,
             'priceSale' => 0,
             'percent' => 0,
             'html' => '',
         ];
+        // dd($product->promotions['discountValue']);
         if(isset($product->promotions) && isset($product->promotions['discountType'])){
             $result['percent'] = ($product->promotions['discountType'] == 'percent') ? $product->promotions['discountValue'] : getPercent($product, $product->promotions['discountValue']);
             if($product->promotions['discountValue'] > 0){
@@ -349,8 +322,7 @@ if(!function_exists('write_url')){
 }
 
 if (!function_exists('seo')) {
-    function seo($model = null, $page = 1)
-    {
+    function seo($model = null, $page = 1){
         $canonical = ($page > 1) ? write_url($model->canonical, true, false) . '/trang-' . $page . config('apps.general.suffix') : write_url($model->canonical, true, true);
         return [
             'meta_title' => ($model->meta_title) ?? $model->name,

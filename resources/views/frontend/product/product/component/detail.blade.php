@@ -14,7 +14,7 @@
 <div class="modal-body mb-3">
     <div class="row">
         @if (!is_null($gallery))
-            <div class="col-md-1 col-sm-12 col-xs-12 gallery-container">
+            <div class="col-md-1 col-sm-6 col-xs-6 gallery-container">
                 <div class="qty-nav-thumb">
                     @foreach ($gallery as $key => $val)
                         <div class="qty-slide-thumb">
@@ -53,14 +53,17 @@
                     {!! $price['html'] !!}
                 </div>
                 @include('frontend.product.product.component.variant')
-                <div class="ec-quickview-qty">
+                <div class="ec-quickview-qty w-100 uk-flex uk-space-between mb-2">
                     <div class="qty-plus-minus">
                         <input class="qty-input" type="text" name="ec_qtybtn" value="1">
                     </div>
-                    <div class="ec-quickview-cart addToCart" data-id="{{ $product->id }}">
-                        <button class="btn btn-danger">Thêm vào giỏ hàng</button>
+                    <div class="add-to-cart addToCart  w-100" data-id="{{ $product->id }}">
+                        <button class="btn btn-danger  w-100">Thêm vào giỏ hàng</button>
                     </div>
                 </div>
+                <a href="{{ write_url('thanh-toan', true, true) }}">
+                    <button class="btn btn-light w-100">Mua ngay</button>
+                </a>
             </div>
             @include('frontend.product.product.component.methodship')
         </div>

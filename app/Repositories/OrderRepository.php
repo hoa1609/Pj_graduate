@@ -198,5 +198,26 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
         ->first();
     }
 
+    public function getOrderByCode(string $code = ''){
+        return $this->model->select([
+                'orders.code',
+                'orders.fullname',
+                'orders.phone',
+                'orders.email',
+                'orders.method',
+                'orders.confirm',
+                'orders.payment',
+                'orders.delivery',
+                'provinces.name as province_name',
+                'districts.name as district_name',
+                'wards.name as ward_name',
+            ]
+        )
+        ->leftJoin('provinces', 'orders.province_id', '=','provinces.code')
+        ->leftJoin('districts', 'orders.district_id', '=', 'districts.code')
+        ->leftJoin('wards', 'orders.ward_id', '=', 'wards.code')
+        ->first();
+    }
+
 
 }

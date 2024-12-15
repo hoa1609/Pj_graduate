@@ -39,24 +39,21 @@
                 data: option,
                 dataType: 'json',
                 success: function(res) {
-                    if(res.code == 10) {
+                    if (res.code === 10) {
                         toastr.success(res.message);
-                        location.reload()
                     } else {
                         toastr.error(res.message);
                     }
                 },
                 error: function(xhr) {
-                    if (xhr.status === 422) {
-                        let errors = xhr.responseJSON.errors;
-                        Object.keys(errors).forEach(function(key) {
-                            toastr.error(errors[key][0]);
-                        });
+                    if (xhr.status === 401) {
+                        toastr.error('Vui lòng đăng nhập trước khi bình luận!');
                     } else {
-                        toastr.error('Có lỗi xảy ra, vui lòng thử lại');
+                        toastr.error('Có lỗi xảy ra, vui lòng thử lại sau.');
                     }
                 }
-            })
+            });
+            
         })
     }
 
@@ -71,7 +68,6 @@
 //copy sku
 
 document.getElementById('copy-sku-dt').addEventListener('click', function() {
-    console.log(22323)
     const skuText = document.getElementById('sku-text-dt').innerText;
     navigator.clipboard.writeText(skuText).then(function() {
         toastr.success('Đã sao chép');

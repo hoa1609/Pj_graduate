@@ -4,10 +4,10 @@
         $total = 0;
     @endphp
 
-    <section class="ec-page-content section-space-p">
+    <section class="ec-page-content section-fixed-top">
         <form action="{{ route('cart.store') }}" method="POST">
             @csrf
-            <div class="container">
+            <div class="container" style="margin-top: 20px">
                 <div class="row">
                     <div class="ec-checkout-leftside col-lg-7 col-md-12 ">
                         <div class="border-checkout">
@@ -32,7 +32,6 @@
                             @include('frontend.cart.component.item')
                             @include('frontend.cart.component.voucher')
                             @include('frontend.cart.component.summary')
-                            
                         </div>
                     </div>
                 </div>

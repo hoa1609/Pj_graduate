@@ -1,8 +1,6 @@
 <div class="row d-flex">
     <div class="col-lg-5">
-        <!-- Vị trí Menu Panel -->
         <div class="accordion" id="menuAccordion">
-            <!-- Liên kết tự tạo -->
             <div class="accordion-item">
                 <h2 class="accordion-header" id="headingOne">
                     <button class="accordion-button" type="button" data-bs-toggle="collapse"
@@ -89,19 +87,23 @@
                                             placeholder="Tên Menu" class="form-control">
                                     </td>
                                     <td>
-                                        <input type="text" name="menu[canonical][]"
-                                            value="{{ $menu['canonical'][$key] }}" placeholder="Đường dẫn"
+                                        <input type="text" 
+                                            name="menu[canonical][]"
+                                            value="{{ $menu['canonical'][$key] }}" 
+                                            placeholder="Đường dẫn"
                                             class="form-control">
                                     </td>
                                     <td>
-                                        <input type="text" name="menu[order][]" value="{{ $menu['order'][$key] }}"
-                                            placeholder="Vị trí" class="form-control">
-                                        <!-- Input hidden để lưu menu[id][] -->
+                                        <input type="text" 
+                                            name="menu[order][]" 
+                                            value="{{ $menu['order'][$key] }}"
+                                            placeholder="Vị trí" 
+                                            class="form-control">
                                         <input type="hidden" name="menu[id][]" value="{{ $menu['id'][$key] }}">
                                     </td>
                                     <td class="text-center">
-                                        <button type="button" class="btn btn-link text-danger"><i
-                                                class="fas fa-times"></i>
+                                        <button type="button" class="btn btn-link text-danger">
+                                            <i class="fas fa-times"></i>
                                         </button>
                                     </td>
                                 </tr>

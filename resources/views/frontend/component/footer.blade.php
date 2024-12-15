@@ -26,23 +26,22 @@
                             </div>
                         </div>
                     </div>
-                    
                     @if(isset($menu['footer-menu']) && !is_null($menu['footer-menu']))
                         @foreach ($menu['footer-menu'] as $key => $val)
-                        @php
-                            $catf = $val['item']->languages->first()->pivot->name;
-                        @endphp
+                            @php
+                                $header = $val['item']->languages->first()->pivot->name;
+                            @endphp
                             <div class="col-sm-12 col-lg-3 ec-footer-account">
                                 <div class="ec-footer-widget">
-                                    <h4 class="ec-footer-heading">{{ $catf }}</h4>
+                                    <h4 class="ec-footer-heading">{{ $header }}</h4>
                                     <div class="ec-footer-links">
                                         <ul class="align-items-center">
                                             @if(isset($val['children']) && !is_null($val['children']))
                                                 @foreach ($val['children'] as $children)
-                                                @php
-                                                    $chilName = $children['item']->languages->first()->pivot->name;
-                                                    $chilCananical = $children['item']->languages->first()->pivot->name;
-                                                @endphp
+                                                    @php
+                                                        $chilName = $children['item']->languages->first()->pivot->name;
+                                                        $chilCananical = $children['item']->languages->first()->pivot->name;
+                                                    @endphp
                                                     <li class="ec-footer-link"><a href="{{ $chilCananical }}">{{ $chilName }}</a></li>
                                                 @endforeach
                                             @endif
@@ -52,16 +51,46 @@
                             </div>
                         @endforeach
                     @endif
-                    
                 </div>
             </div>
+            @if(isset($menu['category-footer']) && !is_null($menu['category-footer']))
+                <div class="container box-footer-cate">
+                    <div class="header-footer">Danh mục sản phẩm</div>
+                    <div class="row">
+                        @foreach ($menu['category-footer'] as $key => $val)
+                            @php
+                                $category = $val['item']->languages->first()->pivot->name;
+                            @endphp
+                            <div class="col-md-3 ec-footer-account">
+                                <h4 class="footer-heading-cate">{{ $category }}</h4>
+                                <div class="ec-footer-links">
+                                    <ul class="footer-list">
+                                        @if(isset($val['children']) && !is_null($val['children']))
+                                        @foreach ($val['children'] as $children)
+                                            @php
+                                                $chilName = $children['item']->languages->first()->pivot->name;
+                                                $chilCananical = $children['item']->languages->first()->pivot->name;
+                                            @endphp
+                                            <li><a href="{{ $chilCananical }}">{{ $chilName }}</a></li>
+                                        @endforeach
+                                        @endif
+                                    </ul>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            @endif
         </div>
         <div class="footer-bottom">
             <div class="container">
                 <div class="row">
                     <div class="footer-copy">
                         <div class="footer-bottom-copy ">
-                            <div class="ec-copy">{{ $system['homepage_copyright'] }}</div>
+                            <div class="ec-copy">@ Bản quyền thuộc về 
+                                <a href="{{ route('home.index') }}"><strong>4AM Style</strong></a>
+                                 All right reserved
+                            </div>
                         </div>
                     </div>
                 </div>

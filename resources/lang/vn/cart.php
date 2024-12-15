@@ -17,5 +17,6 @@
             'pending' => 'Chưa giao',
             'processing' => 'Đang giao',
             'success' => 'Thành công',
+            'error' => 'Bom hàng',
         ],
     ];

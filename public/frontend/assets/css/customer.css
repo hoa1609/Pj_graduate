@@ -386,10 +386,7 @@ input:focus {
     padding: .75rem;
     resize: none;
     width: 100%;
-    --tw-shadow: 0 0 #0000;
-    --tw-shadow-colored: 0 0 #0000;
-    box-shadow: var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)
-
+    border: 1px solid #CED4DA;
 }
 
 .ec-ratting-input input[type="number"]::-webkit-outer-spin-button,
@@ -861,8 +858,8 @@ i.ecicon.eci-star-o {
     background-color: #404040;
 }
 .form-select{
-    border: 1px solid #666666 !important;
-    height: 38px !important;
+    border: 1px solid #CED4DA !important;
+    height: 42px !important;
     border-radius: 50px;
 }
 .cart-price-old{
@@ -965,10 +962,9 @@ color: #222222;
     text-transform: uppercase;
 }
 .prive-other-pr{
-    border: 1.5px solid #60a5fa;
     padding: 10px 30px;
     border-radius: 30px;
-    background-color: #3b82f6;
+    background-color: #000000;
 }
 .text-iv-pro{
     color: #f1f1f1;
@@ -1008,9 +1004,6 @@ table, th, td {
     font-weight: 600;
     color: #c91c08c7 !important;
 }
-.bg-danger-bur{
-    background-color: #ff51001a;
-}
 .info-receiver{
     padding: 20px;
     border: 1px solid #313131;
@@ -1022,8 +1015,8 @@ table, th, td {
 .text-normal{
     font-weight: normal;
 }
-.bg-yellow{
-    background-color: #f6f67f;
+.sku-succes{
+    background-color: #f4f4f4;
 }
 .fs-18{
     font-size: 18px !important;
@@ -1061,107 +1054,271 @@ table, th, td {
     color: #717171;
     cursor: pointer;
 }
-/*  */
-
-/* truck's tires */
-.loader {
-    width: fit-content;
-    height: fit-content;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+/* cricle check success */
+.svg-success {
+    display: inline-block;
+    vertical-align: top;
+    height: 50px;
+    width: 50px;
+    opacity: 1;
+    overflow: visible;
 }
-.truckWrapper {
-    width: 200px;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    align-items: center;
-    justify-content: flex-end;
-    overflow-x: hidden;
-    zoom: 0.6;
+.success-tick {
+    fill: none;
+    stroke-width: 1px;
+    stroke: #ffffff;
+    stroke-dasharray: 15px, 15px;
+    stroke-dashoffset: -14px;
+    animation: success-tick 450ms ease 1400ms forwards;
+    opacity: 0;
 }
-.truckBody {
-    width: 130px;
-    height: fit-content;
-    margin-bottom: 6px;
-    animation: motion 1s linear infinite;
+.success-circle-outline {
+    fill: none;
+    stroke-width: 1px;
+    stroke: limegreen;
+    stroke-dasharray: 72px, 72px;
+    stroke-dashoffset: 72px;
+    animation: success-circle-outline 300ms ease-in-out 800ms forwards;
+    opacity: 0;
 }
-/* truck suspension animation*/
-@keyframes motion {
+.success-circle-fill {
+    fill: limegreen;
+    stroke: none;
+    opacity: 0;
+    animation: success-circle-fill 300ms ease-out 1100ms forwards;
+}
+@keyframes success-tick {
     0% {
-        transform: translateY(0px);
+        stroke-dashoffset: 16px;
+        opacity: 1;
     }
-
-    50% {
-        transform: translateY(3px);
+    100% {
+        stroke-dashoffset: 31px;
+        opacity: 1;
+    }
+}
+@keyframes success-circle-outline {
+    0% {
+        stroke-dashoffset: 72px;
+        opacity: 1;
+    }
+    100% {
+        stroke-dashoffset: 0px;
+        opacity: 1;
+    }
+}
+@keyframes success-circle-fill {
+    0% {
+        opacity: 0;
     }
 
     100% {
-        transform: translateY(0px);
+        opacity: 1;
     }
 }
-.truckTires {
-    width: 130px;
-    height: fit-content;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0px 10px 0px 15px;
-    position: absolute;
-    bottom: 0;
+@media screen and (-ms-high-contrast: active),
+screen and (-ms-high-contrast: none) {
+    .success-tick {
+        stroke-dasharray: 0;
+        stroke-dashoffset: 0;
+        animation: none;
+        opacity: 1;
+    }
+    .success-circle-outline {
+        stroke-dasharray: 0;
+        stroke-dashoffset: 0;
+        animation: none;
+        opacity: 1;
+    }
+    .success-circle-fill {
+        animation: none;
+        opacity: 1;
+    }
 }
-.truckTires svg {
-    width: 24px;
+
+/* cricle check error */
+.svg-error {
+    display: inline-block;
+    vertical-align: top;
+    height: 50px;
+    width: 50px;
+    opacity: 1;
+    overflow: visible;
 }
-.road {
-    width: 100%;
-    height: 1.5px;
-    background-color: #282828;
-    position: relative;
-    bottom: 0;
-    align-self: flex-end;
-    border-radius: 3px;
+.error-tick {
+    fill: none;
+    stroke-width: 1px;
+    stroke: #ffffff;
+    stroke-dasharray: 15px, 15px;
+    stroke-dashoffset: -14px;
+    animation: error-tick 450ms ease 1400ms forwards;
+    opacity: 0;
 }
-.road::before {
-    content: "";
-    position: absolute;
-    width: 20px;
-    height: 100%;
-    background-color: #282828;
-    right: -50%;
-    border-radius: 3px;
-    animation: roadAnimation 1.4s linear infinite;
-    border-left: 10px solid white;
+.error-circle-outline {
+    fill: none;
+    stroke-width: 1px;
+    stroke: rgb(223, 7, 7);
+    stroke-dasharray: 72px, 72px;
+    stroke-dashoffset: 72px;
+    animation: error-circle-outline 300ms ease-in-out 800ms forwards;
+    opacity: 0;
 }
-.road::after {
-    content: "";
-    position: absolute;
-    width: 10px;
-    height: 100%;
-    background-color: #282828;
-    right: -65%;
-    border-radius: 3px;
-    animation: roadAnimation 1.4s linear infinite;
-    border-left: 4px solid white;
+.error-circle-fill {
+    fill: red;
+    stroke: none;
+    opacity: 0;
+    animation: error-circle-fill 300ms ease-out 1100ms forwards;
 }
-.lampPost {
-    position: absolute;
-    bottom: 0;
-    right: -90%;
-    height: 90px;
-    animation: roadAnimation 1.4s linear infinite;
-}
-@keyframes roadAnimation {
+@keyframes error-tick {
     0% {
-        transform: translateX(0px);
+        stroke-dashoffset: 16px;
+        opacity: 1;
+    }
+    100% {
+        stroke-dashoffset: 31px;
+        opacity: 1;
+    }
+}
+@keyframes error-circle-outline {
+    0% {
+        stroke-dashoffset: 72px;
+        opacity: 1;
+    }
+    100% {
+        stroke-dashoffset: 0px;
+        opacity: 1;
+    }
+}
+@keyframes error-circle-fill {
+    0% {
+        opacity: 0;
     }
 
     100% {
-        transform: translateX(-350px);
+        opacity: 1;
     }
 }
-/* end */
+@media screen and (-ms-high-contrast: active),
+screen and (-ms-high-contrast: none) {
+    .error-tick {
+        stroke-dasharray: 0;
+        stroke-dashoffset: 0;
+        animation: none;
+        opacity: 1;
+    }
+    .error-circle-outline {
+        stroke-dasharray: 0;
+        stroke-dashoffset: 0;
+        animation: none;
+        opacity: 1;
+    }
+    .error-circle-fill {
+        animation: none;
+        opacity: 1;
+    }
+}
+
+/* cricle check defalut */
+.svg-default {
+    display: inline-block;
+    vertical-align: top;
+    height: 50px;
+    width: 50px;
+    opacity: 1;
+    overflow: visible;
+}
+.default-tick {
+    fill: none;
+    stroke-width: 1px;
+    stroke: #ffffff;
+    stroke-dasharray: 15px, 15px;
+    stroke-dashoffset: -14px;
+    animation: default-tick 450ms ease 1400ms forwards;
+    opacity: 0;
+}
+.default-circle-outline {
+    fill: none;
+    stroke-width: 1px;
+    stroke: rgb(161, 161, 161);
+    stroke-dasharray: 72px, 72px;
+    stroke-dashoffset: 72px;
+    animation: default-circle-outline 300ms ease-in-out 800ms forwards;
+    opacity: 0;
+}
+.default-circle-fill {
+    fill: rgb(161, 161, 161);
+    stroke: none;
+    opacity: 0;
+    animation: default-circle-fill 300ms ease-out 1100ms forwards;
+}
+@keyframes default-tick {
+    0% {
+        stroke-dashoffset: 16px;
+        opacity: 1;
+    }
+    100% {
+        stroke-dashoffset: 31px;
+        opacity: 1;
+    }
+}
+@keyframes default-circle-outline {
+    0% {
+        stroke-dashoffset: 72px;
+        opacity: 1;
+    }
+    100% {
+        stroke-dashoffset: 0px;
+        opacity: 1;
+    }
+}
+@keyframes default-circle-fill {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+@media screen and (-ms-high-contrast: active),
+screen and (-ms-high-contrast: none) {
+    .default-tick {
+        stroke-dasharray: 0;
+        stroke-dashoffset: 0;
+        animation: none;
+        opacity: 1;
+    }
+    .default-circle-outline {
+        stroke-dasharray: 0;
+        stroke-dashoffset: 0;
+        animation: none;
+        opacity: 1;
+    }
+    .default-circle-fill {
+        animation: none;
+        opacity: 1;
+    }
+}
+
+.check-find-pro{
+    position: relative;
+    text-align: center;
+}
+.check-find-pro .item-check{
+    padding: 0 50px;
+    z-index: 1;
+}
+.check-find-pro .shiping{
+    padding-top: 10px;
+}
+.line::after {
+    content: ""; 
+    width: 28%;
+    top: 20px;
+    border-top: 1px dashed #505050;
+    position: absolute;
+    z-index: 0;
+}
 
 /* search product */
 .ui-widget.ui-widget-content {
@@ -1170,8 +1327,8 @@ table, th, td {
 }
 
 .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active, a.ui-button:active, .ui-button:active, .ui-button.ui-state-active:hover {
-    background-color: #ff909d;
-    border: 1px solid #ff909d;
+    background-color: #c7c7c7;
+    /* border: 1px solid #ff909d; */
     border-radius: 5px ;
 }
 /*  */
@@ -1201,4 +1358,90 @@ table, th, td {
 }
 .cloes-remove:hover{
     color: #ff0000;
+}
+.text-cart-null{
+    font-size: 16px;
+    color: #404040;
+    text-align: center;
+}
+.ui-menu{
+    z-index: 10000;
+}
+.ui-menu-item{
+    background-color: #ededed !important;
+}
+.item-post h3{
+    font-size: 30px;
+}
+.ec-blog-detail h2{
+    font-size: 18px;
+}
+.ec-blog-detail img{
+    width: 500px;
+    align-items: center;
+}
+.container .box-find{
+    padding: 30px 0;
+}
+.title-tracking-header{
+    color: #333;
+    padding-bottom: 20px;
+    text-align: center;
+}
+.title-tracking-header h3{
+    font-size: 24px;
+    font-weight: 400;
+}
+.btn-tracking{
+    min-width: 100px;
+    background-color: #1b1b1b;
+    color: #fff;
+    font-size: 16px;
+    text-align: center;
+    font-weight: 300;
+}
+.box-footer-cate{
+    padding: 30px 0;
+    border-top: 1px solid #d8d7d7;
+}
+.box-footer-cate .header-footer{
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 25px;
+    text-transform: uppercase;
+    color: #333;
+    padding-bottom: 10px;
+}
+.footer-heading-cate {
+    font-size: 15px;
+    font-weight: 400;
+    color: #333;
+    line-height: 22px;
+}
+.footer-list li{
+    display: inline;
+    font-weight: 400;
+    text-transform: capitalize;
+}
+.footer-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 14px;
+}
+.footer-list li::after {
+    content: " /";
+    color: #999;
+}
+.footer-list li:last-child::after {
+    content: "";
+}
+.footer-list a {
+    font-size: 13px;
+    text-decoration: none;
+    color: #707070;
+    transition: color 0.3s;
+}
+.footer-list a:hover {
+    color: #000;
 }

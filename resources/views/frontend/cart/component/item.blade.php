@@ -1,7 +1,7 @@
 @if(count($carts) && !is_null($carts))
     <div class="cart-product">
         @foreach ($carts as $keyCart => $cart)
-            <div class="row item-product mt-2">
+            <div class="row item-product">
                 <div class="col-md-3 image-item">
                     <div class="image-cart-wrapper">
                         <img src="{{ $cart->image }}">
@@ -25,7 +25,7 @@
                 </div>
                 <div class="col-md-3 uk-flex flex-column">
                     <div class="cart-item-remove" data-row-id="{{ $cart->rowId }}">
-                        <span class="cursor cloes-remove">X</span>
+                        <span class="cursor cloes-remove"><ion-icon name="trash-outline" class="fs-20"></ion-icon></span>
                     </div>
                     <div class="price-item mt-5">
                         <div class="cart-price-sale">{{ convert_price($cart->price * $cart->qty, true) }}₫</div>

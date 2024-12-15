@@ -63,10 +63,10 @@
                     </select>
                     <div class="uk-flex uk-flex-middle uk-flex-nowrap input-group mr5">
                         <input type="text" 
-                        name="keyword" 
-                        value="{{ request('keyword') ?: old('keyword') }}" 
-                        placeholder="Nhập Từ khóa bạn muốn tìm kiếm..." 
-                        class="form-control"
+                            name="keyword" 
+                            value="{{ request('keyword') ?: old('keyword') }}" 
+                            placeholder="Nhập Từ khóa bạn muốn tìm kiếm..." 
+                            class="form-control"
                         >
                         <button type="submit" name="search" value="search" class="btn btn-primary btn-find">Tìm Kiếm</button>
                     </div>

@@ -94,6 +94,7 @@ class MenuController extends Controller
                 $query->where('language_id', $language);
             }
         ], ['order', 'DESC']);
+
         $menuCatalogue = $this->menuCatalogueRepository->findById($id);
         $config['method'] = 'edit';
         $config['seo'] = config('menu.user.edit');
@@ -138,7 +139,6 @@ class MenuController extends Controller
         }]);
 
         $menuList = $this->menuService->getAndConvertMenu($menu, $this->language);
-        // dd($menuList);
         $config['method'] = 'children';
         $config['seo'] = config('apps.menu.create');
         $template = 'backend.menu.menu.children';

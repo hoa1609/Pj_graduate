@@ -199,7 +199,7 @@ button.toast-close-button {
     position: absolute;
     left: 0;
     bottom: 0;
-    height: 4px;
+    height: 2px;
     background-color: #a4a4a4 !important;
     opacity: 1;
     -ms-filter: alpha(Opacity=40);

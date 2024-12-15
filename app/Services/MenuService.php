@@ -139,25 +139,22 @@ class MenuService extends BaseService implements MenuServiceInterface
         return [$request->Menu_catalogue_id];
     }
 
-    public function saveChildren($request, $languageId, $menu)
-    {
+    public function saveChildren($request, $languageId, $menu){
         DB::beginTransaction();
         try {
             $payload = $request->only('menu');
-
             if (count($payload['menu']['name'])) {
                 foreach ($payload['menu']['name'] as $key => $value) {
                     $menuId = $payload['menu']['id'][$key];
-
                     $menuArray = [
                         'menu_catalogue_id' => $menu->menu_catalogue_id,
                         'parent_id' => $menu->id,
-                        'order' => $payload['menu']['order'][$key] ?? 0,
+                        'order' => $payload['menu']['order'][$key],
                         'user_id' => Auth::id(),
                     ];
 
                     $menuSave = ($menuId == 0) ? $this->menuRepository->create($menuArray) : $this->menuRepository->update($menuId, $menuArray);
-                    // dd($menuSave);
+
                     if ($menuSave->id > 0) {
                         $menuSave->languages()->detach([$languageId, $menuSave->id]);
                         $payloadLanguage = [
@@ -182,10 +179,9 @@ class MenuService extends BaseService implements MenuServiceInterface
         }
     }
 
-    public function dragUpdate(array $json = [], int $menuCatalogueId = 0, int $languageId = 1, $parentId = 0)
-    {
-        if (count($json)) {
-            foreach ($json as $key => $value) {
+    public function dragUpdate(array $json = [], int $menuCatalogueId = 0, int $languageId = 1, $parentId = 0){
+        if(count($json)) {
+            foreach($json as $key => $value) {
                 $update = [
                     'order' => count($json) - $key,
                     'parent_id' => $parentId,
@@ -201,9 +197,7 @@ class MenuService extends BaseService implements MenuServiceInterface
         $this->nestedset();
     }
 
-    public function getAndConvertMenu($menu = null, $language = 1): array
-    {
-        // Lấy danh sách menu con theo điều kiện
+    public function getAndConvertMenu($menu = null, $language = 1): array{
         $menuList = $this->menuRepository->findByCondition([
             ['parent_id', '=', $menu->id]
         ], TRUE, [
@@ -211,41 +205,29 @@ class MenuService extends BaseService implements MenuServiceInterface
                 $query->where('language_id', $language);
             },
         ]);
-
-        // Chuyển đổi danh sách menu sang định dạng mảng
         $return = $this->convertMenu($menuList);
-
-        // Trả về kết quả sau khi chuyển đổi
         return $return;
     }
 
-    public function convertMenu($menuList = null)
-    {
+    public function convertMenu($menuList = null){
         $temp = [];
         $fields = ['name', 'canonical', 'order', 'id'];
-
-        // Kiểm tra nếu danh sách menu không rỗng
         if (count($menuList)) {
             foreach ($menuList as $key => $value) {
                 foreach ($fields as $field) {
-                    // Kiểm tra nếu trường là 'name' hoặc 'canonical'
                     if ($field == 'name' || $field == 'canonical') {
                         $temp[$field][] = $value->languages->first()->pivot->{$field};
                     } else {
-                        // Thêm các trường còn lại vào mảng tạm
                         $temp[$field][] = $value->{$field};
                     }
                 }
             }
         }
-
-        // Trả về mảng chứa thông tin menu đã chuyển đổi
         return $temp;
     }
 
 
-    public function destroy($id)
-    {
+    public function destroy($id){
         DB::beginTransaction();
         try {
             // Xóa tất cả các menu liên quan tới menu_catalogue

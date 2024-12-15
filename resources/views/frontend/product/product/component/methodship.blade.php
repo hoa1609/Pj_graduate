@@ -20,7 +20,7 @@
         <label>Sử dụng mã giảm giá ở bước thanh toán</label>
     </div>
     <div class="uk-flex uk-align-center">
-        <div class="icon"><ion-icon name="repeat-outline"></ion-icon> </div>
+        <div class="icon"><ion-icon name="shield-checkmark-outline"></ion-icon> </div>
         <label>Thông tin bảo mật và mã hoá</label>
     </div>
 </div>

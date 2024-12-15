@@ -84,7 +84,6 @@ class CartService implements CartServiceInterface
         try {
             $payload = $request->input();
             Cart::instance('shopping')->update($payload['rowId'], $payload['qty']);
-
             $cartCaculate = $this->cartAndPromotion();
 
             $cartItem = Cart::instance('shopping')->get($payload['rowId']);
@@ -221,8 +220,6 @@ class CartService implements CartServiceInterface
             $order = $this->orderRepository->create($payload);
             if($order->id > 0){
                 $this->createOrderProduct($payload, $order, $request);
-
-                $this->mail($order, $system);
                 Cart::instance('shopping')->destroy();
             }
             DB::commit();
@@ -240,7 +237,7 @@ class CartService implements CartServiceInterface
         }
     }
 
-    private function mail($order, $system){
+    public function mail($order, $system){
         $to = $order->email;
         $cc = $system['contact_email'];
         $carts = Cart::instance('shopping')->content();

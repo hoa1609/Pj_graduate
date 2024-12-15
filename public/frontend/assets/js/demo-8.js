@@ -376,6 +376,7 @@ function ecCheckCookie()
         }
     });
 
+
     /*--------------------- Quick view Slider ------------------------------ */
     $('.qty-product-cover').slick({
         slidesToShow: 1,

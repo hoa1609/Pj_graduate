@@ -26,7 +26,7 @@ class ReviewRequest extends FormRequest
             'fullname' => 'required|string|min:2|max:100',
             'email' => 'required|email',
             'phone' => 'required',
-            'description' => 'required|string|min:10|max:191',
+            'description' => 'required|string|max:191',
         ];
     }
 
@@ -47,7 +47,6 @@ class ReviewRequest extends FormRequest
             'phone.required' => 'Vui lòng nhập số điện thoại',
 
             'description.required' => 'Vui lòng nhập nội dung đánh giá',
-            'description.min' => 'Nội dung đánh giá phải có ít nhất :min ký tự',
             'description.max' => 'Nội dung đánh giá quá dài',
         ];
     }

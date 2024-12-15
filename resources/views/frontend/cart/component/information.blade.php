@@ -11,7 +11,7 @@
                 <input 
                     type="text" 
                     name="fullname" 
-                    value="{{ old('fullname') }}"
+                    value="{{ old('fullname', ($customer-> name) ?? '') }}"
                     class="form-control border-h-5" 
                     placeholder="nhập họ và tên...">
                 @if ($errors->has('fullname')) 
@@ -24,7 +24,7 @@
                 <input 
                     type="text" 
                     name="phone" 
-                    value="{{ old('phone') }}"
+                    value="{{ old('phone', ($customer-> phone) ?? '') }}"
                     class="form-control border-h-5" 
                     placeholder="nhập số điện thoại...">
                 @if ($errors->has('phone')) 
@@ -40,7 +40,7 @@
                 <input 
                     type="text" 
                     name="email"
-                    value="{{ old('email') }}" 
+                    value="{{ old('email', ($customer-> email) ?? '') }}" 
                     class="form-control border-h-5" 
                     placeholder="nhập địa chỉ email...">
                 @if ($errors->has('email')) 
@@ -53,21 +53,21 @@
 
         <div class="row mb-2">
             <div class="col-lg-4 mb-2">
-                <select class=" form-control border-h-5 form-select province location" name="province_id" data-target="districts">
-                    <option value="0">[Chọn thành phố]</option>
+                <select class="form-control border-h-5 form-select province location" name="province_id" data-target="districts">
+                    <option value="0">Chọn thành phố</option>
                     @foreach ($provinces as $key => $val)
                         <option value="{{ $val->code }}">{{ $val->name }}</option>
                     @endforeach
                 </select>
             </div>
             <div class="col-lg-4 mb-2">
-                <select name="district_id" id="" class="form-control form-select border-h-5 districts location" data-target="wards">
-                    <option value="0">[Chọn Quận huyện]</option>
+                <select  class="form-control form-select border-h-5 districts location"  name="district_id" data-target="wards">
+                    <option value="0">Chọn Quận huyện</option>
                 </select>
             </div>
             <div class="col-lg-4 mb-2">
                 <select class="form-control border-h-5 form-select wards" name="ward_id" data-target="districts"> 
-                    <option value="0">[Chọn phường xã]</option>
+                    <option value="0">Chọn phường xã</option>
                 </select>
             </div>
         </div>
@@ -76,7 +76,7 @@
                 <input 
                     type="text" 
                     name="address" 
-                    value="{{ old('address') }}"
+                    value="{{ old('address', ($customer-> address) ?? '') }}"
                     class="form-control border-h-5" 
                     placeholder="nhập địa chỉ đường...">
                 @if ($errors->has('address')) 

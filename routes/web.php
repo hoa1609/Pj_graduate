@@ -51,16 +51,18 @@ use Illuminate\Routing\RouteGroup;
 
 /*FE ROUTER */
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
+Route::post('don-hang'.config('apps.general.suffix'), [OtherController::class, 'find'])->name('find.result');
 Route::get('thanh-toan'.config('apps.general.suffix'), [CartController::class, 'checkout'])->name('cart.checkout');
+Route::get('gioi-thieu'.config('apps.general.suffix'), [OtherController::class, 'intro'])->name('intro.index');
+Route::get('tim-kiem-don-hang'.config('apps.general.suffix'), [OtherController::class, 'order'])->name('form.find');
+
 Route::get('{canonical}'.config('apps.general.suffix'), [RouterController::class, 'index'])->name('router.index');
 Route::get('{canonical}/trang-{page}.html', [RouterController::class, 'page'])->name('router.page');
 Route::post('cart/store', [CartController::class, 'store'])->name('cart.store');
 Route::get('cart/{code}/success'.config('apps.general.suffix'), [CartController::class, 'success'])->name('cart.success');
-Route::get('product-list', [HomeController::class, 'productlistAjax']);//danh sach khi search
+Route::get('product-list', [HomeController::class, 'productlistAjax']); //danh sach khi search
 Route::post('searchProduct', [HomeController::class, 'searchProduct']);
 Route::get('ajax/product/quickview/{id}', [FrontendProductController::class, 'getProduct'])->name('product.get');
-
-Route::get('gioi-thieu', [OtherController::class, 'intro'])->name('intro.index');
 
 
 /*VNPAY */
@@ -76,9 +78,7 @@ Route::post('ajax/cart/create', [AjaxCartController::class, 'create'])->name('aj
 Route::post('ajax/cart/update', [AjaxCartController::class, 'update'])->name('ajax.cart.update');
 Route::post('ajax/cart/delete', [AjaxCartController::class, 'delete'])->name('ajax.cart.delete');
 Route::get('ajax/location/getLocation', [LocationController::class, 'getLocation'])->name('ajax.location.index');
-
-
-
+Route::post('ajax/review/create', [AjaxReviewController::class, 'create'])->name('ajax.dashboard.create');
 
 
 
@@ -329,9 +329,7 @@ Route::middleware(['admin', 'locale', 'backend_default_locale'])->group(function
     Route::post('ajax/menu/createCatalogue', [AjaxMenuController::class, 'createCatalogue'])->name('ajax.menu.createCatalogue');
     Route::post('ajax/menu/drag', [AjaxMenuController::class, 'drag'])->name('ajax.menu.drag');
     Route::get('ajax/dashboard/getMenu', [AjaxDashboardController::class, 'getMenu'])->name('ajax.dashboard.getMenu');
-    Route::post('ajax/review/create', [AjaxReviewController::class, 'create'])->name('ajax.dashboard.create');
     Route::post('ajax/order/update', [AjaxOrderController::class, 'update'])->name('ajax.dashboard.update');
-
     Route::get('ajax/order/chart', [AjaxOrderController::class, 'chart'])->name('ajax.dashboard.chart');
 });
 

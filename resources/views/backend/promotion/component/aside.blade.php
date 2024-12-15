@@ -5,8 +5,8 @@
                 <div class="col-md-12 position-relative pb-2">
                     <label class="card-title fs-16">Thời gian áp dụng chương trình</label>
                     <div class="col-sm-12">
-                        <label class="form-label col-sm-12 col-form-label">Ngày bắt đầu <span class="text-danger fs-10">
-                                (*)</span></label>
+                        <label class="form-label col-sm-12 col-form-label">Ngày bắt đầu 
+                            <span class="text-danger fs-10">(*)</span></label>
                         <input class="form-control datepicker" type="datetime-local" name="startDate" id="startDate"
                             value="{{ old('startDate', $model->startDate ?? '') }}">
                     </div>
@@ -32,7 +32,7 @@
             </div>
         </div>
     </div>
-    <div class="card">
+    {{-- <div class="card">
         <div class="card-body pt-10">
             <div class="row">
                 <div class="content-source">
@@ -113,29 +113,18 @@
                         <div class="wrapper-condition"></div>
                     </div>
                 @endif
-
-                {{-- @if ($applyStatus)
-                    <div class="apply-wrapper">
-                        <select name="applyValue[]" id="" class="multipleSelect2 conditionItem" multiple>
-                            @foreach (__('module.applyStatus') as $key => $val)
-                                <option value="{{ $val['id'] }}"> {{ $val['name'] }}</option>
-                            @endforeach
-                        </select>
-                        <div class="wrapper-condition"></div>
-                    </div>
-                @endif --}}
             </div>
         </div>
-    </div>
+    </div> --}}
     <div class="text-end sticky-find mb-2">
         <button type="submit" name="send" class="btn btn-primary">Lưu thông tin</button>
     </div>
 </div>
 <input type="hidden" class="input-product-and-quantity" value="{{ json_encode(__('module.item')) }}">
 <input type="hidden" class="applyStatusList" value="{{ json_encode(__('module.applyStatus')) }}">
-<input type="hidden" name="" class="conditionItemSelected" value="{{ json_encode($applyValue) }}">
+{{-- <input type="hidden" name="" class="conditionItemSelected" value="{{ json_encode($applyValue) }}"> --}}
 
-@if(count($applyValue))
+{{-- @if(count($applyValue))
     @foreach ($applyValue as $key => $val)
         <input
             type="hidden"
@@ -143,7 +132,7 @@
             value="{{ json_encode(old($val, ($model->discountInformation['apply']['condition'][$val]) ?? null)) }}"
         >
     @endforeach
-@endif
+@endif --}}
 <script>
     document.addEventListener('DOMContentLoaded', function() {
      const neverEndDateCheckbox = document.querySelector('input[name="neverEndDate"]');

@@ -5,13 +5,18 @@
                 <span class="cart_title">Giỏ hàng</span>
                 <button class="ec-close">×</button>
             </div>
-            @if(count($cartsC) && !is_null($cartsC))
-                <div class="cart-product">
-                    <div id="cart-list">
+            <div class="cart-product">
+                <div id="cart-list">
+                    @if(count($cartsC) && !is_null($cartsC))
                         @include('frontend.cart.partials.cart_list', ['cart' => Cart::instance('shopping')->content()])
-                    </div>
+                    @else
+                        <div class="text-center">
+                            <img src="frontend/assets/images/icons/product-null.svg" alt="icon" width="150px">
+                        </div>
+                        <p class="text-cart-null">Hiện chưa có sản phẩm trong giỏ hàng!</p>
+                    @endif
                 </div>
-            @endif
+            </div>               
         </div>
         <div class="ec-cart-bottom">
             <div class="total-mount mt-3">
@@ -20,12 +25,6 @@
                         <span>Giảm giá</span>
                     </div>
                     <div class="voucher-price">-{{ convert_price($cartPromotion['discount'], true) }}₫</div>
-                </div>
-                <div class="total-voucher uk-flex uk-space-between">
-                    <div class="text-name-price">
-                        <span>Phí giao hàng</span>
-                    </div>
-                    <div class="shipping-price">miễn phí</div>
                 </div>
                 <div class="total-voucher uk-flex uk-space-between">
                     <div class="text-name-price">

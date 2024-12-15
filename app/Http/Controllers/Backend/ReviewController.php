@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Services\Interfaces\ReviewServiceInterface as ReviewService;
 use App\Repositories\Interfaces\ReviewRepositoryInterface as ReviewRepository;
-
 use Illuminate\Http\Request;
 
 
@@ -17,7 +16,7 @@ class ReviewController extends Controller{
     public function __construct(
         ReviewService $reviewService,
         ReviewRepository $reviewRepository,
-    ) {
+    ){
         $this->reviewService = $reviewService;
         $this->reviewRepository = $reviewRepository;
     }
@@ -47,13 +46,13 @@ class ReviewController extends Controller{
 
         ));
     }
+
+
     public function destroy($id){
         if ($this->reviewService->destroy($id)) {
             return redirect()->route('review.index')->with('success', 'Xóa bình luận thành công!');
         }
         return redirect()->route('review.index')->with('error', 'Xóa bình luận thất bại!');
     }
-
-
 
 }

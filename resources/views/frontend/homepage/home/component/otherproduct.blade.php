@@ -32,7 +32,7 @@
                     @endif
                    <!------san pham--->
                     @if(isset($category->products) && count($category->products))
-                        <div class="row margin-minus-b-15">
+                        <div class="row margin-minus-b-15" data-animation="fadeIn">
                             <div class="col">
                                 <div class="tab-content">
                                     <div class="tab-pane fade show active" id="all">

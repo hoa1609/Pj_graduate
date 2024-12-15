@@ -36,7 +36,7 @@
                     toastr.clear() //clear khi chon nhanh
                     if(res.code === 10){
                         $('#cart-list').html(res.html);
-                        toastr.success(res.messages, 'Thông báo từ hệ thống!')
+                        toastr.success(res.messages)
                     }else{
                         toastr.error('Hãy thử lại!')
                     }
@@ -97,7 +97,7 @@
                     HT.changeMinyCartQuantityItem(_this, option)
                     HT.changeCartItemSubTotal(_this, res)
                     HT.changeCartTotal(res)
-                    toastr.success(res.messages, 'Thông báo từ hệ thống!')
+                    toastr.success(res.messages)
                 }else{
                     toastr.error('Hãy thử lại!')
                 }

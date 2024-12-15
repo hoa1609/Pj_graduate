@@ -157,13 +157,6 @@
                         <h3 class="title-invoice">Xác nhận đơn hàng thành công</h3>
                     </div>
                 </div>
-                <div class="row mb-4">
-                    <div class="col uk-flex uk-content-center">
-                        <span class="prive-other-pr">
-                            <a href="" class="text-iv-pro">Xem sản phẩm khác tại đây!</a>
-                        </span>
-                    </div>
-                </div>
                 <div class="row uk-flex uk-content-center">
                     <div class="col-md-6">
                         <div class="invoice-container mt-4">
@@ -194,7 +187,7 @@
                                                 $priceOriginal = convert_price($val->priceOriginal, true);
                                                 $subtotal = convert_price($val->price * $qty, true);
                                             @endphp
-                                        <tr class="bg-danger-bur">
+                                        <tr>
                                             <td>{{ $name }}</td>
                                             <td class="text-center">{{ $qty }}</td>
                                             <td class="text-center">{{ $priceOriginal }}₫</td>
@@ -250,7 +243,13 @@
                             </div>
                             <p class="invoice-footer">Cảm ơn bạn đã mua sắm tại cửa hàng của chúng tôi!</p>
                         </div>
-
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    <div class="col uk-flex uk-content-center">
+                        <span class="prive-other-pr">
+                            <a href="" class="text-iv-pro">Xem sản phẩm khác tại đây!</a>
+                        </span>
                     </div>
                 </div>
             </div>

@@ -1,7 +1,11 @@
 (function($) {
 	"use strict";
 	var HT = {}; 
-	var timer;
+
+	HT.select2 = ()=>{
+        $('.setUpSelect2').select2();
+    }
+
 
 	HT.swiperOption = (setting) => {
 		let option = {}
@@ -131,7 +135,10 @@
 		
 		/* CORE JS */
 		HT.swiper()
-		HT.niceSelect()		
+		HT.niceSelect()	
+		
+		/*    */ 
+		HT.select2()
 		
 	});
 

@@ -13,12 +13,14 @@
                                         $productCount = $val->products_count;
                                         $canonical = write_url($val->languages->first()->pivot->canonical, true, true);
                                     @endphp
-                                    <div class="image-category">
-                                        <img src="{{ $image }}" class="image-category-slide" alt="drink">
-                                        <div class="name text-center">
-                                            {{ $name }}
+                                    <a href="{{ $canonical }}">
+                                        <div class="image-category">
+                                            <img src="{{ $image }}" class="image-category-slide" alt="drink">
+                                            <div class="name text-center">
+                                                {{ $name }}
+                                            </div>
                                         </div>
-                                    </div>
+                                    </a>
                                 @endforeach
                             </div>
                         </div>

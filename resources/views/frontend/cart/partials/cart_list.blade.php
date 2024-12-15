@@ -24,7 +24,7 @@
             </div>
             <div class="col-md-3 uk-flex flex-column">
                 <div class="cart-item-remove" data-row-id="{{ $item->rowId }}">
-                    <span class="cursor cloes-remove">X</span>
+                    <span class="cursor cloes-remove"><ion-icon name="trash-outline" class="fs-18"></ion-icon></span>
                 </div>
                 <div class="price-item mt-5">
                     <div class="cart-price-sale">{{ convert_price($item->price * $item->qty, true) }}₫</div>

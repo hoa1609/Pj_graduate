@@ -1,5 +1,5 @@
 <div class="ec-breadcrumb mb-3">
-    <div class="container">
+    <div class="container section-fixed-top">
         <div class="row">
             <div class="col-12">
                 <div class="row ec_breadcrumb_inner">

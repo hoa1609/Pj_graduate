@@ -22,7 +22,7 @@ class MenuController extends Controller
         MenuCatalogueRepository $menuCatalogueRepository,
         MenuCatalogueService $menuCatalogueService,
         MenuService $menuService
-    ) {
+    ){
         $this->menuCatalogueRepository = $menuCatalogueRepository;
         $this->menuCatalogueService = $menuCatalogueService;
         $this->menuService = $menuService;
@@ -34,8 +34,7 @@ class MenuController extends Controller
         });
     }
 
-    public function createCatalogue(StoreMenuCatalogueRequest $request)
-    {
+    public function createCatalogue(StoreMenuCatalogueRequest $request){
         $menuCatalogue = $this->menuCatalogueService->create($request);
         if ($menuCatalogue !== false) {
             return response()->json([
@@ -50,10 +49,11 @@ class MenuController extends Controller
         ]);
     }
 
-    public function drag(Request $request)
-    {
+
+    public function drag(Request $request){
         $json = json_decode($request->string('json'), TRUE);
         $menuCatalogueId = $request->integer('menu_catalogue_id');
+        
         $flag = $this->menuService->dragUpdate($json, $menuCatalogueId, $this->language);
     }
 }

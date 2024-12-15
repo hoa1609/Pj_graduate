@@ -1,7 +1,7 @@
 @php
     $slideKeyword = App\Enums\SlideEnum::MAIN;
 @endphp
-<div class="ec-main-slider section section-space-pb">
+<div class="ec-main-slider section section-fixed-top">
     @if(isset($slides[$slideKeyword]['item']) && !is_null($slides[$slideKeyword]['item']))
         <div class="container">
             <div class="panel-slide" data-setting="{{ json_encode($slides[$slideKeyword]['setting']) }}">

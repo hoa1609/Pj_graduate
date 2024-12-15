@@ -1,4 +1,4 @@
-<header class="ec-header ">
+<header class="ec-header fixed-top">
     <div class="header-top">
         <div class="container">
             <div class="row align-items-center">
@@ -21,27 +21,27 @@
                         <span>{{ $system['homepage_slogan'] }}</span>
                     </div>
                 </div>
-    <div class="col header-top-right d-none d-lg-block">
-        <div class="header-top-lan-curr d-flex justify-content-end">
-            <div class="header-top-lan dropdown">
-                <button class="dropdown-toggle text-upper" data-bs-toggle="dropdown">
-                        @foreach ($languages as $key => $val)
-                            @if($key > 0) @break; @endif
-                            {{ $val->name }}
-                        @endforeach
-                    <i class="ecicon eci-caret-down" aria-hidden="true"></i>
-                </button>
-                @if(isset($languages))
-                    <ul class="dropdown-menu">
-                        @foreach ($languages as $key =>$val)
-                            @if($key == 0) @continue; @endif
-                            <li><a class="dropdown-item" href="{{ $val->name }}">{{ $val->name }}</a></li>
-                        @endforeach
-                    </ul>
-                @endif
-            </div>
-        </div>
-    </div>
+                <div class="col header-top-right d-none d-lg-block">
+                    <div class="header-top-lan-curr d-flex justify-content-end">
+                        <div class="header-top-lan dropdown">
+                            <button class="dropdown-toggle text-upper" data-bs-toggle="dropdown">
+                                    @foreach ($languages as $key => $val)
+                                        @if($key > 0) @break; @endif
+                                        {{ $val->name }}
+                                    @endforeach
+                                <i class="ecicon eci-caret-down" aria-hidden="true"></i>
+                            </button>
+                            @if(isset($languages))
+                                <ul class="dropdown-menu">
+                                    @foreach ($languages as $key =>$val)
+                                        @if($key == 0) @continue; @endif
+                                        <li><a class="dropdown-item" href="{{ $val->name }}">{{ $val->name }}</a></li>
+                                    @endforeach
+                                </ul>
+                            @endif
+                        </div>
+                    </div>
+                </div>
                 <!-- Header Top Language Currency -->
                 <!-- Header Top responsive Action -->
                 {{-- <div class="col d-lg-none ">
@@ -83,23 +83,37 @@
         <div class="container position-relative">
             <div class="row">
                 <div class="ec-flex">
-                    <div class="align-self-center">
+                    <div class="align-self-center uk-flex">
                         <div class="header-logo">
                             <a href="{{ route('home.index') }}">
                                 <img src="{{ $system['homepage_logo'] }}" alt="Site Logo" style="width: 80px" />
                             </a>
                         </div>
-                    </div>
-                    <div class="align-self-center">
-                        <div class="header-search">
-                            <form class="ec-btn-group-form" action="{{ url('searchProduct') }}" method="POST">
-                                @csrf
-                                <input class="form-control" placeholder="Tìm kiếm sản phẩm..." type="text" id="search_product" name="product_name">
-                                <button class="submit" type="submit"><i class="fi-rr-search"></i></button>
-                            </form>
+                        <div id="ec-main-menu-desk" class="d-none d-lg-block sticky-nav bg-nav-h">
+                            <div class="container position-relative">
+                                <div class="row">
+                                    <div class="col-md-12 align-self-center">
+                                        <div class="ec-main-menu">
+                                            <ul class="class-name-menu-customer-by-hoa">
+                                                {!! $menu['main-menu'] !!}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="align-self-center">
+                    
+                    <div class="align-self-center uk-flex">
+                        <div class="align-self-center">
+                            <div class="header-search">
+                                <form class="ec-btn-group-form" action="{{ url('searchProduct') }}" method="POST">
+                                    @csrf
+                                    <input class="form-control" placeholder="Tìm kiếm sản phẩm..." type="text" id="search_product" name="product_name">
+                                    <button class="submit" type="submit"><i class="fi-rr-search"></i></button>
+                                </form>
+                            </div>
+                        </div>
                         <div class="ec-header-bottons">
                             <div class="ec-header-user dropdown">
                                 <button class="dropdown-toggle" data-bs-toggle="dropdown"><i class="fi-rr-user"></i></button>
@@ -114,6 +128,7 @@
                                     @else
                                         <li><a class="dropdown-item" href="{{ route('login') }}">Đăng nhập</a></li>
                                         <li><a class="dropdown-item" href="{{ route('register') }}">Đăng ký</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('form.find') }}">Tra cứu đơn hàng</a></li>
                                     @endauth
                                 </ul>
                             </div>
@@ -122,11 +137,11 @@
                                 <span class="ec-header-count">4</span>
                             </a> --}}
                             <a href="#ec-side-cart" class="ec-header-btn ec-side-toggle">
-                                <div class="header-icon"><i class="fi-rr-shopping-basket"></i></div>
                                 @php
                                     $count = Cart::count();
                                 @endphp
                                 <span class="ec-header-count ec-cart-count cart-count-lable" id="cartTotalItem">{{ $count }} </span>
+                                <div class="header-icon"><i class="fi-rr-shopping-basket"></i></div>
                             </a>
                         </div>
                     </div>
@@ -155,8 +170,6 @@
             </div>
         </div>
     </div>
-
-    @include('frontend.component.nav-menu')
 
     <!-- menu mobile -->
     {{-- <div id="ec-mobile-menu" class="ec-side-cart ec-mobile-menu">

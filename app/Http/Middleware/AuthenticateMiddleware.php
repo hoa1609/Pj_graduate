@@ -17,7 +17,7 @@ class AuthenticateMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-       if(Auth::id() == null){
+       if(Auth::guard('web')->id() == null){
         return redirect()-> route('auth.admin')->with('error','Bạn đang vượt link !');
        }
 

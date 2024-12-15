@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Language;
 use App\Http\Requests\ReviewRequest;
+use Illuminate\Support\Facades\Auth;
 
 class ReviewController extends Controller
 {
@@ -15,16 +16,17 @@ class ReviewController extends Controller
 
     public function __construct(
         ReviewService $reviewService,
-
     ){
         $this->reviewService = $reviewService;
     }
 
 
-    public function create(ReviewRequest $request)
-    {
-        $response = $this->reviewService->create($request);
-        return response()->json($response);
+    public function create(ReviewRequest $request){
+        if (Auth::guard('customer')->check()) {
+            $response = $this->reviewService->create($request);
+            return response()->json($response);
+        }
+        return response()->json([], 401);
     }
 
 

@@ -33,7 +33,6 @@
     };
 
     HT.menuRowHtml = (option = {}) => {
-        // Tạo input ẩn
         let hiddenInput = $('<input>', {
             type: 'hidden',
             name: 'menu[id][]',
@@ -59,6 +58,7 @@
             $('<td>').append($('<input>', {
                 type: 'text',
                 name: 'menu[order][]',
+                value: 0,
                 placeholder: 'Vị trí',
                 class: 'form-control'
             })),
@@ -172,23 +172,21 @@
         if ($('#nestable2').length) {
             $('#nestable2').nestable({
                 group: 1
-            }).on('change', function (e) {
-                HT.updateNestableOutput(e);
-            });
+            }).on('change', HT.updateNestableOutput);
         }
     };
 
     HT.updateNestableOutput = (e) => {
-        var list = $(e.currentTarget);
-        var output = $(list.data('output'));
-        let json = window.JSON.stringify(list.nestable('serialize'));
+        var list = $(e.currentTarget),
+        output = $(list.data('output'));
 
-        if (json && json.length) {
+        let json = window.JSON.stringify(list.nestable('serialize'));
+        if(json && json.length) {
             let option = {
                 json: json,
                 menu_catalogue_id: $('#dataCatalogue').attr('data-catalogueId'),
-                '_token': _token
-            };
+                _token: _token
+            }
 
             $.ajax({
                 url: 'ajax/menu/drag',
@@ -199,7 +197,7 @@
                     console.log(res);
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
-                    console.error('Error:', jqXHR.responseText);
+                    // console.error('Error:', jqXHR.responseText);
 
                 }
             });
@@ -228,6 +226,7 @@
     const logAjaxError = (jqXHR) => console.error('Error:', jqXHR.statusText);
 
     $(document).ready(function () {
+        HT.setupNestable(); // Khởi tạo Nestable và gắn sự kiện
         HT.createMenuCatalogue();
         HT.createMenuRow();
         HT.deleteRow();
@@ -235,7 +234,6 @@
         HT.chooseMenu();
         // HT.getPaginationMenu();
         HT.searchMenu();
-        HT.setupNestable(); // Khởi tạo Nestable và gắn sự kiện
         HT.updateNestableOutput(); // Cập nhật Nestable output nếu cần
         HT.runUpdateNestableOutput();
         HT.expandAndCollapse();

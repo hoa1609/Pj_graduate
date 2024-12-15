@@ -7,10 +7,12 @@ use App\Http\Requests\StoreCartRequest;
 use App\Repositories\Interfaces\ProvinceRepositoryInterface as ProvinceRepository;
 use App\Repositories\Interfaces\PromotionRepositoryInterface as PromotionRepository;
 use App\Repositories\Interfaces\OrderRepositoryInterface as OrderRepository;
+use App\Repositories\Interfaces\CustomerRepositoryInterface as CustomerRepository;
 use App\Services\CartService;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use App\Classes\Vnpay;
 use App\Classes\Momo;
+use Illuminate\Support\Facades\Auth;
 
 class CartController extends FrontendController
 {
@@ -19,6 +21,7 @@ class CartController extends FrontendController
     protected $provinceRepository;
     protected $promotionRepository;
     protected $orderRepository;
+    protected $customerRepository;
     protected $cartService;
     protected $vnpay;
     protected $momo;
@@ -28,6 +31,7 @@ class CartController extends FrontendController
         ProvinceRepository $provinceRepository,
         PromotionRepository $promotionRepository,
         OrderRepository $orderRepository,
+        CustomerRepository $customerRepository,
         CartService $cartService,
         Vnpay $vnpay,
         Momo $momo,
@@ -35,6 +39,7 @@ class CartController extends FrontendController
         $this->provinceRepository = $provinceRepository;
         $this->promotionRepository = $promotionRepository;
         $this->orderRepository = $orderRepository;
+        $this->customerRepository = $customerRepository;
         $this->cartService = $cartService;
         $this->vnpay = $vnpay;
         $this->momo = $momo;
@@ -49,31 +54,39 @@ class CartController extends FrontendController
         $cartCaculate = $this->cartService->reCaculateCart();
         $cartPromotion = $this->cartService->cartPromotion($cartCaculate['cartTotal']);
 
+        $customer =  Auth::guard('customer')->user();
         $seo = [
             'meta_title' => 'Trang thanh toán',
             'meta_keyword' => '',
             'meta_description' => '',
             'canonical' => write_url('thanh-toan', true, true),
         ];
-        $system = $this->system;
         $config = $this->config();
         return view('frontend.cart.index', compact(
             'config',
             'seo',
-            'system',
             'provinces',
             'carts',
             'cartConfig',
             'cartPromotion',
             'cartCaculate',
+            'customer',
         ));
     }
 
     public function store(StoreCartRequest $request){
         $system = $this->system;
+
+        $carts = Cart::instance('shopping')->content();
+        if ($carts->isEmpty()) {
+            return redirect()->route('cart.checkout')->with('error', 'Giỏ hàng của bạn đang trống!');
+        }
+    
         $order = $this->cartService->order($request, $system);
         if ($order['flag']) {
             $response = $this->paymentMethod($request ,$order);
+            // $this->cartService->mail($order['order'], $system);
+
             if ($response['errorCode'] == 0) {
                 return redirect()->away($response['url']);
             }
@@ -81,6 +94,7 @@ class CartController extends FrontendController
         }
         return redirect()->route('cart.checkout')->with('error', 'Đặt hàng không thành công!');
     }
+
 
     public function success($code){
         $order = $this->orderRepository->findByCondition([
@@ -93,19 +107,19 @@ class CartController extends FrontendController
             'meta_description' => '',
             'canonical' => write_url('cart/success', true, true),
         ];
-        $system = $this->system;
+        
         $config = $this->config();
+        $config['method'] = 'success';
         return view('frontend.cart.success', compact(
             'config',
             'seo',
-            'system',
             'order',
         ));
     }
      
 
-    public function paymentMethod($request ,$order = null){
-        $system = $this->system;
+    private function paymentMethod($request ,$order = null){
+        $system = $this->system;    
         switch ($order['order']->method) {
             case 'vnpay':
                 $response = $this->vnpay->payment($order['order']);
@@ -138,7 +152,12 @@ class CartController extends FrontendController
             'js' => [
                 'backend/assets/library/location.js',
                 'frontend/assets/library/cart.js',
-            ]
+                'backend/assets/js/select2_4.1.min.js',
+                
+            ],
+            'css' => [
+                'backend/assets/css/select2.min.css',
+            ],
         ];
     }
 
