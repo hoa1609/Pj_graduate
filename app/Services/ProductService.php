@@ -356,16 +356,17 @@ class ProductService extends BaseService implements ProductServiceInterface
     public function combineProductsAndPromotion($productId = [], $products, $flag = false) {
         $promotions = $this->promotionRepository->findByProduct($productId);
         if($promotions){
+
             if($flag == true){
                 $products->promotions = $promotions[0];
                 return $products;
             }
 
             $promotionMap = [];
-            foreach ($promotions as $promotion){
+            foreach ($promotions as $promotion) {
                 $promotionMap[$promotion['product_id']] = $promotion;
             }
-            foreach ($products as $product){
+            foreach ($products as $product) {
                 if (isset($promotionMap[$product->id])) {
                     $product->promotions = $promotionMap[$product->id];
                 }
@@ -374,8 +375,8 @@ class ProductService extends BaseService implements ProductServiceInterface
         return $products;
     }
 
-    public function getAttribute($product, $language){
-        if (!isset($product->attribute) || !is_array($product->attribute)){
+    public function getAttribute($product, $language) {
+        if (!isset($product->attribute) || !is_array($product->attribute)) {
             $product->attributeCatalogue = [];
             return $product;
         }
@@ -386,11 +387,11 @@ class ProductService extends BaseService implements ProductServiceInterface
         $attributeId = array_merge(...$product->attribute);
         $attrs = $this->attributeRepository->findAttributeByIdArray($attributeId, $language);
 
-        if (!is_null($attrCatalogues)){
-            foreach ($attrCatalogues as $key => $val){
+        if (!is_null($attrCatalogues)) {
+            foreach ($attrCatalogues as $key => $val) {
                 $tempAttributes = [];
                 foreach ($attrs as $attr) {
-                    if ($val->id == $attr->attribute_catalogue_id){
+                    if ($val->id == $attr->attribute_catalogue_id) {
                         $tempAttributes[] = $attr;
                     }
                 }

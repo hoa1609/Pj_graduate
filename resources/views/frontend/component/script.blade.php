@@ -16,7 +16,6 @@
         'frontend/assets/js/plugins/owl.carousel.min.js',
         'frontend/assets/js/plugins/infiniteslidev2.js',
         'frontend/assets/js/plugins/click-to-call.js',
-        'frontend/assets/js/plugins/wow1.1.2.min.js',
         'frontend/assets/js/vendor/index.js',
         'frontend/assets/js/demo-8.js',
         'frontend/assets/function.js',

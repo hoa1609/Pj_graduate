@@ -61,6 +61,9 @@
             @elseif($order->delivery == 'error')
                 {!! $checkError !!}
                 <div class="shiping">Hàng bị bom</div>
+            @else
+                {!! $checkDefault !!}
+                <div class="shiping">Đã nhận hàng</div>
             @endif
         </div>
     </div>

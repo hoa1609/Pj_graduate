@@ -22,13 +22,7 @@
             <div class="total-mount mt-3">
                 <div class="total-voucher uk-flex uk-space-between">
                     <div class="text-name-price">
-                        <span>Giảm giá</span>
-                    </div>
-                    <div class="voucher-price">-{{ convert_price($cartPromotion['discount'], true) }}₫</div>
-                </div>
-                <div class="total-voucher uk-flex uk-space-between">
-                    <div class="text-name-price">
-                        <span>Tạm tính</span>
+                        <span class="fs-16">Tạm tính</span>
                     </div>
                     <div class="sumary-value cart-total">{{ convert_price($cartCaculate['cartTotal'] - $cartPromotion['discount'], true)}} đ</div>
                 </div>

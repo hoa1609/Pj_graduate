@@ -21,8 +21,7 @@ if (!function_exists('convert_price')) {
 
 
 if (!function_exists('safeDivision')) {
-    function safeDivision($numerator, $denominator)
-    {
+    function safeDivision($numerator, $denominator) {
         return ($denominator == 0) ? 1 : $denominator;
     }
 }
@@ -99,8 +98,7 @@ if (!function_exists('recursive_menu')) {
 
 
 if (!function_exists('convert_array')) {
-    function convert_array($system = null, $keyword = '', $value = '')
-    {
+    function convert_array($system = null, $keyword = '', $value = '') {
         $temp = [];
         if (is_array(($system))) {
             foreach ($system as $key => $val) {
@@ -118,8 +116,7 @@ if (!function_exists('convert_array')) {
 
 
 if (!function_exists('pre')) {
-    function pre($data, $exit = false)
-    {
+    function pre($data, $exit = false) {
         echo '<pre>';
         print_r($data);
         echo '</pre>';
@@ -131,8 +128,7 @@ if (!function_exists('pre')) {
 
 
 if (!function_exists('image')) {
-    function image(string $image = '')
-    {
+    function image(string $image = '') {
         return $image;
     }
 }
@@ -170,7 +166,6 @@ if (!function_exists('getPrice')) {
             'percent' => 0,
             'html' => '',
         ];
-        // dd($product->promotions['discountValue']);
         if(isset($product->promotions) && isset($product->promotions['discountType'])){
             $result['percent'] = ($product->promotions['discountType'] == 'percent') ? $product->promotions['discountValue'] : getPercent($product, $product->promotions['discountValue']);
             if($product->promotions['discountValue'] > 0){
@@ -196,18 +191,16 @@ if (!function_exists('getPrice')) {
 
 
 if (!function_exists('getVariantPrice')) {
-    function getVariantPrice($variant, $variantPromotion)
-    {
+    function getVariantPrice($variant, $variantPromotion){
         $result = [
             'price' => $variant->price,
             'priceSale' => 0,
             'percent' => 0,
             'html' => '',
         ];
-
-        if (!is_null($variantPromotion) && !empty($variantPromotion)) {
-            $promotion = $variantPromotion->first();
-            if ($promotion) {
+        if (!is_null($variantPromotion)) {
+            $promotion = $variantPromotion;
+            if($promotion) {
                 $result['percent'] = ($promotion->discountType == 'percent')
                     ? $promotion->discountValue
                     : getPercent($variant, $promotion->discountValue);
@@ -234,8 +227,7 @@ if (!function_exists('getVariantPrice')) {
 
 
 if (!function_exists('getReview')) {
-    function getReview(string $product = '')
-    {
+    function getReview(string $product = ''){
         return [
             'star' => rand(1, 5),
             'count' => rand(0, 100),
@@ -245,8 +237,7 @@ if (!function_exists('getReview')) {
 
 
 if (!function_exists('loadClass')) {
-    function loadClass(string $model = '', $interface = 'Repository')
-    {
+    function loadClass(string $model = '', $interface = 'Repository'){
         $serviceInterfaceNamespace = '\App\Repositories\\' . ucfirst($model) . $interface;
         if (class_exists($serviceInterfaceNamespace)) {
             $serviceInstance = app($serviceInterfaceNamespace);
@@ -256,8 +247,7 @@ if (!function_exists('loadClass')) {
 }
 
 if (!function_exists('renderSystemInput')) {
-    function renderSystemInput(string $name = '', $systems = null)
-    {
+    function renderSystemInput(string $name = '', $systems = null){
         return '<input
             type="text"
             name="config['.$name.']"
@@ -269,8 +259,7 @@ if (!function_exists('renderSystemInput')) {
 }
 
 if (!function_exists('renderSystemImages')) {
-    function renderSystemImages(string $name = '', $systems = null)
-    {
+    function renderSystemImages(string $name = '', $systems = null) {
         return '<input
             type="text"
             name="config['.$name.']"
@@ -282,22 +271,19 @@ if (!function_exists('renderSystemImages')) {
 }
 
 if (!function_exists('renderSystemTextarea')) {
-    function renderSystemTextarea(string $name = '', $systems = null)
-    {
+    function renderSystemTextarea(string $name = '', $systems = null) {
         return '<textarea name="config[' . $name . ']" class="form-control">' . old($name, ($systems[$name] ?? '')) . '</textarea>';
     }
 }
 
 if (!function_exists('renderSystemLink')) {
-    function renderSystemLink(array $item = [], $systems = null)
-    {
+    function renderSystemLink(array $item = [], $systems = null) {
         return (isset($item['link'])) ? '<a href="' . $item['link']['href'] . '">' . $item['link']['text'] . '</a>' : '';
     }
 }
 
 if (!function_exists('renderSystemSelect')) {
-    function renderSystemSelect(array $item, string $name = '', $systems = null): string
-    {
+    function renderSystemSelect(array $item, string $name = '', $systems = null): string {
         if (!isset($item['option']) || !is_array($item['option'])) {
             return '<select class="form-control" name="config[' . $name . ']" ></select>';
         }
@@ -309,6 +295,7 @@ if (!function_exists('renderSystemSelect')) {
         return $result['html'];
     }
 }
+
 
 if(!function_exists('write_url')){
     function write_url($canonical = null, bool $fullDomain = true, $suffix = false){
@@ -344,13 +331,10 @@ if (!function_exists('frontend_recursive_menu')) {
                     $canonical = write_url($val['item']->languages->first()->pivot->canonical, true, true);
 
                     $ulClass = ($count > 1) ? 'menu-level--' . ($count) : '';
-                    // dd($count);
-
                     $html .= '<li class="dropdown">';
                         $html .= '<a href="' . $canonical . '" title="' . $name . '">' . $name . '</a>';
                         if (count($val['children'])) {
                             $html .= '<ul class="sub-menu ' . $ulClass . '">';
-                                // $html .= '<li><a href="about-us.html">About Us</a></li>';
                                 $html .= frontend_recursive_menu($val['children'], $val['item']->parent_id, $count + 1, $type);
                             $html .= '</ul>';
                         }
@@ -365,7 +349,6 @@ if (!function_exists('frontend_recursive_menu')) {
 
 
 
-
 if(!function_exists('coverDatetime')) {
     function coverDatetime(string $data = '', string $format = 'd/m/Y H:i' ){
         $carbonDate = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $data);
@@ -374,8 +357,7 @@ if(!function_exists('coverDatetime')) {
 }
 
 if (!function_exists('renderDiscountInformation')) {
-    function renderDiscountInformation($promotion = [])
-    {
+    function renderDiscountInformation($promotion = []) {
         if ($promotion->method === 'product_and_quantity') {
             $discountValue = $promotion->discountInformation['info']['discountValue'];
             $discountType = ($promotion->discountInformation['info']['discountType'] == 'percent') ? '%' : 'đ';
@@ -389,9 +371,9 @@ if (!function_exists('renderDiscountInformation')) {
     }
 }
 
+
 if (!function_exists('convertArrayByKey')) {
-    function convertArrayByKey($object = null, $fields = [])
-    {
+    function convertArrayByKey($object = null, $fields = []) {
         $temp = [];
         foreach ($object as $key => $value) {
             foreach ($fields as $field) {
@@ -411,12 +393,14 @@ if (!function_exists('convertArrayByKey')) {
     }
 }
 
+
 if (!function_exists('convertDateTime')) {
     function convertDateTime(string $date = '', string $format = 'd/m/Y H:i'){
         $cartbonDate = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $date);
         return $cartbonDate->format($format);
     }
 }
+
 
 if (!function_exists('renderQuickBuy')) {
     function renderQuickBuy($product, string $canonical = '', string $name = ''){
@@ -472,8 +456,7 @@ if (!function_exists('cutnchar')) {
 }
 
 if (!function_exists('sorString')) {
-    function sorString($string = '')
-    {
+    function sorString($string = '') {
         $extract = explode(',', $string);
         $extract = array_map('trim', $extract);
         sort($extract, SORT_NUMERIC);
@@ -549,13 +532,11 @@ if (!function_exists('execPostRequest')) {
         curl_setopt($ch, CURLOPT_HTTPHEADER, array_merge([
             'Content-Type: application/json',
         ], $headers));
-    
         $result = curl_exec($ch);
         if (curl_errno($ch)) {
             return curl_error($ch); // Ghi log lỗi
         }
         curl_close($ch);
-    
         return $result;
     }
     

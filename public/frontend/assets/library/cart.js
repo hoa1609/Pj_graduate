@@ -5,7 +5,8 @@
 
 
     HT.addCart = () => {
-        $(document).on('click', '.addToCart', function(){
+        $(document).on('click', '.addToCart', function(e){
+            e.preventDefault();
             let _this = $(this)
             let id = _this.attr('data-id')
             let quantity = _this.closest('.ec-quickview-qty').find('.qty-input').val();
@@ -47,7 +48,8 @@
 
 
     HT.changeQuantity = () => {
-        $(document).on('click', '.btn-qty', function() {
+        $(document).on('click', '.btn-qty', function(e) {
+            e.preventDefault()
             let _this = $(this);
             let qtyElement = _this.siblings('.qty-checkout');
             let qty = parseInt(qtyElement.val()) || 0;
@@ -66,7 +68,8 @@
 
 
     HT.changeQuantityInput = () => {
-        $(document).on('change', '.qty-checkout', function(){
+        $(document).on('change', '.qty-checkout', function(e){
+            e.preventDefault();
             let _this = $(this)
             let option = {
                 qty: parseInt(_this.val()),
@@ -88,8 +91,6 @@
             type: 'POST',
             data: option,
             dataType: 'json',
-            beforeSend: function () {
-            },
             success: function (res) {
                 toastr.clear()
                 if(res.code === 10){
@@ -97,7 +98,7 @@
                     HT.changeMinyCartQuantityItem(_this, option)
                     HT.changeCartItemSubTotal(_this, res)
                     HT.changeCartTotal(res)
-                    toastr.success(res.messages)
+                    // toastr.success(res.messages)
                 }else{
                     toastr.error('Hãy thử lại!')
                 }
@@ -124,7 +125,8 @@
     }
 
     HT.removeCartItem = () => {
-        $(document).on('click', '.cart-item-remove', function(){
+        $(document).on('click', '.cart-item-remove', function(e){
+            e.preventDefault();
             let _this = $(this)
             let option = {
                 rowId: _this.attr('data-row-id'),
@@ -143,7 +145,7 @@
                         HT.changeMinyCartQuantity(res)
                         HT.changeCartTotal(res)
                         HT.removeCartItemRow(_this)
-                        // toastr.success(res.messages, 'Thông báo từ hệ thống!')
+                        // toastr.success(res.messages)
                     }else{
                         toastr.error('Hãy thử lại!')
                     }
