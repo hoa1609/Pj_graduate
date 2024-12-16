@@ -6,12 +6,17 @@ use App\Services\Interfaces\ProductServiceInterface;
 use App\Repositories\Interfaces\ProductRepositoryInterface as ProductRepository;
 use App\Repositories\Interfaces\ProductVariantLanguageRepositoryInterface as ProductVariantLanguageRepository;
 use App\Repositories\Interfaces\ProductVariantAttributeRepositoryInterface as ProductVariantAttributeRepository;
+use App\Repositories\Interfaces\AttributeCatalogueRepositoryInterface as AttributeCatalogueRepository;
+use App\Repositories\Interfaces\AttributeRepositoryInterface as AttributeRepository;
+use App\Repositories\Interfaces\PromotionRepositoryInterface as PromotionRepository;
 use App\Repositories\Interfaces\RouterRepositoryInterface as RouterRepository;
+use App\Services\Interfaces\ProductCatalogueServiceInterface as ProductCatalogueService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Ramsey\Uuid\Uuid;
+use Illuminate\Pagination\Paginator;
 
 
 class ProductService extends BaseService implements ProductServiceInterface
@@ -20,6 +25,10 @@ class ProductService extends BaseService implements ProductServiceInterface
     protected $routerRepository;
     protected $productVariantLanguageRepository;
     protected $productVariantAttributeRepository;
+    protected $promotionRepository;
+    protected $attributeCatalogueRepository;
+    protected $attributeRepository;
+    protected $productCatalogueService;
 
 
     public function __construct(
@@ -27,15 +36,28 @@ class ProductService extends BaseService implements ProductServiceInterface
         RouterRepository $routerRepository,
         ProductVariantLanguageRepository $productVariantLanguageRepository,
         ProductVariantAttributeRepository $productVariantAttributeRepository,
+        PromotionRepository $promotionRepository,
+        AttributeCatalogueRepository $attributeCatalogueRepository,
+        AttributeRepository $attributeRepository,
+        ProductCatalogueService $productCatalogueService,
     ){
         $this->productRepository = $productRepository;
         $this->routerRepository = $routerRepository;
         $this->productVariantLanguageRepository = $productVariantLanguageRepository;
         $this->productVariantAttributeRepository = $productVariantAttributeRepository;
+        $this->promotionRepository = $promotionRepository;
+        $this->attributeCatalogueRepository = $attributeCatalogueRepository;
+        $this->attributeRepository = $attributeRepository;
+        $this->productCatalogueService = $productCatalogueService;
         $this->controllerName = 'ProductController';
     }
 
-    public function paginate ($request, $languageId){
+    public function paginate($request, $languageId, $productCatalogue = null, $extend = [], $page = 1){
+        if (!is_null($productCatalogue)) {
+            Paginator::currentPageResolver(function () use ($page) {
+                return $page;
+            });
+        }
         $condition = [
             'keyword' => $request->input('keyword'),
             'publish' => $request->integer('publish'),
@@ -43,26 +65,29 @@ class ProductService extends BaseService implements ProductServiceInterface
                 ['tb2.language_id', '=', $languageId]
             ]
         ];
-        $perPage = $request->integer('perpage', 10);
+
+        $perPage = $request->integer('perpage', 10); // Số sản phẩm mỗi trang
         $products = $this->productRepository->pagination(
             $this->paginateSelect(),
             $condition,
             $perPage,
-            ['path' => 'product/index', 'groupBy' => $this->paginateSelect()],
+            ['path' => ($extend['path']) ?? 'product/index', 'groupBy' => $this->paginateSelect()],
             ['products.id', 'DESC'],
             [
                 ['product_language as tb2', 'tb2.product_id', '=', 'products.id'],
                 ['product_catalogue_product as tb3', 'products.id', '=', 'tb3.product_id'],
             ],
             ['product_catalogues'],
-            $this->whereRaw($request),
+            $this->whereRaw($request, $languageId, $productCatalogue),
         );
+
         return $products;
     }
 
-    private function whereRaw($request){
+    private function whereRaw($request, $languageId, $productCatalogue){
         $rawCondition = [];
-        if($request->integer('product_catalogue_id') > 0){
+        if($request->integer('product_catalogue_id') > 0 || !is_null($productCatalogue)){
+            $catId = ($request->integer('product_catalogue_id') > 0) ? $request->integer('product_catalogue_id') > 0 : $productCatalogue->id;
             $rawCondition['whereRaw'] =  [
                 [
                     'tb3.product_catalogue_id IN (
@@ -71,7 +96,7 @@ class ProductService extends BaseService implements ProductServiceInterface
                         WHERE lft >= (SELECT lft FROM product_catalogues as pc WHERE pc.id = ?)
                         AND rgt <= (SELECT rgt FROM product_catalogues as pc WHERE pc.id = ?)
                     )',
-                    [$request->integer('product_catalogue_id'), $request->integer('product_catalogue_id')]
+                    [$catId, $catId]
                 ]
             ];
         }
@@ -87,10 +112,11 @@ class ProductService extends BaseService implements ProductServiceInterface
                 $this->updateLanguageForProduct($product, $request, $languageId);
                 $this->updateCatalogueForProduct($product, $request);
                 $this->createRouter($product, $request, $this->controllerName, $languageId);
-
+                
                 if($request->input('attribute')){
                     $this->createVariant($product, $request, $languageId);
                 }
+                $this->productCatalogueService->setAttribute($product);
             }
             DB::commit();
             return true;
@@ -104,6 +130,7 @@ class ProductService extends BaseService implements ProductServiceInterface
     private function createVariant($product, $request, $languageId){
         $payload = $request->only(['variant','productVariant', 'attribute']);
         $variant = $this->createVariantArray($payload, $product);
+        $product->product_variants()->delete();
         $variant = $product->product_variants()->createMany($variant);
         $variantId = $variant->pluck('id');
 
@@ -145,15 +172,18 @@ class ProductService extends BaseService implements ProductServiceInterface
         return $combines;
     }
 
+
     private function createVariantArray(array $payload = [], $product): array{
         $variant = [];
         if(isset($payload['variant']['sku']) && count($payload['variant']['sku']) ){
             foreach($payload['variant']['sku'] as $key => $val){
 
+                $vId = ($payload['productVariant']['id'][$key]) ?? '';
+                $productVariantId = sorString($vId);
                 $uuid = Uuid::uuid5(uuid::NAMESPACE_DNS, $product->id.', '.$payload['productVariant']['id'][$key]);
                 $variant[] = [
                     'uuid' => $uuid,
-                    'code' =>  ($payload['productVariant']['id'][$key]) ?? '',
+                    'code' => $productVariantId,
 
                     'sku' => $val,
                     'quantity' => ($payload['variant']['quantity'][$key]) ?? '',
@@ -166,7 +196,6 @@ class ProductService extends BaseService implements ProductServiceInterface
                 ];
             }
         }
-        // dd($variant);
         return $variant;
     }
 
@@ -176,17 +205,17 @@ class ProductService extends BaseService implements ProductServiceInterface
         $payload['album'] = $this->formatAlbum($request);
         $payload['price'] = convert_price(($payload['price']) ?? 0);
         $payload['attributeCatalogue'] = $this->formatJson($request, 'attributeCatalogue');
-        $payload['attribute'] = $this->formatJson($request, 'attribute');
+        $payload['attribute'] = $request->input('attribute');
         $payload['variant'] = $this->formatJson($request, 'variant');
         $product = $this->productRepository->create($payload);
         return $product;
     }
 
-    private function uploadProduct($product, $request){
+    private function uploadProduct($id, $request){
         $payload = $request->only($this->payload());
         $payload['album'] = $this->formatAlbum($request);
         $payload['price'] = convert_price(($payload['price']) ?? 0);
-        return $this->productRepository->update($product->id, $payload);
+        return $this->productRepository->update($id, $payload);
     }
 
     private function updateLanguageForProduct($product, $request, $languageId){
@@ -218,8 +247,8 @@ class ProductService extends BaseService implements ProductServiceInterface
     public function update($id, $request, $languageId){
         DB::beginTransaction();
         try{
-            $product = $this->productRepository->findById($id);
-            if( $this->uploadProduct($product, $request)){
+            $product = $this->uploadProduct($id, $request);
+            if($product){
                 $this->updateLanguageForProduct($product, $request, $languageId);
                 $this->updateCatalogueForProduct($product, $request);
                 $this->updateRouter($product, $request, $this->controllerName, $languageId);
@@ -228,10 +257,11 @@ class ProductService extends BaseService implements ProductServiceInterface
                     $variant->languages()->detach();
                     $variant->attributes()->detach();
                     $variant->delete();
-                }); 
+                });
                 if($request->input('attribute')){
                     $this->createVariant($product, $request, $languageId);
                 }
+                $this->productCatalogueService->setAttribute($product);
             }
             DB::commit();
             return true;
@@ -246,6 +276,10 @@ class ProductService extends BaseService implements ProductServiceInterface
         DB::beginTransaction();
         try{
             $productCatalogue = $this->productRepository->delete($id);
+            $this->routerRepository->forceDeleteByCondition([
+                ['module_id', '=', $id],
+                ['controllers', '=', 'App\Http\Controllers\Frontend\ProductController'],
+            ]);
             DB::commit();
             return true;
         }catch(\Exception $e ){
@@ -288,6 +322,8 @@ class ProductService extends BaseService implements ProductServiceInterface
             'products.id',
             'products.publish',
             'products.image',
+            'products.album',
+            'products.price',
             'products.order',
             'tb2.name',
             'tb2.canonical',
@@ -322,4 +358,72 @@ class ProductService extends BaseService implements ProductServiceInterface
             'canonical'
         ];
     }
+
+    public function combineProductsAndPromotion($productId = [], $products, $flag = false) {
+        $promotions = $this->promotionRepository->findByProduct($productId);
+        if($promotions){
+
+            if($flag == true){
+                $products->promotions = $promotions[0];
+                return $products;
+            }
+
+            $promotionMap = [];
+            foreach ($promotions as $promotion) {
+                $promotionMap[$promotion['product_id']] = $promotion;
+            }
+            foreach ($products as $product) {
+                if (isset($promotionMap[$product->id])) {
+                    $product->promotions = $promotionMap[$product->id];
+                }
+            }
+        }
+        return $products;
+    }
+
+    public function getAttribute($product, $language) {
+        if (!isset($product->attribute) || !is_array($product->attribute)) {
+            $product->attributeCatalogue = [];
+            return $product;
+        }
+        $attributeCatalogueId = array_keys($product->attribute);
+        $attrCatalogues = $this->attributeCatalogueRepository->getAttributeCatalogueWhereIn($attributeCatalogueId, 'attribute_catalogues.id', $language);
+
+        /*------*/
+        $attributeId = array_merge(...$product->attribute);
+        $attrs = $this->attributeRepository->findAttributeByIdArray($attributeId, $language);
+
+        if (!is_null($attrCatalogues)) {
+            foreach ($attrCatalogues as $key => $val) {
+                $tempAttributes = [];
+                foreach ($attrs as $attr) {
+                    if ($val->id == $attr->attribute_catalogue_id) {
+                        $tempAttributes[] = $attr;
+                    }
+                }
+                $val->attributes = $tempAttributes;
+            }
+        }
+
+        $product->attributeCatalogue = $attrCatalogues;
+        return $product;
+    }
+
+
+    public function relationProductByCatalogeId($productCatalogue, $language, $id){
+        $productCatalogueId = $productCatalogue->id;
+        
+        return $this->productRepository->findByCondition(
+            [
+                ['product_catalogue_id', '=', $productCatalogueId], 
+                config('apps.general.defaultPublish')
+            ], 
+            true, 
+            ['languages']
+        )
+        ->where('id', '!=', $id) 
+        ->take(5);
+    }
+
+
 }

@@ -4,7 +4,7 @@ namespace App\Repositories;
 
 use App\Repositories\Interfaces\BaseRepositoryInterface;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Support\Facades\DB;
 
 class BaseRepository implements BaseRepositoryInterface
 {
@@ -38,7 +38,8 @@ class BaseRepository implements BaseRepositoryInterface
             ->customGroupBy($extend['groupBy'] ?? null)
             ->customOrderBy($orderBy ?? null)
             ->paginate($perPage)
-            ->withQueryString()->withPath(env('APP_URL') . $extend['path']);
+            ->withQueryString()
+            ->withPath(env('APP_URL') . $extend['path']);
     }
 
 
@@ -78,7 +79,7 @@ class BaseRepository implements BaseRepositoryInterface
         $model = $this->findById($id);
         $model->fill($payload);
         $model->save();
-        return $model->update($payload);
+        return $model;
     }
 
     public function createBatch(array $payload = [])
@@ -131,7 +132,7 @@ class BaseRepository implements BaseRepositoryInterface
             $query->where($val[0], $val[1], $val[2]);
         }
         if(isset($param['whereIn'])){
-            $query->whereIn($param['whereInField'], $param['WhereIn']);
+            $query->whereIn($param['whereInField'], $param['whereIn']);
         }
         $query->with($relation);
         $query->withCount($withCount);
@@ -193,4 +194,68 @@ class BaseRepository implements BaseRepositoryInterface
         $query->orderBy($orderBy[0],$orderBy[1]);
         return ($flag == false) ? $query->first() : $query->get();
     }
+
+    public function recursiveCategory(string $parameter = '', $table = ''){
+        $table = $table.'_catalogues';
+        $query = "
+            WITH RECURSIVE category_tree AS (
+                SELECT id, parent_id, deleted_at
+                FROM $table
+                WHERE id IN (?)
+                UNION ALL
+                SELECT c.id, c.parent_id, c.deleted_at
+                FROM $table as c
+                JOIN category_tree as ct ON ct.id = c.parent_id
+            )
+            SELECT id FROM category_tree WHERE deleted_at IS NULL
+        ";
+        $results = DB::select($query, [$parameter]);
+        return $results;
+    }
+
+    public function findObjectByCatelogueIds($catIds = [], $model, $language){
+        $query = $this->model->newQuery();
+        $this->model->select(
+                $model.'s.*',
+            )
+            ->where(
+                [config('apps.general.defaultPublish')]
+            )
+            ->with('languages', function($query) use ($language){
+                $query->where('language_id', $language);
+            })
+            ->with($model.'_catalogues', function($query) use ($language){
+                $query->with('languages', function($query) use ($language){
+                    $query->where('language_id', $language);
+                });
+            });
+
+            if($model === 'product'){
+                $query ->with('product_variants');
+            }
+
+            $query->join($model.'_catalogue_'.$model.' as tb2', 'tb2.'.$model.'_id', '=', $model.'s.id')
+            ->whereIn('tb2.'.$model.'_catalogue_id', $catIds)
+            ->orderBy('order', 'desc')
+            ->limit(10)
+            ->get();
+
+        return $query->get();
+    }
+
+
+    public function breadcrumb($model, $language){
+        return $this->findByCondition([
+            ['lft', '<=', $model->lft],
+            ['rgt', '>=', $model->rgt],
+            config('apps.general.defaultPublish'),
+        ], true, [
+            'languages' => function($query) use ($language){
+                $query->where('language_id', $language);
+            }
+        ], ['lft', 'asc']);
+    }
+
+
+
 }

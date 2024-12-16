@@ -113,6 +113,17 @@ class LanguageController extends Controller{
         return redirect()->back();
     }
 
+    private function configIndex(){
+        return [
+            'js' => [
+                'backend/assets/js/select2_4.1.min.js',
+            ],
+            'css' => [
+                'backend/assets/css/select2.min.css',
+            ],
+        ];
+    }
+    
     public function translate($id = 0, $languageId = 0, $model = '') {
         if (!session()->has('app_locale')) {
             session(['app_locale' => 'tv']); // mặc định khi chưa chọn language là tiếng việt
@@ -160,17 +171,6 @@ class LanguageController extends Controller{
             $repositoryInstance = app($repositoryNamespace);
         }
         return $repositoryInstance ?? null;
-    }
-    
-    private function configIndex(){
-        return [
-            'js' => [
-                'backend/assets/js/select2_4.1.min.js',
-            ],
-            'css' => [
-                'backend/assets/css/select2.min.css',
-            ],
-        ];
     }
 
 }

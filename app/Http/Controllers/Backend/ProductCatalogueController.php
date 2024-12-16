@@ -153,6 +153,7 @@ class ProductCatalogueController extends Controller {
                 'backend/assets/library/finder.js',
                 'backend/assets/library/seo.js',
                 'backend/plugins/ckeditor/ckeditor.js',
+                'backend/assets/library/renameCanonical.js',
             ],
             'css' => [
                 'backend/assets/css/select2.min.css',

@@ -38,6 +38,7 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface
                 'tb2.meta_keyword',
                 'tb2.meta_description',
                 'tb2.canonical',
+                'tb2.created_at',
             ]
         )
         ->join('post_language as tb2', 'tb2.post_id', '=','posts.id')

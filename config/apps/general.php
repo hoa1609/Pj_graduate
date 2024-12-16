@@ -2,8 +2,8 @@
 	return [
 		'publish' => [
 			'0' => '--Chọn tình trạng--',
-			'1' => 'Không xuất bản',
-			'2' => 'Xuất bản',
+			'1' => 'Đang tắt',
+			'2' => 'Đang bật',
 		],
 		'roleUser' => [
 			'0' => '--Chọn tư cách--',

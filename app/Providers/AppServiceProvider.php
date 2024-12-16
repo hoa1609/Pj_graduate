@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Http\Controllers\ViewComposers\CartComposer;
+use App\Http\Controllers\ViewComposers\LanguagueComposer;
 use Dotenv\Validator;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
@@ -57,6 +59,10 @@ class AppServiceProvider extends ServiceProvider
         'App\Services\Interfaces\ProductVariantLanguageServiceInterface' => 'App\Services\ProductVariantLanguageService',
         'App\Repositories\Interfaces\ProductVariantLanguageRepositoryInterface' => 'App\Repositories\ProductVariantLanguageRepository',
 
+        /* product variant */
+        'App\Services\Interfaces\ProductVariantServiceInterface' => 'App\Services\ProductVariantService',
+        'App\Repositories\Interfaces\ProductVariantRepositoryInterface' => 'App\Repositories\ProductVariantRepository',
+
         /* slide */
         'App\Services\Interfaces\SlideServiceInterface' => 'App\Services\SlideService',
         'App\Repositories\Interfaces\SlideRepositoryInterface' =>'App\Repositories\SlideRepository',
@@ -64,6 +70,10 @@ class AppServiceProvider extends ServiceProvider
         /* ProductVariantAttribute */
         'App\Services\Interfaces\ProductVariantAttributeServiceInterface' => 'App\Services\ProductVariantAttributeService',
         'App\Repositories\Interfaces\ProductVariantAttributeRepositoryInterface' =>'App\Repositories\ProductVariantAttributeRepository',
+
+        /* ProductVariant */
+        'App\Services\Interfaces\ProductVariantServiceInterface' => 'App\Services\ProductVariantService',
+        'App\Repositories\Interfaces\ProductVariantRepositoryInterface' =>'App\Repositories\ProductVariantRepository',
 
         /* router */
         'App\Services\Interfaces\RouterServiceInterface' => 'App\Services\RouterService',
@@ -92,6 +102,12 @@ class AppServiceProvider extends ServiceProvider
        'App\Services\Interfaces\SourceServiceInterface' => 'App\Services\SourceService',
        'App\Repositories\Interfaces\SourceRepositoryInterface' =>'App\Repositories\SourceRepository',
 
+         /* cart */
+        'App\Services\Interfaces\CartServiceInterface' => 'App\Services\CartService',
+
+         /* order */
+        'App\Repositories\Interfaces\OrderRepositoryInterface' =>'App\Repositories\OrderRepository',
+
         /* Customer */
         'App\Services\Interfaces\CustomerServiceInterface' => 'App\Services\CustomerService',
         'App\Repositories\Interfaces\CustomerRepositoryInterface' => 'App\Repositories\CustomerRepository',
@@ -103,6 +119,14 @@ class AppServiceProvider extends ServiceProvider
         // widget
         'App\Services\Interfaces\WidgetServiceInterface' => 'App\Services\WidgetService',
         'App\Repositories\Interfaces\WidgetRepositoryInterface' =>'App\Repositories\WidgetRepository',
+
+        /* Order */
+         'App\Services\Interfaces\OrderServiceInterface' => 'App\Services\OrderService',
+         'App\Repositories\Interfaces\OrderRepositoryInterface' =>'App\Repositories\OrderRepository',
+
+          /* Review */
+          'App\Services\Interfaces\ReviewServiceInterface' => 'App\Services\ReviewService',
+          'App\Repositories\Interfaces\ReviewRepositoryInterface' =>'App\Repositories\ReviewRepository',
     ];
 
     public function register(): void
@@ -122,16 +146,18 @@ class AppServiceProvider extends ServiceProvider
         $language = Language::where('canonical', $locale)->first();
 
         view()->composer('frontend.homepage.layout', function($view) use ($language){
-
             $composerClass = [
                 SystemComposer::class,
-                // MenuComposer::class,
+                MenuComposer::class,
+                LanguagueComposer::class,
+                CartComposer::class,
             ];
             foreach($composerClass as $key => $val){
                 $composer = app()->make($val, ['language' => $language->id]);
                 $composer->composer($view);
-            }   
+            }
         });
+
         // Validator::extend('custom_date_format', function($attribute, $value, $parameters, $validator){
         //     return DateTime::createFromFormat('d/m/Y H:i', $value) !== false;
         // });

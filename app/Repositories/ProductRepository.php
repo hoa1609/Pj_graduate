@@ -56,7 +56,8 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
                         $query->where('language_id', '=', $language_id);
                     }]);
                 }]);
-            }
+            },
+            'reviews'
         ])
         ->where('tb2.language_id', '=', $language_id)
         ->find($id);
@@ -78,7 +79,7 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
         $query->join('product_language as tb2', 'products.id', '=', 'tb2.product_id');
         $query->leftJoin('product_variants as tb3', 'products.id', '=', 'tb3.product_id');
         $query->leftJoin('product_variant_language as tb4', 'tb3.id', '=', 'tb4.product_variant_id');
-        
+
         foreach ($condition as $key => $val) {
             $query->where($val[0], $val[1], $val[2]);
         }

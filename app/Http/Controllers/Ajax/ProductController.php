@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Ajax;
 
 use App\Repositories\Interfaces\ProductRepositoryInterface  as ProductRepository;
+use App\Repositories\Interfaces\ProductVariantRepositoryInterface  as ProductVariantRepository;
+use App\Repositories\Interfaces\PromotionRepositoryInterface  as PromotionRepository;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Language;
@@ -11,12 +13,18 @@ use App\Models\Language;
 class ProductController extends Controller
 {
     protected $productRepository;
+    protected $productVariantRepository;
+    protected $promotionRepository;
     protected $language;
 
     public function __construct(
-        ProductRepository $productRepository
+        ProductRepository $productRepository,
+        ProductVariantRepository $productVariantRepository,
+        PromotionRepository $promotionRepository,
     ){
         $this->productRepository = $productRepository;
+        $this->productVariantRepository = $productVariantRepository;
+        $this->promotionRepository = $promotionRepository;
         $this->middleware(function($request, $next){
             $locale = app()->getLocale();
             $language = Language::where('canonical', $locale)->first();
@@ -63,12 +71,26 @@ class ProductController extends Controller
             );
          }
 
-
         return response()->json([
             'model' => ($get['model']) ??'Product',
             'objects' => $objects,
         ]);
     }
 
+    public function loadVariant(Request $request){
+        $get = $request->input();
+        $attributeId = $get['attribute_id'];
+        
+        $attributeId = sorAttributeId($attributeId);
+        $variant  = $this->productVariantRepository->findVariant($attributeId, $get['product_id'], $get['language_id']);
+
+        $variantPromotion = $this->promotionRepository->findPromotionByVariantUuid($variant->uuid);
+        $variantPrice = getVariantPrice($variant, $variantPromotion);
+
+        return response()->json([
+            'variant' => $variant,
+            'variantPrice' => $variantPrice,
+        ]);
+    }
 
 }

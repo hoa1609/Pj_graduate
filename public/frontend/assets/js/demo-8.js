@@ -221,6 +221,10 @@ function ecCheckCookie()
         });
     }
 
+
+    $('.zoom-image-hover').zoom();
+
+
     /*--------------------- Select option Toggle --------------------- */
     jQuery(".select-option").click(function(){
         var $select =$(this).closest('.ec-product-inner').find('.ec-pro-option');
@@ -372,6 +376,7 @@ function ecCheckCookie()
         }
     });
 
+
     /*--------------------- Quick view Slider ------------------------------ */
     $('.qty-product-cover').slick({
         slidesToShow: 1,
@@ -382,11 +387,12 @@ function ecCheckCookie()
     });
 
     $('.qty-nav-thumb').slick({
-        slidesToShow: 4,
+        vertical: true,  
+        slidesToShow: 5,
         slidesToScroll: 1,
         asNavFor: '.qty-product-cover',
         dots: false,
-        arrows: true,
+        arrows: false,
         focusOnSelect: true,
         responsive: [
         {
@@ -420,16 +426,6 @@ function ecCheckCookie()
     });
 
     /*--------------------- Special inner product Slider  ------------------------------ */
-    $('.ec-spe-products').slick({
-        rows: 1,
-        dots: false,
-        arrows: true,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-    });
-
     $('.ec-spe-pro-cover').slick({
         slidesToShow: 1,
         slidesToScroll: 1,
@@ -466,13 +462,58 @@ function ecCheckCookie()
 
     /*--------------------- Category Slider -------------------------------- */   
     /*--------------------- Blog Owl Slider -------------------------------- */ 
-    $('.ec-blog-slider, #ec-cat-slider').owlCarousel({
-        margin:30,
+    $('#ec-cat-slider').owlCarousel({
+        margin:10,
+        with:100,
         loop: true,
         dots:false,
         nav:false,
         smartSpeed: 1000,
         autoplay:true,
+        items:7,
+        responsiveClass: true,
+        responsive: {
+            0: {
+                items: 1,
+                nav:false
+            },
+            192: {
+                items: 2,
+                nav:false
+            },
+            576: {
+                items: 3,
+                nav:false
+            },
+            768: {
+                items: 4,
+                nav:false
+            },
+            992: {
+                items: 5,
+                nav:false
+            },
+            1200: {
+                items:6,
+                nav:false
+            },
+            1300: {
+                items:7,
+                nav:false
+            },
+        }
+    }); 
+
+
+
+    $('.ec-blog-slider').owlCarousel({
+        margin:6,
+        loop: true,
+        dots:false,
+        nav:true,
+        smartSpeed: 2000,
+        autoplay:true,
+        autoplayHoverPause: true,
         items:3,
         responsiveClass: true,
         responsive: {
@@ -485,21 +526,13 @@ function ecCheckCookie()
                 nav:false
             },
             768: {
-                items: 2,
-                nav:false
-            },
-            992: {
                 items: 3,
                 nav:false
             },
-            1200: {
-                items:4,
-                nav:false
-            },
-            1367: {
+            992: {
                 items: 4,
                 nav:false
-            }
+            },
         }
     }); 
 
@@ -839,49 +872,6 @@ function ecCheckCookie()
         slidesToScroll: 1
     });
 
-    /*--------------------- Blog Owl Slider -------------------------------- */ 
-    $('.ec-blog-slider, #ec-cat-slider').owlCarousel({
-    margin:30,
-    loop: true,
-    dots:false,
-    nav:true,
-    smartSpeed: 1000,
-    autoplay:false,
-    items:3,
-    responsiveClass: true,
-    responsive: {
-		0: {
-			items: 1,
-			dots:true,
-			nav:false
-		},
-		576: {
-			items: 2,
-			dots:true,
-			nav:false
-		},
-		768: {
-			items: 2,
-			dots:true,
-			nav:false
-		},
-		992: {
-			items: 3,
-			dots:true,
-			nav:false
-		},
-		1200: {
-			items:4,
-			dots:true,
-			nav:false
-		},
-		1367: {
-			items: 4,
-			dots:true,
-			nav:false
-		}
-	}
-});
      /*----------------------------- Sidebar js | Toggle Icon OnClick Open sidebar  -----------------------------------*/
 
 	$(".ec-sidebar-toggle").on("click", function () {
@@ -1236,5 +1226,5 @@ function ecCheckCookie()
     /*--------------------- Copyright years JS -------------------------------- */
     var date = new Date().getFullYear();
 
-    document.getElementById("copyright_year").innerHTML = date;
+    // document.getElementById("copyright_year").innerHTML = date;
 })(jQuery);

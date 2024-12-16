@@ -18,14 +18,14 @@
                     <div class="card-body pt-0">
                         <div class="row mb-2">
                             <div class="col-md-12 position-relative">
-                                <label class="form-label">Tiêu đề nhóm bài viết
+                                <label class="form-label">Tiêu đề sản phẩm
                                     <span class="text-danger fs-10"> (*)</span>
                                 </label>
                                 <input
                                     type="text"
                                     name="name"
-                                    class="form-control"
-                                    placeholder="nhập tên bài viết..."
+                                    class="form-control canonical"
+                                    placeholder="nhập tên sản phẩm..."
                                     value="{{ old('name', ($product-> name) ?? '' ) }}"
                                     >
                             </div>
@@ -66,7 +66,6 @@
                     </div>
                 </div>
             </div>
-
 
             <div class="col-md-3 col-lg-3">
                 <div class="card">
@@ -148,7 +147,7 @@
                             <div class="col-md-12 position-relative">
                                 <label class="form-label">Chọn ảnh đại diện</label>
                             </div>
-                            <span class="image img-cover image-target">
+                            <span class="image img-cover image-target" style="max-height: 250px">
                                 @php
                                     $image = old('image', $product->image ?? '');
                                     $image = $image ?: 'backend/assets/images/no-img.jpg';
@@ -187,6 +186,7 @@
                 </div>
             </div>
         </div>
+        @include('backend.dashboard.component.album')
         @include('backend.product.product.component.variant')
         <div class="row justify-content-star">
             <div class="col-md-9 col-lg-9">
@@ -202,14 +202,14 @@
                         <div class="ibox-content mb-3">
                             <div class="seo-container">
                                 <div class="meta-title fs-5">
-                                    {{ (old('meta_title', ($product-> meta_title) ?? '' )) ?? 'Đây là tiêu đề cho bài viết' }}
+                                    {{ (old('meta_title', ($product-> meta_title) ?? '' )) ?? 'Đây là tiêu đề cho sản phẩm' }}
                                 </div>
                             </div>
                             <div class="canonical mb-2">
                                 {{ ( ($product-> canonical) ?? '') ? config('app.url').old('canonical', ($product-> canonical) ?? '').config('apps.general.suffix') : 'http://duong-dan-cua-ban.html' }}
                             </div>
                             <div class="meta-description">
-                                {{ (old('meta_description', ($product-> meta_description) ?? '')) ?? 'Đây là mô tả bài viết.......' }}
+                                {{ (old('meta_description', ($product-> meta_description) ?? '')) ?? 'Đây là mô tả sản phẩm.......' }}
                             </div>
                         </div>
                         <div class="row mb-2">
@@ -221,7 +221,7 @@
                                 <input class="form-control"
                                     name="meta_title"
                                     type="text"
-                                    placeholder="nhập tên bài viết..."
+                                    placeholder="nhập tên sản phẩm..."
                                     value="{{ old('meta_title', ($product-> meta_title) ?? '' ) }}"
                                     >
                             </div>

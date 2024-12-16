@@ -140,7 +140,7 @@ class AttributeCatalogueController extends Controller{
             'css' => [
                 'backend/assets/css/select2.min.css',
             ],
-            'model' => 'Product'
+            'model' => 'AttributeCatalogue'
         ];
     }
 
@@ -152,6 +152,7 @@ class AttributeCatalogueController extends Controller{
                 'backend/assets/library/formatprice-scroll/catalogueScroll.js',
                 'backend/assets/library/finder.js',
                 'backend/assets/library/seo.js',
+                'backend/assets/library/renameCanonical.js',
                 'backend/plugins/ckeditor/ckeditor.js',
             ],
             'css' => [

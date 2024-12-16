@@ -69,19 +69,22 @@ class PromotionService  extends BaseService implements PromotionServiceInterface
             'endDate',
             'neverEndDate'
         );
-        $payload['maxDiscountValue'] = $request->input(PromotionEnum::PRODUCT_AND_QUANTITY.'.maxDiscountValue');
+        $payload['maxDiscountValue'] = convert_price($request->input(PromotionEnum::PRODUCT_AND_QUANTITY.'.maxDiscountValue'));
         $payload['discountValue'] = convert_price($request->input(PromotionEnum::PRODUCT_AND_QUANTITY.'.discountValue'));
         $payload['discountType'] = $request->input(PromotionEnum::PRODUCT_AND_QUANTITY.'.discountType');
+        if(is_null($payload['discountType'])){
+            $payload['discountType'] = '' ;
+        }
+        $payload['neverEndDate'] = $request->has('neverEndDate') ? 'accept' : null;
 
-        if (isset($payload['neverEndDate']) && $payload['neverEndDate'] === 'accept') {
+        if ($payload['neverEndDate'] === 'accept') {
             $payload['endDate'] = null;
-        } elseif (!empty($payload['endDate'])) {
+        } elseif (!empty($request->input('endDate'))) {
             try {
-                $payload['endDate'] = Carbon::createFromFormat('d/m/Y H:i', $payload['endDate']);
+                $payload['endDate'] = Carbon::parse($request->input('endDate'));
             } catch (\Exception $e) {
-                // Log::error("Lỗi: " . $payload['endDate'] . " | Error: " . $e->getMessage());
-
-                $payload['endDate'] = Carbon::parse($payload['endDate']);
+                // Log::error("Lỗi parse endDate: " . $e->getMessage());
+                $payload['endDate'] = null;
             }
         }
         $payload['code'] = (empty($payload['code'])) ? time() : $payload['code'];

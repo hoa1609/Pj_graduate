@@ -16,7 +16,6 @@ class PostService extends BaseService implements PostServiceInterface
 {
     protected $postRepository;
     protected $nestedset;
-    // protected $language;
     protected $routerRepository;
 
     public function __construct(
@@ -28,7 +27,7 @@ class PostService extends BaseService implements PostServiceInterface
         $this->controllerName = 'PostController';
     }
 
-    public function paginate ($request, $languageId){
+    public function paginate($request, $languageId, $postCatalogue = null, $extend = [], $page = 1){
         $condition = [
             'keyword' => addslashes($request->input('keyword')),
             'publish' => $request->integer('publish'),
@@ -41,21 +40,22 @@ class PostService extends BaseService implements PostServiceInterface
             $this->paginateSelect(),
             $condition,
             $perPage,
-            ['path' => 'post/index', 'groupBy' => $this->paginateSelect()],
+            ['path' => ($extend['path']) ?? 'post/index', 'groupBy' => $this->paginateSelect()],
             ['posts.id', 'DESC'],
             [
                 ['post_language as tb2', 'tb2.post_id', '=', 'posts.id'],
                 ['post_catalogue_post as tb3', 'posts.id', '=', 'tb3.post_id'],
             ],
             ['post_catalogues'],
-            $this->whereRaw($request, $languageId),
+            $this->whereRaw($request, $languageId, $postCatalogue),
         );
         return $posts;
     }
 
-    private function whereRaw($request, $languageId){
+    private function whereRaw($request, $languageId, $postCatalogue){
         $rawCondition = [];
-        if ($request->integer('post_catalogue_id') > 0) {
+        if($request->integer('post_catalogue_id') > 0 || !is_null($postCatalogue)){
+            $catId = ($request->integer('post_catalogue_id') > 0) ? $request->integer('post_catalogue_id') > 0 : $postCatalogue->id;
             $rawCondition['whereRaw'] =  [
                 [
                     'tb3.post_catalogue_id IN (
@@ -66,7 +66,7 @@ class PostService extends BaseService implements PostServiceInterface
                         AND rgt <= (SELECT rgt FROM post_catalogues as pc WHERE pc.id = ?)
                         AND post_catalogue_language.language_id = '.$languageId.'
                     )',
-                    [$request->integer('post_catalogue_id'), $request->integer('post_catalogue_id')]
+                    [$catId, $catId]
                 ]
             ];
         }
@@ -154,6 +154,10 @@ class PostService extends BaseService implements PostServiceInterface
         DB::beginTransaction();
         try{
             $postCatalogue = $this->postRepository->delete($id);
+            $this->routerRepository->forceDeleteByCondition([
+                ['module_id', '=', $id],
+                ['controllers', '=', 'App\Http\Controllers\Frontend\PostController'],
+            ]);
             DB::commit();
             return true;
         }catch(\Exception $e ){
@@ -198,6 +202,7 @@ class PostService extends BaseService implements PostServiceInterface
             'posts.image',
             'posts.order',
             'tb2.name', 
+            'tb2.description', 
             'tb2.canonical',
         ];
     }
@@ -223,4 +228,12 @@ class PostService extends BaseService implements PostServiceInterface
             'canonical'
         ];
     }
+
+    
+    //----- FRONT END// 
+    public function getInformationDetailPost($postId = [], $posts){
+        $posts = $this->postRepository->findByPost($postId);
+        return $posts;
+    }
+
 }

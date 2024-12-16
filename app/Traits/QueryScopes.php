@@ -2,11 +2,23 @@
 
 namespace App\Traits;
 
-trait QueryScopes 
+trait QueryScopes
 {
-    public function scopeKeyword($query, $keyword){
+    public function scopeKeyword($query, $keyword, $fieldSearch= [], $whereHas = []){
         if(!empty($keyword)){
-            $query->where('name', 'LIKE', '%'.$keyword.'%');
+            if(count($fieldSearch)) {
+                foreach ($fieldSearch as $key => $val) {
+                    $query->orWhere($val, 'LIKE', '%'.$keyword.'%');
+                }
+            }else {
+                $query->where('name', 'LIKE', '%'.$keyword.'%');
+            }
+        }
+        if(isset($whereHas) && count($whereHas)){
+            $field = $whereHas['field'];
+            $query->orwhereHas($whereHas['relation'], function($query) use($field, $keyword){
+                $query->where($field, 'LIKE', '%'.$keyword.'%');
+            });
         }
         return $query;
     }
@@ -83,6 +95,17 @@ trait QueryScopes
         }
         return $query;
     }
-    
-    
+
+    public function scopeCustomDropdownFilter($query, $condition)
+    {
+        if(count($condition)){
+            foreach ($condition as $key => $val) {
+                if($val != 'none' && !empty($val) && $val != ''){
+                    $query->where($key, '=', $val);
+                }
+            }
+        }
+        return $query;
+    }
+
 }

@@ -11,7 +11,7 @@
                         @if(session('app_locale') === $language->canonical)
                             @continue; 
                         @endif
-                        <th class="text-center"><span class="image img-scaledown laguange-flag"><img src="{{ $language->image}}" alt="" style="width:40px;"></span></th>
+                        <th><span class="image img-scaledown laguange-flag"><img src="{{ $language->image}}" alt="" style="width:40px;"></span></th>
                     @endforeach
                     <th>Tình trạng</th>
                     <th class="text-end">Thao tác</th>

@@ -23,9 +23,15 @@ class ProductCatalogue extends Model
         'follow',
         'order',
         'user_id',
+        'attribute',
     ];
 
     protected $table = 'product_catalogues';
+
+    protected $casts = [
+        'attribute' => 'json'
+    ];
+
 
     public function languages(){
         return $this->belongsToMany(Language::class, 'product_catalogue_language' , 'product_catalogue_id', 'language_id')
@@ -59,6 +65,10 @@ class ProductCatalogue extends Model
         } 
 
         return true;
+    }
+
+    public function getNameByLanguage($id, $language){
         
     }
+
 }

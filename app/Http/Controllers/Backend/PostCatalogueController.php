@@ -39,7 +39,6 @@ class PostCatalogueController extends Controller{
  
 
     public function index(Request $request){
-        // dd(session('app_locale'));
         $this->authorize('modules', 'post.catalogue.index');
 
         $config = $this->configIndex();
@@ -154,6 +153,7 @@ class PostCatalogueController extends Controller{
                 'backend/assets/library/seo.js',
                 'backend/assets/library/finder.js',
                 'backend/plugins/ckeditor/ckeditor.js',
+                'backend/assets/library/renameCanonical.js',
                 'backend/plugins/nice-select/js/jquery.nice-select.min.js',
             ],
             'css' => [

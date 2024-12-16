@@ -69,7 +69,6 @@ table strong {
 .btn {
     margin-bottom: 0 !important;
     font-size: 13px;
-    border-radius: 0;
     height: 32px;
 }
 .filter-wrapper .form-control {
@@ -312,7 +311,7 @@ table strong {
 }
 
 .text-overflow {
-    width: 500px;
+    max-width: 350px;
     text-overflow: ellipsis;
     overflow: hidden;
     -webkit-line-clamp: 2;
@@ -387,7 +386,7 @@ input:disabled {
     padding: 10px;
     text-align: center;
     box-shadow: 0 4px 6px rgba(48, 48, 48, 0.1);
-    position: relative; 
+    position: relative;
 }
 .uk-baseline{
     align-items: baseline
@@ -534,9 +533,7 @@ input:disabled {
 .search-model{
     border-radius: 5px;
     height: 42px;
-    padding-left: 35px;
     font-size: 14px;
-    border: 1px solid #e3e9ed;
     outline: 0;
 }
 
@@ -597,4 +594,62 @@ input:disabled {
     margin-bottom: 10px;
 }
 
+.create-children-menu{
+    position: absolute;
+    top: 5px;
+    right: 11px;
+    z-index: 1000;
+}
+
+.dd-handle {
+    position: relative;
+    cursor: move;
+}
+
+.expand-collapse-btn {
+    z-index: 9999;
+}
 /* Quyen customize menu */
+
+/* Order */
+div.edit-order,
+div.cancle-edit,
+.updateBadge {
+    cursor: pointer;
+    user-select: none;
+}
+
+.order-aside label {
+    display: block;
+}
+
+.order-aside .select2-container {
+    width: 100% !important;
+}
+
+.progress-bar-customer {
+     display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    overflow: hidden;
+    color: var(--bs-progress-bar-color);
+    text-align: center;
+    white-space: nowrap;
+    background-color: #ef4d56;
+    -webkit-transition: var(--bs-progress-bar-transition);
+    transition: var(--bs-progress-bar-transition)
+}
+/* #barChart {
+    width: 70% !important; 
+    height: auto;        
+    margin: 0 auto;       
+} */
+
+/* end Order */

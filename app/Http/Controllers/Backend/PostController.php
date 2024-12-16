@@ -71,9 +71,9 @@ class PostController extends Controller{
 
     public function store(PostRequest $request){
         if ($this->postService->create($request, $this->language)) {
-            return redirect()->route('post.index')->with('success', 'Thêm nhóm thành viên thành công !');
+            return redirect()->route('post.index')->with('success', 'Thêm nhóm bản ghi thành công !');
         }
-        return redirect()->route('post.index')->with('error', 'Thêm nhóm thành viên thất bại !');
+        return redirect()->route('post.index')->with('error', 'Thêm nhóm bản ghi thất bại !');
     }
 
 
@@ -110,19 +110,19 @@ class PostController extends Controller{
 
     public function update($id, UpdatePostRequest $request){
         if ($this->postService->update($id, $request, $this->language)) {
-            return redirect()->route('post.index')->with('success', 'Cập nhập nhóm thành viên thành công !');
+            return redirect()->route('post.index')->with('success', 'Cập nhập nhóm bản ghi thành công !');
         }
-        return redirect()->route('post.index')->with('error', 'Cập nhập nhóm thành viên thất bại !');
+        return redirect()->route('post.index')->with('error', 'Cập nhập nhóm bản ghi thất bại !');
     }
 
     
     public function destroy($id){
         $this->authorize('modules', 'post.destroy');
         if ($this->postService->destroy($id, $this->language)) {
-            return redirect()->route('post.index')->with('success', 'Xóa nhóm thành viên thành công!');
+            return redirect()->route('post.index')->with('success', 'Xóa nhóm bản ghi thành công!');
         }
 
-        return redirect()->route('post.index')->with('error', 'Xóa nhóm thành viên thất bại!');
+        return redirect()->route('post.index')->with('error', 'Xóa nhóm bản ghi thất bại!');
     }
 
     private function initialize(){
@@ -155,6 +155,9 @@ class PostController extends Controller{
                 'backend/assets/library/finder.js',
                 'backend/plugins/ckeditor/ckeditor.js',
                 'backend/plugins/nice-select/js/jquery.nice-select.min.js',
+                'backend/plugins/jquery-ui.js',
+                'backend/assets/library/renameCanonical.js',
+                'backend/assets/library/set-up-ui.js',
             ],
             'css' => [
                 'backend/assets/css/select2.min.css',

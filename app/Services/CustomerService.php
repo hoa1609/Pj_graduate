@@ -130,6 +130,13 @@ class CustomerService extends BaseService implements CustomerServiceInterface
         return $birthday;
     }
 
+
+    public function statictis(){
+        return [
+            'totalCustomers' => $this->customerRepository->totalCustomer(),
+        ];
+    }
+
     private function paginateSelect(){
        return [
             'id',

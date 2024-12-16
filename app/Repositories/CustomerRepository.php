@@ -50,4 +50,8 @@ class CustomerRepository extends BaseRepository implements CustomerRepositoryInt
         return $query->paginate($perPage)
                     ->withQueryString()->withPath(env('APP_URL').$extend['path']);
     }
+
+    public function totalCustomer(){
+        return $this->model->count();
+    }
 }

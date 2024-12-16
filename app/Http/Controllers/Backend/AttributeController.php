@@ -155,6 +155,7 @@ class AttributeController extends Controller{
                 'backend/assets/library/finder.js',
                 'backend/assets/library/seo.js',
                 'backend/plugins/ckeditor/ckeditor.js',
+                'backend/assets/library/renameCanonical.js',
                 'backend/plugins/nice-select/js/jquery.nice-select.min.js',
             ],
             'css' => [

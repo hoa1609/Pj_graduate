@@ -3,13 +3,11 @@
 namespace App\Services;
 
 use App\Services\Interfaces\ProductCatalogueServiceInterface;
-use App\Services\Interfaces\BaseServiceInterface;
 use App\Repositories\Interfaces\ProductCatalogueRepositoryInterface as ProductCatalogueRepository;
+use App\Repositories\Interfaces\AttributeCatalogueRepositoryInterface as AttributeCatalogueRepository;
+use App\Repositories\Interfaces\AttributeRepositoryInterface as AttributeRepository;
 use App\Repositories\Interfaces\RouterRepositoryInterface as RouterRepository;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\Classes\Nestedsetbie;
 use Illuminate\Support\Str;
@@ -20,6 +18,8 @@ class ProductCatalogueService extends BaseService implements ProductCatalogueSer
 {
 
     protected $productCatalogueRepository;
+    protected $attributeCatalogueRepository;
+    protected $attributeRepository;
     protected $routerRepository;
     protected $nestedset;
     protected $language;
@@ -28,9 +28,13 @@ class ProductCatalogueService extends BaseService implements ProductCatalogueSer
 
     public function __construct(
         ProductCatalogueRepository $productCatalogueRepository,
+        AttributeCatalogueRepository $attributeCatalogueRepository,
+        AttributeRepository $attributeRepository,
         RouterRepository $routerRepository,
     ){
         $this->productCatalogueRepository = $productCatalogueRepository;
+        $this->attributeCatalogueRepository = $attributeCatalogueRepository;
+        $this->attributeRepository = $attributeRepository;
         $this->routerRepository = $routerRepository;
     }
 
@@ -187,6 +191,27 @@ class ProductCatalogueService extends BaseService implements ProductCatalogueSer
         }
     }
 
+    public function setAttribute($product){
+        $attribute = $product->attribute;
+        $productCatalogueId = $product->product_catalogue_id;
+        $productCatalogue = $this->productCatalogueRepository->findById($productCatalogueId);
+        if(!is_array($productCatalogue->attribute)){
+            $payload['attribute'] = $attribute;
+        }else{
+
+            $mergeArray = $productCatalogue->attribute;
+            foreach($attribute as $key => $val){
+                if(!isset($mergeArray[$key])){
+                    $mergeArray[$key] = $val;
+                }else{
+                    $mergeArray[$key] = array_unique(array_merge($mergeArray[$key], $val));
+                }
+            }
+            $payload['attribute'] = $mergeArray;
+        }
+        $result = $this->productCatalogueRepository->update($productCatalogueId, $payload);
+        return $result;
+    }
     
   
     private function paginateSelect(){
@@ -222,6 +247,29 @@ class ProductCatalogueService extends BaseService implements ProductCatalogueSer
         ];
     }
 
+    // FRONT END 
+    public function getFilterList(array $attribute = [], $languageId = 1){
+        $attributeCatalogueId = array_keys($attribute);
+        $attributeId = array_unique(array_merge(...$attribute));
+        
+        $attributeCatalogues = $this->attributeCatalogueRepository->findByCondition(
+            [
+                config('apps.general.defaultPublish')
+            ],
+            true,
+            [
+                'languages' => function($query) use ($languageId){
+                    $query->where('language_id', $languageId);
+                }
+            ],
+            ['id', 'desc'],
+            [
+                'whereIn' => $attributeCatalogueId,
+                'whereInField' => 'id'
+            ]
+        );
+        dd($attributeCatalogues);
+    }
 
 
 }

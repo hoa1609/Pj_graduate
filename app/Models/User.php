@@ -43,5 +43,8 @@ class User extends Authenticatable
         return $this->user_roles->permissions->contains('canonical', $permissionCanonical);
     }
 
+    public function getInfor(){
+        return $this->load('user_roles');
+    }
 
 }

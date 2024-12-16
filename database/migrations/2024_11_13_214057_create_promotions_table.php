@@ -18,7 +18,10 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->integer('order')->default(0);
             $table->string('method');
-            $table->longText('discountInformation')->nullable();
+            $table->integer('discountValue')->default(0);
+            $table->string('discountType', 10);
+            $table->integer('maxDiscountValue');
+            $table->json('discountInformation')->nullable();
             $table->string('neverEndDate')->nullable();
             $table->tinyInteger('publish')->default(1);
             $table->timestamp('startDate');

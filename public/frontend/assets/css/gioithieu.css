@@ -1,0 +1,97 @@
+.tieu-de {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.tieu-de h1 {
+    font-size: 3rem;
+    color: #ff6a00;
+    margin-bottom: 15px;
+}
+
+.tieu-de span {
+    color: #ee0979;
+}
+
+.tieu-de p {
+    font-size: 1.2rem;
+    color: #555;
+}
+
+.noi-dung-gioi-thieu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 50px;
+    gap: 20px;
+}
+
+.noi-dung-gioi-thieu .text-gioi-thieu {
+    flex: 1;
+    padding-right: 30px;
+}
+
+.noi-dung-gioi-thieu h2 {
+    font-size: 2rem;
+    color: #ff6a00;
+    margin-bottom: 15px;
+}
+
+.noi-dung-gioi-thieu p {
+    font-size: 1rem;
+    color: #777;
+}
+
+.noi-dung-gioi-thieu .hinh-anh-gioi-thieu {
+    flex: 1;
+}
+
+.noi-dung-gioi-thieu img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.dich-vu {
+    margin-bottom: 50px;
+}
+
+.dich-vu h2 {
+    text-align: center;
+    font-size: 2rem;
+    color: #ff6a00;
+    margin-bottom: 30px;
+}
+
+.dich-vu-list {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.dich-vu-item {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    flex: 1;
+}
+
+.dich-vu-item i {
+    font-size: 3rem;
+    color: #ff6a00;
+    margin-bottom: 15px;
+}
+
+.dich-vu-item h3 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.dich-vu-item p {
+    font-size: 1rem;
+    color: #555;
+}

@@ -1,8 +1,6 @@
 <div class="row d-flex">
     <div class="col-lg-5">
-        <!-- Vị trí Menu Panel -->
         <div class="accordion" id="menuAccordion">
-            <!-- Liên kết tự tạo -->
             <div class="accordion-item">
                 <h2 class="accordion-header" id="headingOne">
                     <button class="accordion-button" type="button" data-bs-toggle="collapse"
@@ -42,14 +40,14 @@
                     <div id="collapseGroupPosts{{ $key }}" class="accordion-collapse collapse"
                         aria-labelledby="heading{{ $key }}" data-bs-parent="#menuAccordion">
                         <div class="accordion-body">
-                            <form action="" method="get" data-model="{{ $key }}" class="search-model">
+                            <div data-model="{{ $key }}" class="search-model">
                                 <div class="form-row">
-                                    <input type="text" class="form-control" name="keyword"
-                                        placeholder="Nhập 2 ký tự để tìm kiếm...">
+                                    <input type="text" class="form-control search-menu" name="keyword"
+                                        data-model="someModel" placeholder="Nhập 2 ký tự để tìm kiếm...">
                                 </div>
-                            </form>
+                            </div>
                             <div class="menu-list mt20">
-                                <div id="paginationMenu"></div>
+                                {{-- <div id="paginationMenu"></div> --}}
                             </div>
                         </div>
                     </div>
@@ -69,27 +67,51 @@
                             <th class="fw-bold">Xóa</th>
                         </tr>
                     </thead>
+                    @php
+                        $menu = old('menu', $menuList ?? null);
+                    @endphp
                     <tbody class="menu-wrapper">
-                        <tr class="text-wp">
+                        <tr class="text-wp {{ is_array($menu) && count($menu) ? 'd-none' : '' }}">
                             <td colspan="4" class="text-center text-muted hid">
-                                <p>Danh sách liên kết này chưa có bất kì đường dẫn nào.</p>
-                                <p>Hãy nhấn vào <a href="#" class="text-primary">Thêm đường dẫn</a> để bắt đầu
+                                <p>Danh sách liên kết này chưa có bất kỳ đường dẫn nào.</p>
+                                <p>Hãy nhấn vào <a href="#" class="text-primary add-menu">Thêm đường dẫn</a> để bắt đầu
                                     thêm.</p>
                             </td>
                         </tr>
-                        <tr>
-                            <td><input type="text" class="form-control" placeholder="Tên Menu"></td>
-                            <td><input type="text" class="form-control" placeholder="Đường dẫn"></td>
-                            <td><input type="text" class="form-control" placeholder="Vị trí"></td>
-                            <td class="text-center">
-                                <button type="button" class="btn btn-link text-danger"><i
-                                        class="fas fa-times"></i></button>
-                            </td>
-                        </tr>
+
+                        @if (is_array($menu) && count($menu))
+                            @foreach ($menu['name'] as $key => $value)
+                                <tr class="default-class">
+                                    <td>
+                                        <input type="text" name="menu[name][]" value="{{ $value }}"
+                                            placeholder="Tên Menu" class="form-control">
+                                    </td>
+                                    <td>
+                                        <input type="text" 
+                                            name="menu[canonical][]"
+                                            value="{{ $menu['canonical'][$key] }}" 
+                                            placeholder="Đường dẫn"
+                                            class="form-control">
+                                    </td>
+                                    <td>
+                                        <input type="text" 
+                                            name="menu[order][]" 
+                                            value="{{ $menu['order'][$key] }}"
+                                            placeholder="Vị trí" 
+                                            class="form-control">
+                                        <input type="hidden" name="menu[id][]" value="{{ $menu['id'][$key] }}">
+                                    </td>
+                                    <td class="text-center">
+                                        <button type="button" class="btn btn-link text-danger">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @endif
                     </tbody>
                 </table>
             </div>
         </div>
-
     </div>
 </div>

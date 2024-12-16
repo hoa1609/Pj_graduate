@@ -66,7 +66,7 @@
                         >
                         <button type="submit" name="search" value="search" class="btn btn-primary btn-find">Tìm Kiếm</button>
                     </div>
-                    <a href="{{ route('menu.create') }}" class="btn btn-md btn-danger form-control"><i class="fas fa-user-alt mr5"></i>Thêm menu</a>
+                    <a href="{{ route('menu.create') }}" class="btn btn-md btn-danger form-control"><i class="fas fa-list mr5"></i>Thêm menu</a>
                 </div>
             </div>
         </div>

@@ -7,12 +7,7 @@
                     <input type="checkbox" class="form-check-input checkBoxItem" id="checkAll">                                                    
                 </th>
                 <th>Hình ảnh</th>
-
                 <th>Bài viết</th>
-                {{-- <th>Vị trí</th> --}}
-
-                {{-- @include('backend.dashboard.component.languageTh'); --}}
-                
                 @foreach($languages as $language)
                             @if(session('app_locale') === $language->canonical)
                                 @continue; 
@@ -43,18 +38,12 @@
                                             @foreach ($val-> post_catalogue_language as $cat)
                                                 <a href="{{ route('post.index', ['post_catalogue_id' => $val-> id]) }}">{{ $cat-> name }} |</a>
                                             @endforeach
-
                                         @endforeach
                                     </div>
                                 </div>
                             </div>
                         </td>
-
-                        @include('backend.dashboard.component.languageTd', ['model' => $post, 'modeling' => 'Post']);
-
-                        {{-- <td>
-                            <input type="text" name="form-control" data-id="{{ $post->id }}" data-model="{{ $config['model'] }}" value="{{ $post-> order }}">
-                        </td> --}}
+                        @include('backend.dashboard.component.languageTd', ['model' => $post, 'modeling' => 'Post'])
                         <td>
                             <div class="form-switch">
                                 <input class="form-check-input status js-switch-{{ $post-> id }}" 

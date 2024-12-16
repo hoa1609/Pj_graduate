@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\AuthController;
 use App\Http\Controllers\Backend\DashboardController;
@@ -15,6 +16,7 @@ use App\Http\Controllers\Backend\PermissionController;
 use App\Http\Controllers\Backend\ProductCatalogueController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\MenuController;
+use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\Backend\AttributeController;
 use App\Http\Controllers\Backend\AttributeCatalogueController;
 use App\Http\Controllers\Backend\PromotionController;
@@ -23,6 +25,7 @@ use App\Http\Controllers\Ajax\AttributeController as AjaxAttributeController;
 use App\Http\Controllers\Ajax\ProductController as AjaxProductController;
 use App\Http\Controllers\Ajax\SourceController as AjaxSourceController;
 use App\Http\Controllers\Backend\SlideController;
+use App\Http\Controllers\Backend\ReviewController;
 
 
 use App\Http\Controllers\Backend\SourceController;
@@ -30,20 +33,93 @@ use App\Http\Controllers\Backend\WidgetController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\RouterController;
 use App\Http\Controllers\Frontend\CartController;
+use App\Http\Controllers\Frontend\VnpayController;
+use App\Http\Controllers\Ajax\CartController as AjaxCartController;
 use App\Http\Controllers\Ajax\MenuController as AjaxMenuController;
+use App\Http\Controllers\Ajax\ReviewController as AjaxReviewController;
+use App\Http\Controllers\Ajax\OrderController as AjaxOrderController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Backend\SystemController;
-
-
-
-
+use App\Http\Controllers\Frontend\MomoController;
+use App\Http\Controllers\Frontend\OtherController;
+use App\Http\Controllers\Frontend\ProductController as FrontendProductController;
 use Illuminate\Routing\RouteGroup;
 
 
 
+<<<<<<< HEAD
+=======
+
+
+/*FE ROUTER */
+>>>>>>> e5109ae2f6b1fc6625d5043377fea92d8e5c5469
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
+Route::post('don-hang'.config('apps.general.suffix'), [OtherController::class, 'find'])->name('find.result');
+Route::get('thanh-toan'.config('apps.general.suffix'), [CartController::class, 'checkout'])->name('cart.checkout');
+Route::get('gioi-thieu'.config('apps.general.suffix'), [OtherController::class, 'intro'])->name('intro.index');
+Route::get('tim-kiem-don-hang'.config('apps.general.suffix'), [OtherController::class, 'order'])->name('form.find');
+
+Route::get('{canonical}'.config('apps.general.suffix'), [RouterController::class, 'index'])->name('router.index');
+Route::get('{canonical}/trang-{page}.html', [RouterController::class, 'page'])->name('router.page');
+Route::post('cart/store', [CartController::class, 'store'])->name('cart.store');
+Route::get('cart/{code}/success'.config('apps.general.suffix'), [CartController::class, 'success'])->name('cart.success');
+Route::get('product-list', [HomeController::class, 'productlistAjax']); //danh sach khi search
+Route::post('searchProduct', [HomeController::class, 'searchProduct']);
+Route::get('ajax/product/quickview/{id}', [FrontendProductController::class, 'getProduct'])->name('product.get');
+
+
+/*VNPAY */
+Route::get('return/vnpay'.config('apps.general.suffix'), [VnpayController::class, 'vnpay_return'])->name('vnpay.vnpay_return');
+Route::get('return/vnpay_ipn'.config('apps.general.suffix'), [VnpayController::class, 'vnpay_ipn'])->name('vnpay.vnpay_ipn');
+Route::get('return/momo'.config('apps.general.suffix'), [MomoController::class, 'momo_return'])->name('momo.momo_return');
+// Route::get('return/vnpay_ipn'.config('apps.general.suffix'), [VnpayController::class, 'vnpay_ipn'])->name('vnpay.vnpay_ipn');
+
+
+/*FE AJAX */
+Route::get('ajax/product/loadVariant', [AjaxProductController::class, 'loadVariant'])->name('ajax.loadVariant');
+Route::post('ajax/cart/create', [AjaxCartController::class, 'create'])->name('ajax.cart.create');
+Route::post('ajax/cart/update', [AjaxCartController::class, 'update'])->name('ajax.cart.update');
+Route::post('ajax/cart/delete', [AjaxCartController::class, 'delete'])->name('ajax.cart.delete');
+Route::get('ajax/location/getLocation', [LocationController::class, 'getLocation'])->name('ajax.location.index');
+Route::post('ajax/review/create', [AjaxReviewController::class, 'create'])->name('ajax.dashboard.create');
 
 
 
+<<<<<<< HEAD
+=======
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth:customer', 'verified'])->name('dashboard');
+
+Route::middleware('auth:customer')->group(function () {
+    Route::get('profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+Route::middleware('guest:customer')->group(function () {
+    Route::post('client/login', [AuthenticatedSessionController::class, 'store'])
+        ->name('client.login'); 
+});
+
+Route::post('client/logout', [AuthenticatedSessionController::class, 'destroy'])
+    ->middleware('auth:customer')
+    ->name('client.logout');
+
+
+
+
+    
+require __DIR__.'/auth.php';
+
+
+
+
+
+
+
+
+>>>>>>> e5109ae2f6b1fc6625d5043377fea92d8e5c5469
 /*BACK END ROUTER */
 Route::middleware(['admin', 'locale', 'backend_default_locale'])->group(function () {
     Route::get('dashboard/index', [DashboardController::class, 'index'])->name('dashboard.index');
@@ -171,9 +247,7 @@ Route::middleware(['admin', 'locale', 'backend_default_locale'])->group(function
         Route::delete('destroy/{id}', [LanguageController::class, 'destroy'])->name('language.destroy');
 
         Route::get('switch/{id}', [LanguageController::class, 'swicthBackendLanguage'])->name('language.switch');
-
-        Route::get('{id}/{languageId}/{model}/translate', [LanguageController::class, 'translate'])->where(['id' => '[0-9]+', 'languageId' => '[0-9]+'])->name('language.translate');
-
+        Route::get('{id}/{languageId}/{model}/translate', [LanguageController::class, 'translate'])->name('language.translate');
         Route::post('storeTranslate', [LanguageController::class, 'storeTranslate'])->name('language.storeTranslate');
     });
 
@@ -200,17 +274,19 @@ Route::middleware(['admin', 'locale', 'backend_default_locale'])->group(function
     Route::group(['prefix' => 'system'], function (){
         Route::get('index', [SystemController::class, 'index'])-> name('system.index');
         Route::post('store', [SystemController::class, 'store'])-> name('system.store');
-        
     });
-
 
     Route::group(['prefix' => 'menu'], function () {
         Route::get('index', [MenuController::class, 'index'])->name('menu.index');
         Route::get('create', [MenuController::class, 'create'])->name('menu.create');
         Route::post('store', [MenuController::class, 'store'])->name('menu.store');
         Route::get('edit/{id}', [MenuController::class, 'edit'])->name('menu.edit');
+        Route::get('{id}/editMenu}', [MenuController::class, 'editMenu'])->where(['id' => '[0-9]+'])->name('menu.editMenu');
         Route::post('update/{id}', [MenuController::class, 'update'])->name('menu.update');
-        Route::delete('destroy/{id}', [MenuController::class, 'destroy'])->name('menu.destroy');
+        Route::get('{id}/delete', [MenuController::class, 'delete'])->where(['id' => '[0-9]+'])->name('menu.delete');
+        Route::delete('destroy/{id}', [MenuController::class, 'destroy'])->where(['id' => '[0-9]+'])->name('menu.destroy');
+        Route::get('{id}/children', [MenuController::class, 'children'])->where(['id' => '[0-9]+'])->name('menu.children');
+        Route::post('{id}/saveChildren', [MenuController::class, 'saveChildren'])->where(['id' => '[0-9]+'])->name('menu.saveChildren');
     });
     Route::group(['prefix' => 'source'], function (){
         Route::get('index', [SourceController::class, 'index'])-> name('source.index');
@@ -232,9 +308,19 @@ Route::middleware(['admin', 'locale', 'backend_default_locale'])->group(function
         Route::delete('destroy/{id}', [PromotionController::class, 'destroy'])->name('promotion.destroy');
     });
 
+    Route::group(['prefix' => 'order'], function () {
+        Route::get('index', [OrderController::class, 'index'])->name('order.index');
+        Route::get('detail/{id}', [OrderController::class, 'detail'])->name('order.detail');
+    });
+
+    Route::group(['prefix' => 'review'], function () {
+        Route::get('index', [ReviewController::class, 'index'])->name('review.index');
+        Route::get('delete/{id}', [ReviewController::class, 'delete'])->name('review.delete');
+        Route::delete('destroy/{id}', [ReviewController::class, 'destroy'])->name('review.destroy');
+    });
+
 
     /* AJAX */
-    Route::get('ajax/location/getLocation', [LocationController::class, 'getLocation'])->name('ajax.location.index');
     Route::post('ajax/dashboard/changeStatus', [AjaxDashboardController::class, 'changeStatus'])->name('ajax.dashboard.changeStatus');
     Route::post('ajax/dashboard/changeStatusAll', [AjaxDashboardController::class, 'changeStatusAll'])->name('ajax.dashboard.changeStatusAll');
     Route::get('ajax/dashboard/findPromotionObject', [AjaxDashboardController::class, 'findPromotionObject'])->name('ajax.dashboard.findPromotionObject');
@@ -244,18 +330,17 @@ Route::middleware(['admin', 'locale', 'backend_default_locale'])->group(function
     Route::get('ajax/dashboard/findModelObject', [AjaxDashboardController::class, 'findModelObject'])->name('ajax.dashboard.findModelObject');
     Route::get('ajax/attribute/getAttribute', [AjaxAttributeController::class, 'getAttribute'])->name('ajax.attribute.getAttribute');
     Route::get('ajax/attribute/loadAttribute', [AjaxAttributeController::class, 'loadAttribute'])->name('ajax.attribute.loadAttribute');
-
     Route::get('ajax/attribute/getAttribute', [AjaxAttributeController::class, 'getAttribute'])->name('ajax.attribute.getAttribute');
     Route::get('ajax/attribute/loadAttribute', [AjaxAttributeController::class, 'loadAttribute'])->name('ajax.attribute.loadAttribute');
     Route::post('ajax/menu/createCatalogue', [AjaxMenuController::class, 'createCatalogue'])->name('ajax.menu.createCatalogue');
+    Route::post('ajax/menu/drag', [AjaxMenuController::class, 'drag'])->name('ajax.menu.drag');
     Route::get('ajax/dashboard/getMenu', [AjaxDashboardController::class, 'getMenu'])->name('ajax.dashboard.getMenu');
+    Route::post('ajax/order/update', [AjaxOrderController::class, 'update'])->name('ajax.dashboard.update');
+    Route::get('ajax/order/chart', [AjaxOrderController::class, 'chart'])->name('ajax.dashboard.chart');
 });
 
 
-/*   */
+// /*   */
 Route::get('admin', [AuthController::class, 'index'])->name('auth.admin')->middleware('login');
 Route::post('login', [AuthController::class, 'login'])->name('auth.login');
-Route::get('logout', [AuthController::class, 'logout'])->name('logout');
-
-
-
+Route::get('logout', [AuthController::class, 'logout'])->name('admin.logout');
