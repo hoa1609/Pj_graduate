@@ -165,7 +165,6 @@
     }
 
 
-
 	$(document).ready(function(){
 		HT.addCart()
         HT.changeQuantity()

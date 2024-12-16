@@ -27,4 +27,19 @@ class Handler extends ExceptionHandler
             //
         });
     }
+
+    public function render($request, Throwable $exception){
+        if ($this->isHttpException($exception)) {
+            $seo = [
+                'meta_title' => 'Trang không tồn tại',
+                'meta_keyword' => '',
+                'meta_description' => '',
+                'canonical' => '',
+            ];
+            return response()->view('frontend.errors.404', compact('seo'), 404);
+        }
+
+        return parent::render($request, $exception);
+    }
+
 }

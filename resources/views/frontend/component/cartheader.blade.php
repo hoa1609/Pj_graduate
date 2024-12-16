@@ -1,9 +1,9 @@
 <div id="ec-side-cart" class="ec-side-cart">
-    <div class="ec-cart-inner">
+    <div class="ec-cart-inner event-none">
         <div class="ec-cart-top">
             <div class="ec-cart-title">
                 <span class="cart_title">Giỏ hàng</span>
-                <button class="ec-close">×</button>
+                <button class="ec-close p-event">×</button>
             </div>
             <div class="cart-product">
                 <div id="cart-list">
@@ -27,7 +27,7 @@
                     <div class="sumary-value cart-total">{{ convert_price($cartCaculate['cartTotal'] - $cartPromotion['discount'], true)}} đ</div>
                 </div>
             </div>
-            <div class="cart_btn">
+            <div class="cart_btn p-event">
                 <a href="{{ route('cart.checkout') }}" class="btn btn-secondary">Thanh toán</a>
             </div>
         </div>

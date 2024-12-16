@@ -1448,3 +1448,65 @@ screen and (-ms-high-contrast: none) {
 .footer-list a:hover {
     color: #000;
 }
+.border-10{
+    border-radius: 10px;
+}
+.header-error{
+    font-size: 25px;
+}
+.event-none {
+    pointer-events: none;
+}
+.p-event{
+    pointer-events: all !important;
+}
+/* fitter */
+.filter-list li,
+.filter-grid li {
+    margin: 5px 0;
+}
+
+.filter-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 5px;
+}
+label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.9em;
+}
+.filter-section {
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+}
+.filter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    cursor: pointer;
+}
+.price-range input {
+    width: 100%;
+}
+
+.price-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9em;
+    margin-top: 5px;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .filter-container {
+        max-width: 100%;
+    }
+
+    .filter-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}

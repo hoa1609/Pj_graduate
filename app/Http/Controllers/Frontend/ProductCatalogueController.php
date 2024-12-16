@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\FrontendController;
 use App\Repositories\Interfaces\ProductCatalogueRepositoryInterface as ProductCatalogueRepository;
 use App\Services\Interfaces\ProductServiceInterface as ProductService;
+use App\Services\Interfaces\ProductCatalogueServiceInterface as ProductCatalogueService;
 
 class ProductCatalogueController extends FrontendController{
 
@@ -12,13 +13,16 @@ class ProductCatalogueController extends FrontendController{
     protected $system;
     protected $productCatalogueRepository;
     protected $productService;
+    protected $productCatalogueService;
 
 
     public function __construct(
         ProductCatalogueRepository $productCatalogueRepository,
+        ProductCatalogueService $productCatalogueService,
         ProductService $productService,
     ){
         $this->productCatalogueRepository = $productCatalogueRepository;
+        $this->productCatalogueService = $productCatalogueService;
         $this->productService = $productService;
         parent::__construct();
     }
@@ -28,6 +32,7 @@ class ProductCatalogueController extends FrontendController{
         $config = $this->config();
         $productCatalogue = $this->productCatalogueRepository->getProductCatalogueById($id, $this->language);
         $breadcrumb = $this->productCatalogueRepository->breadcrumb($productCatalogue, $this->language);
+        $filters = $this->productCatalogueService->getFilterList($productCatalogue->attribute, $this->language);
     
         $products = $this->productService->paginate(
             $request,

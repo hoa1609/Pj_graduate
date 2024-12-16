@@ -12,14 +12,6 @@
     }
 
     HT.review = () => {
-        toastr.options = {
-            "positionClass": "toast-top-right",
-            "closeButton": true,
-            "progressBar": true,
-            "timeOut": "3000",
-            "extendedTimeOut": "1000"
-        }
-
         $(document).on('click', '.btn-review', function() {
             let option = {
                 score: $('input[name="rating"]:checked').val() || $('input[name="rating"]:checked').attr('id').replace('radio-', ''),
@@ -41,6 +33,7 @@
                 success: function(res) {
                     if (res.code === 10) {
                         toastr.success(res.message);
+                        location.reload()
                     } else {
                         toastr.error(res.message);
                     }
@@ -66,7 +59,6 @@
 })(jQuery);
 
 //copy sku
-
 document.getElementById('copy-sku-dt').addEventListener('click', function() {
     const skuText = document.getElementById('sku-text-dt').innerText;
     navigator.clipboard.writeText(skuText).then(function() {
