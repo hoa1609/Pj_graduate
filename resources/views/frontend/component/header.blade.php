@@ -89,21 +89,22 @@
                                 <img src="{{ $system['homepage_logo'] }}" alt="Site Logo" style="width: 80px" />
                             </a>
                         </div>
-                        <div id="ec-main-menu-desk" class="d-none d-lg-block sticky-nav bg-nav-h">
-                            <div class="container position-relative">
-                                <div class="row">
-                                    <div class="col-md-12 align-self-center">
-                                        <div class="ec-main-menu">
-                                            <ul class="class-name-menu-customer-by-hoa">
-                                                {!! $menu['main-menu'] !!}
-                                            </ul>
+                        @if(isset($menu['main-menu']) && !empty($menu['main-menu']))
+                            <div id="ec-main-menu-desk" class="d-none d-lg-block sticky-nav bg-nav-h">
+                                <div class="container position-relative">
+                                    <div class="row">
+                                        <div class="col-md-12 align-self-center">
+                                            <div class="ec-main-menu">
+                                                <ul class="class-name-menu-customer-by-hoa">
+                                                    {!! $menu['main-menu'] !!}
+                                                </ul>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        @endif
                     </div>
-                    
                     <div class="align-self-center uk-flex">
                         <div class="align-self-center">
                             <div class="header-search">

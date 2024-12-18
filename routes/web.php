@@ -74,6 +74,7 @@ Route::get('return/momo'.config('apps.general.suffix'), [MomoController::class, 
 
 /*FE AJAX */
 Route::get('ajax/product/loadVariant', [AjaxProductController::class, 'loadVariant'])->name('ajax.loadVariant');
+Route::get('ajax/product/filter', [AjaxProductController::class, 'filter'])->name('ajax.filter');
 Route::post('ajax/cart/create', [AjaxCartController::class, 'create'])->name('ajax.cart.create');
 Route::post('ajax/cart/update', [AjaxCartController::class, 'update'])->name('ajax.cart.update');
 Route::post('ajax/cart/delete', [AjaxCartController::class, 'delete'])->name('ajax.cart.delete');

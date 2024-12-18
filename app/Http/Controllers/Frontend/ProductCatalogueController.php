@@ -32,8 +32,9 @@ class ProductCatalogueController extends FrontendController{
         $config = $this->config();
         $productCatalogue = $this->productCatalogueRepository->getProductCatalogueById($id, $this->language);
         $breadcrumb = $this->productCatalogueRepository->breadcrumb($productCatalogue, $this->language);
-        $filters = $this->productCatalogueService->getFilterList($productCatalogue->attribute, $this->language);
-    
+
+        $filters = $this->filter($productCatalogue);
+        /* -----------  */ 
         $products = $this->productService->paginate(
             $request,
             $this->language,
@@ -56,8 +57,17 @@ class ProductCatalogueController extends FrontendController{
             'seo',
             'productCatalogue',
             'breadcrumb',
-            'products'
+            'products',
+            'filters',
         ));
+    }
+
+    private function filter($productCatalogue){
+        $filters = null;
+        if(isset($productCatalogue->attribute) && !is_null($productCatalogue->attribute)){
+            $filters = $this->productCatalogueService->getFilterList($productCatalogue->attribute, $this->language);
+        }
+        return $filters;
     }
      
 
@@ -66,7 +76,9 @@ class ProductCatalogueController extends FrontendController{
             'language' => $this->language,
             'js' => [
                 'frontend/assets/library/cart.js',
+                'frontend/assets/library/filter.js',
                 'frontend/assets/js/quickview.js',
+                'frontend/assets/js/price-range.js',
             ]
         ];
     }

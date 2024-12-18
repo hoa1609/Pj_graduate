@@ -199,7 +199,7 @@
                                     </tbody>
                                     <tfoot class="footer-iv">
                                         <tr>
-                                            <td colspan="4" class="price-iv">Mã giảm giá</td>
+                                            <td colspan="4" class="price-iv">Mã khuyến mãi</td>
                                             <td class="text-end">
                                                 {{ isset($data['cartPromotion']['selectedPromotion']) ? $data['cartPromotion']['selectedPromotion']->code : ' ' }}
                                             </td>

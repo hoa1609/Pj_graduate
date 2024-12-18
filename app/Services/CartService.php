@@ -220,7 +220,6 @@ class CartService implements CartServiceInterface
             $order = $this->orderRepository->create($payload);
             if($order->id > 0){
                 $this->createOrderProduct($payload, $order, $request);
-                Cart::instance('shopping')->destroy();
             }
             DB::commit();
             return [

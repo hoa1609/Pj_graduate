@@ -76,16 +76,15 @@ class CartController extends FrontendController
 
     public function store(StoreCartRequest $request){
         $system = $this->system;
-
         $carts = Cart::instance('shopping')->content();
         if ($carts->isEmpty()) {
             return redirect()->route('cart.checkout')->with('error', 'Giỏ hàng của bạn đang trống!');
         }
-    
         $order = $this->cartService->order($request, $system);
         if ($order['flag']) {
             $response = $this->paymentMethod($request ,$order);
             $this->cartService->mail($order['order'], $system);
+            Cart::instance('shopping')->destroy();
 
             if ($response['errorCode'] == 0) {
                 return redirect()->away($response['url']);

@@ -68,5 +68,18 @@ class AttributeRepository extends BaseRepository implements AttributeRepositoryI
         ->get();
     }
 
+    public function findAttributeProductVariant($attributeId = [], $productCatalogueId = 0){
+        return $this->model->select([
+            'attributes.id'
+        ])
+        ->leftJoin('product_variant_attribute as tb2', 'tb2.attribute_id', '=', 'attributes.id')
+        ->leftJoin('product_variants as tb3', 'tb3.id', '=', 'tb2.product_variant_id')
+        ->leftJoin('product_catalogue_product as tb4', 'tb4.product_id', '=', 'tb3.product_id')
+        ->where('tb4.product_catalogue_id', '=', $productCatalogueId)
+        ->whereIn('attributes.id', $attributeId)
+        ->distinct()
+        ->pluck('attributes.id');
+    }
+
 
 }

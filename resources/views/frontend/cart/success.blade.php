@@ -70,12 +70,15 @@
                                     <tr> <td colspan="4"></td> </tr>
                                 </tbody>
                                 <tfoot class="footer-iv">
-                                    <td class="text-end">
-                                        {{ isset($data['cartPromotion']['selectedPromotion']) ? $data['cartPromotion']['selectedPromotion']->code : ' ' }}
-                                    </td>
                                     <tr>
                                         <td colspan="4" class="price-iv">Tổng giá trị</td>
                                         <td class="text-end">{{ convert_price($order->cart['cartTotal'], true) }}₫</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="4" class="price-iv">Mã khuyến mãi</td>
+                                        <td class="text-end">
+                                            {{ ($order['promotion']['code'] ?? ' ') }}
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td colspan="4" class="price-iv">Khuyến mãi</td>

@@ -17,7 +17,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Pagination\Paginator;
-
+use PhpParser\Node\Expr\FuncCall;
 
 class ProductService extends BaseService implements ProductServiceInterface
 {
@@ -381,6 +381,21 @@ class ProductService extends BaseService implements ProductServiceInterface
         return $products;
     }
 
+    
+    public function relationProductByCatalogeId($productCatalogue, $language, $id){
+        $productCatalogueId = $productCatalogue->id;
+        return $this->productRepository->findByCondition(
+            [
+                ['product_catalogue_id', '=', $productCatalogueId], 
+                config('apps.general.defaultPublish')
+            ], 
+            true, 
+            ['languages']
+        )
+        ->where('id', '!=', $id) 
+        ->take(5);
+    }
+
     public function getAttribute($product, $language) {
         if (!isset($product->attribute) || !is_array($product->attribute)) {
             $product->attributeCatalogue = [];
@@ -410,20 +425,167 @@ class ProductService extends BaseService implements ProductServiceInterface
     }
 
 
-    public function relationProductByCatalogeId($productCatalogue, $language, $id){
-        $productCatalogueId = $productCatalogue->id;
-        
-        return $this->productRepository->findByCondition(
-            [
-                ['product_catalogue_id', '=', $productCatalogueId], 
-                config('apps.general.defaultPublish')
-            ], 
-            true, 
-            ['languages']
-        )
-        ->where('id', '!=', $id) 
-        ->take(5);
+    /*----------FITER------------*/ 
+    public function filter($request){
+        $parpage = $request->input('perpage', 15);
+        $param['attributeQuery'] = $this->attributeQuery($request);
+        // $param['rateQuery'] = $this->rateQuery($request);
+        $param['priceQuery'] = $this->priceQuery($request);
+        $param['productCatalogueQuery'] = $this->productCatalogueQuery($request);
+
+        $query = $this->combineFilterQuery($param);
+        $products = $this->productRepository->filter($query, $parpage);
+
+        return $products;
     }
 
+
+    private function combineFilterQuery($param){
+        $query = [];
+
+        foreach ($param as $array) {
+            foreach ($array as $key => $value) {
+                if (!isset($query[$key])) {
+                    $query[$key] = [];
+                }
+                if (is_array($value)) {
+                    $query[$key] = array_merge($query[$key], $value);
+                } else {
+                    $query[$key][] = $value;
+                }
+            }
+        }
+        return $query;
+    }
+ 
+
+    private function productCatalogueQuery($request){
+        $productCatalogueId = $request->input('productCatalogueId');
+        $query['join'] = null;
+        $query['whereRaw'] = null;
+        if($productCatalogueId > 0){
+            $query['join'] = [
+                ['product_catalogue_product as pcp', 'pcp.product_id', '=', 'products.id']
+            ];
+            $query['whereRaw'] = [
+                [
+                    'pcp.product_catalogue_id IN (
+                        SELECT id
+                        FROM product_catalogues
+                        WHERE lft >= (SELECT lft FROM product_catalogues as pc WHERE pc.id = ?)
+                        AND rgt <= (SELECT rgt FROM product_catalogues as pc WHERE pc.id = ?)                    
+                    )',
+                    [$productCatalogueId, $productCatalogueId]
+                ]
+            ];
+        }
+        return $query;
+    }
+
+
+    private function rateQuery($request){
+        $rates = $request->input('rate');
+        $query['join'] = null;
+        $query['having'] = null;
+
+        if(!is_null($rates) && count($rates)){
+            $query['join'] = [
+                ['reviews', 'reviews.reviewable_id', '=', 'products.id'],
+            ];
+            $rateCondition = [];
+            $bingdings = [];
+
+            foreach($rates as $rate){
+                if($rate != 5){
+                    $minRate = $rate.'.1';
+                    $maxRate = $rate.'.9';
+                    $rateCondition[] = '(AVG(reviews.score) >= ? AND AVG(reviews.score) <= ?)';
+                    $bingdings[] = $minRate;
+                    $bingdings[] = $maxRate;
+                }else{
+                    $rateCondition[] = 'AVG(reviews.score) = ?';
+                    $bingdings[] = 5;
+                }
+            }
+            $query['where'] = function($query){
+                $query->where('reviews.reviewable_type', '=', 'App\\Models\\Product');
+            };
+
+            $query['having'] = function($query) use ($rateCondition, $bingdings){
+                $query->havingRaw(implode(' OR', $rateCondition), $bingdings);
+            };
+        }
+        return $query;
+    }
+    
+
+    private function attributeQuery($request){
+        $attributes = $request->input('attributes');
+        $query['select'] = null;
+        $query['join'] = null;
+        $query['where'] = null;
+
+        if(!is_null($attributes) && count($attributes)){
+            $query['select'] = 'pv.price as variant_price, pv.sku as variant_sku';
+            $query['join'] = [
+                ['product_variants as pv', 'pv.product_id', '=', 'products.id'],
+            ];
+            foreach($attributes as $key => $attribute){
+                $joinKey = 'tb'. $key;
+                $query['join'][] = [
+                    "product_variant_attribute as {$joinKey}",
+                    "$joinKey.product_variant_id",
+                    "=",
+                    "pv.id"
+                ];
+                $query['where'][] = function($query) use ($joinKey, $attribute){
+                    foreach($attribute as $attr){
+                        $query->orWhere("$joinKey.attribute_id", '=', $attr);
+                    }
+                };
+            }
+        }
+        return $query;
+    }
+
+
+    private function priceQuery($request){
+        $price = $request->input('price');
+        $priceMin = convert_price($price['price_min']);
+        $priceMax = convert_price($price['price_max']);
+        $query['select'] = null;
+        $query['join'] = null;
+        $query['having'] = null;
+
+        if ($priceMax > $priceMin) {
+            $query['join'] = [
+                ['promotion_product_variant as ppv', 'ppv.product_id', '=', 'products.id'],
+                ['promotions', 'ppv.promotion_id', '=', 'promotions.id']
+            ];
+            $query['select'] = "
+                (products.price - MAX(
+                    IF(promotions.maxDiscountValue != 0,
+                        LEAST(
+                            CASE
+                                WHEN promotions.discountType = 'cash' THEN promotions.discountValue
+                                WHEN promotions.discountType = 'percent' THEN products.price * promotions.discountValue / 100
+                            ELSE 0
+                            END,
+                            promotions.maxDiscountValue
+                        ),
+                        CASE
+                            WHEN promotions.discountType = 'cash' THEN promotions.discountValue
+                            WHEN promotions.discountType = 'percent' THEN products.price * promotions.discountValue / 100
+                            ELSE 0
+                        END
+                    )
+                )) as discounted_price
+            ";
+            $query['having'] = function($query) use ($priceMin, $priceMax){
+                $query->havingRaw('discounted_price >= ? AND discounted_price <= ?', [$priceMin, $priceMax]);
+            };
+        }
+        return $query;
+    }
 
 }

@@ -193,27 +193,34 @@ class ProductCatalogueService extends BaseService implements ProductCatalogueSer
 
     public function setAttribute($product){
         $attribute = $product->attribute;
-        $productCatalogueId = $product->product_catalogue_id;
+        $productCatalogueId = (int)$product->product_catalogue_id;
         $productCatalogue = $this->productCatalogueRepository->findById($productCatalogueId);
+        
         if(!is_array($productCatalogue->attribute)){
             $payload['attribute'] = $attribute;
         }else{
-
             $mergeArray = $productCatalogue->attribute;
             foreach($attribute as $key => $val){
                 if(!isset($mergeArray[$key])){
                     $mergeArray[$key] = $val;
                 }else{
-                    $mergeArray[$key] = array_unique(array_merge($mergeArray[$key], $val));
+                    $mergeArray[$key] = array_values(array_unique(array_merge($mergeArray[$key], $val)));
                 }
             }
-            $payload['attribute'] = $mergeArray;
+
+            $flagAttributeArray = array_merge(...$mergeArray);
+            $attributeList = $this->attributeRepository->findAttributeProductVariant($flagAttributeArray, $productCatalogue->id);
+            
+            $payload['attribute'] = array_map(function($newArray) use($attributeList){
+                return array_intersect($newArray, $attributeList->all());
+            }, $mergeArray);
         }
         $result = $this->productCatalogueRepository->update($productCatalogueId, $payload);
+
         return $result;
     }
+
     
-  
     private function paginateSelect(){
         return [
             'product_catalogues.id', 
@@ -248,27 +255,49 @@ class ProductCatalogueService extends BaseService implements ProductCatalogueSer
     }
 
     // FRONT END 
-    public function getFilterList(array $attribute = [], $languageId = 1){
+    public function getFilterList(array $attribute = [], $languageId){
         $attributeCatalogueId = array_keys($attribute);
         $attributeId = array_unique(array_merge(...$attribute));
         
         $attributeCatalogues = $this->attributeCatalogueRepository->findByCondition(
-            [
-                config('apps.general.defaultPublish')
-            ],
+            [ config('apps.general.defaultPublish')],
             true,
             [
                 'languages' => function($query) use ($languageId){
                     $query->where('language_id', $languageId);
                 }
             ],
-            ['id', 'desc'],
+            ['id', 'asc'],
             [
                 'whereIn' => $attributeCatalogueId,
                 'whereInField' => 'id'
             ]
         );
-        dd($attributeCatalogues);
+
+        $attributes = $this->attributeRepository->findByCondition(
+            [ config('apps.general.defaultPublish') ],
+            true,
+            [
+                'languages' => function($query) use ($languageId){
+                    $query->where('language_id', $languageId);
+                }
+            ],
+            ['id', 'asc'],
+            [
+                'whereIn' => $attributeId,
+                'whereInField' => 'id'
+            ]
+        );
+
+        foreach($attributeCatalogues as $key => $val){
+            foreach($attributes as $index => $item){
+                if($item->attribute_catalogue_id === $val->id){
+                    $attributeItem[] = $item;
+                    $val->setAttribute('attribute', $attributeItem);
+                }
+            }
+        }
+        return $attributeCatalogues;
     }
 
 
