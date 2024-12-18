@@ -40,7 +40,7 @@
                                                 @foreach ($val['children'] as $children)
                                                     @php
                                                         $chilName = $children['item']->languages->first()->pivot->name;
-                                                        $chilCananical = $children['item']->languages->first()->pivot->name;
+                                                        $chilCananical = write_url($children['item']->languages->first()->pivot->canonical, true, true);
                                                     @endphp
                                                     <li class="ec-footer-link"><a href="{{ $chilCananical }}">{{ $chilName }}</a></li>
                                                 @endforeach
@@ -69,7 +69,7 @@
                                         @foreach ($val['children'] as $children)
                                             @php
                                                 $chilName = $children['item']->languages->first()->pivot->name;
-                                                $chilCananical = $children['item']->languages->first()->pivot->name;
+                                                $chilCananical = write_url($children['item']->languages->first()->pivot->canonical, true, true);
                                             @endphp
                                             <li><a href="{{ $chilCananical }}">{{ $chilName }}</a></li>
                                         @endforeach

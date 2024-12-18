@@ -332,7 +332,7 @@ if (!function_exists('frontend_recursive_menu')) {
 
                     $ulClass = ($count > 1) ? 'menu-level--' . ($count) : '';
                     $html .= '<li class="dropdown">';
-                        $html .= '<a href="' . $canonical . '" title="' . $name . '">' . $name . '</a>';
+                    $html .= '<a href="' . $canonical . '">' . $name . '</a>';
                         if (count($val['children'])) {
                             $html .= '<ul class="sub-menu ' . $ulClass . '">';
                                 $html .= frontend_recursive_menu($val['children'], $val['item']->parent_id, $count + 1, $type);

@@ -14,7 +14,7 @@
         ],
         'delivery' => [
             'none' => 'Tình trạng giao hàng',
-            'pending' => 'Chưa giao',
+            'pending' => 'Chờ xác nhận',
             'processing' => 'Đang giao',
             'success' => 'Thành công',
             'error' => 'Bom hàng',

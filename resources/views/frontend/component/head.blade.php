@@ -10,8 +10,8 @@
 
 <title>{{ $seo['meta_title'] }}</title>
 <meta name="keyword" content="{{ $seo['meta_keyword'] }}">
-<meta name="description" content="{{ $seo['meta_description'] }}">
 <meta name="canonical" content="{{ $seo['canonical'] }}">
+<meta name="description" content="{{ $seo['meta_description'] }}">
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -43,45 +43,3 @@
 @foreach ($coreCss as $item)
     <link rel="stylesheet" href="{{ asset($item) }}">
 @endforeach
-<style>
-    .price-range-block {
-    margin:60px;
-}
-
-.sliderText{
-    width:100%;
-    margin-bottom:30px;
-    border-bottom: 2px solid red;
-    padding: 10px 0 10px 0px;
-    font-weight:bold;
-}
-
-.ui-slider-horizontal {
-    height: 4px;
-}
-.ui-slider-horizontal {
-    margin-bottom: 15px;
-    width:100%;
-}
-.ui-widget-header {
-    background: #6f6f6f;
-}
-
-.price-range-field{
-    /* width:20%;  */
-    min-width: 16%;
-    background-color:#f9f9f9; 
-    border: 1px solid #6e6666; 
-    color: black; 
-    font-family: myFont; 
-    font: normal 14px Arial, Helvetica, sans-serif; 
-    border-radius: 5px; 
-    height:26px; 
-    padding:5px;
-}
-.search-results-block{
-    position: relative;
-    display: block;
-    clear: both;
-}
-</style>

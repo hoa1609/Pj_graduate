@@ -15,7 +15,7 @@
                                 <div class="shop-pro-inner">
                                     <div class="row product-catalogue">
                                         @foreach ($products as $product)
-                                            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 ec-product-content">
+                                            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-6 ec-product-content">
                                                 @include('frontend.component.product-item')
                                             </div>
                                         @endforeach

@@ -42,40 +42,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- Header Top Language Currency -->
-                <!-- Header Top responsive Action -->
-                {{-- <div class="col d-lg-none ">
-                    <div class="ec-header-bottons">
-                        <!-- Header User Start -->
-                        <div class="ec-header-user dropdown">
-                            <button class="dropdown-toggle" data-bs-toggle="dropdown"><i class="fi-rr-user"></i></button>
-                            <ul class="dropdown-menu dropdown-menu-right">
-                                <li><a class="dropdown-item" href="register.html">Register</a></li>
-                                <li><a class="dropdown-item" href="checkout.html">Checkout</a></li>
-                                <li><a class="dropdown-item" href="login.html">Login</a></li>
-                            </ul>
-                        </div>
-                        <!-- Header User End -->
-                        <!-- Header Cart Start -->
-                        <a href="wishlist.html" class="ec-header-btn ec-header-wishlist">
-                            <div class="header-icon"><i class="fi-rr-heart"></i></div>
-                            <span class="ec-header-count">4</span>
-                        </a>
-                        <!-- Header Cart End -->
-                        <!-- Header Cart Start -->
-                        <a href="#ec-side-cart" class="ec-header-btn ec-side-toggle">
-                            <div class="header-icon"><i class="fi-rr-shopping-basket"></i></div>
-                            <span class="ec-header-count ec-cart-count cart-count-lable">32323232323232</span>
-                        </a>
-                        <!-- Header Cart End -->
-                        <!-- Header menu Start -->
-                        <a href="#ec-mobile-menu" class="ec-header-btn ec-side-toggle d-lg-none">
-                            <i class="fi-rr-menu-burger"></i>
-                        </a>
-                        <!-- Header menu End -->
-                    </div>
-                </div> --}}
-                <!-- Header Top responsive Action -->
             </div>
         </div>
     </div>
@@ -86,20 +52,16 @@
                     <div class="align-self-center uk-flex">
                         <div class="header-logo">
                             <a href="{{ route('home.index') }}">
-                                <img src="{{ $system['homepage_logo'] }}" alt="Site Logo" style="width: 80px" />
+                                <img src="{{ $system['homepage_logo'] }}" alt="Site Logo" style="width: 80px">
                             </a>
                         </div>
                         @if(isset($menu['main-menu']) && !empty($menu['main-menu']))
-                            <div id="ec-main-menu-desk" class="d-none d-lg-block sticky-nav bg-nav-h">
-                                <div class="container position-relative">
-                                    <div class="row">
-                                        <div class="col-md-12 align-self-center">
-                                            <div class="ec-main-menu">
-                                                <ul class="class-name-menu-customer-by-hoa">
-                                                    {!! $menu['main-menu'] !!}
-                                                </ul>
-                                            </div>
-                                        </div>
+                            <div class="row ps-2">
+                                <div class="col-md-12 uk-flex uk-align-center container">
+                                    <div class="ec-main-menu">
+                                        <ul class="class-name-menu-customer-by-hoa">
+                                            {!! $menu['main-menu'] !!}
+                                        </ul>
                                     </div>
                                 </div>
                             </div>

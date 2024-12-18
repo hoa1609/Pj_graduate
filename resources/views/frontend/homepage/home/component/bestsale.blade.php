@@ -41,7 +41,7 @@
                                                 </p>
                                             </div>
                                             <div class="title-seeding pl-0 pb-1">
-                                                <a href="">
+                                                <a href="" class="text-more">
                                                     Xem thêm <i class="fa-solid fa-arrow-right"></i>  
                                                 </a>
                                             </div>

@@ -297,8 +297,17 @@ class ProductCatalogueService extends BaseService implements ProductCatalogueSer
                 }
             }
         }
+
+        foreach ($attributeCatalogues as $key => $val) {
+            $attributeItem = [];
+            foreach ($attributes as $item) {
+                if ($item->attribute_catalogue_id === $val->id) {
+                    $attributeItem[] = $item;
+                }
+            }
+            $val->setAttribute('attribute', $attributeItem);
+        }
         return $attributeCatalogues;
     }
-
 
 }
