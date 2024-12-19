@@ -38,6 +38,7 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
                 'products.attributeCatalogue',
                 'products.attribute',
                 'products.variant',
+                'products.average_star',
                 'tb2.name',
                 'tb2.description',
                 'tb2.content',

@@ -65,29 +65,34 @@ class ProductService extends BaseService implements ProductServiceInterface
                 ['tb2.language_id', '=', $languageId]
             ]
         ];
+        $perPage = $request->integer('perpage', 10);
+        $path = [
+            'path' => $extend['path'] ?? 'product/index',
+            'groupBy' => $this->paginateSelect(),
+        ];
+        $orderBy = ['products.id', 'DESC'];
+        $joins = [
+            ['product_language as tb2', 'tb2.product_id', '=', 'products.id'],
+            ['product_catalogue_product as tb3', 'products.id', '=', 'tb3.product_id'],
+        ];
 
-        $perPage = $request->integer('perpage', 10); // Số sản phẩm mỗi trang
         $products = $this->productRepository->pagination(
             $this->paginateSelect(),
             $condition,
             $perPage,
-            ['path' => ($extend['path']) ?? 'product/index', 'groupBy' => $this->paginateSelect()],
-            ['products.id', 'DESC'],
-            [
-                ['product_language as tb2', 'tb2.product_id', '=', 'products.id'],
-                ['product_catalogue_product as tb3', 'products.id', '=', 'tb3.product_id'],
-            ],
+            $path,
+            $orderBy,
+            $joins,
             ['product_catalogues'],
-            $this->whereRaw($request, $languageId, $productCatalogue),
+            $this->whereRaw($request, $productCatalogue),
         );
-
         return $products;
     }
 
-    private function whereRaw($request, $languageId, $productCatalogue){
+    private function whereRaw($request, $productCatalogue){
         $rawCondition = [];
         if($request->integer('product_catalogue_id') > 0 || !is_null($productCatalogue)){
-            $catId = ($request->integer('product_catalogue_id') > 0) ? $request->integer('product_catalogue_id') > 0 : $productCatalogue->id;
+            $catId = ($request->integer('product_catalogue_id') > 0) ? $request->integer('product_catalogue_id') : $productCatalogue->id;
             $rawCondition['whereRaw'] =  [
                 [
                     'tb3.product_catalogue_id IN (
@@ -115,8 +120,8 @@ class ProductService extends BaseService implements ProductServiceInterface
                 
                 if($request->input('attribute')){
                     $this->createVariant($product, $request, $languageId);
+                    $this->productCatalogueService->setAttribute($product);
                 }
-                $this->productCatalogueService->setAttribute($product);
             }
             DB::commit();
             return true;
@@ -260,8 +265,8 @@ class ProductService extends BaseService implements ProductServiceInterface
                 });
                 if($request->input('attribute')){
                     $this->createVariant($product, $request, $languageId);
+                    $this->productCatalogueService->setAttribute($product);
                 }
-                $this->productCatalogueService->setAttribute($product);
             }
             DB::commit();
             return true;
@@ -325,6 +330,7 @@ class ProductService extends BaseService implements ProductServiceInterface
             'products.album',
             'products.price',
             'products.order',
+            'products.average_star',
             'tb2.name',
             'tb2.canonical',
         ];

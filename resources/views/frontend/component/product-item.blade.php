@@ -6,7 +6,8 @@
     $hoverimage = $gallery[0] ?? $image;
     $price = getPrice($product);
     $catName = $product->product_catalogues->first()->languages->first()->pivot->name;
-    $review = getReview($product);
+    $rating = $product->average_star;
+    $rangeStartTotal = $rating /5 * 100;
 @endphp
 <div class="ec-product-inner">
     <div class="ec-pro-image-outer">
@@ -28,12 +29,12 @@
     <div class="ec-pro-content">
         <div class="ec-pro-rat-price">
             <span class="ec-pro-rating uk-flex uk-align-center">
-                <div class="star">
-                    @for($j = 1; $j <= $review['star'] ; $j++)
-                        <i class="ecicon eci-star fill"></i>
-                    @endfor
+                <div class="item-star">
+                    <div class="stars-layout">
+                        <div class="stars-active-layout" style="width: {{ $rangeStartTotal }}%;"></div>
+                    </div>
+                    <span>({{ $rating }})</span>
                 </div>
-                <span class="rate-number">( {{ $review['count'] }} )</span>
             </span>
             <div class="price-cart uk-flex uk-space-between">
                 <div class="price-product">

@@ -216,11 +216,11 @@
                         <div class="col">
                             <h4 class="card-title">Thông tin đặt hàng</h4>
                         </div>
-                        <div class="col-auto">
+                        {{-- <div class="col-auto">
                             <div class="text-secondary edit edit-order" data-target="customerInfo">
                                 <i class="fas fa-pen me-1"></i> Sửa
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
                 <div class="card-body pt-0">

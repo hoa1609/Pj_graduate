@@ -529,32 +529,26 @@ input:disabled {
 }
 
 /* widget */
-
 .search-model{
     border-radius: 5px;
     height: 42px;
     font-size: 14px;
     outline: 0;
 }
-
 .search-model-box{
     position: relative;
 }
-
 .search-model-box .fa{
     position: absolute;
     top: 15px;
-    left: 15px;
+    right: 15px;
 }
-
 .delete button {
     font-size: 25px;
 }
-
 .list-group li:hover{
     background-color: #f0f8ff;
 }
-
 .ajax-search-result {
     position: absolute;
     top: 100%;
@@ -562,7 +556,6 @@ input:disabled {
     z-index: 9999;
     background-color: #fff ;
 }
-
 /* Quyen customize menu */
 .mb15 {
     margin-bottom: 15px;

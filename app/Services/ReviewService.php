@@ -24,7 +24,6 @@ class ReviewService extends BaseService implements ReviewServiceInterface
         DB::beginTransaction();
         try {
             $payload = $request->except('_token');
-            // $payload['user_id'] = Auth::id();
             $review = $this->reviewRepository->create($payload);
 
             $this->reviewnestedset = new ReviewNested([
@@ -43,7 +42,6 @@ class ReviewService extends BaseService implements ReviewServiceInterface
             ];
         } catch(\Exception $e ){
             DB::rollBack();
-            // echo $e->getMessage(); die();
             return [
                 'code' => 11,
                 'message' => 'Có lỗi vui lòng thử lại: ' . $e->getMessage()

@@ -34,13 +34,14 @@ class HomeController extends FrontendController{
         $config = $this->config();
         $widgets = $this->widgetService->getWidget([
             ['keyword' =>'category','children' => true,'object' => true, 'countObject' => true],
-            ['keyword' =>'product'],
-            ['keyword' =>'other-product', 'children' => true, 'promotion' => true, 'object' => true],
+            ['keyword' =>'group-product1', 'children' => true, 'promotion' => true, 'object' => true],
+            ['keyword' =>'group-product2', 'children' => true, 'promotion' => true, 'object' => true],
+            ['keyword' =>'new-product', 'promotion' => true, 'object' => true],
             ['keyword' =>'best-seller', 'promotion' => true],
             ['keyword' =>'blog', 'object' => true],
         ], $this->language);
     
-        $slides = $this->slideService->getSlide([SlideEnum::MAIN, SlideEnum::SELLER], $this->language);
+        $slides = $this->slideService->getSlide([SlideEnum::MAIN, SlideEnum::SELLER, SlideEnum::BANNERLAZY], $this->language);
         $system = $this->system;
         $seo = [
             'meta_title' => $system['seo_meta_title'],

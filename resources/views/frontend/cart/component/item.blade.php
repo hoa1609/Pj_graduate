@@ -4,7 +4,7 @@
             <div class="row item-product">
                 <div class="col-md-3 image-item">
                     <div class="image-cart-wrapper">
-                        <img src="{{ $cart->image }}">
+                        <img src="{{ $cart->options->image }}" alt="{{ $cart->name }}">
                         <span class="quantity-label">
                             <label class="cart-item-number">{{ $cart->qty }}</label>
                         </span>

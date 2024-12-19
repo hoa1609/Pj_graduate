@@ -1,5 +1,7 @@
 @php
     $sku = $product->code;
+    $rating = $product->average_star;
+    $rangeStartTotal = $rating /5 * 100;
     $name = $product->languages->first()->pivot->name;
     $canonical = write_url($product->languages->first()->pivot->canonical, true , true);
     $image = image($product->image);
@@ -42,11 +44,10 @@
                         <ion-icon name="copy-outline" class="fs-20" id="copy-sku-dt"></ion-icon>
                     </div>
                     <div class="item-star">
-                        <i class="ecicon eci-star fill"></i>
-                        <i class="ecicon eci-star fill"></i>
-                        <i class="ecicon eci-star fill"></i>
-                        <i class="ecicon eci-star fill"></i>
-                        <i class="ecicon eci-star"></i>
+                        <div class="stars-layout">
+                            <div class="stars-active-layout" style="width: {{ $rangeStartTotal }}%;"></div>
+                        </div>
+                        <span>({{ $rating }})</span>
                     </div>
                 </div>
                 <div class="item-price-detail">

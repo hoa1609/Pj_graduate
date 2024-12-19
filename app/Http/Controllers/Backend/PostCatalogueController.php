@@ -72,9 +72,9 @@ class PostCatalogueController extends Controller{
 
     public function store(PostCatalogueRequest $request){
         if ($this->postCatalogueService->create($request, $this->language)) {
-            return redirect()->route('post.catalogue.index')->with('success', 'Thêm nhóm thành viên thành công !');
+            return redirect()->route('post.catalogue.index')->with('success', 'Thêm nhóm bản ghi thành công !');
         }
-        return redirect()->route('post.catalogue.index')->with('error', 'Thêm nhóm thành viên thất bại !');
+        return redirect()->route('post.catalogue.index')->with('error', 'Thêm nhóm bản ghi thất bại !');
     }
 
 
@@ -111,18 +111,18 @@ class PostCatalogueController extends Controller{
 
     public function update($id, UpdatePostCatalogueRequest $request){
         if ($this->postCatalogueService->update($id, $request, $this->language)) {
-            return redirect()->route('post.catalogue.index')->with('success', 'Cập nhập nhóm thành viên thành công !');
+            return redirect()->route('post.catalogue.index')->with('success', 'Cập nhập nhóm bản ghi thành công !');
         }
-        return redirect()->route('post.catalogue.index')->with('error', 'Cập nhập nhóm thành viên thất bại !');
+        return redirect()->route('post.catalogue.index')->with('error', 'Cập nhập nhóm bản ghi thất bại !');
     }
 
     
     public function destroy(DeletePostCatalogueRequest $request, $id){
         $this->authorize('modules', 'post.catalogue.destroy');
         if ($this->postCatalogueService->destroy($id, $this->language)) {
-            return redirect()->route('post.catalogue.index')->with('success', 'Xóa nhóm thành viên thành công!');
+            return redirect()->route('post.catalogue.index')->with('success', 'Xóa nhóm bản ghi thành công!');
         }
-        return redirect()->route('post.catalogue.index')->with('error', 'Xóa nhóm thành viên thất bại!');
+        return redirect()->route('post.catalogue.index')->with('error', 'Xóa nhóm bản ghi thất bại!');
     }
 
     

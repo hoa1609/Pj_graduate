@@ -16,19 +16,21 @@
                     <div class="tab-content">
                         <div class="tab-pane fade show active" id="all">
                             <div class="row">
-                                <div class="col-md-4" style="z-index: 10">
-                                    <div class="" style="width: 420px">
-                                        @foreach ($slides[$bannerSeller]['item'] as $val)
-                                            @php
-                                                $image = $val['image'];
-                                                $canonical = ($val['canonical']);
-                                            @endphp
-                                            <a href="{{ $canonical }}">
-                                                <img src="{{ $image }}" alt="slide">
-                                            </a>
-                                        @endforeach
+                                @if(isset($slides[$bannerSeller]))
+                                    <div class="col-md-4" style="z-index: 10">
+                                        <div class="" style="width: 420px">
+                                            @foreach ($slides[$bannerSeller]['item'] as $val)
+                                                @php
+                                                    $image = $val['image'];
+                                                    $canonical = ($val['canonical']);
+                                                @endphp
+                                                <a href="{{ $canonical }}">
+                                                    <img src="{{ $image }}" alt="slide">
+                                                </a>
+                                            @endforeach
+                                        </div>
                                     </div>
-                                </div>
+                                @endif
                                 <div class="col-md-8">
                                     <div class="row uk-flex">
                                         <div class="pl-0"  data-animation="slideInRight">
@@ -46,11 +48,13 @@
                                                 </a>
                                             </div>
                                         </div>
-                                        <div class="row ec-blog-slider owl-carousel">
-                                            @foreach ($widgets['best-seller']->object as $key => $val)
-                                                @include('frontend.component.product-item', ['product' => $val])
-                                            @endforeach
-                                        </div>
+                                        @if(isset($widgets['best-seller']))
+                                            <div class="row ec-blog-slider owl-carousel">
+                                                @foreach ($widgets['best-seller']->object as $key => $val)
+                                                    @include('frontend.component.product-item', ['product' => $val])
+                                                @endforeach
+                                            </div>
+                                        @endif
                                     </div>
                                 </div>
                             </div>

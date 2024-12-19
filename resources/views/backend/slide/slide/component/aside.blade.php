@@ -156,23 +156,5 @@
                 <span class="unit-text pe-2">ms</span>
             </div>
         </div>
-
-    </div>
-</div>
-
-<div class="card">
-    <div class="card-body">
-        <div class="card-header p-0 pb-3">
-            <div class="row align-items-center">
-                <div class="col">
-                    <h4 class="card-title">Short code</h4>
-                </div><!--end col-->
-            </div> <!--end row-->
-        </div>
-        <div class="row mb-2">
-            <div class="col-12">
-                <textarea name="short_code" class="form-control" rows="3">{{ old('short_code', $slide->short_code ?? null) }}</textarea>
-            </div>
-        </div>
     </div>
 </div>

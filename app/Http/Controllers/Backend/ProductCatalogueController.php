@@ -79,9 +79,9 @@ class ProductCatalogueController extends Controller {
 
     public function store(ProductCatalogueRequest $request){
         if ($this->productCatalogueService->create($request, $this->language)) {
-            return redirect()->route('product.catalogue.index')->with('success', 'Thêm danh mục thành công !');
+            return redirect()->route('product.catalogue.index')->with('success', 'Thêm thành công !');
         }
-        return redirect()->route('product.catalogue.index')->with('error', 'Thêm danh mục thất bại !');
+        return redirect()->route('product.catalogue.index')->with('error', 'Thêm thất bại !');
     }
 
 
@@ -119,18 +119,18 @@ class ProductCatalogueController extends Controller {
 
     public function update($id, UpdateProductCatalogueRequest $request){
         if ($this->productCatalogueService->update($id, $request, $this->language)) {
-            return redirect()->route('product.catalogue.index')->with('success', 'Cập nhập danh mục thành công !');
+            return redirect()->route('product.catalogue.index')->with('success', 'Cập nhập thành công !');
         }
-        return redirect()->route('product.catalogue.index')->with('error', 'Cập nhập danh mục thất bại !');
+        return redirect()->route('product.catalogue.index')->with('error', 'Cập nhập thất bại !');
     }
 
     
     public function destroy(DeleteProductCatalogueRequest $request, $id){
         $this->authorize('modules', 'product.catalogue.destroy');
         if ($this->productCatalogueService->destroy($id, $this->language)) {
-            return redirect()->route('product.catalogue.index')->with('success', 'Xóa danh mục thành công!');
+            return redirect()->route('product.catalogue.index')->with('success', 'Xóa thành công!');
         }
-        return redirect()->route('product.catalogue.index')->with('error', 'Xóa danh mục thất bại!');
+        return redirect()->route('product.catalogue.index')->with('error', 'Xóa thất bại!');
     }
 
     private function configIndex(){

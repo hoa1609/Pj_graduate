@@ -42,7 +42,7 @@
                     if (xhr.status === 401) {
                         toastr.error('Vui lòng đăng nhập trước khi bình luận!');
                     } else {
-                        toastr.error('Có lỗi xảy ra, vui lòng thử lại sau.');
+                        toastr.error('Vui lòng nhập đủ thông tin. Hãy thử lại!');
                     }
                 }
             });

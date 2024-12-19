@@ -20,7 +20,6 @@ class Widget extends Model
         'model_id',
         'model',
         'short_code'
-
     ];
 
     protected $table = 'widgets';

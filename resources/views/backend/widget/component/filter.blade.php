@@ -63,7 +63,7 @@
                         >
                         <button type="submit" name="search" value="search" class="btn btn-primary btn-find">Tìm Kiếm</button>
                     </div>
-                    <a href="{{ route('widget.create') }}" class="btn btn-md btn-danger form-control"><i class="fas fa-user-alt mr5"></i>Thêm widget</a>
+                    <a href="{{ route('widget.create') }}" class="btn btn-md btn-danger form-control"><i class="fa-solid fa-bookmark mr5"></i>Thêm widget</a>
                 </div>
             </div>
         </div>

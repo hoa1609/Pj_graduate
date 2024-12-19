@@ -22,22 +22,16 @@ class ReviewRequest extends FormRequest
     public function rules()
     {
         return [
-            // 'rating' => 'required|integer|min:1|max:5',
             'fullname' => 'required|string|min:2|max:100',
             'email' => 'required|email',
             'phone' => 'required',
-            'description' => 'required|string|max:191',
+            'description' => 'max:191',
         ];
     }
 
     public function messages()
     {
         return [
-            // 'rating.required' => 'Vui lòng chọn số sao đánh giá',
-            // 'rating.integer' => 'Đánh giá không hợp lệ',
-            // 'rating.min' => 'Đánh giá không hợp lệ',
-            // 'rating.max' => 'Đánh giá không hợp lệ',
-
             'fullname.required' => 'Vui lòng nhập họ tên',
             'fullname.min' => 'Họ tên phải có ít nhất :min ký tự',
 

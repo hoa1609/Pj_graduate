@@ -3,12 +3,11 @@
     @php
         $total = 0;
     @endphp
-
     <section class="ec-page-content section-fixed-top">
         <form action="{{ route('cart.store') }}" method="POST">
             @csrf
             <div class="container" style="margin-top: 20px">
-                <div class="row">
+                <div class="row pb-3">
                     <div class="ec-checkout-leftside col-lg-7 col-md-12 ">
                         <div class="border-checkout">
                             <div class="checkout-content">

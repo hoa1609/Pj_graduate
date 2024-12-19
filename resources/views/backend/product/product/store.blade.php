@@ -120,14 +120,6 @@
                                     value="{{ old('code', ($product->code) ?? '') }}"
                                 >
                             </div>
-                            <div class="col-md-12 position-relative mb-2">
-                                <label class="form-label">Xuất xứ <span class="text-danger fs-10">(*)</span></label>
-                                <input type="text"
-                                    class="form-control"
-                                    name="made_in"
-                                    value="{{ old('made_in', ($product->made_in) ?? '') }}"
-                                >
-                            </div>
                             <div class="col-md-12 position-relative">
                                 <label class="form-label">Giá sản phẩm <span class="text-danger fs-10">(*)</span></label>
                                 <input type="text"
@@ -136,6 +128,14 @@
                                     name="price"
                                     id="priceInput"
                                     value="{{ old('price', ($product->price) ?? '') }}"
+                                >
+                            </div>
+                            <div class="col-md-12 position-relative mb-2">
+                                <label class="form-label">Xuất xứ</label>
+                                <input type="text"
+                                    class="form-control"
+                                    name="made_in"
+                                    value="{{ old('made_in', ($product->made_in) ?? '') }}"
                                 >
                             </div>
                         </div>

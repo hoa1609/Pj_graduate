@@ -8,7 +8,6 @@
                     </th>
                     <th>Tên Widget</th>
                     <th>Từ khóa</th>
-                    <th>short_code</th>
                     <th class="text-center">Trạng thái</th>
                     <th class="text-center">Thao tác</th>
                 </tr>
@@ -21,7 +20,6 @@
                     </th>
                     <td> {{ $widget-> name }}</td>
                     <td> {{ $widget-> keyword }}</td>
-                    <td> {{ $widget-> short_code }}</td>
                     <td>
                         <div class="text-center form-switch">
                             <input class="form-check-input status js-switch-{{ $widget-> id }}"

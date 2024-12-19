@@ -71,9 +71,9 @@ class AttributeCatalogueController extends Controller{
 
     public function store(AttributeCatalogueRequest $request){
         if ($this->attributeCatalogueService->create($request, $this->language)) {
-            return redirect()->route('attribute.catalogue.index')->with('success', 'Thêm nhóm thành viên thành công !');
+            return redirect()->route('attribute.catalogue.index')->with('success', 'Thêm nhóm bản ghi thành công !');
         }
-        return redirect()->route('attribute.catalogue.index')->with('error', 'Thêm nhóm thành viên thất bại !');
+        return redirect()->route('attribute.catalogue.index')->with('error', 'Thêm nhóm bản ghi thất bại !');
     }
 
 
@@ -110,18 +110,18 @@ class AttributeCatalogueController extends Controller{
 
     public function update($id, UpdateAttributeCatalogueRequest $request){
         if ($this->attributeCatalogueService->update($id, $request, $this->language)) {
-            return redirect()->route('attribute.catalogue.index')->with('success', 'Cập nhập nhóm thành viên thành công !');
+            return redirect()->route('attribute.catalogue.index')->with('success', 'Cập nhập nhóm bản ghi thành công !');
         }
-        return redirect()->route('attribute.catalogue.index')->with('error', 'Cập nhập nhóm thành viên thất bại !');
+        return redirect()->route('attribute.catalogue.index')->with('error', 'Cập nhập nhóm bản ghi thất bại !');
     }
 
     
     public function destroy(DeleteAttributeCatalogueRequest $request, $id){
         $this->authorize('modules', 'attribute.catalogue.destroy');
         if ($this->attributeCatalogueService->destroy($id, $this->language)) {
-            return redirect()->route('attribute.catalogue.index')->with('success', 'Xóa nhóm thành viên thành công!');
+            return redirect()->route('attribute.catalogue.index')->with('success', 'Xóa nhóm bản ghi thành công!');
         }
-        return redirect()->route('attribute.catalogue.index')->with('error', 'Xóa nhóm thành viên thất bại!');
+        return redirect()->route('attribute.catalogue.index')->with('error', 'Xóa nhóm bản ghi thất bại!');
     }
 
     private function initialize(){

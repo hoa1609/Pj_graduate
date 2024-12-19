@@ -53,7 +53,7 @@
                                                 <div class="col-lg-8 col-md-6 col-sm-12">
                                                     <input class="form-control" type="text" name="slide[canonical][]" value="{{ old('slide.canonical.' . $key, $canonical) }}" placeholder="URL">
                                                 </div>
-                                                <div class="col-lg-4 col-md-6 col-sm-12">
+                                                {{-- <div class="col-lg-4 col-md-6 col-sm-12">
                                                     <div class="form-check pt-1">
                                                         <input
                                                                 type="checkbox"
@@ -68,7 +68,7 @@
                                                             >
                                                         <label class="form-check-label" for="input_{{ $key }}">Mở trong tab mới</label>
                                                     </div>
-                                                </div>
+                                                </div> --}}
                                             </div>
                                         </div>
                                         <div class="tab-pane p-2" id="tab{{ $i + 1 }}" role="tabpanel">

@@ -24,8 +24,6 @@ class UpdateWidgetRequest extends FormRequest
         return [
             'name' => 'required',
             'keyword' => 'required|unique:widgets,keyword,'.$this->id.'',
-            'short_code' => 'required|unique:widgets,short_code,'.$this->id.'',
-            'album' => 'required'
         ];
     }
 
@@ -35,9 +33,6 @@ class UpdateWidgetRequest extends FormRequest
             'name.required' => 'Vui lòng nhập tên widget.',
             'keyword.required' => 'Vui lòng nhập từ khóa của widget.',
             'keyword.unique' => 'Từ khóa này đã tồn tại. Vui lòng chọn từ khóa khác!',
-            'short_code.required' => 'Vui lòng nhập short_code.',
-            'short_code.unique' => 'short_code đã tồn tại vui lòng chọn code khác',
-            'album.required' => 'Vui lòng chọn album.',
         ];
     }
 }

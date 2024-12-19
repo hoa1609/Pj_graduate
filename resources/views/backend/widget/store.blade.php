@@ -64,16 +64,6 @@ $url = ($config['method'] == 'create') ? route('widget.store') : route('widget.u
                         </div>
                     </div>
                 </div>
-                <div class="card">
-                    <div class="card-body pt-10">
-                        <div class="row">
-                            <div class="col-md-12 position-relative">
-                                <label class="form-label">Short code <span class="text-danger fs-10">(*)</span></label>
-                            </div>
-                            <textarea name="short_code" class="form-control" id="">{{old('short_code', ($widget->short_code) ?? '' )}}</textarea>
-                        </div>
-                    </div>
-                </div>
                 <div class="text-end sticky-find">
                     <button type="submit" class="btn btn-primary">Lưu thông tin</button>
                 </div>

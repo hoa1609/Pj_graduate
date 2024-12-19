@@ -148,13 +148,11 @@ class WidgetService implements WidgetServiceInterface
             'name',
             'keyword',
             'publish',
-            'short_code'
         ];
     }
 
 
     /*--------------FRONT END SERVICE-----------------*/
-
     public function getWidget(array $params = [], int $language){
         $whereIn = [];
         $whereInField = 'keyword';
@@ -221,7 +219,6 @@ class WidgetService implements WidgetServiceInterface
             }
         ];
         $withCount = [];
-
         if(strpos($widget->model, 'Catalogue')){
             $model = lcfirst(str_replace('Catalogue','', $widget->model)).'s';
             if(isset($param['object'])){
@@ -229,7 +226,7 @@ class WidgetService implements WidgetServiceInterface
                     $query->whereHas('languages', function($query) use ($language){
                         $query->where('language_id', $language);
                     });
-                    $query->take(($param['limit']) ?? 8);
+                    $query->take(8);
                     $query->orderBy('order', 'desc');
                 };
             }

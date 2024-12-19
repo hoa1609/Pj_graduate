@@ -174,9 +174,11 @@ class CartService implements CartServiceInterface
     }
 
 
-    public function cartPromotion($cartTotal = 0){
+    public function cartPromotion($cartTotal = 0) {
         $maxDiscount = 0;
         $selectedPromotion = null;
+    
+        // Lấy danh sách các khuyến mãi
         $promotions = $this->promotionRepository->getPromotionByCartTotal();
         if (!is_null($promotions)) {
             foreach ($promotions as $promotion) {
@@ -185,22 +187,29 @@ class CartService implements CartServiceInterface
                 $amountTo = $discount['amountTo'] ?? [];
                 $amountValue = $discount['amountValue'] ?? [];
                 $amountType = $discount['amountType'] ?? [];
-
+    
+                /*Kiểm tra số lượng điều kiện*/ 
                 if (!empty($amountFrom) && count($amountFrom) == count($amountTo) && count($amountFrom) == count($amountValue)) {
                     for ($i = 0; $i < count($amountFrom); $i++) {
                         $currentAmountFrom = convert_price($amountFrom[$i]);
                         $currentAmountTo = convert_price($amountTo[$i]);
                         $currentAmountValue = convert_price($amountValue[$i]);
                         $currentAmountType = $amountType[$i];
-
-                        if ($cartTotal > $currentAmountFrom && ($cartTotal <= $currentAmountTo) || $cartTotal > $currentAmountTo) {
+    
+                        /*Kiểm tra nếu tổng giỏ hàng nằm trong khoảng hợp lệ*/
+                        if ($cartTotal >= $currentAmountFrom && $cartTotal <= $currentAmountTo) {
+                            $discountValue = 0;
+    
                             if ($currentAmountType == 'cash') {
-                                $maxDiscount = max($maxDiscount, $currentAmountValue);
+                                $discountValue = $currentAmountValue;
                             } else if ($currentAmountType == 'percent') {
                                 $discountValue = ($currentAmountValue / 100) * $cartTotal;
-                                $maxDiscount = max($maxDiscount, $discountValue);
                             }
-                            $selectedPromotion = $promotion;
+    
+                            if ($discountValue > $maxDiscount) {
+                                $maxDiscount = $discountValue;
+                                $selectedPromotion = $promotion;
+                            }
                         }
                     }
                 }
@@ -211,7 +220,7 @@ class CartService implements CartServiceInterface
             'selectedPromotion' => $selectedPromotion
         ];
     }
-
+    
 
     public function order($request, $system){
         DB::beginTransaction();

@@ -127,9 +127,9 @@ class WidgetController extends Controller{
 
     public function update($id, UpdateWidgetRequest $request){
         if ($this->widgetService->update($id, $request)) {
-            return redirect()->route('widget.index')->with('success', 'Cập nhập thành viên thành công !');
+            return redirect()->route('widget.index')->with('success', 'Cập nhập bản ghi thành công !');
         }
-        return redirect()->route('widget.index')->with('error', 'Cập nhập thành viên thất bại !');
+        return redirect()->route('widget.index')->with('error', 'Cập nhập bản ghi thất bại !');
     }
 
 
@@ -137,9 +137,9 @@ class WidgetController extends Controller{
         $this->authorize('modules', 'widget.destroy');
 
         if ($this->widgetService->destroy($id)) {
-            return redirect()->route('widget.index')->with('success', 'Xóa thành viên thành công !');
+            return redirect()->route('widget.index')->with('success', 'Xóa bản ghi thành công !');
         }
-        return redirect()->route('widget.index')->with('error', 'Xóa thành viên thất bại !');
+        return redirect()->route('widget.index')->with('error', 'Xóa bản ghi thất bại !');
     }
 
     private function configIndex(){
